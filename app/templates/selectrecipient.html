@@ -1,0 +1,25 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+{% block content %}
+	<h2>select recipients:<h2><br>
+{% if message.title %}
+	<h4>{{message.title}}</h4>
+{% endif %}
+{% if message.url %}
+	<h6>({{message.url}})</h6>
+{% endif %}
+<div class = "row">
+	<form method ="POST"> 
+	{{form.hidden_tag()}}
+	<ul class = "list-group">
+	{% for recipient in form.recipients %}
+		<li class = "list-group-item">
+			<div class = "col-xs-10">{{recipient.label}}</div>
+			<div class = "col-xs-2"> {{recipient}}</div><br>
+		</li>
+	{% endfor %}
+	</ul>
+	<input type = "submit" value = "Send!">
+	</form>
+</div>	
+{% endblock %}

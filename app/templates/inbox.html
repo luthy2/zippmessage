@@ -1,0 +1,31 @@
+<!--extends base layout -->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+  	<div class="row">
+  		<div class="col-md-8 col-md-offset-2">
+		  <ul class="nav nav-tabs nav-justified">
+		    <li role="presentation" class="active"><a href="{{url_for('inbox')}}">New  <span class="badge">{{inbox.count()}}</span></a></li>
+	    	<li role="presentation"><a href="{{url_for('top')}}">Top</a></li>
+	  	  </ul>
+		</div>
+	</div>
+  
+  		<div class="row">
+  			<div class ="col-md-8 col-md-offset-2">
+				<ul class="list-group">	
+			{% if inbox %}
+				{% for message in inbox %}
+					
+	  					<li class="list-group-item">{% include "message.html" %}</li>
+	  				
+	 			{% endfor %}		
+  			{% else %}
+					<li class="list-group-item"> no messages :( </li>	
+				</ul>
+    	</div>
+  			{% endif %}	 
+  </div>
+</div>	
+{% endblock %}

@@ -1,0 +1,17 @@
+<!-- extends base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<h4>New Message</h4>
+<form action="" method = "POST" name="new message">
+	<div class="form-group">
+		{{form.hidden_tag()}}
+			<label>Title</label><br>
+			{{form.message_title(size=150)}}<br>
+			<label>URL</label><br>
+			{{form.message_url(size=150)}}<br>
+		<input type = "submit" value = "Next" class = "btn btn-default">
+	</div>	
+</form>
+{% endblock %}
