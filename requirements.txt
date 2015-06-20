@@ -11,7 +11,7 @@ httplib2==0.9.1
 werkzeug==0.7
 MarkupSafe==0.23
 decorator==3.4.2
-itsdangerous==.24
+itsdangerous==0.24
 Jinja2==2.7.3
 pyscopg2==2.6.1
 sqlalchemy-migrate==0.9.6
