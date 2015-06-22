@@ -52,6 +52,8 @@ def login():
     in.  When all worked out as expected, the remote application will
     redirect back to the callback URL provided.
     """
+    if current_user.is_authenticated():
+      return redirect('/')
 	return twitter.authorize(callback=url_for('oauth_authorized', next=request.args.get('next') or request.referrer or None))
 	
 @app.route('/logout')
@@ -90,6 +92,7 @@ def oauth_authorized(resp):
     if user is None:
         user = User(username = resp['screen_name'])
         db.session.add(user)
+        db.session.commit()
 
     # in any case we update the authenciation token in the db
     # In case the user temporarily revoked access we will have
