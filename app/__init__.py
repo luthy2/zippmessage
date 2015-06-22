@@ -2,7 +2,7 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask_oauth import OAuth
-from settings import SECRET_KEY
+from config import SECRET_KEY
 
 
 
