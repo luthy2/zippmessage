@@ -92,7 +92,6 @@ def oauth_authorized(resp):
     if user is None:
         user = User(username = resp['screen_name'])
         db.session.add(user)
-        db.session.commit()
 
     # in any case we update the authenciation token in the db
     # In case the user temporarily revoked access we will have
