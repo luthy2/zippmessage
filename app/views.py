@@ -33,7 +33,7 @@ def load_user(id):
 	return User.query.get(int(id))	
 
 @twitter.tokengetter
-def get_twitter_token():
+def get_twitter_token(oauth_token = None, oauth_secret = None):
     """This is used by the API to look for the auth token and secret
     it should use for API calls.  During the authorization handshake
     a temporary set of token and secret is used, but afterwards this
@@ -52,9 +52,6 @@ def login():
     in.  When all worked out as expected, the remote application will
     redirect back to the callback URL provided.
     """
-    session.clear()
-	if current_user.is_authenticated():
-		return redirect('/')
 	return twitter.authorize(callback=url_for('oauth_authorized', next=request.args.get('next') or request.referrer or None))
 	
 @app.route('/logout')
