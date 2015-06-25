@@ -14,4 +14,4 @@ itsdangerous==0.24
 Jinja2==2.7.3
 psycopg2==2.6.1
 sqlalchemy-migrate==0.9.6
--e git://github.com/mkrentovskiy/flask-oauth.git#egg=flask-oauth
+-e git://github.com/werdnum/flask-oauth.git#egg=flask-oauth
