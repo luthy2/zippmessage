@@ -4,6 +4,7 @@ from app import app, db, lm, twitter
 from forms import NewMessageForm, RecipientsForm
 from models import User, Message, UserMessage
 from datetime import datetime
+ 
 
 @app.before_request
 def before_request():
@@ -43,7 +44,7 @@ def get_twitter_token():
     """
     user = g.user
     if user is not None:
-        return user.oauth_token, user.oauth_secret
+        return session.get('twitter_token')
         
 
 @app.route('/login')
@@ -89,7 +90,6 @@ def oauth_authorized(resp):
     # user never signed on
     if user is None:
         user = User(username = resp['screen_name'])
-        db.session.add(user)
 
     # in any case we update the authenciation token in the db
     # In case the user temporarily revoked access we will have
@@ -105,6 +105,15 @@ def oauth_authorized(resp):
     
     return redirect(next_url)
 	
+#@app.route('/callback' methods = ["POST"])
+#def callback():
+#	oauth_token = request.args.get('oauth_token', '')
+#	oauth_verifier = request.args.get('oauth_verifier', '')
+#	
+#	token = oauth.Token(oauth_token, oauth_token)
+#	token.set_verifier(oauth_verifier)
+	
+
 
 @app.route('/', methods = ["GET", "POST"])
 @app.route('/index', methods = ["GET", "POST"])
