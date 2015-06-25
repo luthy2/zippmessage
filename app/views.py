@@ -68,7 +68,7 @@ def logout():
 
 
 @app.route('/oauth-authorized')
-@twitter.handle_oauth1_response
+@twitter.authorized_handler
 def oauth_authorized(resp):
     """Called after authorization.  After this function finished handling,
     the OAuth information is removed from the session again.  When this
@@ -91,6 +91,7 @@ def oauth_authorized(resp):
     # user never signed on
     if user is None:
         user = User(username = resp['screen_name'])
+        db.session.add(user)
 
     # in any case we update the authenciation token in the db
     # In case the user temporarily revoked access we will have
