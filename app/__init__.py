@@ -22,9 +22,9 @@ twitter = oauth.remote_app('twitter',
     # before all URLs.  This is also true for request_token_url and others.
     base_url='https://api.twitter.com/1/',
     # where flask should look for new request tokens
-    request_token_url='https://api.twitter.com/1/oauth/request_token',
+    request_token_url='https://api.twitter.com/oauth/request_token',
     # where flask should exchange the token with the remote application
-    access_token_url='https://api.twitter.com/1/oauth/access_token',
+    access_token_url='https://api.twitter.com/oauth/access_token',
     # twitter knows two authorizatiom URLs.  /authorize and /authenticate.
     # they mostly work the same, but for sign on /authenticate is
     # expected because this will give the user a slightly different
