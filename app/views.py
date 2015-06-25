@@ -91,6 +91,7 @@ def oauth_authorized(resp):
     # user never signed on
     if user is None:
         user = User(username = resp['screen_name'])
+        user.add_contact(user)
         db.session.add(user)
 
     # in any case we update the authenciation token in the db
@@ -98,7 +99,7 @@ def oauth_authorized(resp):
     # new tokens here.
     user.oauth_token = resp['oauth_token']
     user.oauth_secret = resp['oauth_token_secret']
-    user.add_contact(user)
+    db.sesion.add(user)
     db.session.commit()
     login_user(user)
 
