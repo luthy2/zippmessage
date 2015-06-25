@@ -29,7 +29,7 @@ twitter = oauth.remote_app('twitter',
     # they mostly work the same, but for sign on /authenticate is
     # expected because this will give the user a slightly different
     # user interface on the twitter side.
-    authorize_url='https://api.twitter.com/oauth/authorize',
+    authorize_url='https://api.twitter.com/oauth/authenticate',
     # the consumer keys from the twitter application registry.
     consumer_key='hDdtxxgJc8P6V6ZKiNksD4ryi',
     consumer_secret='b0U9ZC31BcwMnBx9KWezHhqDwq2lcq87dMwxyNi2fsp9qV4dtn'
