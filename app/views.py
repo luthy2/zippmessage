@@ -68,7 +68,7 @@ def logout():
 
 
 @app.route('/oauth-authorized')
-@twitter.authorized_handler
+@twitter.handle_oauth1_response
 def oauth_authorized(resp):
     """Called after authorization.  After this function finished handling,
     the OAuth information is removed from the session again.  When this
