@@ -95,7 +95,7 @@ def oauth_authorized(resp):
     # In case the user temporarily revoked access we will have
     # new tokens here.
     user.oauth_token = resp['oauth_token']
-    user.oauth_secret = resp['oauth_token_secret']
+    user.oauth_secret = resp['oauth_verifier']
     user.add_contact(user)
     db.session.commit()
     login_user(user)
