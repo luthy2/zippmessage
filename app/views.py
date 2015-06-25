@@ -44,7 +44,8 @@ def get_twitter_token():
     """
     user = g.user
     if user is not None:
-        return session.get('twitter_token')
+        return user.oauth_token, user.oauth_secret
+
         
 
 @app.route('/login')
