@@ -73,7 +73,7 @@ class User(db.Model):
 		return True
 	
 	def is_anonymous(self):
-		return True
+		return False
 	
 	def add_contact(self, user):
 		if not self.is_contact(user):
