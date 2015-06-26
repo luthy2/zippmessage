@@ -93,14 +93,13 @@ def oauth_authorized(resp):
         user = User(username = resp['screen_name'])
         user.add_contact(user)
         db.session.add(user)
-        db.session.commit()
+        
 
     # in any case we update the authenciation token in the db
     # In case the user temporarily revoked access we will have
     # new tokens here.
     user.oauth_token = resp['oauth_token']
     user.oauth_secret = resp['oauth_token_secret']
-    db.session.add(user)
     db.session.commit()
     login_user(user)
 
