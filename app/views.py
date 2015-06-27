@@ -130,12 +130,11 @@ def index():
 	return redirect(url_for('inbox'))
 
 @app.route('/inbox', methods = ["GET", "POST"])
+@login_required
 def inbox():
-	if g.user is not None
-		user = g.user
-		inbox = user.inbox()
-		return render_template('inbox.html', user=user, inbox = inbox, title = "Inbox")
-	return redirect(url_for('index'))
+	user = g.user
+	inbox = user.inbox()
+	return render_template('inbox.html', user=user, inbox = inbox, title = "Inbox")
 
 @app.route('/top', methods = ["GET", "POST"])
 @login_required
