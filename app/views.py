@@ -110,7 +110,7 @@ def oauth_authorized(resp):
     session['user_id'] = user.id
     flash('You were signed in')
     
-    return redirect(url_for(next_url))
+    return redirect(next_url or url_for('inbox'))
 	
 #@app.route('/callback' methods = ["POST"])
 #def callback():
