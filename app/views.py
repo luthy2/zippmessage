@@ -1,6 +1,6 @@
 from flask import request, g, render_template, session, url_for, redirect, request, flash
 from flask_login import login_user, logout_user, current_user, login_required
-from app import app, db, lm, twitter
+from app import app, db, twitter
 from forms import NewMessageForm, RecipientsForm
 from models import User, Message, UserMessage
 from datetime import datetime
