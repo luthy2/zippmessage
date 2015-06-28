@@ -248,16 +248,16 @@ def unfollow(username):
 	if g.user is None:
 		return redirect(url_for('index'))
 	user = User.query.filter_by(username=username).first()
-    if user is None:
-        flash('User %s not found.' % username)
-        return redirect(url_for('index'))
-    if user == g.user:
-        flash('You can\'t unfollow yourself!')
-        return redirect(url_for('user', username))
-    u = g.user.remove_contact(user)
-    if u is None:
-        flash('Cannot unfollow ' + nickname + '.')
-        return redirect(url_for('user', username=username))
+	if user is None:
+		flash('User %s not found.' % username)
+		return redirect(url_for('index'))
+	if user == g.user:
+		flash('You can\'t unfollow yourself!')
+		return redirect(url_for('user', username))
+	u = g.user.remove_contact(user)
+	if u is None:
+    	flash('Cannot unfollow ' + nickname + '.')
+    	return redirect(url_for('user', username=username))
     db.session.add(u)
     db.session.commit()
     flash('You have stopped following ' + username + '.')
@@ -268,18 +268,18 @@ def unfollow(username):
 def like(message_id):
 	if g.user is None:
 		return redirect(url_for('index'))
-    message = UserMessage.query.filter(UserMessage.message_id == message_id)
-    user = g.user
+	message = UserMessage.query.filter(UserMessage.message_id == message_id)
+	user = g.user
     if message is None:
-        flash('Message not found.')
-        return redirect(url_for('index'))
+		flash('Message not found.')
+		return redirect(url_for('index'))
     m = user.like_message(message_id)
     if m is None:
-        flash('Could not like message')
-        return redirect(url_for('index'))
-    db.session.add(user)
-    db.session.commit()
-    flash('Message added to favorites')
+    	flash('Could not like message')
+ 		return redirect(url_for('index'))
+	db.session.add(user)
+	db.session.commit()
+	flash('Message added to favorites')
     return redirect(url_for('index'))
     
    
