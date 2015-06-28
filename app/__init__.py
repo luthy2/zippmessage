@@ -3,17 +3,17 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_oauth import OAuth
 from config import SECRET_KEY
-
+import logging
 
 
 
 app = Flask(__name__)
 app.config.from_object('config')
 db = SQLAlchemy(app)
-#lm = LoginManager()
-#lm.init_app(app)
-#lm.login_view = 'login'
-#lm.login_message = u'you must login to view this page'
+lm = LoginManager()
+lm.init_app(app)
+lm.login_view = 'login'
+lm.login_message = u'you must login to view this page'
 app.secret_key = SECRET_KEY
 oauth = OAuth()
 
@@ -36,5 +36,8 @@ twitter = oauth.remote_app('twitter',
 )
 
 
+
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 from app import views, models

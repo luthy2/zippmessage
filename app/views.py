@@ -1,6 +1,6 @@
 from flask import request, g, render_template, session, url_for, redirect, request, flash
 from flask_login import login_user, logout_user, current_user, login_required
-from app import app, db, twitter
+from app import app, db, lm, twitter
 from forms import NewMessageForm, RecipientsForm
 from models import User, Message, UserMessage
 from datetime import datetime
@@ -29,9 +29,9 @@ def internal_error(error):
     db.session.rollback()
     return render_template('500.html'), 500
 
-#@lm.user_loader
-#def load_user(id):
-#	return User.query.get(int(id))	
+@lm.user_loader
+def load_user(id):
+	return User.query.get(int(id))	
 
 @twitter.tokengetter
 def get_twitter_token():
@@ -45,7 +45,8 @@ def get_twitter_token():
     user = g.user
     if user is not None:
         return user.oauth_token, user.oauth_secret
-       
+
+        
 
 @app.route('/login')
 def login():
@@ -57,8 +58,8 @@ def login():
 	
 @app.route('/logout')
 def logout():
-#	logout_user()
-#	current_user = None
+	logout_user()
+	current_user = None
 	session.pop('user_id', None)
 	session.pop('user', None)
 	session.pop('flashed_messages', None)
@@ -102,7 +103,7 @@ def oauth_authorized(resp):
     db.session.commit()
 
     session['user_id'] = user.id
-#    login_user(user)
+    login_user(user)
     flash('You were signed in')
     
     return redirect(next_url or url_for('inbox'))
@@ -125,28 +126,22 @@ def index():
 	return redirect(url_for('inbox'))
 
 @app.route('/inbox', methods = ["GET", "POST"])
-#@login_required
+@login_required
 def inbox():
-	if g.user is None:
-		return redirect(url_for('index'))
 	user = g.user
 	inbox = user.inbox()
 	return render_template('inbox.html', user=user, inbox = inbox, title = "Inbox")
 
 @app.route('/top', methods = ["GET", "POST"])
-#@login_required
+@login_required
 def top():
-	if g.user is None:
-		return redirect(url_for('index'))
 	user = g.user
 	inbox = user.inbox()
 	return render_template('inbox.html', user=user, inbox = inbox, title = "Top")
 
 @app.route('/compose', methods = ["GET", "POST"])
-#@login_required
+@login_required
 def compose():
-	if g.user is None:
-		return redirect(url_for('index'))
 	user = g.user
 	form = NewMessageForm()
 	if form.validate_on_submit():
@@ -164,20 +159,16 @@ def compose():
 	return render_template('compose.html', form=form, title = "Compose")
 
 @app.route('/contacts', methods = ["GET", "POST"])
-#@login_required
+@login_required
 def contacts():
-	if g.user is None:
-		return redirect(url_for('index'))
 	user = g.user
 	contacts = g.user.contacts
 	return render_template('contacts.html', user = user, title = 'Contacts', contacts = contacts)
 
 
 @app.route('/recipients', methods = ["GET", "POST"])
-#@login_required
+@login_required
 def recipients():
-	if g.user is None:
-		return redirect(url_for('index'))
 	user = g.user 
 	form = RecipientsForm()
 	
@@ -204,103 +195,91 @@ def recipients():
 	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
 
 @app.route('/likes', methods = 	["GET", "POST"])
-#@login_required
+@login_required
 def likes():
-	if g.user is None:
-		return redirect(url_for('index'))
 	user = g.user 
 	likes = user.likes()
 	return render_template('likes.html', user = user, likes = likes, title = "Favorites")
 
 @app.route('/user/<username>')
-#@login_required
+@login_required
 def user(username):
-	if g.user is None:
-		return redirect(url_for('index'))
 	user = User.query.filter_by(username=username).first()
 	return render_template('user.html', user = user, title = 'Profile')     
 
 
 @app.route('/follow/<username>')
-#@login_required
+@login_required
 def follow(username):
-	if g.user is None:
-		return redirect(url_for('index'))
-	user = User.query.filter_by(username=username).first()
-	if user is None:
-		flash('User %s not found.' % username)
-		return redirect(url_for('index'))
-	if user == g.user:
-		flash('You can\'t follow yourself!')
-		return redirect(url_for('user', username=username))
-	u = g.user.add_contact(user)
-	if u is None:
-		flash('Cannot follow ' + nickname + '.')
-		return redirect(url_for('user', username=username))
-	db.session.add(u)
-	db.session.commit()
-	flash('You are now following ' + username + '!')
-	return redirect(url_for('user', username=username))
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('User %s not found.' % username)
+        return redirect(url_for('index'))
+    if user == g.user:
+        flash('You can\'t follow yourself!')
+        return redirect(url_for('user', username=username))
+    u = g.user.add_contact(user)
+    if u is None:
+        flash('Cannot follow ' + nickname + '.')
+        return redirect(url_for('user', username=username))
+    db.session.add(u)
+    db.session.commit()
+    flash('You are now following ' + username + '!')
+    return redirect(url_for('user', username=username))
 
 @app.route('/unfollow/<username>')
-#@login_required
+@login_required
 def unfollow(username):
-	if g.user is None:
-		return redirect(url_for('index'))
-	user = User.query.filter_by(username=username).first()
-	if user is None:
-		flash('User %s not found.' % username)
-		return redirect(url_for('index'))
-	if user == g.user:
-		flash('You can\'t unfollow yourself!')
-		return redirect(url_for('user', username))
-	u = g.user.remove_contact(user)
-	if u is None:
-		flash('Cannot unfollow ' + nickname + '.')
-		return redirect(url_for('user', username=username))
-	db.session.add(u)
-	db.session.commit()
-	flash('You have stopped following ' + username + '.')
-	return redirect(url_for('user', username=username))	
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('User %s not found.' % username)
+        return redirect(url_for('index'))
+    if user == g.user:
+        flash('You can\'t unfollow yourself!')
+        return redirect(url_for('user', username))
+    u = g.user.remove_contact(user)
+    if u is None:
+        flash('Cannot unfollow ' + nickname + '.')
+        return redirect(url_for('user', username=username))
+    db.session.add(u)
+    db.session.commit()
+    flash('You have stopped following ' + username + '.')
+    return redirect(url_for('user', username=username))	
 
 @app.route('/like/<message_id>')
-#@login_required
+@login_required
 def like(message_id):
-	if g.user is None:
-		return redirect(url_for('index'))
-	message = UserMessage.query.filter(UserMessage.message_id == message_id)
-	user = g.user
-	if message is None:
-		flash('Message not found.')
-		return redirect(url_for('index'))
-	m = user.like_message(message_id)
-	if m is None:
-		flash('Could not like message')
-		return redirect(url_for('index'))
-	db.session.add(user)
-	db.session.commit()
-	flash('Message added to favorites')
-	return redirect(url_for('index'))
+    message = UserMessage.query.filter(UserMessage.message_id == message_id)
+    user = g.user
+    if message is None:
+        flash('Message not found.')
+        return redirect(url_for('index'))
+    m = user.like_message(message_id)
+    if m is None:
+        flash('Could not like message')
+        return redirect(url_for('index'))
+    db.session.add(user)
+    db.session.commit()
+    flash('Message added to favorites')
+    return redirect(url_for('index'))
     
    
 @app.route('/dismiss/<message_id>')
-#@login_required
+@login_required
 def dismiss(message_id):
-	if g.user is None:
-		return redirect(url_for('index'))
-	message = UserMessage.query.filter(UserMessage.message_id == message_id)
-	user = g.user
-	if message is None:
-		flash('Message not found.')
-		return redirect(url_for('index'))
-	m = user.dismiss_message(message_id)
-	if m is None:
-		flash('Could not dismiss message')
-		return redirect(url_for('index'))
-	db.session.add(user)
-	db.session.commit()
-	flash('Message dismissed')
-	return redirect(url_for('index'))  
+    message = UserMessage.query.filter(UserMessage.message_id == message_id)
+    user = g.user
+    if message is None:
+        flash('Message not found.')
+        return redirect(url_for('index'))
+    m = user.dismiss_message(message_id)
+    if m is None:
+        flash('Could not dismiss message')
+        return redirect(url_for('index'))
+    db.session.add(user)
+    db.session.commit()
+    flash('Message dismissed')
+    return redirect(url_for('index'))  
 
 #@app.route('/share/<message_id>', methods = ["GET", "POST"])    
 #@login_required
@@ -319,26 +298,20 @@ def dismiss(message_id):
 
 		
 @app.route('/settings', methods = ["GET", "POST"])
-#@login_required
+@login_required
 def settings():
-	if g.user is None:
-		return redirect(url_for('index'))
 	user = g.user
 	return render_template('settings.html', title = 'Settings')
 
 @app.route('/history', methods = ["GET", "POST"])
-#@login_required
+@login_required
 def history():
-	if g.user is None:
-		return redirect(url_for('index'))
 	user = g.user
 	return render_template('history.html', title = "History")
 	
 @app.route('/quickshare', methods = ["GET", "POST"])
-#@login_required
+@login_required
 def quickshare():
-	if g.user is None:
-		return redirect(url_for('index'))
 	user = g.user 
 	form = RecipientsForm()
 	
