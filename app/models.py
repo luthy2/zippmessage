@@ -50,7 +50,7 @@ class User(db.Model):
 								backref = db.backref('followers', lazy = 'dynamic'),
 								lazy = 'dynamic')
 	
-	def __init__(self, username, contacts, sent_messages, inbox_messages):
+	def __init__(self, *args, **kwargs):
 		self.username = username
 		self.contacts = contacts
 		self.inbox_messages = inbox_messages
