@@ -226,7 +226,7 @@ def user(username):
 def follow(username):
 	if g.user is None:
 		return redirect(url_for('index'))
-    user = User.query.filter_by(username=username).first()
+	user = User.query.filter_by(username=username).first()
     if user is None:
         flash('User %s not found.' % username)
         return redirect(url_for('index'))
@@ -247,7 +247,7 @@ def follow(username):
 def unfollow(username):
 	if g.user is None:
 		return redirect(url_for('index'))
-    user = User.query.filter_by(username=username).first()
+	user = User.query.filter_by(username=username).first()
     if user is None:
         flash('User %s not found.' % username)
         return redirect(url_for('index'))
