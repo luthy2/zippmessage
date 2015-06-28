@@ -90,7 +90,7 @@ def oauth_authorized(resp):
 
     # user never signed on
     if user is None:
-        user = User(username = resp['screen_name'], contacts = None, inbox_messages = None, sent_messages = None)
+        user = User(username = resp['screen_name'])
         
         user.add_contact(user)
         db.session.add(user)
