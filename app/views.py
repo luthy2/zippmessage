@@ -227,20 +227,20 @@ def follow(username):
 	if g.user is None:
 		return redirect(url_for('index'))
 	user = User.query.filter_by(username=username).first()
-    if user is None:
-        flash('User %s not found.' % username)
-        return redirect(url_for('index'))
-    if user == g.user:
-        flash('You can\'t follow yourself!')
-        return redirect(url_for('user', username=username))
-    u = g.user.add_contact(user)
-    if u is None:
-        flash('Cannot follow ' + nickname + '.')
-        return redirect(url_for('user', username=username))
-    db.session.add(u)
-    db.session.commit()
-    flash('You are now following ' + username + '!')
-    return redirect(url_for('user', username=username))
+	if user is None:
+		flash('User %s not found.' % username)
+		return redirect(url_for('index'))
+	if user == g.user:
+		flash('You can\'t follow yourself!')
+		return redirect(url_for('user', username=username))
+	u = g.user.add_contact(user)
+	if u is None:
+		flash('Cannot follow ' + nickname + '.')
+		return redirect(url_for('user', username=username))
+	db.session.add(u)
+	db.session.commit()
+	flash('You are now following ' + username + '!')
+	return redirect(url_for('user', username=username))
 
 @app.route('/unfollow/<username>')
 #@login_required
@@ -256,12 +256,12 @@ def unfollow(username):
 		return redirect(url_for('user', username))
 	u = g.user.remove_contact(user)
 	if u is None:
-    	flash('Cannot unfollow ' + nickname + '.')
-    	return redirect(url_for('user', username=username))
-    db.session.add(u)
-    db.session.commit()
-    flash('You have stopped following ' + username + '.')
-    return redirect(url_for('user', username=username))	
+		flash('Cannot unfollow ' + nickname + '.')
+		return redirect(url_for('user', username=username))
+	db.session.add(u)
+	db.session.commit()
+	flash('You have stopped following ' + username + '.')
+	return redirect(url_for('user', username=username))	
 
 @app.route('/like/<message_id>')
 #@login_required
@@ -270,17 +270,17 @@ def like(message_id):
 		return redirect(url_for('index'))
 	message = UserMessage.query.filter(UserMessage.message_id == message_id)
 	user = g.user
-    if message is None:
+	if message is None:
 		flash('Message not found.')
 		return redirect(url_for('index'))
-    m = user.like_message(message_id)
-    if m is None:
-    	flash('Could not like message')
- 		return redirect(url_for('index'))
+	m = user.like_message(message_id)
+	if m is None:
+		flash('Could not like message')
+		return redirect(url_for('index'))
 	db.session.add(user)
 	db.session.commit()
 	flash('Message added to favorites')
-    return redirect(url_for('index'))
+	return redirect(url_for('index'))
     
    
 @app.route('/dismiss/<message_id>')
@@ -288,19 +288,19 @@ def like(message_id):
 def dismiss(message_id):
 	if g.user is None:
 		return redirect(url_for('index'))
-    message = UserMessage.query.filter(UserMessage.message_id == message_id)
-    user = g.user
-    if message is None:
-        flash('Message not found.')
-        return redirect(url_for('index'))
-    m = user.dismiss_message(message_id)
-    if m is None:
-        flash('Could not dismiss message')
-        return redirect(url_for('index'))
-    db.session.add(user)
-    db.session.commit()
-    flash('Message dismissed')
-    return redirect(url_for('index'))  
+	message = UserMessage.query.filter(UserMessage.message_id == message_id)
+	user = g.user
+	if message is None:
+		flash('Message not found.')
+		return redirect(url_for('index'))
+	m = user.dismiss_message(message_id)
+	if m is None:
+		flash('Could not dismiss message')
+		return redirect(url_for('index'))
+	db.session.add(user)
+	db.session.commit()
+	flash('Message dismissed')
+	return redirect(url_for('index'))  
 
 #@app.route('/share/<message_id>', methods = ["GET", "POST"])    
 #@login_required
