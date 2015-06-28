@@ -44,11 +44,7 @@ def get_twitter_token():
     """
     user = g.user
     if user is not None:
-    	ouath_token = session['oauth_token']
-    	oauth_secret = session['oauth_secret']
-    	session.pop('oauth_token', None)
-    	session.pop('oauth_secret', None)
-        return oauth_token, oauth_secret
+        return user.oauth_token, user.oauth_secret
 
         
 
@@ -102,12 +98,12 @@ def oauth_authorized(resp):
     # in any case we update the authenciation token in the db
     # In case the user temporarily revoked access we will have
     # new tokens here.
-    session['oauth_token'] = resp['oauth_token']
-    session['oauth_secret'] = resp['oauth_token_secret']
+    user.oauth_token = resp['oauth_token']
+    user.oath_secret = resp['oauth_token_secret']
     db.session.commit()
-    login_user(user)
 
     session['user_id'] = user.id
+    login_user(user)
     flash('You were signed in')
     
     return redirect(next_url or url_for('inbox'))
