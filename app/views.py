@@ -91,8 +91,9 @@ def oauth_authorized(resp):
     # user never signed on
     if user is None:
         user = User(username = resp['screen_name'], contacts = None, inbox_messages = None, sent_messages = None)
+        
         user.add_contact(user)
-		db.session.add(user)
+        db.session.add(user)
 
     # in any case we update the authenciation token in the db
     # In case the user temporarily revoked access we will have
