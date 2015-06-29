@@ -92,8 +92,8 @@ def oauth_authorized(resp):
     if user is None:
         user = User(username = resp['screen_name'], contacts=(), sent_messages=(), inbox_messages=())
         
-        user.add_contact(user)
         db.session.add(user)
+        user.add_contact(user)
 
     # in any case we update the authenciation token in the db
     # In case the user temporarily revoked access we will have
@@ -103,6 +103,7 @@ def oauth_authorized(resp):
     db.session.commit()
 
     session['user_id'] = user.id
+    
     login_user(user)
     flash('You were signed in')
     
