@@ -108,15 +108,6 @@ def oauth_authorized(resp):
     flash('You were signed in')
     
     return redirect(next_url or url_for('inbox'))
-	
-#@app.route('/callback' methods = ["POST"])
-#def callback():
-#	oauth_token = request.args.get('oauth_token', '')
-#	oauth_verifier = request.args.get('oauth_verifier', '')
-#	
-#	token = oauth.Token(oauth_token, oauth_token)
-#	token.set_verifier(oauth_verifier)
-	
 
 
 @app.route('/', methods = ["GET", "POST"])
@@ -282,22 +273,8 @@ def dismiss(message_id):
     flash('Message dismissed')
     return redirect(url_for('index'))  
 
-#@app.route('/share/<message_id>', methods = ["GET", "POST"])    
-#@login_required
-#def share(message_id):
-#    user = g.user
-#    message = UserMessage.query.filter(UserMessage.message_id == message_id)
-#    form = RecipientsForm
-#    
-#    form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
-#    
-#    if request.method == "POST";
-#    	recipients = form.recipients.data
-#    	if form.validate_on_submit():
-#    		
-#    return redirect(url_for('index'))  
 
-		
+
 @app.route('/settings', methods = ["GET", "POST"])
 @login_required
 def settings():
@@ -340,5 +317,7 @@ def quickshare():
 	
 	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
 		
-
-			
+@app.route('/welcome', methods = ['GET', 'POST'])
+@login_required
+def welcome():
+	return render_template('welcome.html')

@@ -1,8 +1,8 @@
 from flask import flash, g
 from flask.ext.wtf import Form
-from wtforms import StringField, SubmitField, SelectMultipleField, widgets
+from wtforms import StringField, SubmitField, SelectMultipleField, EmailField, widgets
 from wtforms.widgets import ListWidget
-from wtforms.validators import DataRequired, Length, URL
+from wtforms.validators import DataRequired, Length, URL, Email
 
 
 class NewMessageForm(Form):
@@ -24,6 +24,7 @@ class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
     				
-class RecipientsForm(Form):
-	recipients = MultiCheckboxField("recipients", choices = [], coerce=int, validators=[DataRequired()])				
-		
+#class RecipientsForm(Form):
+#	recipients = MultiCheckboxField("recipients", choices = [], coerce=int, #validators=[DataRequired()])				
+
+

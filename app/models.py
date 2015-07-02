@@ -105,9 +105,6 @@ class User(db.Model):
 		user_message.is_read = True
 		db.session.commit()
 		return self
-	
-#	def share_message(	
-
 		
 
 class Message(db.Model):

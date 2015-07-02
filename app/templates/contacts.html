@@ -3,9 +3,9 @@
 {% block content %}
 <div class = "container">
 <h4>{{g.user.username}}'s Contacts</h4>
-	<ul>
+	<ul class = "list-unstlyed">
 	{% for contact in user.contacts %}
-	<li>{{contact.username}}</li>
+	<li><a href="{{url_for('user', username=contact.username)}}">{{contact.username}}</li>
 	{% else %}
 	<li> You have no friends :( </li>
 	{% endfor %}	

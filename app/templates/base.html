@@ -76,6 +76,10 @@
 		</nav>
 	
 	<div class="container">
+		<div class = "alert alert-info alert-dismissable"	role= "alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			Welcome to Zipp!<a href = "{{url_for('welcome')}}" class = "alert-link">Learn more about how it works</a>
+		</div>
 	  {% block content %}
 	  {% endblock %}
 	</div>
@@ -89,7 +93,13 @@
 	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-   
+   	
+<script type="text/javascript">
+$(".nav a").on("click", function(){
+$(".nav").find(".active").removeClass("active");
+$(this).parent().addClass("active");
+});
+</script>
 
 
 </body>

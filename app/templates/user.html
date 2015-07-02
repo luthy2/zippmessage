@@ -7,8 +7,8 @@
 	
 	{% if user == g.user %}
 	<p><a href = "">Edit</a></p>
-	<p><a href = "javascript:window.location=%22http://localhost:5000/quickshare?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)">Zipp-Quickshare</a></p>
-	{% elif not g.user.is_contact(user)%}
+	
+	{% elif g.user.is_contact(user) is None %}
 		<a href = "{{url_for('follow', username=user.username)}}">Follow {{user.username}}</a>
 	{% else %}
 		<a href = "{{url_for('unfollow', username= user.username)}}">Unfollow {{user.username}}</a>	
