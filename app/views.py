@@ -320,7 +320,7 @@ def quickshare():
 @app.route('/welcome', methods = ['GET', 'POST'])
 @login_required
 def welcome():
-	return render_template('welcome.html')
+	return render_template('welcome.html', title = "Welcome!")
 
 @app.route('/share/<message_id>', methods = ["GET", "POST"])
 @login_required
