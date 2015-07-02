@@ -359,4 +359,4 @@ def share(message_id):
 		else:
 			flash(form.errors)
     
-    return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)  	
+	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
