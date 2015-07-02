@@ -326,19 +326,19 @@ def welcome():
 @login_required
 def share(message_id):
 	#user and original message
-    user = g.user
-    message = UserMessage.query.filter(UserMessage.message_id == message_id)
+	user = g.user
+	message = UserMessage.query.filter(UserMessage.message_id == message_id)
 
 	#select recipients
-    form = RecipientsForm
-    form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
+	form = RecipientsForm
+	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
     
-    #if the form was submitted
-    if request.method == "POST";
-    	recipients = form.recipients.data
-    	if form.validate_on_submit():
-    		#create a new message using the parent message as the paramas
-    		new_message = Message(title = message.title,
+	#if the form was submitted
+	if request.method == 'POST';
+		recipients = form.recipients.data
+		if form.validate_on_submit():
+			#create a new message using the parent message as the paramas
+			new_message = Message(title = message.title,
 							url = message.url, 
 							author = g.user,
 							timestamp = datetime.utcnow())
@@ -354,9 +354,9 @@ def share(message_id):
 			new_message.deliver_message()
 			db.session.commit()
 			flash('Message Shared!')
-    		return redirect(url_for('index'))
-    	
-    	else:
-    		flash(form.errors)
+			return redirect(url_for('index'))
+		
+		else:
+			flash(form.errors)
     
     return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)  	
