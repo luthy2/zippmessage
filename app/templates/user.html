@@ -8,7 +8,7 @@
 	{% if user == g.user %}
 	<p><a href = "">Edit</a></p>
 	
-	{% elif g.user.is_contact(user) is None %}
+	{% elif not g.user.is_contact(user) %}
 		<a href = "{{url_for('follow', username=user.username)}}">Follow {{user.username}}</a>
 	{% else %}
 		<a href = "{{url_for('unfollow', username= user.username)}}">Unfollow {{user.username}}</a>	
