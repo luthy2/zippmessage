@@ -1,8 +1,8 @@
 from flask import flash, g
 from flask.ext.wtf import Form
-from wtforms import StringField, SubmitField, SelectMultipleField, EmailField, widgets
+from wtforms import StringField, SubmitField, SelectMultipleField, widgets
 from wtforms.widgets import ListWidget
-from wtforms.validators import DataRequired, Length, URL, Email
+from wtforms.validators import DataRequired, Length, URL
 
 
 class NewMessageForm(Form):
