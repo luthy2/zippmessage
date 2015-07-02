@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, Length, URL
 
 
 class NewMessageForm(Form):
-	message_title = StringField('title', validators=[DataRequired(), Length(min = 1, max = 60)])
+	message_title = StringField('title', validators=[DataRequired(), Length(min = 1, max = 100)])
 	message_url = StringField('url', validators=[DataRequired(), URL(require_tld = False, message = 'Must contain a valid URL'), Length(min = 7, max = 300)])
 	
 	def flash_errors(form):
