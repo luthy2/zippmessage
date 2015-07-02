@@ -109,12 +109,12 @@ class User(db.Model):
 
 class Message(db.Model):
 	id= db.Column(db.Integer, primary_key = True)
-	title = db.Column(db.String())
-	url = db.Column(db.String())
+	title = db.Column(db.String(100))
+	url = db.Column(db.String(300))
 	from_user = db.Column(db.Integer, db.ForeignKey('user.id'))
 	is_delivered = db.Column(db.Boolean, default = False)
 	timestamp = db.Column(db.DateTime)
-	score = (db.Integer)
+	score = db.Integer()
 	recipients = db.relationship(	'User', 
 									secondary = recipients,
 									primaryjoin = (recipients.c.message_id == id), 
