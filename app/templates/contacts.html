@@ -3,12 +3,14 @@
 {% block content %}
 <div class = "container">
 <h4>{{g.user.username}}'s Contacts</h4>
-	<ul class = "list-unstlyed">
+	<div class = "col-xs-10">
+	  <ul class = "list-group">
 	{% for contact in user.contacts %}
-	<li><a href="{{url_for('user', username=contact.username)}}">{{contact.username}}</li>
+		<li class="list-group-item"><a href="{{url_for('user', username=contact.username)}}">{{contact.username}}</li>
 	{% else %}
-	<li> You have no friends :( </li>
+		<li> You have no friends :( </li>
 	{% endfor %}	
-	</ul>
+	  </ul>
+	</div>
 </div>
 {% endblock %}
