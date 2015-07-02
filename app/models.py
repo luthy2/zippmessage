@@ -119,7 +119,7 @@ class Message(db.Model):
 									primaryjoin = (recipients.c.message_id == id), 
 									secondaryjoin = (recipients.c.user_id == User.id),
 									backref = db.backref('received_messages', lazy = 'dynamic'), lazy = 'dynamic')
-	
+	score = (db.Integer)
 	
 	
 	
