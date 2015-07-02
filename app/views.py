@@ -322,7 +322,7 @@ def quickshare():
 def welcome():
 	return render_template('welcome.html')
 
-@app.route('/share/<message_id>', methods = ['GET', 'POST'])
+@app.route('/share/<message_id>', methods = ["GET", "POST"])
 @login_required
 def share(message_id):
 	#user and original message
@@ -334,7 +334,7 @@ def share(message_id):
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
     
 	#if the form was submitted
-	if request.method == 'POST';
+	if request.method == 'POST':
 		recipients = form.recipients.data
 		if form.validate_on_submit():
 			#create a new message using the parent message as the paramas
