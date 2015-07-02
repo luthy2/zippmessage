@@ -75,14 +75,15 @@
 		  </div>
 		</nav>
 	</div>
-	<div class = "alert alert-info"	role= "alert">
-			Welcome to Zipp! <a href = "{{url_for('welcome')}}" class = "alert-link">How it works</a>
-	</div>
 	<div class="container">
-	  {% block content %}
-	  {% endblock %}
-	</div>
+	  <div class = "alert alert-info"	role= "alert">
+			Welcome to Zipp! <a href = "{{url_for('welcome')}}" class = "alert-link">How it works</a>
+	  </div>
 	
+	  
+	</div>
+	{% block content %}
+	{% endblock %}
 </div>
 	
 	
