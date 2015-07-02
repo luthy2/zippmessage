@@ -24,7 +24,7 @@ class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
     				
-#class RecipientsForm(Form):
-#	recipients = MultiCheckboxField("recipients", choices = [], coerce=int, #validators=[DataRequired()])				
+class RecipientsForm(Form):
+	recipients = MultiCheckboxField("recipients", choices = [], coerce=int, validators=[DataRequired()])				
 
 
