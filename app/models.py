@@ -156,7 +156,7 @@ class Message(db.Model):
 		resp = embedly.extract(self.url)
 		if resp['title'] and resp['provider_name']:
 			return resp['title'] + " - " + resp['provider_name']
-		else if resp['title']:
+		elif resp['title']:
 			return resp['title']
 		else:
 			return self.short_url()
