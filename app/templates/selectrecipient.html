@@ -5,13 +5,10 @@
 	<div class="row">
 		<h2>select recipients:</h2><br>
 		{% if message.url %}
-			<h4>{{message.get_url_title()}}</h4>
-		{% endif %}
-		{% if message.url %}
-			<h4><small>({{message.url}})</small></h4>
+			<h4>{{message.get_url_title()}}</h4><small>({{message.url}})</small>
 		{% endif %}
 		{% if message.title %}
-			<h5><small>message.title</small></h5>
+			<h5><small>{{message.title}}</small></h5>
 		{% endif %}
 	</div>
 		<div class="col-xs-8 col-offset-2">
