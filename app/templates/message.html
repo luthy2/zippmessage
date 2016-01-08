@@ -2,19 +2,20 @@
   <div class = "col-xs-10">
 	<a href = "{{message.message.url}}" target = "_blank">
 		<span style ="display: block;" >
-			<h4>{{message.message.title}} <small>({{message.message.short_url()}})</small></h4>
+			<h4>{{message.message.get_url_title()}} <small>({{message.message.short_url()}})</small></h4><img src="{{message.message.url_logo()}}">
 		</span>
 	</a>
-	<h4><small><a href = "{{url_for('user', username = message.message.author.username)}}">{{message.message.author.username}}</a> {{message.message.format_timestamp()}}</small></h4> 
+	<h4><small><a href = "{{url_for('user', username = message.message.author.username)}}">{{message.message.author.username}}</a> {{message.message.format_timestamp()}}</small></h4><br>
+  <h5><small>{{message.message.title}}</small></h5>
   </div>
   <br>
   <div class="col-xs-2">
-	 
-	  	<div>
+
+	  <div>
 		  <a href = "{{url_for('like', message_id = message.message_id)}}"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><a>
 		  <a href = "{{url_for('dismiss', message_id = message.message_id)}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><a>
 		  <a href = "{{url_for('share', message_id = message.message_id)}}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span><a>
-		</div>  
-	 
+		</div>
+
   </div>
 </div>

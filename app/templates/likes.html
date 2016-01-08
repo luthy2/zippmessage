@@ -7,27 +7,28 @@
 <div class="container-fluid">
 	<div class="row">
 	  	<div class ="col-md-8 col-md-offset-2">
-			<ul class="list-group">	
-				{% if likes %}	
+			<ul class="list-group">
+				{% if likes %}
 	  				{% for message in likes %}
 						<li class="list-group-item">
 							<div class="row">
 								<div class = "col-md-10">
 							  	<a href = "{{message.message.url}}" target = "_blank">
 									<span style ="display: block;" >
-										<h4>{{message.message.title}} <small>({{message.message.short_url()}})</small></h4>
+										<h4>{{message.message.get_message_title()}} <small>({{message.message.short_url()}})</small></h4><img src ="{{message.message.url_logo()}}">
+										<h5><small>{{message.message.title}}</small></h5>
 									</span>
 							  	</a>
-								<h4><small><a href = "{{url_for("user", username = message.message.author.username)}}">{{message.message.author.username}}</a>  {{message.message.format_timestamp()}}</small></h4> 
+								<h4><small><a href = "{{url_for("user", username = message.message.author.username)}}">{{message.message.author.username}}</a>  {{message.message.format_timestamp()}}</small></h4>
  						   	</div>
  						   </div>
 						</li>
-	 				{% endfor %}	
+	 				{% endfor %}
   				{% else %}
-						<li class="list-group-item"> no messages :( </li>	
+						<li class="list-group-item"> no messages :( </li>
 			</ul>
 		</div>
-	</div>			
-</div>    	
-  			{% endif %}	 	
+	</div>
+</div>
+  			{% endif %}
 {% endblock %}

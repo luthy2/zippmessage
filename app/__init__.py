@@ -2,6 +2,7 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_oauth import OAuth
+from embedly import Embedly
 from config import SECRET_KEY
 import logging
 import sys
@@ -16,6 +17,7 @@ lm.login_view = 'login'
 lm.login_message = u'you must login to view this page'
 app.secret_key = SECRET_KEY
 oauth = OAuth()
+embedly = Embedly('3ec6801e9b5e4931925749186fd75996')
 
 twitter = oauth.remote_app('twitter',
     # unless absolute urls are used to make requests, this will be added

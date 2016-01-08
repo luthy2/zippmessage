@@ -15,3 +15,4 @@ Jinja2==2.7.3
 psycopg2==2.6.1
 sqlalchemy-migrate==0.9.6
 -e git://github.com/werdnum/flask-oauth.git#egg=flask-oauth
+embedly==0.5.0

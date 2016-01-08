@@ -1,5 +1,6 @@
 from app import db
 from app import app
+from app import embedly
 from urlparse import urlparse
 from datetime import datetime
 
@@ -16,96 +17,96 @@ recipients = db.Table('message_recipients',
 class UserMessage(db.Model):
 	user_id = db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key = True)
 	message_id = db.Column('message_id', db.Integer, db.ForeignKey('message.id'), primary_key = True)
-	
+
 	is_read = db.Column('is_read', db.Boolean, default = False)
 	is_liked = db.Column('is_liked', db.Boolean, default = False)
-	
-	
+
+
 	def __init__(self, message, is_read, is_liked):
 		self.message = message
 		self.is_liked = is_liked
 		self.is_read = is_read
-	
+
 	message = db.relationship('Message', backref = 'message')
-		
-		
-	
-	
-	
-	
+
+
+
+
+
+
 class User(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	oauth_token = db.Column(db.String(200))
 	oauth_secret = db.Column(db.String(200))
 	username = db.Column(db.String(80))
 	email = db.Column(db.String(240))
-	
+
 	sent_messages = db.relationship('Message', backref='author', lazy='dynamic')
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
-	
-	contacts = db.relationship('User', 
+
+	contacts = db.relationship('User',
 								secondary = approved_contacts,
 								primaryjoin = (approved_contacts.c.from_contact_id == id),
 								secondaryjoin = (approved_contacts.c.to_contact_id == id),
 								backref = db.backref('followers', lazy = 'dynamic'),
 								lazy = 'dynamic')
-	
+
 	def __init__(self, username, contacts, sent_messages, inbox_messages):
 		self.username = username
 		self.contacts = contacts
 		self.inbox_messages = inbox_messages
 		self.sent_messages = sent_messages
-		
+
 	def __repr__(self):
-		return '<User %r>' % (self.username)	
-								
+		return '<User %r>' % (self.username)
+
 
 	def get_id(self):
 		try:
 			return unicode(self.id) #python 2
 		except NameError:
 			return str(self.id) #python 3
-			
+
 	def is_authenticated(self):
 		return True
-	
+
 	def is_active(self):
 		return True
-	
+
 	def is_anonymous(self):
 		return False
-	
+
 	def add_contact(self, user):
 		if not self.is_contact(user):
 			self.contacts.append(user)
 			return self
-	
+
 	def remove_contact(self, user):
 		if self.is_contact(user):
 			self.contacts.remove(user)
 			return self
-	
+
 	def is_contact(self, user):
-		return self.contacts.filter(approved_contacts.c.to_contact_id == user.id).count() > 0		
-	
+		return self.contacts.filter(approved_contacts.c.to_contact_id == user.id).count() > 0
+
 	def inbox(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_read == False)
-		
+
 	def likes(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_liked == True)
-		
+
 	def like_message(self, message_id):
 		user_message = UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.message_id == message_id).one()
 		user_message.is_read = True
 		user_message.is_liked = True
 		return self
-		
+
 	def dismiss_message(self, message_id):
 		user_message = UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.message_id == message_id).one()
 		user_message.is_read = True
 		db.session.commit()
 		return self
-		
+
 
 class Message(db.Model):
 	id= db.Column(db.Integer, primary_key = True)
@@ -115,50 +116,65 @@ class Message(db.Model):
 	is_delivered = db.Column(db.Boolean, default = False)
 	timestamp = db.Column(db.DateTime)
 	score = db.Integer()
-	recipients = db.relationship(	'User', 
+	recipients = db.relationship(	'User',
 									secondary = recipients,
-									primaryjoin = (recipients.c.message_id == id), 
+									primaryjoin = (recipients.c.message_id == id),
 									secondaryjoin = (recipients.c.user_id == User.id),
 									backref = db.backref('received_messages', lazy = 'dynamic'), lazy = 'dynamic')
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	def __init__(self, title, url, author, timestamp):
 		self.title = title
 		self.url = url
 		self.author = author
 		self.timestamp = timestamp
-	
+
 	def __repr__(self):
 		return '<Message %r>' % (self.title)
-	
-	
+
+
 	def get_id(self):
 		try:
 			return unicode(self.id) #python 2
 		except NameError:
 			return str(self.id) #python 3
-					
-	
+
+
 	def short_url(self):
-		url = self.url
-		parse_object = urlparse(url)
-		return parse_object.netloc
-	
-		
+		resp = embedly.extract(self.url)
+		if resp['provider_display']:
+			return resp['provider_display']
+		else:
+			parse_object = urlparse(self.url)
+			return parse_object.netloc
+
+	def get_url_title(self):
+		resp = embedly.extract(self.url)
+		if resp['title'] and resp['provider_name']:
+			return resp['title'] + " - " + resp['provider_name']
+		else if resp['title']:
+			return resp['title']
+		else:
+			return self.short_url()
+
+	def url_logo(self):
+		short_url = self.short_url()
+		return "https://logo.clearbit.com/" +short_url+ "?size=20"
+
 	def deliver_message(self):
 		if self.is_delivered is not True:
-			self.is_delivered = True	
+			self.is_delivered = True
 			return self
 
 	def add_recipient(self, user):
 		recipient = User.query.get(user)
 		self.recipients.append(recipient)
 		return self
-	
+
 	def send_message(self, user):
 		u = User.query.get(user)
 		u.inbox_messages.append(UserMessage(message = self, is_read = False, is_liked = False))
@@ -166,10 +182,13 @@ class Message(db.Model):
 		db.session.commit()
 		return self
 
+
+
+
 	def format_timestamp(self):
 		ts = self.timestamp
 		now = datetime.utcnow()
-		tdelta = now - ts 
+		tdelta = now - ts
 		s = tdelta.total_seconds()
 		if s <= 59:
 			s = s//1
@@ -186,4 +205,3 @@ class Message(db.Model):
 		else:
 			s = s//604800
 			return '{0}w'.format(int(s))
-	
