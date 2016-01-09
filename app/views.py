@@ -296,10 +296,7 @@ def quickshare():
 
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
-	message = Message(title = quickshare,
-                        url = request.args.get('url'),
-                        author = g.user,
-                        timestamp = datetime.utcnow())
+    message = Message(title = quickshare, url = request.args.get('url'), author = g.user, timestamp = datetime.utcnow())
 
 	if request.method == 'POST':
 		recipients = form.recipients.data
