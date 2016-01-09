@@ -291,14 +291,15 @@ def history():
 @login_required
 def quickshare():
 	user = g.user
+    quickshare = "Sent by " + {{user.username}} +" via quickshare"
 	form = RecipientsForm()
 
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
-	message = Message(title = "Added via Quickshare toolbar"),
-							url = request.args.get('url'),
-							author = g.user,
-							timestamp = datetime.utcnow())
+	message = Message(title = quickshare,
+                        url = request.args.get('url'),
+                        author = g.user,
+                        timestamp = datetime.utcnow())
 
 	if request.method == 'POST':
 		recipients = form.recipients.data
