@@ -4,7 +4,7 @@ from app import app, db, lm, twitter
 from forms import NewMessageForm, RecipientsForm
 from models import User, Message, UserMessage
 from datetime import datetime
- 
+
 
 @app.before_request
 def before_request():
@@ -22,7 +22,7 @@ def after_request(response):
 @app.errorhandler(404)
 def not_found_error():
 	return render_template('404.html'), 404
-	
+
 
 @app.errorhandler(500)
 def internal_error(error):
@@ -31,7 +31,7 @@ def internal_error(error):
 
 @lm.user_loader
 def load_user(id):
-	return User.query.get(int(id))	
+	return User.query.get(int(id))
 
 @twitter.tokengetter
 def get_twitter_token():
@@ -46,7 +46,7 @@ def get_twitter_token():
     if user is not None:
         return user.oauth_token, user.oauth_secret
 
-        
+
 
 @app.route('/login')
 def login():
@@ -55,7 +55,7 @@ def login():
     redirect back to the callback URL provided.
     """
 	return twitter.authorize(callback=url_for('oauth_authorized', next=request.args.get('next') or request.referrer or None))
-	
+
 @app.route('/logout')
 def logout():
 	logout_user()
@@ -91,7 +91,7 @@ def oauth_authorized(resp):
     # user never signed on
     if user is None:
         user = User(username = resp['screen_name'], contacts=(), sent_messages=(), inbox_messages=())
-        
+
         db.session.add(user)
         user.add_contact(user)
 
@@ -103,10 +103,10 @@ def oauth_authorized(resp):
     db.session.commit()
 
     session['user_id'] = user.id
-    
+
     login_user(user)
     flash('You were signed in')
-    
+
     return redirect(next_url or url_for('inbox'))
 
 
@@ -138,12 +138,12 @@ def compose():
 	form = NewMessageForm()
 	if form.validate_on_submit():
 		message = Message(title = form.message_title.data,
-							url = form.message_url.data, 
+							url = form.message_url.data,
 							author = g.user,
 							timestamp = datetime.utcnow())
 		db.session.add(message)
 		db.session.commit()
-		session['message_id'] = message.id	
+		session['message_id'] = message.id
 		flash('Choose Receipients')
 		return redirect(url_for('recipients'))
 	else:
@@ -161,14 +161,14 @@ def contacts():
 @app.route('/recipients', methods = ["GET", "POST"])
 @login_required
 def recipients():
-	user = g.user 
+	user = g.user
 	form = RecipientsForm()
-	
+
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
-	
+
 	message_id = session['message_id']
 	message = Message.query.get(message_id)
-	
+
 	if request.method == 'POST':
 		recipients = form.recipients.data
 		if form.validate_on_submit():
@@ -178,18 +178,18 @@ def recipients():
 			message.deliver_message()
 			db.session.commit()
 			session.pop('message_id', None)
-			flash('Message Sent!')	
+			flash('Message Sent!')
 			return redirect(url_for('index'))
-	
+
 		else:
 			flash(form.errors)
-	
+
 	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
 
 @app.route('/likes', methods = 	["GET", "POST"])
 @login_required
 def likes():
-	user = g.user 
+	user = g.user
 	likes = user.likes()
 	return render_template('likes.html', user = user, likes = likes, title = "Favorites")
 
@@ -197,7 +197,7 @@ def likes():
 @login_required
 def user(username):
 	user = User.query.filter_by(username=username).first()
-	return render_template('user.html', user = user, title = 'Profile')     
+	return render_template('user.html', user = user, title = 'Profile')
 
 
 @app.route('/follow/<username>')
@@ -236,7 +236,7 @@ def unfollow(username):
     db.session.add(u)
     db.session.commit()
     flash('You have stopped following ' + username + '.')
-    return redirect(url_for('user', username=username))	
+    return redirect(url_for('user', username=username))
 
 @app.route('/like/<message_id>')
 @login_required
@@ -254,8 +254,8 @@ def like(message_id):
     db.session.commit()
     flash('Message added to favorites')
     return redirect(url_for('index'))
-    
-   
+
+
 @app.route('/dismiss/<message_id>')
 @login_required
 def dismiss(message_id):
@@ -271,7 +271,7 @@ def dismiss(message_id):
     db.session.add(user)
     db.session.commit()
     flash('Message dismissed')
-    return redirect(url_for('index'))  
+    return redirect(url_for('index'))
 
 
 
@@ -286,20 +286,20 @@ def settings():
 def history():
 	user = g.user
 	return render_template('history.html', title = "History")
-	
+
 @app.route('/quickshare', methods = ["GET", "POST"])
 @login_required
 def quickshare():
-	user = g.user 
+	user = g.user
 	form = RecipientsForm()
-	
+
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
-	message = Message(title = request.args.get('title'),
-							url = request.args.get('url'), 
+	message = Message(title = "Added via Quickshare toolbar"),
+							url = request.args.get('url'),
 							author = g.user,
 							timestamp = datetime.utcnow())
-	
+
 	if request.method == 'POST':
 		recipients = form.recipients.data
 		if form.validate_on_submit():
@@ -309,14 +309,14 @@ def quickshare():
 				message.send_message(recipient)
 			message.deliver_message()
 			db.session.commit()
-			flash('Message Sent!')	
+			flash('Message Sent!')
 			return redirect(url_for('index'))
-	
+
 		else:
 			flash(form.errors)
-	
+
 	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
-		
+
 @app.route('/welcome', methods = ['GET', 'POST'])
 @login_required
 def welcome():
@@ -332,31 +332,31 @@ def share(message_id):
 	#select recipients
 	form = RecipientsForm
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
-    
+
 	#if the form was submitted
 	if request.method == 'POST':
 		recipients = form.recipients.data
 		if form.validate_on_submit():
 			#create a new message using the parent message as the paramas
 			new_message = Message(title = message.title,
-							url = message.url, 
+							url = message.url,
 							author = g.user,
 							timestamp = datetime.utcnow())
 			db.session.add(new_message)
 			db.session.commit()
-			
+
 			#append the new recipients
 			for recipient in recipients:
 				new_message.add_recipient(recipient)
 				new_message.send_message(recipient)
-			
+
 			#deliver message
 			new_message.deliver_message()
 			db.session.commit()
 			flash('Message Shared!')
 			return redirect(url_for('index'))
-		
+
 		else:
 			flash(form.errors)
-    
+
 	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
