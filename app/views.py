@@ -290,11 +290,11 @@ def history():
 @app.route('/quickshare', methods = ["GET", "POST"])
 @login_required
 def quickshare():
-	user = g.user
+    user = g.user
     quickshare = "Sent by " + {{user.username}} +" via quickshare"
-	form = RecipientsForm()
+    form = RecipientsForm()
 
-	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
+    form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
     message = Message(title = quickshare, url = request.args.get('url'), author = g.user, timestamp = datetime.utcnow())
 
