@@ -298,20 +298,20 @@ def quickshare():
 
     message = Message(title = quickshare, url = request.args.get('url'), author = g.user, timestamp = datetime.utcnow())
 
-	if request.method == 'POST':
-		recipients = form.recipients.data
-		if form.validate_on_submit():
-			db.session.add(message)
-			for recipient in recipients:
-				message.add_recipient(recipient)
-				message.send_message(recipient)
-			message.deliver_message()
-			db.session.commit()
-			flash('Message Sent!')
-			return redirect(url_for('index'))
+    if request.method == 'POST':
+        recipients = form.recipients.data
+        if form.validate_on_submit():
+            db.session.add(message)
+            for recipient in recipients:
+                message.add_recipient(recipient)
+                message.send_message(recipient)
+                message.deliver_message()
+                db.session.commit()
+                flash('Message Sent!')
+                return redirect(url_for('index'))
 
-		else:
-			flash(form.errors)
+        else:
+            flash(form.errors)
 
 	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
 
