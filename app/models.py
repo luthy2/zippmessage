@@ -161,7 +161,7 @@ class Message(db.Model):
 
 	def url_logo(self):
 		short_url = self.short_url()
-		return "https://logo.clearbit.com/" +short_url+ "?size=20"
+		return "https://logo.clearbit.com/" +short_url+ "?size=15"
 
 	def deliver_message(self):
 		if self.is_delivered is not True:
