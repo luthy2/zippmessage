@@ -291,7 +291,8 @@ def history():
 @login_required
 def quickshare():
     user = g.user
-    quickshare = "Sent by " + {{user.username}} +" via quickshare"
+
+    quickshare = "Sent by " + user.username +" via quickshare"
     form = RecipientsForm()
 
     form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
