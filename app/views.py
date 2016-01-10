@@ -328,7 +328,7 @@ def share(message_id):
 	message = UserMessage.query.filter(UserMessage.message_id == message_id)
 
 	#select recipients
-	form = RecipientsForm
+	form = RecipientsForm()
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
 	#if the form was submitted
