@@ -291,7 +291,6 @@ def history():
 @login_required
 def quickshare():
     user = g.user
-
     quickshare = "Sent by " + user.username +" via quickshare"
     form = RecipientsForm()
 
@@ -314,7 +313,7 @@ def quickshare():
         else:
             flash(form.errors)
 
-	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
+    return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
 
 @app.route('/welcome', methods = ['GET', 'POST'])
 @login_required
