@@ -1,15 +1,24 @@
-<div class="row">
-  <a href = "{{message.message.url}}" target = "_blank">
-    <span style ="display:inline-block;" >
-      <h4>{{message.message.get_url_title()}} <small>({{message.message.short_url()}})</small></h4><img src="{{message.message.url_logo()}}">
-    </span>
-  </a>
-</div>
 <div class = "row">
-  <h4><small><a href = "{{url_for('user', username = message.message.author.username)}}">{{message.message.author.username}}</a>: {{message.message.title}}<p class ="text-right">{{message.message.format_timestamp()}}</p></small></h4>
-</div>
-<div class = "col-xs-8">
-    <a href = "{{url_for('like', message_id = message.message_id)}}"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><a>
-    <a href = "{{url_for('dismiss', message_id = message.message_id)}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><a>
-    <a href = "{{url_for('share', message_id = message.message_id)}}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span><a>
+
+  <div class = "col-xs-6"
+    <div class="row">
+      <a href = "{{message.message.url}}" target = "_blank">
+        <span style ="display:inline-block;" >
+          <h4>{{message.message.get_url_title()}} <small>({{message.message.short_url()}})</small></h4><img src="{{message.message.url_logo()}}">
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class = "col-xs-2">
+      <a href = "{{url_for('like', message_id = message.message_id)}}"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><a>
+      <a href = "{{url_for('dismiss', message_id = message.message_id)}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><a>
+      <a href = "{{url_for('share', message_id = message.message_id)}}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span><a>
+  </div>
+
+  <div class = "row">
+    <div class = "col-xs-6">
+      <h4><small><a href = "{{url_for('user', username = message.message.author.username)}}">{{message.message.author.username}}</a>: {{message.message.title}}<p class ="text-right">{{message.message.format_timestamp()}}</p></small></h4>
+    </div>
+  </div>
 </div>

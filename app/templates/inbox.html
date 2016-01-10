@@ -11,21 +11,21 @@
 	  	  </ul>
 		</div>
 	</div>
-  
+
   		<div class="row">
   			<div class ="col-md-8 col-md-offset-2">
-				<ul class="list-group">	
+				<ul class="list-group">
 			{% if inbox %}
 				{% for message in inbox %}
-					
+
 	  					<li class="list-group-item">{% include "message.html" %}</li>
-	  				
-	 			{% endfor %}		
+
+	 			{% endfor %}
   			{% else %}
-					<li class="list-group-item"> no messages :( </li>	
+					<li class="list-group-item"> no messages :( </li>
 				</ul>
     	</div>
-  			{% endif %}	 
+  			{% endif %}
   </div>
-</div>	
+</div>
 {% endblock %}
