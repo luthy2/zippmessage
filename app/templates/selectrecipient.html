@@ -1,17 +1,17 @@
 <!-- extend from base layout -->
 {% extends "base.html" %}
 {% block content %}
-<div class="col-xs-8 col-xs-offset-2">
+<div class="col-xs-8">
 	<div class="row">
-		<h2>select recipients:</h2><br>
+		<h4>Select Recipients:</h4><br>
 		{% if message.url %}
-			<h4>{{message.get_url_title()}}</h4><small>({{message.url}})</small>
+			<a href = "{{message.message.url}}"><h4>{{message.get_url_title()}}</h4><small>({{message.url}})</small></a>
 		{% endif %}
 		{% if message.title %}
 			<h5><small>{{message.title}}</small></h5>
 		{% endif %}
 	</div>
-		<div class="container-fluid">
+		<div class="row">
 			<form method ="POST">
 				{{form.hidden_tag()}}
 				<ul class = "list-group">
