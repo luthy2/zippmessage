@@ -4,8 +4,8 @@
 {% block content %}
 <div class="container-fluid">
   	<div class="row">
-  		<div class="col-md-8 col-md-offset-2">
-		  <ul class="nav nav-tabs nav-justified">
+  		<div class="col-md-8 col-md-offset-1">
+		  <ul class="nav nav-pills nav-justified">
 		    <li role="presentation" class="active"><a href="{{url_for('inbox')}}">New  <span class="badge">{{inbox.count()}}</span></a></li>
 	    	<li role="presentation"><a href="{{url_for('top')}}">Top</a></li>
 	  	  </ul>
@@ -13,19 +13,19 @@
 	</div>
 
   		<div class="row">
-  			<div class ="col-md-8 col-md-offset-2">
-				<ul class="list-group">
+  			<div class ="col-md-8 col-md-offset-1">
+
 			{% if inbox %}
 				{% for message in inbox %}
-
-	  					<li class="list-group-item">{% include "message.html" %}</li>
-
+            <ul class="list-group">
+	  					{% include "message.html" %}
+            </ul>
 	 			{% endfor %}
-  			{% else %}
-					<li class="list-group-item"> no messages :( </li>
-				</ul>
+  		{% else %}
+					<li class="list-group-item"> Theres nothing here :(. Add some stuff and will show up here</li>
+
     	</div>
-  			{% endif %}
+  		{% endif %}
   </div>
 </div>
 {% endblock %}
