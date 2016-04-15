@@ -2,6 +2,9 @@
   <p>
     From: <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a> via {{message.message.short_url()}}<img src="{{message.message.url_logo()}}"> <span class ="pull-right">{{message.message.format_timestamp()}}</span>
   </p>
+  <p>
+    {{message.message.title}}
+  <p>  
 </li>
 
 <a class="list-group-item" href="{{message.message.url}}" target = "_blank">
@@ -9,7 +12,7 @@
 </a>
 
 <li class="list-group-item">
-  <h5>{{message.message.title}}</h5>
+  <h5></h5>
 </li>
 
 <li class="list-group-item">
