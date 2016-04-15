@@ -56,8 +56,8 @@
 		      	<li class="active"><a href="{{url_for('inbox')}}">Inbox<span class="badge">{{inbox.count()}}</span><span class="sr-only">(current)</span></a></li>
 		        <li><a href="{{url_for('contacts')}}">Contacts</a></li>
 		        <li><a href="{{url_for('compose')}}" role="button">Compose</a></li>
-					</ul>	
-					<ul class="nav navbar-nav navbar-right"
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
 					    <li class="dropdown">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" >@{{g.user.username}} <span class="caret"></span></a>
 			          {% if g.user %}
