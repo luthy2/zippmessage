@@ -3,16 +3,16 @@
 	<title> Zipp - {{title}}</title>
 	<head>
 
-   		<link href="{{ url_for('.static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+   		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen">
     	<script src="http://code.jquery.com/jquery-latest.js"></script>
-   		<script src="{{ url_for('.static', filename='js/bootstrap.min.js') }}"></script>
+   		<script  type="text/javascript" src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta charset="utf-8">
 
     	<style type="text/css">
 
-		body { padding-top: 70px; }
+				body { padding-top: 70px; }
 
       	@media (max-width: 980px) {
         	/* Enable use of floated navbar text */
@@ -53,28 +53,30 @@
 		    </div>
 		    <div class="collapse navbar-collapse" id="nav-links">
 		      <ul class="nav navbar-nav">
-		      	<li class="active"><a href="{{url_for('inbox')}}">Inbox<span class="sr-only">(current)</span></a></li>
+		      	<li class="active"><a href="{{url_for('inbox')}}">Inbox<span class="badge">{{inbox.count()}}</span><span class="sr-only">(current)</span></a></li>
 		        <li><a href="{{url_for('contacts')}}">Contacts</a></li>
-		        <li><button type="button" class="btn btn-default navbar-btn" href="{{url_for('compose')}}" role="button">Compose</button></li>
-		        <li class="dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" >@{{g.user.username}} <span class="caret"></span></a>
-		          {% if g.user %}
-		          <ul class="dropdown-menu" role="menu">
-		            <li><a href="{{url_for('user', username=g.user.username)}}">Profile</a></li>
-            	  <li><a href="{{url_for('likes')}}">Likes</a></li>
-            	  <li class="divider"></li>
-            	  <li><a href="{{url_for('settings')}}">Settings</a></li>
-            	  <li><a href="{{url_for('logout')}}">Logout</a></li>
-            	</ul>
-            	{% endif %}
-        	  </li>
+		        <li><a href="{{url_for('compose')}}" role="button">Compose</a></li>
+					</ul>	
+					<ul class="nav navbar-nav navbar-right"
+					    <li class="dropdown">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" >@{{g.user.username}} <span class="caret"></span></a>
+			          {% if g.user %}
+			          <ul class="dropdown-menu" role="menu">
+			            <li><a href="{{url_for('user', username=g.user.username)}}">Profile</a></li>
+	            	  <li><a href="{{url_for('likes')}}">Likes</a></li>
+	            	  <li class="divider"></li>
+	            	  <li><a href="{{url_for('settings')}}">Settings</a></li>
+	            	  <li><a href="{{url_for('logout')}}">Logout</a></li>
+	            	</ul>
+	            	{% endif %}
+	        	  </li>
           </ul>
 		  	 </div>
 			 </div>
 		</nav>
 	</div>
 	<div class="row">
-		<div class="col-xs-8">
+		<div class="col-md-8">
 		  <div class = "alert alert-info"	role= "alert">
 				Welcome to Zipp! <a href = "{{url_for('welcome')}}" class = "alert-link">How it works</a>
 		  </div>
