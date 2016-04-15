@@ -53,7 +53,7 @@
 		    </div>
 		    <div class="collapse navbar-collapse" id="nav-links">
 		      <ul class="nav navbar-nav">
-		      	<li class="active"><a href="{{url_for('inbox')}}">Inbox<span class="badge">{{inbox.count()}}</span><span class="sr-only">(current)</span></a></li>
+		      	<li class="active"><a href="{{url_for('inbox')}}">Inbox<span class="sr-only">(current)</span></a></li>
 		        <li><a href="{{url_for('contacts')}}">Contacts</a></li>
 		        <li><a href="{{url_for('compose')}}" role="button">Compose</a></li>
 					</ul>
@@ -76,7 +76,7 @@
 		</nav>
 	</div>
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-6 col-md-offset-3">
 		  <div class = "alert alert-info"	role= "alert">
 				Welcome to Zipp! <a href = "{{url_for('welcome')}}" class = "alert-link">How it works</a>
 		  </div>
