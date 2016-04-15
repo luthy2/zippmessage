@@ -1,11 +1,11 @@
 <li class="list-group-item">
   <h4>
-    <small><a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a><span class ="pull-right">{{message.message.format_timestamp()}}</span></small>
+    <small>From: <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a> via {{message.message.short_url()}}<img src="{{message.message.url_logo()}}"> <span class ="pull-right">{{message.message.format_timestamp()}}</span></small>
   </h4>
 </li>
 
 <a class="list-group-item" href="{{message.message.url}}" target = "_blank">
-  <h4>{{message.message.get_url_title()}} <small>({{message.message.short_url()}})</small><img src="{{message.message.url_logo()}}"></h4>
+  <h4>{{message.message.get_url_title()}}</h4>
 </a>
 
 <li class="list-group-item">
