@@ -58,6 +58,7 @@
 		      	<li class="active"><a href="{{url_for('inbox')}}">Inbox<span class="sr-only">(current)</span></a></li>
 		        <li><a href="{{url_for('contacts')}}">Contacts</a></li>
 		        <li><a href="{{url_for('compose')}}" role="button">Compose</a></li>
+						<li><a href=#>Collections</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 					    <li class="dropdown">
@@ -66,7 +67,6 @@
 			          <ul class="dropdown-menu" role="menu">
 			            <li><a href="{{url_for('user', username=g.user.username)}}">Profile</a></li>
 	            	  <li><a href="{{url_for('likes')}}">Bookmarks</a></li>
-									<li><a href=#>Collections</a></li>
 	            	  <li class="divider"></li>
 	            	  <li><a href="{{url_for('settings')}}">Settings</a></li>
 	            	  <li><a href="{{url_for('logout')}}">Logout</a></li>
