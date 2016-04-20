@@ -12,7 +12,9 @@
 
     	<style type="text/css">
 
-				body { padding-top: 70px; }
+				body { 	padding-top: 70px;
+								background-color: #f8f8f8;
+				}
 
       	@media (max-width: 980px) {
         	/* Enable use of floated navbar text */
@@ -63,7 +65,8 @@
 			          {% if g.user %}
 			          <ul class="dropdown-menu" role="menu">
 			            <li><a href="{{url_for('user', username=g.user.username)}}">Profile</a></li>
-	            	  <li><a href="{{url_for('likes')}}">Likes</a></li>
+	            	  <li><a href="{{url_for('likes')}}">Bookmarks</a></li>
+									<li><a href=#>Collections</a></li>
 	            	  <li class="divider"></li>
 	            	  <li><a href="{{url_for('settings')}}">Settings</a></li>
 	            	  <li><a href="{{url_for('logout')}}">Logout</a></li>
@@ -75,19 +78,13 @@
 			 </div>
 		</nav>
 	</div>
-	<div class="row">
-		<div class="col-md-6 col-md-offset-3">
-		  <div class = "alert alert-info"	role= "alert">
-				Welcome to Zipp! <a href = "{{url_for('welcome')}}" class = "alert-link">How it works</a>
-		  </div>
-		</div>
+
+
+
+	<div class="container-fluid">
+		{% block content %}
+		{% endblock %}
 	</div>
-
-
-		<div class="container-fluid">
-			{% block content %}
-			{% endblock %}
-		</div>
 
 
 
