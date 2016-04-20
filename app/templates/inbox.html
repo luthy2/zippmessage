@@ -2,9 +2,22 @@
 
 {% extends "base.html" %}
 {% block content %}
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class = "alert alert-info"	role= "alert">
+      Welcome to Zipp! <a href = "{{url_for('welcome')}}" class = "alert-link">How it works</a>
+    </div>
+  </div>
+</div>
 
 <div class="row">
-	<div class ="col-md-6 col-md-offset-3">
+  <div class ="col-md-3">
+    <ul class = "list-group">
+      <li class="list-group-item"><a href =#><h4>Collections</h4></a></li>
+      <li class = "list-group-item"><a href =#>There's nothing here yet...</a></li>
+    </ul>
+  </div>
+	<div class ="col-md-6">
 
 	  {% if inbox %}
 		  {% for message in inbox %}
@@ -15,6 +28,11 @@
   	{% else %}
 				<li class="list-group-item"> Theres nothing here :(. Add some stuff and will show up here</li>
 
+  </div>
+  <div class = "col-md-1">
+    <ul class="list-unstyled">
+      Theres nothing here yet...
+    </ul>
   </div>
     {% endif %}
 </div>
