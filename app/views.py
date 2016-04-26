@@ -139,7 +139,7 @@ def top():
 	user = g.user
 	inbox = user.inbox()
 	inbox_count = inbox.count()
-	return render_template('inbox.html', user=user, inbox = inbox, inbox_count=inbox_count title = "Top")
+	return render_template('inbox.html', user=user, inbox = inbox, inbox_count=inbox_count, title = "Top")
 
 @app.route('/contacts', methods = ["GET", "POST"])
 @login_required
