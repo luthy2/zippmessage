@@ -272,8 +272,8 @@ def unfollow(username):
 @app.route('/bookmark/<message_id>')
 @login_required
 def bookmark(message_id):
-    message = UserMessage.query.filter(UserMessage.message_id == message_id)
-    user = g.user
+	message = UserMessage.query.filter(UserMessage.message_id == message_id)
+	user = g.user
 	inbox = user.inbox()
 	inbox_count = inbox.count()
 	form = TagForm()
@@ -325,11 +325,11 @@ def dismiss(message_id):
 @app.route('/quickshare', methods = ["GET", "POST"])
 @login_required
 def quickshare():
-    user = g.user
+	user = g.user
 	inbox = user.inbox()
 	inbox_count = inbox.count()
-    quickshare = "Sent by " + user.username +" via quickshare"
-    recipient_form = RecipientsForm()
+	quickshare = "Sent by " + user.username +" via quickshare"
+	recipient_form = RecipientsForm()
 	quickshare_form = QuickShareForm()
 
     form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
