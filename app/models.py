@@ -3,6 +3,7 @@ from app import app
 from app import embedly
 from urlparse import urlparse
 from datetime import datetime
+from collections import Counter
 
 approved_contacts = db.Table('approved_contacts',
 	db.Column('from_contact_id', db.Integer, db.ForeignKey('user.id')),
@@ -14,24 +15,33 @@ recipients = db.Table('message_recipients',
 	db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
 )
 
+
 class UserMessage(db.Model):
 	user_id = db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key = True)
 	message_id = db.Column('message_id', db.Integer, db.ForeignKey('message.id'), primary_key = True)
 
 	is_read = db.Column('is_read', db.Boolean, default = False)
-	is_liked = db.Column('is_liked', db.Boolean, default = False)
+	is_bookmarked = db.Column('is_bookmarked', db.Boolean, default = False)
+	tags = db.Column(db.String())
 
 
-	def __init__(self, message, is_read, is_liked):
+	def __init__(self, message, is_read, is_bookmarked, tags):
 		self.message = message
-		self.is_liked = is_liked
+		self.is_bookmarked = is_bookmarked
 		self.is_read = is_read
+		self.tags = tags
 
 	message = db.relationship('Message', backref = 'message')
 
 
-
-
+	def usermessage_tags(self):
+		# if there are no tags the field will be an empty string
+		if self.tags == '':
+			return False
+		else:
+			#creates and returns ['list', 'of', 'tags']
+			tags = [t.strip() for t in  self.tags.split(',') if t != '']
+			return tags
 
 
 class User(db.Model):
@@ -92,20 +102,41 @@ class User(db.Model):
 	def inbox(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_read == False)
 
-	def likes(self):
-		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_liked == True)
+	def bookmarks(self):
+		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_bookmarked == True)
 
-	def like_message(self, message_id):
+	def bookmark_message(self, message_id):
 		user_message = UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.message_id == message_id).one()
 		user_message.is_read = True
-		user_message.is_liked = True
+		user_message.is_bookmarked = True
 		return self
 
 	def dismiss_message(self, message_id):
 		user_message = UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.message_id == message_id).one()
 		user_message.is_read = True
+		user_message.is_bookmarked = False
 		db.session.commit()
 		return self
+
+	def tags_for_user(self):
+		# empty list
+		user_tags = []
+		# iterate through the tag strings, appending them to the empty list
+		bookmarks = self.bookmarks()
+		for item in bookmarks:
+			user_tags += item.tags.split(',')
+		#list comprehension to remove empty strings, and strip whitespace
+		user_tags = [tag.strip() for tag in user_tags if tag != '']
+		#creates a Counter of tags with the number of each, order by most common
+		user_tags = Counter(user_tags).most_common()
+		#convert Counter to a dict, returns a dict with {'tag name': count}
+		return dict(user_tags)
+
+
+	def get_bookmarks_with_tag(self, tag):
+		# we don't need to check if it's bookmarked because an unbookmarked message can't have tags
+		# this will produce false matches, and might crash if there are no tags
+		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.tags.contains(tag))
 
 
 class Message(db.Model):
@@ -115,7 +146,6 @@ class Message(db.Model):
 	from_user = db.Column(db.Integer, db.ForeignKey('user.id'))
 	is_delivered = db.Column(db.Boolean, default = False)
 	timestamp = db.Column(db.DateTime)
-	score = db.Integer()
 	recipients = db.relationship(	'User',
 									secondary = recipients,
 									primaryjoin = (recipients.c.message_id == id),
@@ -145,23 +175,20 @@ class Message(db.Model):
 
 
 	def short_url(self):
-		resp = embedly.extract(self.url)
-		if resp['provider_display']:
-			return resp['provider_display']
-		else:
-			parse_object = urlparse(self.url)
-			return parse_object.netloc
+		parse_object = urlparse(self.url)
+		return parse_object.netloc
 
-	def get_url_title(self):
-		resp = embedly.extract(self.url)
-		if resp['title']:
-			return resp['title']
+	def request_url(self):
+		resp = embedly.oembed(self.url, words = 25)
+		if not resp["type"] == "error":
+			return resp
 		else:
-			return self.short_url()
+			return False
+
 
 	def url_logo(self):
 		short_url = self.short_url()
-		return "https://logo.clearbit.com/" +short_url+ "?size=15"
+		return "https://logo.clearbit.com/" +short_url+ "?size=20"
 
 	def deliver_message(self):
 		if self.is_delivered is not True:
@@ -175,12 +202,10 @@ class Message(db.Model):
 
 	def send_message(self, user):
 		u = User.query.get(user)
-		u.inbox_messages.append(UserMessage(message = self, is_read = False, is_liked = False))
+		u.inbox_messages.append(UserMessage(message = self, is_read = False, is_bookmarked = False, tags = ''))
 		db.session.add(u)
 		db.session.commit()
 		return self
-
-
 
 
 	def format_timestamp(self):
@@ -193,13 +218,13 @@ class Message(db.Model):
 			return '{0}s'.format(s)
 		elif 60 <= s < 3600:
 			s = s//60
-			return '{0}m'.format(int(s))
+			return '{0}m ago'.format(int(s))
 		elif 3600 <= s < 86400:
 			s = s//3600
-			return '{0}h'.format(int(s))
+			return '{0}h ago'.format(int(s))
 		elif 86400 <= s < 604800:
 			s = s//86400
-			return '{0}d'.format(int(s))
+			return '{0}d ago'.format(int(s))
 		else:
 			s = s//604800
-			return '{0}w'.format(int(s))
+			return '{0}w ago'.format(int(s))

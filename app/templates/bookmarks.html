@@ -1,0 +1,35 @@
+<!--extends base layout -->
+{% extends "base.html" %}
+{%block content%}
+<div class="row">
+
+  <div class = "col-md-3">
+    <ul class="list-group">
+      <a class = "list-group-item" href = "{{url_for('user', username=g.user.username)}}"><h4>@{{user.username}}'s tags</h4></a>
+      {% if user_tags %}
+        {% for tag in user_tags %}
+          <a href = "{{url_for('tag', name = tag)}}" class="list-group-item">#{{tag}}<label class="badge">{{user_tags[tag]}}</a>
+        {% endfor %}
+      {% else %}
+      <li class = "list-group-item"> No tags yet :/</li>
+      {% endif %}
+  </div>
+
+  <div class = "col-md-6">
+    <ul>
+    {% if inbox %}
+      {% for item in bookmarks %}
+        <ul class = "list-group">
+          {% include "bookmarked.html" %}
+        </ul>
+      {% endfor %}
+    {% else %}
+      <ul class ="list-group">
+        <li class = "list-group-item">nothing here yet :/</li>
+      </ul>
+    {% endif %}
+    </ul>
+  </div>
+
+</div>
+{% enblock %}

@@ -117,12 +117,20 @@ def index():
 		return render_template('home.html')
 	return redirect(url_for('inbox'))
 
+@app.route('/welcome', methods = ['GET', 'POST'])
+@login_required
+def welcome():
+	user = g.user
+	inbox = user.inbox()
+	return render_template('welcome.html', title = "Welcome!", inbox=inbox)
+
 @app.route('/inbox', methods = ["GET", "POST"])
 @login_required
 def inbox():
 	user = g.user
 	inbox = user.inbox()
-	return render_template('inbox.html', user=user, inbox = inbox, title = "Inbox")
+	user_tags = user.tags_for_user()
+	return render_template('inbox.html', user=user, inbox = inbox, user_tags = user_tags, title = "Inbox")
 
 @app.route('/top', methods = ["GET", "POST"])
 @login_required
@@ -130,6 +138,33 @@ def top():
 	user = g.user
 	inbox = user.inbox()
 	return render_template('inbox.html', user=user, inbox = inbox, title = "Top")
+
+@app.route('/contacts', methods = ["GET", "POST"])
+@login_required
+def contacts():
+	user = g.user
+	contacts = g.user.contacts
+	return render_template('contacts.html', user = user, title = 'Contacts', contacts = contacts)
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+	user = User.query.filter_by(username=username).first()
+	tags = user.tags_for_user()
+	return render_template('user.html', user = user, tags = tags, title = 'Profile')
+
+
+@app.route('/settings', methods = ["GET", "POST"])
+@login_required
+def settings():
+	user = g.user
+	return render_template('settings.html', title = 'Settings')
+
+@app.route('/history', methods = ["GET", "POST"])
+@login_required
+def history():
+	user = g.user
+	return render_template('history.html', title = "History")
 
 @app.route('/compose', methods = ["GET", "POST"])
 @login_required
@@ -149,13 +184,6 @@ def compose():
 	else:
 		form.flash_errors()
 	return render_template('compose.html', form=form, title = "Compose")
-
-@app.route('/contacts', methods = ["GET", "POST"])
-@login_required
-def contacts():
-	user = g.user
-	contacts = g.user.contacts
-	return render_template('contacts.html', user = user, title = 'Contacts', contacts = contacts)
 
 
 @app.route('/recipients', methods = ["GET", "POST"])
@@ -186,19 +214,13 @@ def recipients():
 
 	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
 
-@app.route('/likes', methods = 	["GET", "POST"])
+@app.route('/bookmarks', methods = 	["GET", "POST"])
 @login_required
-def likes():
+def bookmarks():
 	user = g.user
-	likes = user.likes()
-	return render_template('likes.html', user = user, likes = likes, title = "Favorites")
-
-@app.route('/user/<username>')
-@login_required
-def user(username):
-	user = User.query.filter_by(username=username).first()
-	return render_template('user.html', user = user, title = 'Profile')
-
+	bookmarks = user.bookmarks()
+	user_tags = user.tags_for_user()
+	return render_template('bookmarks.html', user = user, bookmarks = bookmarks, user_tags = user_tags, title = "Bookmarks")
 
 @app.route('/follow/<username>')
 @login_required
@@ -238,22 +260,37 @@ def unfollow(username):
     flash('You have stopped following ' + username + '.')
     return redirect(url_for('user', username=username))
 
-@app.route('/like/<message_id>')
+@app.route('/bookmark/<message_id>')
 @login_required
-def like(message_id):
+def bookmark(message_id):
     message = UserMessage.query.filter(UserMessage.message_id == message_id)
     user = g.user
-    if message is None:
+	form = TagForm()
+
+	if message is None:
         flash('Message not found.')
         return redirect(url_for('index'))
-    m = user.like_message(message_id)
-    if m is None:
-        flash('Could not like message')
+
+	m = user.bookmark_message(message_id)
+	if m is None:
+        flash('Could not bookmark message')
         return redirect(url_for('index'))
-    db.session.add(user)
-    db.session.commit()
-    flash('Message added to favorites')
-    return redirect(url_for('index'))
+
+	if form.validate_on_submit():
+		#look up the user_message
+		user_message = UserMessage.query.filter(UserMessage.message_id == message_id).filter(UserMessage.user_id == user.id).one()
+		#form data will be in format 'list, of, tags' we add a comma to the end so we can add more tags later
+		tags = form.tags.data + ','
+		# we can use the += operator because there will at least be an empty string
+		user_message.tags += tags
+		db.session.add(message, user)
+		db.session.commit()
+		flash("tags updated")
+		return redirect(url_for('inbox'))
+	else:
+		flash(form.errors)
+
+    return render_template("bookmark.html", message = message, user = user, form = form, title = "Edit Bookmark")
 
 
 @app.route('/dismiss/<message_id>')
@@ -274,51 +311,44 @@ def dismiss(message_id):
     return redirect(url_for('index'))
 
 
-
-@app.route('/settings', methods = ["GET", "POST"])
-@login_required
-def settings():
-	user = g.user
-	return render_template('settings.html', title = 'Settings')
-
-@app.route('/history', methods = ["GET", "POST"])
-@login_required
-def history():
-	user = g.user
-	return render_template('history.html', title = "History")
-
 @app.route('/quickshare', methods = ["GET", "POST"])
 @login_required
 def quickshare():
     user = g.user
     quickshare = "Sent by " + user.username +" via quickshare"
-    form = RecipientsForm()
+    recipient_form = RecipientsForm()
+	quickshare_form = QuickShareForm()
 
     form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
     message = Message(title = quickshare, url = request.args.get('url'), author = g.user, timestamp = datetime.utcnow())
 
     if request.method == 'POST':
-        recipients = form.recipients.data
-        if form.validate_on_submit():
+        recipients = recipients_form.recipients.data
+
+		if recipients_form.validate_on_submit():
             db.session.add(message)
-            for recipient in recipients:
-                message.add_recipient(recipient)
-                message.send_message(recipient)
-                message.deliver_message()
-                db.session.commit()
-                flash('Message Sent!')
-                return redirect(url_for('index'))
+			for recipient in recipients:
+	            message.add_recipient(recipient)
+	            message.send_message(recipient)
+	        message.deliver_message()
+			flash('Message Sent!')
+
+		user_message = UserMessage.query.filter(UserMessage.user_id == user.id).filter(UserMessage.message_id == message_id).one()
+		if quickshare_form.bookmark.data == True:
+			if user_message:
+				user.bookmark_message(message.id)
+				db.session.add(user_message)
+				db.session.commit()
+
+        return redirect(url_for('index'))
 
         else:
             flash(form.errors)
 
-    return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
+    return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, recipient_form = recipient_form, bookmark_form = bookmark_form)
 
-@app.route('/welcome', methods = ['GET', 'POST'])
-@login_required
-def welcome():
-	return render_template('welcome.html', title = "Welcome!")
+
 
 @app.route('/share/<message_id>', methods = ["GET", "POST"])
 @login_required
@@ -358,3 +388,12 @@ def share(message_id):
 			flash(form.errors)
 
 	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
+
+
+@app.route('/tag/<name>', methods = ["GET", "POST"])
+@login_required
+def tag_name(name):
+	user = g.user
+	name = name
+	bookmarks = user.get_bookmarks_with_tag(name)
+	return render_template('tags.html', user = user, title = "#" + name, bookmarks = bookmarks)
