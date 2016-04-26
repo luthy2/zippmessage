@@ -277,15 +277,15 @@ def bookmark(message_id):
 	inbox = user.inbox()
 	inbox_count = inbox.count()
 	form = TagForm()
-	
+
 	if message is None:
 		flash('Message not found.')
 		return redirect(url_for('index'))
 
 	m = user.bookmark_message(message_id)
 	if m is None:
-        flash('Could not bookmark message')
-        return redirect(url_for('index'))
+		flash('Could not bookmark message')
+		return redirect(url_for('index'))
 
 	if form.validate_on_submit():
 		#look up the user_message
