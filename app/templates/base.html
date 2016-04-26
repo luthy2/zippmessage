@@ -55,7 +55,7 @@
 		    </div>
 		    <div class="collapse navbar-collapse" id="nav-links">
 		      <ul class="nav navbar-nav">
-		      	<li class="active"><a href="{{url_for('inbox')}}">Inbox<span class="sr-only">(current)</span></a></li>
+		      	<li class="active"><a href="{{url_for('inbox')}}">Inbox<span class "badge">{{inbox_count}}</span>=<span class="sr-only">(current)</span></a></li>
 		        <li><a href="{{url_for('contacts')}}">Contacts</a></li>
 		        <li><a href="{{url_for('compose')}}" role="button">Compose</a></li>
 						<li><a href=#>Collections</a></li>
