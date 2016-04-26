@@ -1,7 +1,7 @@
 from flask import request, g, render_template, session, url_for, redirect, request, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, twitter
-from forms import NewMessageForm, RecipientsForm
+from forms import NewMessageForm, RecipientsForm, TagForm
 from models import User, Message, UserMessage
 from datetime import datetime
 
@@ -121,55 +121,60 @@ def index():
 @login_required
 def welcome():
 	user = g.user
-	inbox = user.inbox()
-	return render_template('welcome.html', title = "Welcome!", inbox=inbox)
+	inbox_count = count(user.inbox())
+	return render_template('welcome.html', title = "Welcome!", inbox_count=inbox_count)
 
 @app.route('/inbox', methods = ["GET", "POST"])
 @login_required
 def inbox():
 	user = g.user
 	inbox = user.inbox()
+	inbox_count = inbox.count()
 	user_tags = user.tags_for_user()
-	return render_template('inbox.html', user=user, inbox = inbox, user_tags = user_tags, title = "Inbox")
+	return render_template('inbox.html', user=user, inbox = inbox, user_tags = user_tags, title = "Inbox", inbox_count=inbox_count)
 
 @app.route('/top', methods = ["GET", "POST"])
 @login_required
 def top():
 	user = g.user
 	inbox = user.inbox()
-	return render_template('inbox.html', user=user, inbox = inbox, title = "Top")
+	inbox_count = inbox.count()
+	return render_template('inbox.html', user=user, inbox = inbox, inbox_count=inbox_count title = "Top")
 
 @app.route('/contacts', methods = ["GET", "POST"])
 @login_required
 def contacts():
 	user = g.user
-	contacts = g.user.contacts
-	return render_template('contacts.html', user = user, title = 'Contacts', contacts = contacts)
+	contacts = user.contacts
+	inbox = user.inbox()
+	inbox_count = inbox.count()
+	return render_template('contacts.html', user = user, title = 'Contacts', contacts = contacts, inbox = inbox, inbox_count = inbox_count)
 
 @app.route('/user/<username>')
 @login_required
 def user(username):
 	user = User.query.filter_by(username=username).first()
 	tags = user.tags_for_user()
-	return render_template('user.html', user = user, tags = tags, title = 'Profile')
+	inbox = user.inbox()
+	inbox_count = inbox.count()
+	return render_template('user.html', user = user, tags = tags, title = 'Profile', inbox=inbox, inbox_count=inbox_count)
 
 
 @app.route('/settings', methods = ["GET", "POST"])
 @login_required
 def settings():
 	user = g.user
-	return render_template('settings.html', title = 'Settings')
+	inbox=user.inbox()
+	inbox_count = inbox.count()
+	return render_template('settings.html', title = 'Settings', inbox=inbox, inbox_count = inbox_count)
 
-@app.route('/history', methods = ["GET", "POST"])
-@login_required
-def history():
-	user = g.user
-	return render_template('history.html', title = "History")
 
 @app.route('/compose', methods = ["GET", "POST"])
 @login_required
 def compose():
 	user = g.user
+	inbox = user.inbox()
+	inbox_count=inbox.count()
 	form = NewMessageForm()
 	if form.validate_on_submit():
 		message = Message(title = form.message_title.data,
@@ -183,7 +188,7 @@ def compose():
 		return redirect(url_for('recipients'))
 	else:
 		form.flash_errors()
-	return render_template('compose.html', form=form, title = "Compose")
+	return render_template('compose.html', form=form, title = "Compose", inbox =inbox, inbox_count=inbox_count)
 
 
 @app.route('/recipients', methods = ["GET", "POST"])
@@ -191,6 +196,8 @@ def compose():
 def recipients():
 	user = g.user
 	form = RecipientsForm()
+	inbox = user.inbox()
+	inbox_count = inbox.count()
 
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
@@ -212,7 +219,7 @@ def recipients():
 		else:
 			flash(form.errors)
 
-	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
+	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form, inbox_count = inbox_count)
 
 @app.route('/bookmarks', methods = 	["GET", "POST"])
 @login_required
@@ -220,7 +227,9 @@ def bookmarks():
 	user = g.user
 	bookmarks = user.bookmarks()
 	user_tags = user.tags_for_user()
-	return render_template('bookmarks.html', user = user, bookmarks = bookmarks, user_tags = user_tags, title = "Bookmarks")
+	inbox = user.inbox()
+	inbox_count = inbox.count()
+	return render_template('bookmarks.html', user = user, bookmarks = bookmarks, user_tags = user_tags, title = "Bookmarks", inbox_count=inbox_count)
 
 @app.route('/follow/<username>')
 @login_required
@@ -265,6 +274,8 @@ def unfollow(username):
 def bookmark(message_id):
     message = UserMessage.query.filter(UserMessage.message_id == message_id)
     user = g.user
+	inbox = user.inbox()
+	inbox_count = inbox.count()
 	form = TagForm()
 
 	if message is None:
@@ -290,7 +301,7 @@ def bookmark(message_id):
 	else:
 		flash(form.errors)
 
-    return render_template("bookmark.html", message = message, user = user, form = form, title = "Edit Bookmark")
+    return render_template("bookmark.html", message = message, user = user, form = form, title = "Edit Bookmark", inbox_count=inbox_count)
 
 
 @app.route('/dismiss/<message_id>')
@@ -315,6 +326,8 @@ def dismiss(message_id):
 @login_required
 def quickshare():
     user = g.user
+	inbox = user.inbox()
+	inbox_count = inbox.count()
     quickshare = "Sent by " + user.username +" via quickshare"
     recipient_form = RecipientsForm()
 	quickshare_form = QuickShareForm()
@@ -346,7 +359,7 @@ def quickshare():
         else:
             flash(form.errors)
 
-    return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, recipient_form = recipient_form, bookmark_form = bookmark_form)
+    return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, recipient_form = recipient_form, bookmark_form = bookmark_form, inbox_count=inbox_count)
 
 
 
@@ -356,6 +369,8 @@ def share(message_id):
 	#user and original message
 	user = g.user
 	message = UserMessage.query.filter(UserMessage.message_id == message_id)
+	inbox = user.inbox()
+	inbox_count = inbox.count()
 
 	#select recipients
 	form = RecipientsForm()
@@ -387,7 +402,7 @@ def share(message_id):
 		else:
 			flash(form.errors)
 
-	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
+	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form, inbox_count=inbox_count)
 
 
 @app.route('/tag/<name>', methods = ["GET", "POST"])
@@ -396,4 +411,6 @@ def tag_name(name):
 	user = g.user
 	name = name
 	bookmarks = user.get_bookmarks_with_tag(name)
-	return render_template('tags.html', user = user, title = "#" + name, bookmarks = bookmarks)
+	inbox = user.inbox()
+	inbox_count = inbox.count()
+	return render_template('tags.html', user = user, title = "#" + name, bookmarks = bookmarks, inbox_count=inbox_count)
