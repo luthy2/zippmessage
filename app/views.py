@@ -301,7 +301,7 @@ def bookmark(message_id):
 	else:
 		flash(form.errors)
 
-    return render_template("bookmark.html", message = message, user = user, form = form, title = "Edit Bookmark", inbox_count=inbox_count)
+		return render_template("bookmark.html", message = message, user = user, form = form, title = "Edit Bookmark", inbox_count=inbox_count)
 
 
 @app.route('/dismiss/<message_id>')
