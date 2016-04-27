@@ -19,7 +19,7 @@
           <a class ="list-group-item" href = "{{url_for('tag', name = tag)}}">#{{tag}}<label class="badge">{{user_tag[tag]}}</a>
         {% endfor %}
       {% else %}
-        <li class = "list-group-item">whats up trevor</li>
+        <li class = "list-group-item">no tagged items yet :/</li>
       {% endif %}
     </ul>
   </div>
