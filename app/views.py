@@ -288,12 +288,10 @@ def bookmark(message_id):
 		return redirect(url_for('index'))
 
 	if form.validate_on_submit():
-		#look up the user_message
-		user_message = UserMessage.query.filter(UserMessage.message_id == message_id).filter(UserMessage.user_id == user.id).one()
 		#form data will be in format 'list, of, tags' we add a comma to the end so we can add more tags later
 		tags = form.tags.data + ','
 		# we can use the += operator because there will at least be an empty string
-		user_message.tags += tags
+		message.tags += tags
 		db.session.add(message, user)
 		db.session.commit()
 		flash("tags updated")
