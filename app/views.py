@@ -273,7 +273,7 @@ def unfollow(username):
 @login_required
 def bookmark(message_id):
 	user = g.user
-	message = UserMessage.query.filter(UserMessage.message_id == message_id).filter(UserMessage.user_id == user_id).one()
+	message = UserMessage.query.filter(UserMessage.message_id == message_id).filter(UserMessage.user_id == user.id).one()
 	inbox = user.inbox()
 	inbox_count = inbox.count()
 	form = TagForm()
