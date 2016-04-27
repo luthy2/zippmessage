@@ -5,7 +5,7 @@
 	<div class="row">
 		<h4>Select Recipients:</h4><br>
 		{% if message.url %}
-			<a href = "{{message.message.url}}"><h4>{{message.get_url_title()}}</h4><small>({{message.url}})</small></a>
+			<a href = "{{message.url}}">{{message.url}}</a>
 		{% endif %}
 		{% if message.title %}
 			<h5><small>{{message.title}}</small></h5>
@@ -13,7 +13,8 @@
 	</div>
 		<div class="row">
 			<div class = "form-group">
-				<label>I've alreaady read this (Note: you must also select yourself for this to work.)</label>{{bookmark_form.bookmark}}
+				<label>I've alreaady read this (Note: you must also select yourself for this to work.)</label>
+				{{bookmark_form.bookmark}}
 				{{bookmark_form.hidden_tag()}}
 			</div>
 			<form method ="POST">
