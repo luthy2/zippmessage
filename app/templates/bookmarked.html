@@ -19,7 +19,6 @@
     {% if tags %}
 
       <ul class = "list-inline">
-        <li><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></li>
       {% for name in tags %}
         <li><a href = "{{url_for('tag', name = name)}}">#{{name}}</a></li>
       {% endfor %}
