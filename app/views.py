@@ -220,7 +220,7 @@ def recipients():
 		else:
 			flash(form.errors)
 
-	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, rec_form = rec_form, bk_form = bk_form inbox_count = inbox_count)
+	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form, inbox_count = inbox_count)
 
 @app.route('/bookmarks', methods = 	["GET", "POST"])
 @login_required
@@ -330,37 +330,28 @@ def quickshare():
 	inbox = user.inbox()
 	inbox_count = inbox.count()
 	quickshare = "Sent by " + user.username +" via quickshare"
-	rec_form = RecipientsForm()
-	bk_form = QuickShareForm()
+	form = RecipientsForm()
 
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
 	message = Message(title = quickshare, url = request.args.get('url'), author = g.user, timestamp = datetime.utcnow())
 
 	if request.method == 'POST':
-		recipients = recipients_form.recipients.data
+		recipients = form.recipients.data
 
-		if recipients_form.validate_on_submit():
+		if form.validate_on_submit():
 			db.session.add(message)
 			for recipient in recipients:
 				message.add_recipient(recipient)
 				message.send_message(recipient)
 				message.deliver_message()
 				flash('Message Sent!')
-
-			user_message = UserMessage.query.filter(UserMessage.user_id == user.id).filter(UserMessage.message_id == message_id).one()
-			if quickshare_form.bookmark.data == True:
-				if user_message:
-					user.bookmark_message(message.id)
-					db.session.add(user_message)
-					db.session.commit()
-
-					return redirect(url_for('index'))
+				return redirect(url_for('index'))
 
 		else:
 			flash(form.errors)
 
-	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, rec_form = recipient_form, bk_form = bookmark_form, inbox_count=inbox_count)
+	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form, inbox_count=inbox_count)
 
 
 

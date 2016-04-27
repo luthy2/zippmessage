@@ -12,15 +12,10 @@
 		{% endif %}
 	</div>
 		<div class="row">
-			<div class = "form-group">
-				<label>I've alreaady read this (Note: you must also select yourself for this to work.)</label>
-				{{bk_form.bookmark}}
-				{{bk_form.hidden_tag()}}
-			</div>
 			<form method ="POST">
-				{{rec_form.hidden_tag()}}
+				{{form.hidden_tag()}}
 				<ul class = "list-group">
-				{% for recipient in rec_form.recipients %}
+				{% for recipient in form.recipients %}
 					<li class = "list-group-item">
 						<div class = "form-group">
 							<div class = "col-xs-10">@{{recipient.label}}</div>
