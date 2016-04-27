@@ -15,7 +15,7 @@
   </ul>
 </li>
 <li class = "list-group-item">
-  {% with tags = message.message.usermessage_tags() %}
+  {% with tags = message.usermessage_tags() %}
     {% if tags %}
       <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
       <ul class = "list-inline">
