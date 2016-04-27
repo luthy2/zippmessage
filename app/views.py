@@ -399,7 +399,7 @@ def share(message_id):
 @login_required
 def tag_name(name):
 	user = g.user
-	name = name
+	name = urllib.unquote(name)
 	bookmarks = user.get_bookmarks_with_tag(name)
 	inbox = user.inbox()
 	inbox_count = inbox.count()
