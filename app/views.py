@@ -195,7 +195,8 @@ def compose():
 @login_required
 def recipients():
 	user = g.user
-	form = RecipientsForm()
+	rec_form = RecipientsForm()
+	bk_form = QuickShareForm()
 	inbox = user.inbox()
 	inbox_count = inbox.count()
 
@@ -219,7 +220,7 @@ def recipients():
 		else:
 			flash(form.errors)
 
-	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form, inbox_count = inbox_count)
+	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, rec_form = rec_form, bk_form = bk_form inbox_count = inbox_count)
 
 @app.route('/bookmarks', methods = 	["GET", "POST"])
 @login_required
@@ -329,8 +330,8 @@ def quickshare():
 	inbox = user.inbox()
 	inbox_count = inbox.count()
 	quickshare = "Sent by " + user.username +" via quickshare"
-	recipient_form = RecipientsForm()
-	quickshare_form = QuickShareForm()
+	rec_form = RecipientsForm()
+	bk_form = QuickShareForm()
 
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
@@ -359,7 +360,7 @@ def quickshare():
 		else:
 			flash(form.errors)
 
-	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, recipient_form = recipient_form, bookmark_form = bookmark_form, inbox_count=inbox_count)
+	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, rec_form = recipient_form, bk_form = bookmark_form, inbox_count=inbox_count)
 
 
 
