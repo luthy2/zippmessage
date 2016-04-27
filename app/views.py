@@ -269,7 +269,7 @@ def unfollow(username):
     flash('You have stopped following ' + username + '.')
     return redirect(url_for('user', username=username))
 
-@app.route('/bookmark/<message_id>')
+@app.route('/bookmark/<message_id>', methods = ["GET", "POST"])
 @login_required
 def bookmark(message_id):
 	user = g.user
