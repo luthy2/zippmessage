@@ -16,7 +16,7 @@
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
       {% if user_tags %}
         {% for tag in user_tags%}
-          <a class ="list-group-item" href = "{{url_for('tag', name = tag|urlencode)}}">#{{tag}}<label class="badge">{{user_tags[tag]}}</a>
+          <a class ="list-group-item" href = "{{url_for('tag', name = tag)}}">#{{tag}}<label class="badge">{{user_tags[tag]}}</a>
         {% endfor %}
       {% else %}
         <li class = "list-group-item">no tagged items yet :/</li>
