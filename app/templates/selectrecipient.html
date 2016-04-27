@@ -21,7 +21,7 @@
 			{% for recipient in form.recipients %}
 				<li class = "list-group-item">
 					<div class = "form-group">
-						<div>@{{recipient.label}}<span class= "text-right">{{recipient}}</span></div>
+						<div><a href = href="{{url_for('user', username = recipient.label)}}"@{{recipient.label}} {{recipient}}</div>
 					</div>
 				</li>
 			{% endfor %}
