@@ -4,6 +4,7 @@ from app import app, db, lm, twitter
 from forms import NewMessageForm, RecipientsForm, TagForm
 from models import User, Message, UserMessage
 from datetime import datetime
+import urllib
 
 
 @app.before_request
@@ -409,4 +410,4 @@ def tag_name(name):
 def tags():
 	user = g.user
 	tags = user.tags_for_user()
-	return render_template('tag.html', user = user, title = 'Tags', tags = tags)
+	return render_template('tags.html', user = user, title = 'Tags', tags = tags)
