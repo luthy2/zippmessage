@@ -20,9 +20,9 @@
       <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
       <ul class = "list-inline">
       {% for name in tags %}
-        <li><a href = "{{url_for('tag', name = name)}">#{{name}}</a></li>
+        <li><a href = "{{url_for('tag', name = name|urlencode)}}">#{{name}}</a></li>
       {% endfor %}
       </ul>
     {% endif %}
-  {% endwith %}  
+  {% endwith %}
 </li>
