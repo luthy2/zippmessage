@@ -7,6 +7,7 @@
     <h4>Save to Bookmarks</h4>
     <p><a href = "{{message.message.url}}">{{message.message.request_url()['title']}}</a></p>
     <form method = "POST">
+      {{form.hidden_tag()}}
       <div class = "form-group">
         <label>Add tags? (note: optional. tags must be in format 'list, of, tags')</label>
         {{form.tags}}
