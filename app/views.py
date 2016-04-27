@@ -382,9 +382,9 @@ def share(message_id):
 		if form.validate_on_submit():
 			#create a new message using the parent message as the paramas
 			new_message = Message(title = message.title,
-							url = message.url,
-							author = g.user,
-							timestamp = datetime.utcnow())
+			url = message.url,
+			author = g.user,
+			timestamp = datetime.utcnow())
 			db.session.add(new_message)
 			db.session.commit()
 
