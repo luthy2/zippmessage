@@ -21,8 +21,7 @@
 			{% for recipient in form.recipients %}
 				<li class = "list-group-item">
 					<div class = "form-group">
-						<div>@{{recipient.label}}</div>
-						<div class ="text-right">{{recipient}}</div>
+						<div>@{{recipient.label}}<span class= "text-right">{{recipient}}</span></div>
 					</div>
 				</li>
 			{% endfor %}
