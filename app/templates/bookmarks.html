@@ -5,7 +5,7 @@
 
   <div class = "col-md-3">
     <ul class="list-group">
-      <a class = "list-group-item" href = "{{url_for('user', username=g.user.username)}}"><h4>@{{user.username}}'s tags</h4></a>
+      <a class = "list-group-item" href = "{{url_for('tags')}}"><h4>@{{user.username}}'s tags</h4></a>
       {% if user_tags %}
         {% for tag in user_tags %}
           <a href = "{{url_for('tag', name = tag)}}" class="list-group-item">#{{tag}}<label class="badge">{{user_tags[tag]}}</a>
