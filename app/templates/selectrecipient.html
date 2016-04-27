@@ -6,7 +6,7 @@
 	<div class="col-md-6 col-md-offset-3">
 		<h4>Select Recipients:</h4><br>
 		{% if message.url %}
-			<a href = "{{message.url}}">{{message.url}}</a>
+			<a href = "{{message.url}}" target="_blank">{{message.url}}</a>
 		{% endif %}
 		{% if message.title %}
 			<h5><small>{{message.title}}</small></h5>
@@ -21,7 +21,7 @@
 			{% for recipient in form.recipients %}
 				<li class = "list-group-item">
 					<div class = "form-group">
-						<div><a href = href="{{url_for('user', username = recipient.label)}}"@{{recipient.label}} {{recipient}}</div>
+						<div><a href = href="{{url_for('user', username = recipient.label)}}">@{{recipient.label}}</a> {{recipient}}</div>
 					</div>
 				</li>
 			{% endfor %}
