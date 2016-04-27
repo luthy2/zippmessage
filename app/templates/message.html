@@ -2,14 +2,14 @@
 
 <a class="list-group-item" href="{{message.message.url}}" target = "_blank">
 {% if resp %}
-  <h4>{{resp[title]}}</h4>
-  {% if resp[type] is "link" %}
-    {% if resp[description] %}<p>{{resp[description]}}</p>{% endif %}
-  {% elif resp[type] is "photo" %}
+  <h4>{{resp["title"]}}</h4>
+  {% if resp["type"] == "link" %}
+    {% if resp["description"] %}<p>{{resp["description"]}}</p>{% endif %}
+  {% elif resp["type"] == "photo" %}
     <img src = "{{message.message.url}}" width = "100%">
-  {% elif resp[type] is "rich" or "video" %}
+  {% elif resp["type"] == "rich" or "video" %}
     <div class = "embed-responsive embed-responsive-16by9">
-      {{resp[html]}}
+      {{resp["html"]}}
     </div>
   {%endif%}
 {% else %}
