@@ -15,12 +15,13 @@
   </ul>
 </li>
 <li class = "list-group-item">
-  {% if message.message.usermessage_tags() %}
-    <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-    <ul class = "list-inline">
-    {% for name in message.message.usermessage_tags() %}
-      <li><a href = "{{url_for('tag', name = name)}">#{{name}}</a></li>
-    {% endfor %}
-    </ul>
-  {% endif %}
+  {% with tags = message.message.usermessage_tags() %}
+    {% if tags %}
+      <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+      <ul class = "list-inline">
+      {% for name in tags %}
+        <li><a href = "{{url_for('tag', name = name)}">#{{name}}</a></li>
+      {% endfor %}
+      </ul>
+    {% endif %}
 </li>
