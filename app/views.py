@@ -272,8 +272,8 @@ def unfollow(username):
 @app.route('/bookmark/<message_id>')
 @login_required
 def bookmark(message_id):
-	message = UserMessage.query.filter(UserMessage.message_id == message_id)
 	user = g.user
+	message = UserMessage.query.filter(UserMessage.message_id == message_id).filter(UserMessage.user_id == user_id).one()
 	inbox = user.inbox()
 	inbox_count = inbox.count()
 	form = TagForm()
