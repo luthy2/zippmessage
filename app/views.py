@@ -406,7 +406,7 @@ def tag_name(name):
 	inbox_count = inbox.count()
 	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, inbox_count=inbox_count)
 
-@app.route('tags', methods = ["GET", "POST"])
+@app.route('/tags', methods = ["GET", "POST"])
 @login_required
 def tags():
 	user = g.user
