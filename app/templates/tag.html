@@ -1,7 +1,7 @@
 {%extends "base.html"%}
 {% block content %}
   <h4> bookmarks with #{{name}}</h4>
-  {% for bookmark in bookmarks  %}
+  {% for message in bookmarks  %}
     {% include "bookmarked.html" %}
-  {% endfor %} 
+  {% endfor %}
 {% endblock %}
