@@ -1,7 +1,7 @@
 from flask import request, g, render_template, session, url_for, redirect, request, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, twitter
-from forms import NewMessageForm, RecipientsForm, TagForm
+from forms import NewMessageForm, RecipientsForm, TagForm, QuickShareForm
 from models import User, Message, UserMessage
 from datetime import datetime
 
@@ -332,34 +332,34 @@ def quickshare():
 	recipient_form = RecipientsForm()
 	quickshare_form = QuickShareForm()
 
-    form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
+	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
-    message = Message(title = quickshare, url = request.args.get('url'), author = g.user, timestamp = datetime.utcnow())
+	message = Message(title = quickshare, url = request.args.get('url'), author = g.user, timestamp = datetime.utcnow())
 
-    if request.method == 'POST':
-        recipients = recipients_form.recipients.data
+	if request.method == 'POST':
+		recipients = recipients_form.recipients.data
 
 		if recipients_form.validate_on_submit():
-            db.session.add(message)
+			db.session.add(message)
 			for recipient in recipients:
-	            message.add_recipient(recipient)
-	            message.send_message(recipient)
-	        message.deliver_message()
-			flash('Message Sent!')
+				message.add_recipient(recipient)
+				message.send_message(recipient)
+				message.deliver_message()
+				flash('Message Sent!')
 
-		user_message = UserMessage.query.filter(UserMessage.user_id == user.id).filter(UserMessage.message_id == message_id).one()
-		if quickshare_form.bookmark.data == True:
-			if user_message:
-				user.bookmark_message(message.id)
-				db.session.add(user_message)
-				db.session.commit()
+			user_message = UserMessage.query.filter(UserMessage.user_id == user.id).filter(UserMessage.message_id == message_id).one()
+			if quickshare_form.bookmark.data == True:
+				if user_message:
+					user.bookmark_message(message.id)
+					db.session.add(user_message)
+					db.session.commit()
 
-        return redirect(url_for('index'))
+					return redirect(url_for('index'))
 
-        else:
-            flash(form.errors)
+		else:
+			flash(form.errors)
 
-    return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, recipient_form = recipient_form, bookmark_form = bookmark_form, inbox_count=inbox_count)
+	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, recipient_form = recipient_form, bookmark_form = bookmark_form, inbox_count=inbox_count)
 
 
 
