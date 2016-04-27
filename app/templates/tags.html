@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-{% for name in tags %}
-  {{name}}
+  {% for name in tags %}
+    {{name}}{{tags[name]}}
+  {%endfor}
 {% endblock %}
