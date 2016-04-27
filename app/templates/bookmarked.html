@@ -1,5 +1,5 @@
 <a class="list-group-item" href="{{message.message.url}}" target = "_blank">
-  <h4>{{message.message.request_url()}}</h4>
+  <h4>{{message.message.request_url()['title']}}</h4>
 </a>
 <li class="list-group-item">
   <h5>
@@ -17,8 +17,9 @@
 <li class = "list-group-item">
   {% with tags = message.usermessage_tags() %}
     {% if tags %}
-      <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+
       <ul class = "list-inline">
+        <li><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></li>
       {% for name in tags %}
         <li><a href = "{{url_for('tag', name = name)}}">#{{name}}</a></li>
       {% endfor %}

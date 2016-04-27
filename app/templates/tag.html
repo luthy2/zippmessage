@@ -2,6 +2,10 @@
 {% block content %}
   <h4> bookmarks with #{{name}}</h4>
   {% for message in bookmarks  %}
-    {% include "bookmarked.html" %}
+    <div class= "row">
+      <div class = "col-md-6 col-md-offset-3">
+        {% include "bookmarked.html" %}
+      </div>
+    </div>
   {% endfor %}
 {% endblock %}
