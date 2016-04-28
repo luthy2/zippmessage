@@ -9,14 +9,14 @@
     <img src = "{{resp['url']}}" width = "100%">
   {% elif resp["type"] == "rich" or "video" %}
     {% if resp["provider_name"] == "Spotify" or "SoundCloud" %}
-      <div class = "embed-responsive" width = "100%">
-        {{resp["html"]|safe}}
-      </div>
+    <div class = "embed-responsive" width = "100%">
+      {{resp["html"]|safe}}
+    </div>
     {% else %}
-      <div class = "embed-responsive embed-responsive-16by9">
-        {{resp["html"]|safe}}
-      </div>
-    {% endif %}  
+    <div class = "embed-responsive embed-responsive-16by9">
+      {{resp["html"]|safe}}
+    </div>
+    {% endif %}
   {%endif%}
 {% else %}
   {{message.message.short_url()}}
