@@ -16,7 +16,7 @@
       <div class = "embed-responsive embed-responsive-16by9">
         {{resp["html"]|safe}}
       </div>
-    {%endif%}  
+    {%endif%}
   {%endif%}
 {% else %}
   {{message.message.short_url()}}
@@ -27,7 +27,7 @@
   <h5>
     <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a>:{{message.message.title}}<span class ="pull-right">{{message.message.format_timestamp()}}</span>
   </h5>
-  <h5><small>via {{message.message.resp["provider_name"]}}</small><h5><img src="{{message.message.url_logo()}}">
+  <h5><small>{% if resp["provider_name"]%} via {{resp["provider_name"]}} {%else%} {{message.message.short_url()}}{%endif%}</small><h5><img src="{{message.message.url_logo()}}">
 </li>
 <li class="list-group-item">
   <ul class="list-inline" style="text-align:center;">
