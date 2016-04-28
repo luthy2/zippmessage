@@ -8,15 +8,9 @@
   {% elif resp["type"] == "photo" %}
     <img src = "{{resp['url']}}" width = "100%">
   {% elif resp["type"] == "rich" or "video" %}
-    {% if resp["provider_name"] == "SoundCloud" or "Spotify"%}
-      <div width="100%">
-        {{resp["html"]|safe}}
-      </div>
-    {%else%}
-      <div class = "embed-responsive embed-responsive-16by9">
-        {{resp["html"]|safe}}
-      </div>
-    {%endif%}
+    <div class = "embed-responsive embed-responsive-16by9">
+      {{resp["html"]|safe}}
+    </div>
   {%endif%}
 {% else %}
   {{message.message.short_url()}}
@@ -25,7 +19,7 @@
 </a>
 <li class="list-group-item">
   <h5>
-    <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a>:{{message.message.title}}<span class ="pull-right">{{message.message.format_timestamp()}}</span>
+    <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a> {{message.message.title}}<span class ="pull-right">{{message.message.format_timestamp()}}</span>
   </h5>
   <h5><small>{% if resp["provider_name"]%} via {{resp["provider_name"]}} {%else%} {{message.message.short_url()}}{%endif%}</small><h5><img src="{{message.message.url_logo()}}">
 </li>
