@@ -15,20 +15,20 @@
 </div>
 <div class="row">
 	<div class = "col-md-4 col-md-offset-4 col-xs-12">
-		<form method ="POST" class = "form-inline">
-			{{form.hidden_tag()}}
-			<ul class = "list-group">
-			{% for recipient in form.recipients %}
-				<li class = "list-group-item">
-					<div class  ="form-group">
-						<div class = "checkbox">
-							<label>@{{recipient.label}} {{recipient(_class="checkbox")}}</label>
+		<form method ="POST">
+			<div class = "form-group">
+				{{form.hidden_tag()}}
+				<ul class = "list-group">
+				{% for recipient in form.recipients %}
+					<li class = "list-group-item">
+						<div>
+								@{{recipient.label}}<span class="text-right">{{recipient}}<span>
 						</div>
-					</div>
-				</li>
-			{% endfor %}
-			</ul>
-			<input type = "submit" value = "Send!" class = "btn btn-default">
+					</li>
+				{% endfor %}
+				</ul>
+				<input type = "submit" value = "Send!" class = "btn btn-default">
+			</div>
 		</form>
 	</div>
 </div>
