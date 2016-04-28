@@ -14,16 +14,14 @@
     <li style="width:17%"><a href ="{{url_for('share', message_id = message.message_id)}}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span><a></li>
   </ul>
 </li>
-<li class = "list-group-item">
   {% with tags = message.usermessage_tags() %}
     {% if tags %}
-      <ul class = "list-inline">
-      {% for name in tags %}
-        <li><a href = "{{url_for('tag', name = name)}}">#{{name}}</a></li>
-      {% endfor %}
-    {% else %}
-        <li> theres nothing here :/</li>
-      </ul>
+      <li class = "list-group-item">
+        <ul class = "list-inline">
+        {% for name in tags %}
+          <li><a href = "{{url_for('tag', name = name)}}">#{{name}}</a></li>
+        {% endfor %}
+        </ul>
+      </li>  
     {% endif %}
   {% endwith %}
-</li>
