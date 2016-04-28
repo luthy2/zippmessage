@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="row">
-	<div class="col-md-6 col-md-offset-3">
+	<div class="col-md-2 col-md-offset-5 col-xs-12">
 		<h4>Select Recipients:</h4><br>
 		{% if message.url %}
 			<a href = "{{message.url}}" target="_blank">{{message.url}}</a>
@@ -20,8 +20,8 @@
 			<ul class = "list-group">
 			{% for recipient in form.recipients %}
 				<li class = "list-group-item">
-					<div class = "form-group">
-						<div><a href = href="{{url_for('user', username = recipient.label)}}">@{{recipient.label}}</a> {{recipient}}</div>
+					<div class = "checkbox">
+						<label>@{{recipient.label}} {{recipient}}</label>
 					</div>
 				</li>
 			{% endfor %}

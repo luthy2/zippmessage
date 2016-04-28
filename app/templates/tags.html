@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-  {% for name in tags %}
-    {{name}}{{tags[name]}}
-  {% endfor %}
+<div class="row">
+  <div class ="col-md-3">
+    <ul class = "list-group">
+      <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
+      {% if user_tags %}
+        {% for tag in user_tags%}
+          <a class ="list-group-item" href = "{{url_for('tag', name = tag)}}">#{{tag}}<label class="badge">{{user_tags[tag]}}</a>
+        {% endfor %}
+      {% else %}
+        <li class = "list-group-item">no tagged items yet :/</li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
 {% endblock %}
