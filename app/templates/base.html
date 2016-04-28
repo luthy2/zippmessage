@@ -14,7 +14,7 @@
     	<style type="text/css">
 
 				body { 	padding-top: 70px;
-								background-color: #166088;
+								background-color: #C0D6DF;
 				}
 
       	@media (max-width: 980px) {
@@ -60,10 +60,10 @@
 		      <ul class="nav navbar-nav">
 		      	<li class="active"><a href="{{url_for('inbox')}}">Inbox <span class = "badge">{{inbox_count}}</span><span class="sr-only">(current)</span></a></li>
 		        <li><a href="{{url_for('contacts')}}">Contacts</a></li>
-		        <li><a href="{{url_for('compose')}}" role="button">Compose</a></li>
 						<li><a href="{{url_for('bookmarks')}}">Bookmarks</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
+							<li><a href="{{url_for('compose')}}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></li>
 					    <li class="dropdown">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" >@{{g.user.username}} <span class="caret"></span></a>
 			          {% if g.user %}
