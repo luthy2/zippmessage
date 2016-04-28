@@ -6,11 +6,17 @@
   {% if resp["type"] == "link" %}
     {% if resp["description"] %}<p>{{resp["description"]}}</p>{% endif %}
   {% elif resp["type"] == "photo" %}
-    <img src = "{{message.message.url}}" width = "100%">
+    <img src = "{{resp['url']}}" width = "100%">
   {% elif resp["type"] == "rich" or "video" %}
-    <div class = "embed-responsive embed-responsive-16by9">
-      {{resp["html"]|safe}}
-    </div>
+    {% if resp["provider_name"] == "Spotify" or "SoundCloud" %}
+      <div class = "embed-responsive" width = "100%">
+        {{resp["html"]|safe}}
+      </div>
+    {% else %}
+      <div class = "embed-responsive embed-responsive-16by9">
+        {{resp["html"]|safe}}
+      </div>
+    {% endif %}  
   {%endif%}
 {% else %}
   {{message.message.short_url()}}
