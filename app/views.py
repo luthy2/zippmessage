@@ -155,10 +155,10 @@ def contacts():
 @login_required
 def user(username):
 	user = User.query.filter_by(username=username).first()
-	tags = user.tags_for_user()
+	user_tags = user.tags_for_user()
 	inbox = user.inbox()
 	inbox_count = inbox.count()
-	return render_template('user.html', user = user, tags = tags, title = 'Profile', inbox=inbox, inbox_count=inbox_count)
+	return render_template('user.html', user = user, user_tags = user_tags, title = 'Profile', inbox=inbox, inbox_count=inbox_count)
 
 
 @app.route('/settings', methods = ["GET", "POST"])
