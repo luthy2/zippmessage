@@ -154,10 +154,11 @@ def contacts():
 @app.route('/user/<username>')
 @login_required
 def user(username):
-	user = User.query.filter_by(username=username).first()
+	_user = User.query.filter_by(username=username).first()
+	tags = _user.tags_for_user()
 	inbox = g.user.inbox()
 	inbox_count = inbox.count()
-	return render_template('user.html', user = user, title = 'Profile', inbox=inbox, inbox_count=inbox_count)
+	return render_template('user.html', _user = user, tags = tags, title = 'Profile', inbox=inbox, inbox_count=inbox_count)
 
 
 @app.route('/settings', methods = ["GET", "POST"])
