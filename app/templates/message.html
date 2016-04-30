@@ -9,7 +9,7 @@
     <img src = "{{resp['url']}}" width = "100%">
   {% elif resp["type"] == "rich" or "video" %}
     <div class = "embed-responsive embed-responsive-16by9">
-      {{resp["html"](width_="100%")|safe}}
+      {{resp["html"]|safe}}
     </div>
   {%endif%}
 {% else %}
