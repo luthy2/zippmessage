@@ -127,9 +127,9 @@ class User(db.Model):
 		#list comprehension to remove empty strings, and strip whitespace
 		user_tags = [tag.strip() for tag in user_tags if tag != '']
 		#creates a Counter of tags with the number of each, order by most common
-		user_tags = Counter(user_tags).most_common()
+		user_tags = Counter(user_tags).most_common(20)
 		#convert Counter to a dict, returns a dict with {'tag name': count}
-		return dict(user_tags)
+		return sorted(dict(user_tags))
 
 
 	def get_bookmarks_with_tag(self, tag):
