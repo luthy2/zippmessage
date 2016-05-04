@@ -405,7 +405,7 @@ def tag(name):
 	bookmarks = user.get_bookmarks_with_tag(tag_name)
 	inbox = user.inbox()
 	inbox_count = inbox.count()
-	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, inbox_count=inbox_count)
+	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, inbox_count=inbox_count, name = name)
 
 @app.route('/tags', methods = ["GET", "POST"])
 @login_required
