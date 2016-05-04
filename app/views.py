@@ -411,5 +411,5 @@ def tag(name):
 @login_required
 def tags():
 	user = g.user
-	tags = user.tags_for_user()
-	return render_template('tags.html', user = user, title = 'Tags', tags = tags)
+	user_tags = user.tags_for_user()
+	return render_template('tags.html', user = user, title = 'Tags', user_tags = user_tags)
