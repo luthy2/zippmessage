@@ -159,7 +159,7 @@ def user(username):
 	tags = _user.tags_for_user()
 	inbox = g.user.inbox()
 	inbox_count = inbox.count()
-	return render_template('user.html', _user = user, tags = tags, title = 'Profile', inbox=inbox, inbox_count=inbox_count)
+	return render_template('user.html', user = _user, tags = tags, title = 'Profile', inbox=inbox, inbox_count=inbox_count)
 
 
 @app.route('/settings', methods = ["GET", "POST"])
