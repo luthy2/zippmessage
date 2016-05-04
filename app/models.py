@@ -129,7 +129,7 @@ class User(db.Model):
 		#creates a Counter of tags with the number of each, order by most common
 		user_tags = Counter(user_tags).most_common(20)
 		#convert Counter to a dict, returns a dict with {'tag name': count}
-		return sorted(dict(user_tags))
+		return dict(user_tags)
 
 
 	def get_bookmarks_with_tag(self, tag):
