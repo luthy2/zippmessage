@@ -40,7 +40,7 @@ class UserMessage(db.Model):
 			return False
 		else:
 			#creates and returns ['list', 'of', 'tags']
-			tags = [t.strip() for t in  self.tags.split(',') if t != '' or ' ']
+			tags = [t.strip() for t in self.tags.split(',') if t != '' or ' ']
 			return tags
 
 
