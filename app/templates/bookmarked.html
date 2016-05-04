@@ -1,10 +1,10 @@
-<a class="list-group-item" href="{{message.message.url}}" target = "_blank">
-  <h4>{{message.message.request_url()['title']}}</h4>
+<a class="list-group-item" href="{{message.message.url}}" target = "_blank" rel = "noopener">
+  <h5>{{message.message.request_url()['title']}}</h5>
 </a>
 <li class="list-group-item">
-  <h5>
-    From: <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a> via {{message.message.short_url()}}<img src="{{message.message.url_logo()}}"> <span class ="pull-right">{{message.message.format_timestamp()}}</span>
-  </h5>
+  <p>
+    From: <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}<span style="display:inline-block"></a><img src="{{message.message.url_logo()}}">{{message.message.short_url()}}</span><span class ="pull-right">{{message.message.format_timestamp()}}</span>
+  </p>
   <h5><small>{{message.message.title}}</small><h5>
 </li>
 <li class="list-group-item">
@@ -22,6 +22,6 @@
           <li><a href = "{{url_for('tag', name = name)}}">#{{name}}</a></li>
         {% endfor %}
         </ul>
-      </li>  
+      </li>
     {% endif %}
   {% endwith %}
