@@ -15,8 +15,9 @@
       <li class = "list-group-item"> No tags yet :/</li>
       {% endif %}
   </div>
-
-  <div class = "col-md-6">
+</div>
+<div class = "row">
+  <div class = "col-md-9 col-md-offset-3">
     <ul>
     {% if bookmarks %}
       {% for message in bookmarks %}
@@ -33,6 +34,5 @@
     {% endif %}
     </ul>
   </div>
-
 </div>
 {% endblock %}

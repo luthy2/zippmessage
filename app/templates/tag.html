@@ -3,11 +3,14 @@
 <div class = "row">
   <div class = "col-md-6 col-md-offset-3">
     <h4> bookmarks with #{{name}}</h4>
-      {% for message in bookmarks  %}
-        <div class= "col-md-3">
-          {% include "bookmarked.html" %}
-        </div>
-      {% endfor %}
   </div>
 </div>
+<div class = "row">
+  {% for message in bookmarks  %}
+    <div class= "col-md-3">
+      {% include "bookmarked.html" %}
+    </div>
+  {% endfor %}
+</div>
+
 {% endblock %}

@@ -101,6 +101,7 @@ class User(db.Model):
 
 	def inbox(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message_id.desc())
+
 	def bookmarks(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_bookmarked == True)
 
@@ -187,7 +188,7 @@ class Message(db.Model):
 
 	def url_logo(self):
 		short_url = self.short_url()
-		return "https://logo.clearbit.com/" +short_url+ "?size=20"
+		return "https://logo.clearbit.com/" +short_url+ "?size=18"
 
 	def deliver_message(self):
 		if self.is_delivered is not True:
