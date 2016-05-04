@@ -346,7 +346,7 @@ def quickshare():
 				message.send_message(recipient)
 				message.deliver_message()
 				flash('Message Sent!')
-				return redirect(url_for(request.args.get('url')))
+				return redirect(request.args.get('url'))
 
 		else:
 			flash(form.errors)
