@@ -122,7 +122,8 @@ def index():
 @login_required
 def welcome():
 	user = g.user
-	inbox_count = count(user.inbox())
+	inbox = user.inbox()
+	inbox_count = inbox.count()
 	return render_template('welcome.html', title = "Welcome!", inbox_count=inbox_count)
 
 @app.route('/inbox', methods = ["GET", "POST"])
