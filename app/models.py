@@ -100,8 +100,8 @@ class User(db.Model):
 		return self.contacts.filter(approved_contacts.c.to_contact_id == user.id).count() > 0
 
 	def inbox(self):
-		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).desc()
-		
+		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message.timestamp.desc())
+
 	def bookmarks(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_bookmarked == True)
 
