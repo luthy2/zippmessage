@@ -40,7 +40,7 @@ class UserMessage(db.Model):
 			return False
 		else:
 			#creates and returns ['list', 'of', 'tags']
-			tags = [t.strip() for t in  self.tags.split(',') if t != '']
+			tags = [t.strip() for t in  self.tags.split(',') if t != '' or ' ']
 			return tags
 
 
@@ -100,7 +100,7 @@ class User(db.Model):
 		return self.contacts.filter(approved_contacts.c.to_contact_id == user.id).count() > 0
 
 	def inbox(self):
-		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_read == False)
+		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message.timestamp)
 
 	def bookmarks(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_bookmarked == True)
@@ -179,7 +179,7 @@ class Message(db.Model):
 		return parse_object.netloc
 
 	def request_url(self):
-		resp = embedly.oembed(self.url, words = 25)
+		resp = embedly.oembed(self.url, words = 25, luxe = 1)
 		if not resp["type"] == "error":
 			return resp
 		else:
