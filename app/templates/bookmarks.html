@@ -17,11 +17,11 @@
     </ul>
   </div>
 
-  <div class = "col-md-8 visible-xs-inline-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
+  <div class = "col-md-8" style = "display:inline-block;">
     <ul class = "list-inline">
     {% if bookmarks %}
       {% for message in bookmarks %}
-        <div class = "col-md-4">
+        <div class = "col-md-4" style = "display:inline-block;">
           <ul class = "list-group">
             {% include "bookmarked.html" %}
           </ul>
