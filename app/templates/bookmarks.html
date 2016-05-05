@@ -17,15 +17,12 @@
     </ul>
   </div>
 
-  <div class = "col-md-8" style = "display:inline-block;">
+  <div class = "col-md-6" style = "display:inline-block;">
     {% if bookmarks %}
       {% for message in bookmarks %}
-        <div class = "col-md-4 col-xs-10" style = "display:inline-block; vertical-align:top; height:300px">
           <ul class = "list-group">
             {% include "bookmarked.html" %}
           </ul>
-        </div>
-        <div class="clearfix visible-md-block"></div>
       {% endfor %}
     {% else %}
       <ul class ="list-group">
