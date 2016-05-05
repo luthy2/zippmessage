@@ -10,12 +10,12 @@
 </style>
 <div class="row">
 
-  <div class ="col-md-3 hidden-xs">
+  <div class ="col-md-3">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
       {% if user_tags %}
         {% for tag in user_tags%}
-          <a class ="list-group-item" href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}<label class="badge">{{tag[1]}}</a>
+          <span class = "hidden-sm"><a class ="list-group-item" href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}<label class="badge">{{tag[1]}}</a></span>
         {% endfor %}
         <a class = "list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right text-right"></span></a>
       {% else %}
@@ -27,7 +27,7 @@
   <div class = "col-md-9" style = "display:inline-block;">
     {% if bookmarks %}
       {% for message in bookmarks %}
-        <div class = "col-md-4 col-xs-10 col-xs-offset-1" style = "height:300px;">
+        <div class = " col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-1 col-md-3" style = "height:300px;">
           <ul class = "list-group">
             {% include "bookmarked.html" %}
           </ul>
