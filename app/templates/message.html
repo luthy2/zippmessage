@@ -21,7 +21,7 @@
   <h5>
     <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a> {{message.message.title}}<span class ="pull-right">{{message.message.format_timestamp()}}</span>
   </h5>
-  <h5><span style = "display:inline-block"><img src="{{message.message.url_logo()}}"><small>{% if resp["provider_name"]%}{{resp["provider_name"]}} {%else%} {{message.message.short_url()}}{%endif%}</small></span><h5>
+  <h5><span style = "display:inline-block"><img src="{{message.message.url_logo()}}"><small>{% if resp["provider_name"]%} {{resp["provider_name"]}} {%else%} {{message.message.short_url()}}{%endif%}</small></span><h5>
 </li>
 <li class="list-group-item">
   <ul class="list-inline" style="text-align:center;">

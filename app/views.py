@@ -279,7 +279,6 @@ def bookmark(message_id):
 	inbox = user.inbox()
 	inbox_count = inbox.count()
 	form = TagForm()
-	flash('Save to Bookmarks')
 
 	if message is None:
 		flash('Message not found.')
