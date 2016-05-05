@@ -10,17 +10,22 @@
 </style>
 <div class="row">
 
-  <div class ="col-md-3">
+  <div class ="col-md-3 hidden-xs hidden-sm">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
       {% if user_tags %}
         {% for tag in user_tags%}
-          <span class = "hidden-sm hidden-xs"><a class ="list-group-item" href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}<label class="badge">{{tag[1]}}</a></span>
+          <a class ="list-group-item" href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}<label class="badge">{{tag[1]}}</a>
         {% endfor %}
         <a class = "list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right text-right"></span></a>
       {% else %}
         <li class = "list-group-item">no tagged items yet :/</li>
       {% endif %}
+    </ul>
+  </div>
+  <div class ="col-sm-6 col-sm-offset-3 hidden-md hidden-lg">
+    <ul class = "list-group">
+      <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags</h4></a>
     </ul>
   </div>
 
