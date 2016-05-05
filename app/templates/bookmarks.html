@@ -25,14 +25,14 @@
   </div>
   <div class ="col-sm-6 col-sm-offset-3 hidden-md hidden-lg">
     <ul class = "list-group">
-      <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags</h4></a>
+      <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
     </ul>
   </div>
 
   <div class = "col-md-9" style = "display:inline-block;">
     {% if bookmarks %}
       {% for message in bookmarks %}
-        <div class = " col-xs-10 col-sm-5 col-md-3" style = "height:300px;">
+        <div class = " col-xs-10 col-sm-5 col-md-4" style = "height:300px;">
           <ul class = "list-group">
             {% include "bookmarked.html" %}
           </ul>
