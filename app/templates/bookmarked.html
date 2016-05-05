@@ -6,7 +6,7 @@
     From: <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a><span class ="pull-right">{{message.message.format_timestamp()}}</span>
   </p>
   <p>
-    <span style="display:inline-block" class = "truncate"><img src="{{message.message.url_logo()}}"> {{message.message.short_url()}}</span>
+    <span style="display:inline-block"><img src="{{message.message.url_logo()}}"> <span  class = "truncate">{{message.message.short_url()}}</span></span>
   </p>
   <h5 class = "truncate"><small>{{message.message.title}}</small><h5>
 </li>
@@ -20,8 +20,8 @@
 {% with tags = message.usermessage_tags() %}
   {% if tags %}
     <li class = "list-group-item">
-      <ul class = "list-inline">
-        {% for name in tags %}<li class = "truncate"><a href = "{{url_for('tag', name = name)}}">#{{name}}</a></li>{% endfor %}
+      <ul class = "list-inline truncate">
+        {% for name in tags %}<li><a href = "{{url_for('tag', name = name)}}">#{{name}}</a></li>{% endfor %}
       </ul>
     </li>
   {% endif %}
