@@ -21,9 +21,11 @@
     <ul class = "list-inline">
     {% if bookmarks %}
       {% for message in bookmarks %}
+        <div class = "col-md-4">
           <ul class = "list-group">
             {% include "bookmarked.html" %}
           </ul>
+        </div>
       {% endfor %}
     {% else %}
       <ul class ="list-group">
