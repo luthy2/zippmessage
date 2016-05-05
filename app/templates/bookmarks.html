@@ -17,7 +17,7 @@
         {% for tag in user_tags%}
           <a class ="list-group-item" href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}<label class="badge">{{tag[1]}}</a>
         {% endfor %}
-        <a class = "list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right text-right"></span></a>
+        <a class = "list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right pull-right"></span></a>
       {% else %}
         <li class = "list-group-item">no tagged items yet :/</li>
       {% endif %}
