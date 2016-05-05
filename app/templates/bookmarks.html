@@ -15,7 +15,7 @@
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
       {% if user_tags %}
         {% for tag in user_tags%}
-          <span class = "hidden-sm"><a class ="list-group-item" href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}<label class="badge">{{tag[1]}}</a></span>
+          <span class = "hidden-sm hidden-xs"><a class ="list-group-item" href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}<label class="badge">{{tag[1]}}</a></span>
         {% endfor %}
         <a class = "list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right text-right"></span></a>
       {% else %}
