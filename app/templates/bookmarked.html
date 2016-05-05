@@ -1,5 +1,5 @@
 <a class="list-group-item" href="{{message.message.url}}" target = "_blank" rel = "noopener">
-  <h5>{{message.message.request_url()['title']}}</h5>
+  <h5 class = "truncate">{{message.message.request_url()['title']}}</h5>
 </a>
 <li class="list-group-item">
   <p>
@@ -21,7 +21,7 @@
   {% if tags %}
     <li class = "list-group-item">
       <ul class = "list-inline">
-        {% for name in tags %}<li><a href = "{{url_for('tag', name = name)}}">#{{name}}</a></li>{% endfor %}
+        {% for name in tags %}<li class = "truncate"><a href = "{{url_for('tag', name = name)}}">#{{name}}</a></li>{% endfor %}
       </ul>
     </li>
   {% endif %}
