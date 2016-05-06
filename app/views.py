@@ -292,8 +292,8 @@ def bookmark(message_id):
 	if form.validate_on_submit():
 		#form data will be in format 'list, of, tags' we add a comma to the end so we can add more tags later
 		tags = form.tags.data + ','
-		# we can use the += operator because there will at least be an empty string
-		message.tags += tags
+		# we can use the += operator because there will at least be an empty string. convert input to lowercase.
+		message.tags += tags.lower()
 		db.session.add(message, user)
 		db.session.commit()
 		flash("tags updated")
