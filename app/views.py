@@ -297,7 +297,7 @@ def bookmark(message_id):
 		db.session.add(message, user)
 		db.session.commit()
 		flash("tags updated")
-		return redirect(url_for('inbox'))
+		return redirect(url_for(redirect_url()))
 	else:
 		flash(form.errors)
 
@@ -319,7 +319,7 @@ def dismiss(message_id):
     db.session.add(user)
     db.session.commit()
     flash('Message dismissed')
-    return redirect(url_for('index'))
+    return redirect(url_for(redirect_url()))
 
 
 @app.route('/quickshare', methods = ["GET", "POST"])
@@ -388,7 +388,7 @@ def share(message_id):
 			new_message.deliver_message()
 			db.session.commit()
 			flash('Message Shared!')
-			return redirect(url_for('index'))
+			return redirect(url_for(redirect_url()))
 
 		else:
 			flash(form.errors)
@@ -413,3 +413,8 @@ def tags():
 	inbox_count = user.inbox().count()
 	user_tags = user.tags_for_user()
 	return render_template('tags.html', user = user, title = 'Tags', user_tags = user_tags, inbox_count = inbox_count)
+
+
+
+def redirect_url(default='index'):
+	return request.args.get('next') or request.referrer or url_for(default)
