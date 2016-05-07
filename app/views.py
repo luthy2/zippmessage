@@ -359,7 +359,7 @@ def quickshare():
 def share(message_id):
 	#user and original message
 	user = g.user
-	message = UserMessage.query.filter(UserMessage.message_id == message_id)
+	message = Message.query.get(message_id)
 	inbox = user.inbox()
 	inbox_count = inbox.count()
 
@@ -372,8 +372,8 @@ def share(message_id):
 		recipients = form.recipients.data
 		if form.validate_on_submit():
 			#create a new message using the parent message as the paramas
-			new_message = Message(title = message.message.title,
-			url = message.message.url,
+			new_message = Message(title = message.title,
+			url = message.url,
 			author = g.user,
 			timestamp = datetime.utcnow())
 			db.session.add(new_message)
