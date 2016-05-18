@@ -131,7 +131,7 @@ def welcome():
 def inbox(page=1):
 	user = g.user
 	inbox = user.inbox().paginate(page,8,False)
-	inbox_count = inbox.count()
+	inbox_count = user.inbox().count()
 	user_tags = user.tags_for_user()
 	return render_template('inbox.html', user=user, inbox = inbox, user_tags = user_tags, title = "Inbox", inbox_count=inbox_count)
 
@@ -198,8 +198,7 @@ def compose():
 def recipients():
 	user = g.user
 	form = RecipientsForm()
-	inbox = user.inbox()
-	inbox_count = inbox.count()
+	inbox_count = user.inbox().count()
 
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
