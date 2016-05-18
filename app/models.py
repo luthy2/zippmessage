@@ -185,6 +185,13 @@ class Message(db.Model):
 		else:
 			return False
 
+	def twitter_tag(self, url):
+		url = url
+		TWITTER_SCRIPT_TAG = 	'<blockquote class="twitter-tweet">' \
+								'<a href="%s"></a></blockquote>' \
+								'<script async src="https://platform.twitter.com/widgets.js" ' \
+								'charset="utf-8"></script>'
+		return TWITTER_SCRIPT_TAG % url
 
 	def url_logo(self):
 		short_url = self.short_url()
@@ -228,11 +235,3 @@ class Message(db.Model):
 		else:
 			s = s//604800
 			return '{0}w ago'.format(int(s))
-
-def twitter_tag(url):
-	url = url
-	TWITTER_SCRIPT_TAG = 	'<blockquote class="twitter-tweet">' \
-							'<a href="%s"></a></blockquote>' \
-							'<script async src="https://platform.twitter.com/widgets.js" ' \
-							'charset="utf-8"></script>'
-	return TWITTER_SCRIPT_TAG % url
