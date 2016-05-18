@@ -11,13 +11,11 @@
       {% include "bookmarked.html" %}
     </div>
   {% endfor %}
-</div>
-<footer class = "footer">
   <div class = "container">
     <ul class="pager">
       {% if bookmarks.has_prev %}<li><a href = "{{url_for('tag',page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
       {% if bookmarks.has_next %}<li><a href = "{{url_for('tag',page = bookmarks.next_num)}}">next</a></li>{% endif %}
     </ul>
   </div>
-</footer>
+</div>
 {% endblock %}
