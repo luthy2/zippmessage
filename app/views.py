@@ -128,7 +128,7 @@ def welcome():
 @app.route('/inbox', methods = ["GET", "POST"])
 @app.route('/inbox/<int:page>', methods = ["GET", "POST"])
 @login_required
-def inbox():
+def inbox(page=1):
 	user = g.user
 	inbox = user.inbox().paginate(page,8,False)
 	inbox_count = inbox.count()
@@ -226,7 +226,7 @@ def recipients():
 @app.route('/bookmarks', methods = 	["GET", "POST"])
 @app.route('/bookmarks/<int:page>', methods = ["GET", "POST"])
 @login_required
-def bookmarks():
+def bookmarks(page=1):
 	user = g.user
 	bookmarks = user.bookmarks().paginate(page,12,False)
 	user_tags = user.tags_for_user()
@@ -398,7 +398,7 @@ def share(message_id):
 @app.route('/tag/<name>', methods = ["GET", "POST"])
 @app.route('/tag/<name>/<int:page>', methods = ["GET", "POST"])
 @login_required
-def tag(name):
+def tag(name, page = 1):
 	user = g.user
 	tag_name = urllib.unquote(name)
 	bookmarks = user.get_bookmarks_with_tag(tag_name).paginate(page,12,False)
