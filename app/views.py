@@ -122,15 +122,15 @@ def index():
 @login_required
 def welcome():
 	user = g.user
-	inbox = user.inbox()
-	inbox_count = inbox.count()
+	inbox_count = user.inbox().count()
 	return render_template('welcome.html', title = "Welcome!", inbox_count=inbox_count)
 
 @app.route('/inbox', methods = ["GET", "POST"])
+@app.route('/inbox/<int:page>', methods = ["GET", "POST"])
 @login_required
 def inbox():
 	user = g.user
-	inbox = user.inbox()
+	inbox = user.inbox().paginate(page,8,False)
 	inbox_count = inbox.count()
 	user_tags = user.tags_for_user()
 	return render_template('inbox.html', user=user, inbox = inbox, user_tags = user_tags, title = "Inbox", inbox_count=inbox_count)
@@ -224,13 +224,13 @@ def recipients():
 	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form, inbox_count = inbox_count)
 
 @app.route('/bookmarks', methods = 	["GET", "POST"])
+@app.route('/bookmarks/<int:page>', methods = ["GET", "POST"])
 @login_required
 def bookmarks():
 	user = g.user
-	bookmarks = user.bookmarks()
+	bookmarks = user.bookmarks().paginate(page,12,False)
 	user_tags = user.tags_for_user()
-	inbox = user.inbox()
-	inbox_count = inbox.count()
+	inbox_count = user.inbox().count()
 	return render_template('bookmarks.html', user = user, bookmarks = bookmarks, user_tags = user_tags, title = "Bookmarks", inbox_count=inbox_count)
 
 @app.route('/follow/<username>')
@@ -276,8 +276,7 @@ def unfollow(username):
 def bookmark(message_id):
 	user = g.user
 	message = UserMessage.query.filter(UserMessage.message_id == message_id).filter(UserMessage.user_id == user.id).one()
-	inbox = user.inbox()
-	inbox_count = inbox.count()
+	inbox_count = user.inbox().count()
 	form = TagForm()
 
 	if message is None:
@@ -397,13 +396,13 @@ def share(message_id):
 
 
 @app.route('/tag/<name>', methods = ["GET", "POST"])
+@app.route('/tag/<name>/<int:page>', methods = ["GET", "POST"])
 @login_required
 def tag(name):
 	user = g.user
 	tag_name = urllib.unquote(name)
-	bookmarks = user.get_bookmarks_with_tag(tag_name)
-	inbox = user.inbox()
-	inbox_count = inbox.count()
+	bookmarks = user.get_bookmarks_with_tag(tag_name).paginate(page,12,False)
+	inbox_count = user.inbox().count()
 	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, inbox_count=inbox_count, name = name)
 
 @app.route('/tags', methods = ["GET", "POST"])

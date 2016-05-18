@@ -45,4 +45,10 @@
     {% endif %}
   </div>
 </div>
+<div class = "row">
+    <ul class="list-inline">
+      {% if inbox.has_prev %}<li><a href = "{{url_for('inbox',page = inbox.prev_num)}}">previous</a></li>{% endif %}
+      {% if inbox.has_next %}<li><a href = "{{url_for('inbox',page = inbox.next_num)}}">next</a></li>{% endif %}
+    </ul>
+</div>
 {% endblock %}

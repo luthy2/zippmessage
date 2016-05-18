@@ -4,12 +4,13 @@
 {% if resp %}
   {% if 'twitter.com' in resp["url"] %}
     {{twitter_tag(resp["url"])|safe}}
-  <h4>{{resp["title"]}}</h4>
   {% elif resp["type"] == "link" %}
+    <h4>{{resp["title"]}}</h4>
     {% if resp["description"] %}<p>{{resp["description"]}}</p>{% endif %}
   {% elif resp["type"] == "photo" %}
     <img src = "{{resp['url']}}" width = "100%">
   {% elif resp["type"] == "rich" or "video" %}
+    <h4>{{resp["title"]}}</h4>
     <div class = "embed-responsive embed-responsive-16by9">
       {{resp["html"]|safe}}
     </div>

@@ -185,10 +185,17 @@ class Message(db.Model):
 		else:
 			return False
 
+	def twitter_tag(resp):
+		url = resp["url"]
+		TWITTER_SCRIPT_TAG = 	'<blockquote class="twitter-tweet">' \
+								'<a href="%s"></a></blockquote>' \
+								'<script async src="https://platform.twitter.com/widgets.js" ' \
+								'charset="utf-8"></script>'
+		return TWITTER_SCRIPT_TAG % url
 
 	def url_logo(self):
 		short_url = self.short_url()
-		return "https://logo.clearbit.com/" +short_url+ "?size=18"
+		return "https://logo.clearbit.com/'%s'?size=18" % short_url
 
 	def deliver_message(self):
 		if self.is_delivered is not True:
