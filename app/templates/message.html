@@ -10,7 +10,7 @@
     {% if resp["description"] %}<p>{{resp["description"]}}</p>{% endif %}
     </a>
   {% elif resp["type"] == "photo" %}
-    <a class = "list-group-item" href="{{message.message.url}}" target = "_blank">{{resp["title"]}}</a>
+    <a class = "list-group-item" href="{{message.message.url}}" target = "_blank">{{resp["title"]}}({{resp["provider_url"]}})</a>
     <li class="list-group-item">
       <img src = "{{resp['url']}}" width = "100%">
     </li>
