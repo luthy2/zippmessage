@@ -44,12 +44,10 @@
 
 <footer class = "footer">
   <div class = "container">
-    <nav>
-      <ul class="pager">
-        {% if inbox.has_prev %}<li><a href = "{{url_for('inbox',page = inbox.prev_num)}}">previous</a></li>{% endif %}
-        {% if inbox.has_next %}<li><a href = "{{url_for('inbox',page = inbox.next_num)}}">next</a></li>{% endif %}
+      <ul class="list-inline">
+        {% if inbox.has_prev %}<li><a class = "btn btn-default" href = "{{url_for('inbox',page = inbox.prev_num)}}">previous</a></li>{% endif %}
+        {% if inbox.has_next %}<li><a class = "btn btn-default" href = "{{url_for('inbox',page = inbox.next_num)}}">next</a></li>{% endif %}
       </ul>
-    </nav>
   </div>
 </footer>
 {% endblock %}
