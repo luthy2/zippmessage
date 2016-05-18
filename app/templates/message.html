@@ -18,8 +18,9 @@
       <img src = "{{resp['url']}}" width = "100%">
     </li>
   {% elif resp["type"] == "rich" or "video" %}
+    <li class = "list-group-item"><h4>{{resp["title"]}}</h4></li>
     <li class = "list-group-item">
-      <h4>{{resp["title"]}}</h4>
+
       <div class = "embed-responsive embed-responsive-16by9">
         {{resp["html"]|safe}}
       </div>
