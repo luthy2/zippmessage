@@ -4,10 +4,6 @@
     <li class="list-group-item">
       {{message.message.twitter_tag(resp["url"])|safe}}
     </li>
-  {% elif 'medium.com' in resp["provider_url"] and resp["type"] not "link"%}
-    <li class = "list-group-item center-block">
-      {{resp["html"]|safe}}
-    </li>
   {% elif resp["type"] == "link" %}
     <a class="list-group-item" href="{{message.message.url}}" target = "_blank">
       <h4>{{resp["title"]}}</h4>
@@ -18,12 +14,18 @@
       <img src = "{{resp['url']}}" width = "100%">
     </li>
   {% elif resp["type"] == "rich" or "video" %}
-    <li class = "list-group-item"><h4>{{resp["title"]}}</h4></li>
-    <li class = "list-group-item">
-      <div class = "embed-responsive embed-responsive-16by9">
+    {% if 'medium.com' in resp["provider_url"] %}
+      <li class = "list-group-item center-block">
         {{resp["html"]|safe}}
-      </div>
-    </li>
+      </li>
+    {% elif %}
+      <li class = "list-group-item"><h4>{{resp["title"]}}</h4></li>
+      <li class = "list-group-item">
+        <div class = "embed-responsive embed-responsive-16by9">
+          {{resp["html"]|safe}}
+        </div>
+      </li>
+    {% endif %}
   {%endif%}
 {% else %}
   <a class = "list-group-item" href="{{message.message.url}}" target = "_blank">
