@@ -5,7 +5,7 @@
       {{message.message.twitter_tag(resp["url"])|safe}}
     </li>
   {% elif 'medium.com' in resp["provider_url"]%}
-    <li class = "list-group-item">
+    <li class = "list-group-item text-center">
       {{resp["html"]|safe}}
     </li>
   {% elif resp["type"] == "link" %}
@@ -26,9 +26,9 @@
     </li>
   {%endif%}
 {% else %}
-  <li class = "list-group-item">
+  <a class = "list-group-item" href="{{message.message.url}}" target = "_blank">
     {{message.message.short_url()}}
-  </li>
+  </a>
 {% endif %}
 </li>
 <li class="list-group-item">

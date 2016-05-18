@@ -43,12 +43,12 @@
         <li class = "list-group-item">nothing here yet :/</li>
       </ul>
     {% endif %}
-  </div>
-  <div class = "text-center">
-      <ul class="list-inline">
-        {% if bookmarks.has_prev %}<li><a class = "btn btn-default" href = "{{url_for('bookmarks',page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
-        {% if bookmarks.has_next %}<li><a class = "btn btn-default" href = "{{url_for('bookmarks',page = bookmarks.next_num)}}">next</a></li>{% endif %}
-      </ul>
+    <div class = "text-center">
+        <ul class="list-inline">
+          {% if bookmarks.has_prev %}<li><a class = "btn btn-default" href = "{{url_for('bookmarks',page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
+          {% if bookmarks.has_next %}<li><a class = "btn btn-default" href = "{{url_for('bookmarks',page = bookmarks.next_num)}}">next</a></li>{% endif %}
+        </ul>
+    </div>
   </div>
 </div>
 
