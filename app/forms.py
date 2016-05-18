@@ -29,6 +29,3 @@ class RecipientsForm(Form):
 
 class TagForm(Form):
 	tags = StringField('title', validators = [Length(max=300)])
-
-class QuickShareForm(Form):
-	bookmark = BooleanField("bookmark")
