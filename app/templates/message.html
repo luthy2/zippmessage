@@ -26,7 +26,9 @@
     </li>
   {%endif%}
 {% else %}
-  {{message.message.short_url()}}
+  <li class = "list-group-item">
+    {{message.message.short_url()}}
+  </li>
 {% endif %}
 </li>
 <li class="list-group-item">

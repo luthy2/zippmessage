@@ -40,14 +40,11 @@
 		  <p> Theres nothing here :(. Add some stuff and will show up here</p>
   </div>
     {% endif %}
-</div>
-
-<footer class = "footer">
-  <div class = "container">
+  <div class = "text-center">
       <ul class="list-inline">
         {% if inbox.has_prev %}<li><a class = "btn btn-default" href = "{{url_for('inbox',page = inbox.prev_num)}}">previous</a></li>{% endif %}
         {% if inbox.has_next %}<li><a class = "btn btn-default" href = "{{url_for('inbox',page = inbox.next_num)}}">next</a></li>{% endif %}
       </ul>
   </div>
-</footer>
+</div>  
 {% endblock %}
