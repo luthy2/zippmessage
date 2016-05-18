@@ -124,7 +124,7 @@ class User(db.Model):
 		# iterate through the tag strings, appending them to the empty list
 		bookmarks = self.bookmarks()
 		for item in bookmarks:
-			user_tags += item.tags.split(',')
+			user_tags += item.tags.split(',').lower()
 		#list comprehension to remove empty strings, and strip whitespace
 		user_tags = [tag.strip() for tag in user_tags if tag != '']
 		#creates a Counter of tags with the number of each, order by most common

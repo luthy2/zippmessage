@@ -2,8 +2,10 @@
 
 <a class="list-group-item" href="{{message.message.url}}" target = "_blank">
 {% if resp %}
+  {% if 'twitter.com' in resp["url"] %}
+    {{twitter_tag(resp["url"])|safe}}
   <h4>{{resp["title"]}}</h4>
-  {% if resp["type"] == "link" %}
+  {% elif resp["type"] == "link" %}
     {% if resp["description"] %}<p>{{resp["description"]}}</p>{% endif %}
   {% elif resp["type"] == "photo" %}
     <img src = "{{resp['url']}}" width = "100%">

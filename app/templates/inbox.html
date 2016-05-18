@@ -11,7 +11,7 @@
 </div>
 
 <div class="row">
-  <div class ="col-md-3 hidden-xs">
+  <div class ="col-md-3 hidden-xs hidden-sm">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
       {% if user_tags %}
@@ -24,15 +24,20 @@
       {% endif %}
     </ul>
   </div>
+  <div class ="col-sm-6 col-sm-offset-3 hidden-md hidden-lg">
+    <ul class = "list-group">
+      <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
+    </ul>
+  </div>
 	<div class ="col-md-6">
 	  {% if inbox %}
-		  {% for message in inbox %}
+		  {% for message in inbox.items %}
         <ul class="list-group">
 	  			{% include "message.html" %}
         </ul>
 	 		{% endfor %}
   	{% else %}
-				<p> Theres nothing here :(. Add some stuff and will show up here</p>
+		  <p> Theres nothing here :(. Add some stuff and will show up here</p>
   </div>
     {% endif %}
 </div>
