@@ -12,10 +12,12 @@
     </div>
   {% endfor %}
 </div>
-<div class = "row">
-    <ul class="list-inline">
+<footer class = "footer">
+  <div class = "container">
+    <ul class="pager">
       {% if bookmarks.has_prev %}<li><a href = "{{url_for('tag',page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
       {% if bookmarks.has_next %}<li><a href = "{{url_for('tag',page = bookmarks.next_num)}}">next</a></li>{% endif %}
     </ul>
-</div>
+  </div>
+</footer>
 {% endblock %}
