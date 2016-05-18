@@ -1,6 +1,6 @@
 {% set resp = message.message.request_url() %}
 
-<a class="list-group-item" href="{{message.message.url}}" target = "_blank">
+<li class="list-group-item" href="{{message.message.url}}" target = "_blank">
 {% if resp %}
   {% if 'twitter.com' in resp["url"] %}
     {{message.message.twitter_tag(resp["url"])|safe}}
@@ -19,7 +19,7 @@
   {{message.message.short_url()}}
 {% endif %}
 
-</a>
+</li>
 <li class="list-group-item">
   <h5>
     <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a> {{message.message.title}}<span class ="pull-right">{{message.message.format_timestamp()}}</span>

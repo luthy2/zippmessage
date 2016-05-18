@@ -187,7 +187,7 @@ class Message(db.Model):
 
 	def twitter_tag(self, url):
 		url = url
-		TWITTER_SCRIPT_TAG = 	'<blockquote class="twitter-tweet">' \
+		TWITTER_SCRIPT_TAG = 	'<blockquote class="twitter-tweet tw-align-center">' \
 								'<a href="%s"></a></blockquote>' \
 								'<script async src="https://platform.twitter.com/widgets.js" ' \
 								'charset="utf-8"></script>'
