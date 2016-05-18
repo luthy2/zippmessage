@@ -4,7 +4,7 @@
     <li class="list-group-item">
       {{message.message.twitter_tag(resp["url"])|safe}}
     </li>
-  {% elif 'medium.com' in resp["provider_url"]%}
+  {% elif 'medium.com' in resp["provider_url"] and resp["type"] not "link"%}
     <li class = "list-group-item center-block">
       {{resp["html"]|safe}}
     </li>
