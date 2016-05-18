@@ -1,28 +1,33 @@
 {% set resp = message.message.request_url() %}
-
-<li class="list-group-item" href="{{message.message.url}}" target = "_blank">
 {% if resp %}
   {% if 'twitter.com' in resp["url"] %}
-    {{message.message.twitter_tag(resp["url"])|safe}}
-  {% elif 'medium.com' in resp["url"]%}
-    <div>
+    <li class="list-group-item">
+      {{message.message.twitter_tag(resp["url"])|safe}}
+    </li>
+  {% elif 'medium.com' in resp["provider_url"]%}
+    <li class = "list-group-item">
       {{resp["html"]|safe}}
-    </div>
+    </li>
   {% elif resp["type"] == "link" %}
-    <h4>{{resp["title"]}}</h4>
+    <a class="list-group-item" href="{{message.message.url}}" target = "_blank">
+      <h4>{{resp["title"]}}</h4>
     {% if resp["description"] %}<p>{{resp["description"]}}</p>{% endif %}
+    </a>
   {% elif resp["type"] == "photo" %}
-    <img src = "{{resp['url']}}" width = "100%">
+    <li class="list-group-item" href="{{message.message.url}}" target = "_blank">
+      <img src = "{{resp['url']}}" width = "100%">
+    </li>
   {% elif resp["type"] == "rich" or "video" %}
-    <h4>{{resp["title"]}}</h4>
-    <div class = "embed-responsive embed-responsive-16by9">
-      {{resp["html"]|safe}}
-    </div>
+    <li class = "list-group-item">
+      <h4>{{resp["title"]}}</h4>
+      <div class = "embed-responsive embed-responsive-16by9">
+        {{resp["html"]|safe}}
+      </div>
+    </li>
   {%endif%}
 {% else %}
   {{message.message.short_url()}}
 {% endif %}
-
 </li>
 <li class="list-group-item">
   <h5>
