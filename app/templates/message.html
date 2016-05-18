@@ -3,7 +3,7 @@
 <a class="list-group-item" href="{{message.message.url}}" target = "_blank">
 {% if resp %}
   {% if 'twitter.com' in resp["url"] %}
-    {{message.messsage.twitter_tag(resp["url"])|safe}}
+    {{message.message.twitter_tag(resp["url"])|safe}}
   {% elif resp["type"] == "link" %}
     <h4>{{resp["title"]}}</h4>
     {% if resp["description"] %}<p>{{resp["description"]}}</p>{% endif %}
