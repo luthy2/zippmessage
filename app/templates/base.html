@@ -69,6 +69,7 @@
 			          {% if g.user %}
 			          <ul class="dropdown-menu" role="menu">
 			            <li><a href="{{url_for('user', username=g.user.username)}}">Profile</a></li>
+									<li><a href ="{{url_for('tags')}}">#tags</a></li>
 	            	  <li class="divider"></li>
 	            	  <li><a href="{{url_for('settings')}}">Settings</a></li>
 	            	  <li><a href="{{url_for('logout')}}">Logout</a></li>
