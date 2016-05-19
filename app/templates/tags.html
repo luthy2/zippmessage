@@ -6,7 +6,7 @@
       <ul class = "list-inline">
       {% if user_tags %}
         {% for tag in user_tags|dictsort()%}
-          <li><a class ="btn btn-default" href = "{{url_for('tag', name = tag[0])}}" role="button">#{{tag[0]}} <span class="badge">{{tag[1]}}</span></a></li>
+          <li><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}} ({{tag[1]}})</a></li>
         {% endfor %}
       {% else %}
         <li>no tagged items yet :/</li>
