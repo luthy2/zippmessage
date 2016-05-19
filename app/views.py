@@ -132,7 +132,7 @@ def inbox(page=1):
 	user = g.user
 	inbox = user.inbox().paginate(page,8,False)
 	inbox_count = user.inbox().count()
-	user_tags = user.tags_for_user()
+	user_tags = user.tags_for_user().most_common(20)
 	return render_template('inbox.html', user=user, inbox = inbox, user_tags = user_tags, title = "Inbox", inbox_count=inbox_count)
 
 @app.route('/top', methods = ["GET", "POST"])
@@ -148,15 +148,14 @@ def top():
 def contacts():
 	user = g.user
 	contacts = user.contacts
-	inbox = user.inbox()
-	inbox_count = inbox.count()
+	inbox_count = user.inbox().count()
 	return render_template('contacts.html', user = user, title = 'Contacts', contacts = contacts, inbox = inbox, inbox_count = inbox_count)
 
 @app.route('/user/<username>')
 @login_required
 def user(username):
 	_user = User.query.filter_by(username=username).first()
-	tags = _user.tags_for_user()
+	tags = _user.tags_for_user().most_common(20)
 	inbox = g.user.inbox()
 	inbox_count = inbox.count()
 	return render_template('user.html', user = _user, tags = tags, title = 'Profile', inbox=inbox, inbox_count=inbox_count)
@@ -166,8 +165,7 @@ def user(username):
 @login_required
 def settings():
 	user = g.user
-	inbox=user.inbox()
-	inbox_count = inbox.count()
+	inbox_count = user.inbox().count()
 	return render_template('settings.html', title = 'Settings', inbox=inbox, inbox_count = inbox_count)
 
 
@@ -228,7 +226,7 @@ def recipients():
 def bookmarks(page=1):
 	user = g.user
 	bookmarks = user.bookmarks().paginate(page,12,False)
-	user_tags = user.tags_for_user()
+	user_tags = user.tags_for_user().most_common(20)
 	inbox_count = user.inbox().count()
 	return render_template('bookmarks.html', user = user, bookmarks = bookmarks, user_tags = user_tags, title = "Bookmarks", inbox_count=inbox_count)
 
