@@ -5,11 +5,11 @@
     <a class= "text-center" href ="{{url_for('tags')}}"><h4>tags</h4></a>
       <ul class = "list-inline">
       {% if user_tags %}
-        {% for tag in user_tags%}
+        {% for tag in user_tags|dictsort()%}
           <li><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}} <span class="badge">{{tag[1]}}</span></a></li>
         {% endfor %}
       {% else %}
-        <li class = "list-group-item">no tagged items yet :/</li>
+        <li>no tagged items yet :/</li>
       {% endif %}
     </ul>
   </div>
