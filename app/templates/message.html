@@ -6,7 +6,7 @@
     </li>
   {% elif resp["type"] == "link" %}
     <a class="list-group-item" href="{{message.message.url}}" target = "_blank">
-      <h4>{{resp["title"]}}</h4>
+      {% if resp["title"] %}<h4>{{resp["title"]}}</h4>{% else %}<h4>Content available at {{resp["provider_name"]}}({{resp["provider_url"]}})</h4>
     {% if resp["description"] %}<p>{{resp["description"]}}</p>{% endif %}
     </a>
   {% elif resp["type"] == "photo" %}
@@ -30,7 +30,7 @@
   {%endif%}
 {% else %}
   <a class = "list-group-item" href="{{message.message.url}}" target = "_blank">
-    Content at {{message.message.short_url()}}
+    <h4>Content available at {{message.message.short_url()}}</h4>
   </a>
 {% endif %}
 </li>
