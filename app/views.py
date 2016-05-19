@@ -154,7 +154,7 @@ def contacts():
 @app.route('/user/<username>')
 @login_required
 def user(username):
-	_user = User.query.filter_by(username=username).first()
+	_user = User.query.filter(User.username.ilike(username)).first()
 	tags = _user.tags_for_user().most_common(20)
 	inbox = g.user.inbox()
 	inbox_count = inbox.count()
