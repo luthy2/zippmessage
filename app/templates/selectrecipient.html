@@ -20,9 +20,9 @@
 				{{form.hidden_tag()}}
 				<ul class = "list-group">
 				{% for recipient in form.recipients %}
-					<li class = "list-group-item">
+					<label><li class = "list-group-item">
 						<div>
-							<label>@{{recipient.label}}</label><span class="pull-right">{{recipient}}</span>
+							@{{recipient.label}}</label><span class="pull-right">{{recipient}}</span>
 						</div>
 					</li>
 				{% endfor %}
