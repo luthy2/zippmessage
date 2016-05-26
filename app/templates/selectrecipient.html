@@ -21,11 +21,9 @@
 				<ul class = "list-group">
 				{% for recipient in form.recipients %}
 					<li class = "list-group-item">
-						<label>
-							<div>
-								@{{recipient.label}}<span class="pull-right">{{recipient}}</span>
-							</div>
-						</label>
+						<div>
+							<label style = "width:90%">@{{recipient.label}}</label><span class="pull-right">{{recipient}}</span>
+						</div>
 					</li>
 				{% endfor %}
 				</ul>
