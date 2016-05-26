@@ -7,8 +7,8 @@
   {% elif resp["type"] == "link" %}
     <a class="list-group-item" href="{{message.message.url}}" target = "_blank">
       {% if resp["title"] %}<h4>{{resp["title"]}}</h4>{% else %}Content via {{resp["provider_name"]}} ({{resp["provider_url"]}}){%endif%}
-    {% if resp["description"] %}<p>{{resp["description"]}}</p>{% endif %}
-    <h5><span style = "display:inline-block"><img src="{{message.message.url_logo()}}"><small>{% if resp["provider_name"]%} {{resp["provider_name"]}} {%else%} {{message.message.short_url()}}{%endif%}</small></span><h5>
+      {% if resp["description"] %}<p>{{resp["description"]}}</p>{% endif %}
+      <h5><span style = "display:inline-block"><img src="{{message.message.url_logo()}}"><small>{% if resp["provider_name"]%} {{resp["provider_name"]}} {%else%} {{message.message.short_url()}}{%endif%}</small></span><h5>
     </a>
   {% elif resp["type"] == "photo" %}
     <a class = "list-group-item" href="{{message.message.url}}" target = "_blank">{{resp["title"]}}({{resp["provider_url"]}})</a>
@@ -27,7 +27,6 @@
         <div class = "embed-responsive embed-responsive-16by9">
           {{resp["html"]|safe}}
         </div>
-        <h5><span style = "display:inline-block"><img src="{{message.message.url_logo()}}"><small>{% if resp["provider_name"]%} {{resp["provider_name"]}} {%else%} {{message.message.short_url()}}{%endif%}</small></span><h5>
       </li>
     {% endif %}
   {%endif%}
@@ -36,7 +35,6 @@
     <h4>Content via {{message.message.short_url()}}</h4>
   </a>
 {% endif %}
-</li>
 <li class="list-group-item">
   <h5>
     <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a> {{message.message.title}}<span class ="pull-right">{{message.message.format_timestamp()}}</span>
