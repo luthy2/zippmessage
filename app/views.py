@@ -415,7 +415,7 @@ def tags():
 def redirect_url(default='index'):
 	return request.args.get('next') or request.referrer or default
 
-@app.route('/reader/<int:page>' methods = ["GET", "POST"])
+@app.route('/reader/<int:page>', methods = ["GET", "POST"])
 @login_required
 def reader(page =1):
 	user = g.user
