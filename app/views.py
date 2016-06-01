@@ -414,3 +414,11 @@ def tags():
 
 def redirect_url(default='index'):
 	return request.args.get('next') or request.referrer or default
+
+@app.route('/reader/<int:page>')
+@login_required
+def reader(page =1):
+	user = g.user
+	inbox = user.inbox().paginate(page,1,False)
+	inbox_count = inbox.count()
+	return render_template('reader.html', user = user, title = 'Reader', inbox_count = inbox_count)

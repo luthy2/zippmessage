@@ -184,6 +184,13 @@ class Message(db.Model):
 		else:
 			return False
 
+	def get_content(self):
+		resp = embedly.extract(self.url, autoplay= 'true')
+		if not resp["type"] == "error":
+			return resp
+		else:
+			return False
+
 	def twitter_tag(self, url):
 		url = url
 		TWITTER_SCRIPT_TAG = 	'<blockquote class="twitter-tweet tw-align-center">' \
