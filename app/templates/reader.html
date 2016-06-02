@@ -1,4 +1,4 @@
-{% with item = inbox.items %}
+{% set item = inbox.items[0] %}
 <div class = "row">
   <div class = "col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <a style = "width:15%" href = "{{url_for('inbox')}}">back to inbox</a>
@@ -11,7 +11,7 @@
 </div>
 <div class = "row">
  <div class = "col-xs-12 col-md-6 col-md-offset-3">
-     {% with resp = item.message.get_content() %}
+     {% set resp = item.message.get_content() %}
       {% if not resp %}
         <p> We were unable to extract the content from the original source. Visit {{item.message.url}} to view the content</p>
       {% endif %}
