@@ -420,5 +420,4 @@ def redirect_url(default='index'):
 def reader(page =1):
 	user = g.user
 	inbox = user.inbox().paginate(page,1,False)
-	inbox_count = user.inbox().count()
-	return render_template('reader.html', user = user, title = 'Reader', inbox_count = inbox_count)
+	return render_template('reader.html', user = user, title = 'Reader', inbox = inbox)

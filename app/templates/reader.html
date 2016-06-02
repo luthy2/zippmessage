@@ -1,11 +1,11 @@
 <div class = "row">
   <div class = "col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <a style = "width:15%" href = "{{url_for('inbox')}}">back to inbox</a>
-  {% if inbox.has_prev %}<a style = "width:15%" href = "{{url_for('inbox',page = inbox.prev_num)}}"><span class = glyphicon glyphicon-menu-left></span></a></li>{% endif %}
+  {% if inbox.has_prev %}<a style = "width:15%" href = "{{url_for('reader',page = inbox.prev_num)}}"><span class = glyphicon glyphicon-menu-left></span></a></li>{% endif %}
   <a style = "width:15%" href = "{{url_for('bookmark', message = message.message_id)}}"><span class = glyphicon glyphicon-bookmark></span></a>
   <a style = "width:15%" href = "{{url_for('share', message = message.message_id)}}"><span class = glyphicon glyphicon-heart></span></a>
   <a stlye  = "width:15%" href = "{{url_for('dismiss', message = message.message_id)}}"><span class = glyphicon glyphicon-share-alt></span></a>
-  {% if inbox.has_next %}<a style ="width:15%" href = "{{url_for('inbox',page = inbox.next_num)}}"><span class = glyphicon glyphicon-menu-right></span></a>{% endif %}
+  {% if inbox.has_next %}<a style ="width:15%" href = "{{url_for('reader',page = inbox.next_num)}}"><span class = glyphicon glyphicon-menu-right></span></a>{% endif %}
   </div>
 </div>
 <div class = "row">
