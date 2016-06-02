@@ -17,7 +17,7 @@
     {% endif %}
     {% if resp["authors"]%}
       {% for author in resp["authors"]%}
-        <a href = "{{author["url"]}}">{{author["name"]}}</a>
+        <a href = "{{author['url']}}">{{author["name"]}}</a>
       {% endfor %}
     {% endif %}
     {% if resp["content"] %}
