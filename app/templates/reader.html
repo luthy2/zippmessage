@@ -10,25 +10,26 @@
 </div>
 <div class = "row">
  <div class = "col-xs-12 col-md-6 col-md-offset-3">
-   {% message = inbox[0] %}
-   {% with resp = message.message.get_content() %}
-    {% if not resp %}
-      <p> We were unable to extract the content from the original source. Visit {{message.message.url}} to view the content</p>
-    {% endif %}
-    {% if resp["authors"]%}
-      {% for author in resp["authors"]%}
-        <a href = "{{author["url"]}}">{{author["name"]}}</a>
-      {% endfor %}
-    {% endif %}
-    {% if resp["content"] %}
-      {% if resp["title"]%}
-        {{resp["title"]}}
+   {% with message = inbox[0] %}
+     {% with resp = message.message.get_content() %}
+      {% if not resp %}
+        <p> We were unable to extract the content from the original source. Visit {{message.message.url}} to view the content</p>
       {% endif %}
-      {{resp["content"]}}
-    {%endif%}
-    {% if resp["media"]%}
-      {{resp["media"]}}
-    {% endif %}
-   {% endwith %}
+      {% if resp["authors"]%}
+        {% for author in resp["authors"]%}
+          <a href = "{{author["url"]}}">{{author["name"]}}</a>
+        {% endfor %}
+      {% endif %}
+      {% if resp["content"] %}
+        {% if resp["title"]%}
+          {{resp["title"]}}
+        {% endif %}
+        {{resp["content"]}}
+      {%endif%}
+      {% if resp["media"]%}
+        {{resp["media"]}}
+      {% endif %}
+     {% endwith %}
+    {% endwith %}
  </div>
 </div>
