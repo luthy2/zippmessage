@@ -19,13 +19,15 @@
       <a href = "{{author["url"]}}">{{author["name"]}}</a>
     {% endfor %}
   {% endif %}
-  {% elif resp["content"] %}
+  {% if resp["content"] %}
     {% if resp["title"]%}
       {{resp["title"]}}
     {% endif %}
     {{resp["content"]}}
-  {% elif resp["media"]%}
+  {%endif%}
+  {% if resp["media"]%}
     {{resp["media"]}}
- {% endif %}
+  {% endif %}
+ {% endwith %}
  </div>
 </div>

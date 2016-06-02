@@ -415,9 +415,10 @@ def tags():
 def redirect_url(default='index'):
 	return request.args.get('next') or request.referrer or default
 
+@app.route('/reader', methods = ["GET", "POST"])
 @app.route('/reader/<int:page>', methods = ["GET", "POST"])
 @login_required
-def reader(page =1):
+def reader(page = 1):
 	user = g.user
 	inbox = user.inbox().paginate(page,1,False)
 	return render_template('reader.html', user = user, title = 'Reader', inbox = inbox)
