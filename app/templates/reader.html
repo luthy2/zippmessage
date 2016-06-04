@@ -11,12 +11,12 @@
   {% for item in inbox.items %}
   <div class = "row">
     <div class = "col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <a style = "width:15%" href = "{{url_for('inbox')}}">back to inbox</a>
-    {% if inbox.has_prev %}<a style = "width:15%" href = "{{url_for('reader', page = inbox.prev_num)}}"><span class = "glyphicon glyphicon-menu-left"></span></a></li>{% endif %}
-    <a style = "width:15%" href = "{{url_for('bookmark', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-bookmark"></span></a>
-    <a style = "width:15%" href = "{{url_for('share', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-heart"></span></a>
-    <a stlye  = "width:15%" href = "{{url_for('dismiss', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-share-alt"></span></a>
-    {% if inbox.has_next %}<a style ="width:15%" href = "{{url_for('reader', page = inbox.next_num)}}"><span class = "glyphicon glyphicon-menu-right"></span></a>{% endif %}
+      <span style = "width:15%" ><a href = "{{url_for('inbox')}}">back to inbox</a></span>
+      {% if inbox.has_prev %}<span style = "width:15%" ><a href = "{{url_for('reader', page = inbox.prev_num)}}"><span class = "glyphicon glyphicon-menu-left"></span></a></span>{% endif %}
+      <span style = "width:15%" ><a href = "{{url_for('bookmark', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></span>
+      <span style = "width:15%" ><a href = "{{url_for('share', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-heart"></span></a></span>
+      <span style = "width:15%" ><a href = "{{url_for('dismiss', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-share-alt"></span></a></span>
+      {% if inbox.has_next %}<span style = "width:15%" ><a style ="width:15%" href = "{{url_for('reader', page = inbox.next_num)}}"><span class = "glyphicon glyphicon-menu-right"></span></a></span>{% endif %}
     </div>
   </div>
   <div class = "row">
@@ -32,7 +32,7 @@
       {% endif %}
       {% if resp["content"] %}
         {% if resp["title"]%}
-          <p>{{resp["title"]}}</p>
+          <h4>{{resp["title"]}}</h4>
         {% endif %}
         {{resp["content"] | safe}}
       {%endif%}
