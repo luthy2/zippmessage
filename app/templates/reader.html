@@ -19,7 +19,7 @@
       {% if resp["title"]%}
         {{resp["title"]}}
       {% endif %}
-      {{resp["content"]}}
+      {{resp["content"] | safe}}
     {%endif%}
     {% if resp["media"]%}
       {{resp["media"]}}
