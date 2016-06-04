@@ -40,7 +40,7 @@
             <li style = "width:15%" ><a href = "{{url_for('inbox')}}">inbox</a></li>
             <li style = "width:15%" ><a href = "{{url_for('dismiss', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-remove"></span></a></li>
             <li style = "width:15%" ><a href = "{{url_for('bookmark', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
-            <li style = "width:15%" ><a href = "{{url_for('share', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-share-alat"></span></a></li>
+            <li style = "width:15%" ><a href = "{{url_for('share', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-share-alt"></span></a></li>
             {% if inbox.has_next %}<li style = "width:15%" ><a style ="width:15%" href = "{{url_for('reader', page = inbox.next_num)}}">next<span class = "glyphicon glyphicon-menu-right"></span></a></li>{% endif %}
           </ul>
         </div>
