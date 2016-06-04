@@ -10,7 +10,7 @@
 <body>
   {% for item in inbox.items %}
   <div class = "row">
-    <div class = "col-xs-12 col-sm-12 col-md-12 col-lg-12" style = "position:fixed; background:white;">
+    <div class = "col-xs-12 col-sm-12 col-md-12 col-lg-12" style = "position:fixed; background-color:white;">
       <ul class="list-inline" style="text-align:center;">
         {% if inbox.has_prev %}<li style = "width:15%" ><a href = "{{url_for('reader', page = inbox.prev_num)}}">prev<span class = "glyphicon glyphicon-menu-left"></span></a></li>{% endif %}
         <li style = "width:15%" ><a href = "{{url_for('inbox')}}">inbox</a></li>
