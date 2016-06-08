@@ -38,9 +38,9 @@
         <div class = "col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <ul class="list-inline" style="text-align:center;">
             {% if inbox.has_prev %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.prev_num)}}"><span class = "glyphicon glyphicon-menu-left"></span>prev</a></li>{% endif %}
-            <li style = "width:17%" ><a href = "{{url_for('dismiss', message_id = item.message_id, next = 'reader', page = inbox.page)}}"><span class = "glyphicon glyphicon-remove"></span></a></li>
-            <li style = "width:17%" ><a href = "{{url_for('bookmark', message_id = item.message_id, next = 'reader', page = inbox.page)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
-            <li style = "width:17%" ><a href = "{{url_for('share', message_id = item.message_id, next = 'reader', page = inbox.page)}}"><span class = "glyphicon glyphicon-share-alt"></span></a></li>
+            <li style = "width:17%" ><a href = "{{url_for('dismiss', message_id = item.message_id, next = 'reader/'inbox.page)}}"><span class = "glyphicon glyphicon-remove"></span></a></li>
+            <li style = "width:17%" ><a href = "{{url_for('bookmark', message_id = item.message_id, next = 'reader/'inbox.page)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
+            <li style = "width:17%" ><a href = "{{url_for('share', message_id = item.message_id, next = 'reader/'inbox.page)}}"><span class = "glyphicon glyphicon-share-alt"></span></a></li>
             {% if inbox.has_next %}<li style = "width:15%" ><a style ="width:17%" href = "{{url_for('reader', page = inbox.next_num)}}">next<span class = "glyphicon glyphicon-menu-right"></span></a></li>{% endif %}
           </ul>
         </div>
