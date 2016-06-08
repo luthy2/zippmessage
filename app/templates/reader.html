@@ -28,7 +28,7 @@
         {{resp["content"] | safe}}
       {%endif%}
       {% if resp["media"]%}
-        {{resp["media"]}}
+        {{resp["media"] | safe}}
       {% endif %}
    </div>
   </div>
