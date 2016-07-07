@@ -1,4 +1,4 @@
-from flask import request, g, render_template, session, url_for, redirect, request, flash
+from flask import request, g, render_template, session, url_for, redirect, request, flash, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, twitter
 from forms import NewMessageForm, RecipientsForm, TagForm
@@ -422,3 +422,11 @@ def reader(page = 1):
 	user = g.user
 	inbox = user.inbox().paginate(page,1,False)
 	return render_template('reader.html', user = user, title = 'Reader', inbox = inbox)
+
+
+#start of api routes
+
+@app.route('/api/1/heartbeat', methods = ["GET", "POST"])
+def api_heartbeat():
+	resp = {"ok": True}
+	return jsonify(resp)
