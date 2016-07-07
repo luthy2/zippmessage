@@ -430,3 +430,10 @@ def reader(page = 1):
 def api_heartbeat():
 	resp = {"ok": True}
 	return jsonify(resp)
+
+@app.route('/api/1/inbox', methods = ["GET", "POST"])
+@login_required
+def api_inbox():
+	user = g.user()
+	inbox = user.inbox().paginate(page,1,False)
+	return jsonify(inbox)
