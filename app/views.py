@@ -431,8 +431,6 @@ def api_heartbeat():
 	resp = {"ok": True}
 	return jsonify(resp)
 
-@app.route('/api/1/user/<user_id>/inbox')
+@app.route('/api/1/user/')
 def api_inbox(user_id, page = 1):
-	user = User.query.get(user_id)
-	resp = {"inbox":user.inbox().all()}
-	return jsonify(resp)
+	return jsonify(username = g.user.username, id = g.user.id)
