@@ -431,9 +431,8 @@ def api_heartbeat():
 	resp = {"ok": True}
 	return jsonify(resp)
 
-@app.route('/api/1/inbox', methods = ["GET", "POST"])
-@login_required
-def api_inbox():
-	user = g.user()
-	inbox = user.inbox().paginate(page,1,False)
+@app.route('/api/1/user/<user_id>/inbox')
+def api_inbox(page = 1):
+	user = g.user
+	inbox = dict(user.inbox().paginate(page,1,False))
 	return jsonify(inbox)
