@@ -434,3 +434,15 @@ def api_heartbeat():
 @app.route('/api/1/user')
 def api_user():
 	return jsonify(username = g.user.username, id = g.user.id)
+
+@app.route('/api/1/user/inbox')
+def api_user():
+	inbox = g.user.inbox()
+	data = []
+	for item in inbox:
+		m = {}
+		m['title']=item.message.title
+		m['from_user']=item.message.author
+		m['url']=item.message.url
+		data.append(m)
+	return jsonify(data)
