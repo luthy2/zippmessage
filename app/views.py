@@ -434,5 +434,5 @@ def api_heartbeat():
 @app.route('/api/1/user/<user_id>/inbox')
 def api_inbox(user_id, page = 1):
 	user = User.query.get(user_id)
-	inbox = dict(user.inbox().paginate(page,1,False).items())
+	inbox = user.inbox().paginate(page,1,False).items()
 	return jsonify(inbox)
