@@ -444,7 +444,7 @@ def api_user_inbox():
 		message['title']=item.message.title
 		message['from_user']=item.message.author.username
 		message['url']=item.message.url
-		resp = item.message.url.request_url()
+		resp = item.message.request_url()
 		if resp:
 			message['description'] = resp["description"]
 		data.append(message)
