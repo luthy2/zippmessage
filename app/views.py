@@ -436,10 +436,10 @@ def api_user():
 	return jsonify(username = g.user.username, id = g.user.id)
 
 @app.route('/api/1/user/inbox')
-def api_user():
+def api_user_inbox():
 	inbox = g.user.inbox()
 	data = []
-	for item in inbox:
+	for item in inbox.all():
 		m = {}
 		m['title']=item.message.title
 		m['from_user']=item.message.author
