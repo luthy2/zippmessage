@@ -435,4 +435,4 @@ def api_heartbeat():
 def api_inbox(user_id, page = 1):
 	user = User.query.get(user_id)
 	inbox = user.inbox().paginate(page,1,False)
-	return jsonify(inbox.items)
+	return jsonify(data = inbox.items)
