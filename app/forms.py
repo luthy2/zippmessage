@@ -1,5 +1,5 @@
 from flask import flash, g
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import StringField, SubmitField, SelectMultipleField, BooleanField, widgets
 from wtforms.widgets import ListWidget
 from wtforms.validators import DataRequired, Length, URL

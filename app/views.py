@@ -442,7 +442,7 @@ def api_user_inbox():
 	for item in inbox.all():
 		m = {}
 		m['title']=item.message.title
-		m['from_user']=item.message.author
+		m['from_user']=item.message.author.username
 		m['url']=item.message.url
 		data.append(m)
 	return jsonify(data)
