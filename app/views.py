@@ -438,11 +438,14 @@ def api_user():
 @app.route('/api/1/user/inbox')
 def api_user_inbox():
 	inbox = g.user.inbox()
-	data = []
+	data = [items]
 	for item in inbox.all():
-		m = {}
-		m['title']=item.message.title
-		m['from_user']=item.message.author.username
-		m['url']=item.message.url
-		data.append(m)
+		message = {}
+		message['title']=item.message.title
+		message['from_user']=item.message.author.username
+		message['url']=item.message.url
+		resp = item.message.url.request_url()
+		if resp:
+			message['description'] = resp["description"]
+		data.append(message)
 	return jsonify(data)
