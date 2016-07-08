@@ -438,7 +438,7 @@ def api_user():
 @app.route('/api/1/user/inbox')
 def api_user_inbox():
 	inbox = g.user.inbox()
-	data = ()
+	data = []
 	for item in inbox.all():
 		m = {}
 		m['title']=item.message.title
