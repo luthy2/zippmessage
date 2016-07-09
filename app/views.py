@@ -434,7 +434,7 @@ def api_heartbeat():
 @app.route('/api/1/user')
 @login_required
 def api_user():
-	return jsonify(username = g.user.username, id = g.user.id, tags = dict(g.user.tags_for_user())
+	return jsonify(username = g.user.username, id = g.user.id, tags = dict(g.user.tags_for_user()))
 
 @app.route('/api/1/user/inbox', methods = ["GET"])
 @login_required
