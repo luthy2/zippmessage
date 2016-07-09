@@ -455,56 +455,56 @@ def api_user_inbox():
 
 @app.route('/api/1/user/bookmarks', methods = ["GET"])
 @login_required
-def api_user_inbox():
+def api_user_bookmarks():
 	bookmarks = g.user.bookmarks()
 	data = []
 	for item in bookmarks.all():
 		message = {}
-		message['title']=item.message.title
+		message['note']=item.message.title
 		message['from_user']=item.message.author.username
 		message['url']=item.message.url
 		message['tags'] = item.usermessage_tags()
 		resp = item.message.request_url()
 		if resp:
+			message['title'] = resp["title"]
 			message['description'] = resp["description"]
 		data.append(message)
 	return jsonify(data)
 
 
-@app.route('api/1/message/bookmark', methods = ["GET", "POST"])
-@login_required
-def api_bookmark_message():
-	user = g.user
-	message_id = request.args.get('message_id')
-	user.bookmark_message(message_id)
-	return jsonify(ok = True)
-
-@app.route('api/1/message/dismiss', methods = ["GET", "POST"])
-@login_required
-def api_dismiss_message():
-	user = g.user
-	message_id = request.args.get('message_id')
-	user.dismiss_message(message_id)
-	return jsonify(ok = True)
-
-@app.route('api/1/message/compose', methods = ["GET", "POST"])
-@login_required
-def api_share_message():
-	user = g.user
-	message = Message(title = request.json.get_json('title'),
-						url = request.json.get_json('url'),
-						author = g.user,
-						timestamp = datetime.utcnow())
-	recipients = request.json.get_json('recipients')
-	for u in recipients:
-		message.add_recipient(u)
-	db.session.add(message)
-	db.session.commit()
-	return jsonify(ok = True)
-
+# @app.route('api/1/message/bookmark', methods = ["GET", "POST"])
+# @login_required
+# def api_bookmark_message():
+# 	user = g.user
+# 	message_id = request.args.get('message_id')
+# 	user.bookmark_message(message_id)
+# 	return jsonify(ok = True)
+#
+# @app.route('api/1/message/dismiss', methods = ["GET", "POST"])
+# @login_required
+# def api_dismiss_message():
+# 	user = g.user
+# 	message_id = request.args.get('message_id')
+# 	user.dismiss_message(message_id)
+# 	return jsonify(ok = True)
+#
+# @app.route('api/1/message/compose', methods = ["GET", "POST"])
+# @login_required
+# def api_share_message():
+# 	user = g.user
+# 	message = Message(title = request.json.get_json('title'),
+# 						url = request.json.get_json('url'),
+# 						author = g.user,
+# 						timestamp = datetime.utcnow())
+# 	recipients = request.json.get_json('recipients')
+# 	for u in recipients:
+# 		message.add_recipient(u)
+# 	db.session.add(message)
+# 	db.session.commit()
+# 	return jsonify(ok = True)
 
 @app.route('/app', methods = ["GET", "POST"])
 @login_required
-def app():
+def api_app():
 	user = g.user
-	return render_template('api_test')
+	return render_template('api_test.html')
