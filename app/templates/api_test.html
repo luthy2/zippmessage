@@ -7,17 +7,17 @@
     <script type="text/javascript" src="/static/js/app.js"></script>
   </head>
   <body ng-controller="InboxController">
-    {% raw %}
     <div>Inbox</div>
-    <ul ng-repeat="message in inbox">
-      <li>{{message.fromUser}}{{message.note}}</li>
-      <li>
-        <a href = "{{message.url}}">
-          <p>{{message.title}}</p>
-          <p>{{message.description}}</p>
-        </a>
-      </li>
-    </ul>
+    {% raw %}
+      <ul ng-repeat="message in inbox">
+        <li>{{message.fromUser}}{{message.note}}</li>
+        <li>
+          <a href = "{{message.url}}">
+            <p>{{message.title}}</p>
+            <p>{{message.description}}</p>
+          </a>
+        </li>
+      </ul>
     {% endraw %}
   </body>
 </html>
