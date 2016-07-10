@@ -8,9 +8,9 @@
   <body ng-controller="InboxController">
     <div>Inbox</div>
     {% raw %}
-      <ul ng-repeat="message in inbox">
-        <li>{{message.fromUser}}{{message.note}}</li>
-        <li>
+      <ul>
+        <li ng-repeat="message in inbox">
+          <p>{{message.fromUser}}{{message.note}}</p>
           <a href = "{{message.url}}">
             <p>{{message.title}}</p>
             <p>{{message.description}}</p>
