@@ -1,6 +1,6 @@
 var zippApp = angluar.module('zippApp', []);
 
-zippApp.controller('InboxController', function InboxController($scope)){
+zippApp.controller('InboxController', function InboxController($scope){
   $scope.inbox = [
     {
       title:"A Really Interesting Article",
@@ -15,5 +15,5 @@ zippApp.controller('InboxController', function InboxController($scope)){
       description:"This article details some cool information",
       note:"cool article!!"
     }
-  ]
-}
+  ];
+});
