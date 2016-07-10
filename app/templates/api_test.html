@@ -5,12 +5,12 @@
     <title>Zipp Api Test</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   </head>
-  <body ng-controller="InboxController">
+  <body ng-controller="InboxController" ng-cloak>
     <div>Inbox</div>
     {% raw %}
       <ul>
         <li ng-repeat="message in inbox">
-          <p>{{message.fromUser}}{{message.note}}</p>
+          <p>{{message.fromUser}} {{message.note}}</p>
           <a href = "{{message.url}}">
             <p>{{message.title}}</p>
             <p>{{message.description}}</p>
