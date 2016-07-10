@@ -8,9 +8,9 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
       method: 'GET',
       url: 'http://zippmessage-staging.herokuapp.com/api/1/heartbeat'
     }).then(function success(response){
-      console.log('response')
+      console.log(response)
     }), function error(response){
-      console.log('response')
+      console.log(response)
     }
   ];
 });
