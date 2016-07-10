@@ -2,7 +2,7 @@
 
 var zippApp = angular.module("zippApp", []);
 
-zippApp.controller("InboxController", function InboxController($scope){
+zippApp.controller("InboxController", function InboxController($scope, $http, $q){
   $scope.inbox = [
     $http ({
       method: 'GET',
