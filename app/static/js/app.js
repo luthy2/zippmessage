@@ -1,6 +1,6 @@
 'use strict'
 
-var zippApp = angluar.module("zippApp", []);
+var zippApp = angular.module("zippApp", []);
 
 zippApp.controller("InboxController", function InboxController($scope){
   $scope.inbox = [
