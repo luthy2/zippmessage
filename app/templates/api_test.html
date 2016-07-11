@@ -8,14 +8,14 @@
   <body ng-controller="InboxController" ng-cloak>
     <div>Inbox</div>
     {% raw %}
-      <ul>
+      <ul style = "list-style:none;">
         <li ng-repeat="message in inbox">
-          <p>{{message.from_user}} {{message.note}}</p>
           <a href = "{{message.url}}">
             <p>{{message.title}}</p>
             <p>{{message.description}}</p>
           </a>
-          <div width= "100%"><a>dismiss </a><a>share </a><a>bookmark</a></div>
+          <p>{{message.from_user}} {{message.note}}</p>
+          <a href=#>dismiss </a><a href=#>share </a><a href=#>bookmark</a></div>
         </li>
       </ul>
     {% endraw %}
