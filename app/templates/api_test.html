@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Zipp Api Test</title>
+    <script src= "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   </head>
   <body ng-controller="InboxController" ng-cloak>
@@ -11,12 +12,14 @@
     {% raw %}
       <ul style = "list-style:none;">
         <li ng-repeat="message in inbox">
-          <a href = "{{message.url}}">
-            <h4>{{message.title}}</p>
-            <p>{{message.description}}</p>
-          </a>
+          <a href = "{{message.url}}"><h4>{{message.title}}</h4></a>
+          <p>{{message.description}}</p>
           <p>{{message.from_user}} {{message.note}}</p>
-          <a href=#>dismiss </a><a href=#>share </a><a href=#>bookmark</a></div>
+          <div style = "display:inline;">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span class="glyphicon glyphicon-bookmark"></span>
+            <span class="glyphicon glyphicon-share-alt"></span>
+          </div>
         </li>
       </ul>
     {% endraw %}
