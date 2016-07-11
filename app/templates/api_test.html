@@ -10,11 +10,12 @@
     {% raw %}
       <ul>
         <li ng-repeat="message in inbox">
-          <p>{{message.fromUser}} {{message.note}}</p>
+          <p>{{message.from_user}} {{message.note}}</p>
           <a href = "{{message.url}}">
             <p>{{message.title}}</p>
             <p>{{message.description}}</p>
           </a>
+          <div width= "100%"><a>dismiss </a><a>share </a><a>bookmark</a></div>
         </li>
       </ul>
     {% endraw %}
