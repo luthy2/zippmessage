@@ -487,7 +487,7 @@ def api_bookmark_message(message_id):
 		return jsonify(error = 'Message could not be bookmarked')
 	db.session.add(user)
 	db.session.commit()
-	return jsonify(ok = True)
+	return jsonify(ok = True, msg = 'Message' + str(message_id) + 'bookmarked')
 
 @app.route('/api/1/dismiss/<int:message_id>', methods = ["GET", "POST"])
 @login_required
@@ -501,7 +501,7 @@ def api_dismiss_message(message_id):
 	    return jsonify(error = 'Message could not be dismissed')
 	db.session.add(user)
 	db.session.commit()
-	return jsonify(ok = True, msg = 'Message' +message_id + 'dismissed')
+	return jsonify(ok = True, msg = 'Message' + str(message_id) + 'dismissed')
 #
 # @app.route('api/1/message/compose', methods = ["GET", "POST"])
 # @login_required
