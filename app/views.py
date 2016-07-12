@@ -476,7 +476,7 @@ def api_user_bookmarks():
 
 @app.route('api/1/bookmark/<int:message_id>', methods = ["GET", "POST"])
 @login_required
-def api_bookmark_message():
+def api_bookmark_message(message_id):
 	user = g.user
 	user.bookmark_message(message_id)
 	return jsonify(ok = True)
