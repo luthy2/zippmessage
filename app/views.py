@@ -525,7 +525,7 @@ def api_app():
 	return render_template('api_test.html')
 
 
-@app.route('/favicon.ico')
+@app.route('/favicon.ico', methods = ["GET", "POST"])
 def favicon():
 	    return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico')
