@@ -474,14 +474,14 @@ def api_user_bookmarks():
 	return jsonify(data)
 
 
-@app.route('api/1/bookmark/<int:message_id>', methods = ["GET", "POST"])
+@app.route('/api/1/bookmark/<int:message_id>', methods = ["GET", "POST"])
 @login_required
 def api_bookmark_message(message_id):
 	user = g.user
 	user.bookmark_message(message_id)
 	return jsonify(ok = True)
 
-@app.route('api/1/dismiss/<int:message_id>', methods = ["GET", "POST"])
+@app.route('/api/1/dismiss/<int:message_id>', methods = ["GET", "POST"])
 @login_required
 def api_dismiss_message(message_id):
 	user = g.user
