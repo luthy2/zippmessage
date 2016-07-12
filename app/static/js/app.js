@@ -36,7 +36,9 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
           if ($scope.inbox[i].id == messageId){
             $scope.inbox.splice(i,1);
             break
-      }), function error(response){
+          }
+        }
+    ), function error(response){
         console.log(response)
         alert('something went wrong, we couldnt bookmark this!')
       };
