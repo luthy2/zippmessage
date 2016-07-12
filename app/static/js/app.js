@@ -22,7 +22,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
       console.log(response)
       $scope.inbox = response.data
     }), function error(response){
-      console.log(response)
+      console.log(response);
     };
   };
 
@@ -31,7 +31,6 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
         method: 'GET',
         url: 'http://zippmessage-staging.herokuapp.com/api/1/bookmark/'+messageId
       }).then(function success(response){
-        console.log(response)
         console.log(response)
         for (var i = 0; i < $scope.inbox.length; i++){
           if ($scope.inbox[i].id == messageId){
