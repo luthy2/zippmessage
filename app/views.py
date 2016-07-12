@@ -523,7 +523,7 @@ def api_dismiss_message(message_id):
 @login_required
 def api_app():
 	user = g.user
-	return make_response(open('app/templates/api_test.html')).read())
+	return make_response(open('app/templates/api_test.html').read())
 
 @app.route('/app/bookmarks', methods = ["GET", "POST"])
 @login_required
