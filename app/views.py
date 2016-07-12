@@ -1,4 +1,4 @@
-from flask import request, g, render_template, session, url_for, redirect, request, flash, jsonify, send_from_directory
+from flask import request, g, render_template, session, url_for, redirect, request, flash, jsonify, send_from_directory, make_response
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, twitter
 from forms import NewMessageForm, RecipientsForm, TagForm
@@ -518,11 +518,17 @@ def api_dismiss_message(message_id):
 # 	db.session.commit()
 # 	return jsonify(ok = True)
 
-@app.route('/app', methods = ["GET", "POST"])
+@app.route('/app/inbox', methods = ["GET", "POST"])
 @login_required
 def api_app():
 	user = g.user
-	return render_template('api_test.html')
+	return make_response(open('app/templates/api_test.html')).read()
+
+@app.route('/app/bookmarks', methods = ["GET", "POST"])
+@login_required
+def api_app_bookmarks():
+	user = g.user
+	return
 
 
 @app.route('/favicon.ico', methods = ["GET", "POST"])
