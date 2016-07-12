@@ -38,7 +38,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
             break
           }
         }
-    ), function error(response){
+    }), function error(response){
         console.log(response)
         alert('something went wrong, we couldnt bookmark this!')
       };
