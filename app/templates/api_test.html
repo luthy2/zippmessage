@@ -20,7 +20,7 @@
           <p>{{message.from_user}} {{message.note}}</p>
           <div>
             <a href ng-click="id = {{message.id}}; dismissMessage(id)"><span class="glyphicon glyphicon-remove"></span></a>
-            <a href ng-click="id = {{message.id}}; bookmarkMessage()"><span class="glyphicon glyphicon-bookmark"></span></a>
+            <a href ng-click="id = {{message.id}}; bookmarkMessage(id)"><span class="glyphicon glyphicon-bookmark"></span></a>
             <a><span class="glyphicon glyphicon-share-alt"></span></a>
           </div>
         </li>
