@@ -11,8 +11,7 @@
   </head>
   <body ng-controller="InboxController" ng-cloak>
     Zipp<a href=#>Inbox </a><a href=#>Bookmarks </a><a href=#>Explore </a><a href=#>compose </a><a href=#>Profile </a>
-    <h2>Inbox</h2>
-    {% raw %}
+    <h2>Inbox</h2><button type = "button" class = "btn btn-default" ng-click="getInbox()"></button>
       <ul style = "list-style:none;">
         <li ng-repeat="message in inbox">
           <a href = "{{message.url}}"><h4>{{message.title}}</h4></a>
@@ -25,8 +24,6 @@
           </div>
         </li>
       </ul>
-    {% endraw %}
-
     <script type="text/javascript" src="/static/js/app.js"></script>
   </body>
 
