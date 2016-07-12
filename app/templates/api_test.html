@@ -19,8 +19,8 @@
           <p>{{message.description}}</p>
           <p>{{message.from_user}} {{message.note}}</p>
           <div>
-            <a href ng-click="dismissMessage(message.id)"><span class="glyphicon glyphicon-remove"></span></a>
-            <a href ng-click="bookmarkMessage(message.id)" ><span class="glyphicon glyphicon-bookmark"></span></a>
+            <button type="button" class="btn btn-default" ng-click="dismissMessage(message.id)"><span class="glyphicon glyphicon-remove"></span></button>
+            <button type="button" class="btn btn-default" ng-click="bookmarkMessage(message.id)"><span class="glyphicon glyphicon-bookmark"></span></button>
             <a><span class="glyphicon glyphicon-share-alt"></span></a>
           </div>
         </li>
