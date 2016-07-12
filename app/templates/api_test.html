@@ -5,6 +5,9 @@
     <title>Zipp Api Test</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <style>
+    {background-color:}
+    </style>
   </head>
   <body ng-controller="InboxController" ng-cloak>
     Zipp<a href=#>Inbox </a><a href=#>Bookmarks </a><a href=#>Explore </a><a href=#>compose </a><a href=#>Profile </a>
@@ -16,9 +19,9 @@
           <p>{{message.description}}</p>
           <p>{{message.from_user}} {{message.note}}</p>
           <div>
-            <span class="glyphicon glyphicon-remove"></span>
-            <span class="glyphicon glyphicon-bookmark"></span>
-            <span class="glyphicon glyphicon-share-alt"></span>
+            <a href ng-click="dismissMessage({{message.id}})"><span class="glyphicon glyphicon-remove"></span></a>
+            <a href ng-click="bookmarkMessage({{message.id}})"><span class="glyphicon glyphicon-bookmark"></span></a>
+            <a><span class="glyphicon glyphicon-share-alt"></span></a>
           </div>
         </li>
       </ul>

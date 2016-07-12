@@ -443,6 +443,7 @@ def api_user_inbox():
 	data = []
 	for item in inbox.all():
 		message = {}
+		message['id'] = item.message_id
 		message['note']=item.message.title
 		message['from_user']=item.message.author.username
 		message['url']=item.message.url
@@ -460,6 +461,7 @@ def api_user_bookmarks():
 	data = []
 	for item in bookmarks.all():
 		message = {}
+		message['id']=item.message_id
 		message['note']=item.message.title
 		message['from_user']=item.message.author.username
 		message['url']=item.message.url
@@ -472,21 +474,19 @@ def api_user_bookmarks():
 	return jsonify(data)
 
 
-# @app.route('api/1/message/bookmark', methods = ["GET", "POST"])
-# @login_required
-# def api_bookmark_message():
-# 	user = g.user
-# 	message_id = request.args.get('message_id')
-# 	user.bookmark_message(message_id)
-# 	return jsonify(ok = True)
-#
-# @app.route('api/1/message/dismiss', methods = ["GET", "POST"])
-# @login_required
-# def api_dismiss_message():
-# 	user = g.user
-# 	message_id = request.args.get('message_id')
-# 	user.dismiss_message(message_id)
-# 	return jsonify(ok = True)
+@app.route('api/1/bookmark/<int:message_id>', methods = ["GET", "POST"])
+@login_required
+def api_bookmark_message():
+	user = g.user
+	user.bookmark_message(message_id)
+	return jsonify(ok = True)
+
+@app.route('api/1/dismiss/<int:message_id>', methods = ["GET", "POST"])
+@login_required
+def api_dismiss_message(message_id):
+	user = g.user
+	user.dismiss_message(message_id)
+	return jsonify(ok = True)
 #
 # @app.route('api/1/message/compose', methods = ["GET", "POST"])
 # @login_required
