@@ -1,4 +1,4 @@
-from flask import request, g, render_template, session, url_for, redirect, request, flash, jsonify
+from flask import request, g, render_template, session, url_for, redirect, request, flash, jsonify, send_from_directory
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, twitter
 from forms import NewMessageForm, RecipientsForm, TagForm
@@ -523,3 +523,9 @@ def api_dismiss_message(message_id):
 def api_app():
 	user = g.user
 	return render_template('api_test.html')
+
+
+@app.route('/favicon.ico')
+def favicon():
+	    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico')
