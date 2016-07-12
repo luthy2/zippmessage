@@ -27,5 +27,11 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
 
   $scope.dismissMessage = function(messageId){
     console.log('Message Id is ' + messageId);
-    };
+    for (var i = 0; i < $scope.inbox.length; i++){
+      if ($scope.inbox[i].id == messageId){
+        $scope.inbox.splice(i,1);
+        break
+      }
+    }
+  };
 });
