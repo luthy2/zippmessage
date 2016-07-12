@@ -26,12 +26,19 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     };
 
   $scope.dismissMessage = function(messageId){
-    console.log('Message Id is ' + messageId);
-    for (var i = 0; i < $scope.inbox.length; i++){
-      if ($scope.inbox[i].id == messageId){
-        $scope.inbox.splice(i,1);
-        break
+    $http ({
+      method: 'GET',
+      url: 'http://zippmessage-staging.herokuapp.com/api/1/dismiss/'+messageId
+    }).then(function success(response){
+      console.log(response)
+      for (var i = 0; i < $scope.inbox.length; i++){
+        if ($scope.inbox[i].id == messageId){
+          $scope.inbox.splice(i,1);
+          break
+        }
       }
-    }
+    }), function error(response){
+      console.log(response)
+    };
   };
 });
