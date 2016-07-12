@@ -17,7 +17,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
   $scope.bookmarkMessage = function(messageId){
       $http ({
         method: 'GET',
-        url: 'http://zippmessage-staging.herokuapp.com/api/1/bookmark/'+= messageId
+        url: 'http://zippmessage-staging.herokuapp.com/api/1/bookmark/'+messageId
       }).then(function success(response){
         console.log(response)
       }), function error(response){
