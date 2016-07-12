@@ -478,15 +478,30 @@ def api_user_bookmarks():
 @login_required
 def api_bookmark_message(message_id):
 	user = g.user
-	user.bookmark_message(message_id)
+
+	message = UserMessage.query.filter(UserMessage.message_id == message_id)
+	if message is None:
+		return jsonify(error = 'Message not found.')
+	m = user.bookmark_message(message_id)
+	if m is None:
+		return jsonify(error = 'Message could not be bookmarked')
+	db.session.add(user)
+	db.session.commit()
 	return jsonify(ok = True)
 
 @app.route('/api/1/dismiss/<int:message_id>', methods = ["GET", "POST"])
 @login_required
 def api_dismiss_message(message_id):
 	user = g.user
-	user.dismiss_message(message_id)
-	return jsonify(ok = True)
+	message = UserMessage.query.filter(UserMessage.message_id == message_id)
+	if message is None:
+		return jsonify(error = 'Message not found.')
+	m = user.dismiss_message(message_id)
+	if m is None:
+	    return jsonify(error = 'Message could not be dismissed')
+	db.session.add(user)
+	db.session.commit()
+	return jsonify(ok = True, msg = 'Message' +message_id + 'dismissed')
 #
 # @app.route('api/1/message/compose', methods = ["GET", "POST"])
 # @login_required
