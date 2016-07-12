@@ -35,6 +35,4 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
         console.log(response)
       };
     };
-
-
 });
