@@ -443,10 +443,10 @@ def api_user_inbox():
 	offset = request.args.get('offset')
 	inbox = g.user.inbox()
 	if offset:
-		offset = int(offset) + 1
-		inbox = inbox.offset(offset).limit(5)
+		offset = int(offset)
+		inbox = inbox.from_self().offset(offset).limit(5)
 	else:
-		inbox = inbox.limit(6)	
+		inbox = inbox.limit(6)
 	data = []
 	for item in inbox.all():
 		message = {}
