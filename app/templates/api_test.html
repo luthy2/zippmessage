@@ -9,14 +9,14 @@
     {background-color:}
     </style>
   </head>
-  <body ng-controller="InboxController" ng-cloak>
+  <body ng-controller="InboxController" >
     <div class = "container-fluid">
       <div class = "col-md-8 col-md-offset-2">
         <div class = "row">
           <h4 width ="100%" style="text-align:center;">Zipp <a href=#>Inbox </a><a href=#>Bookmarks </a><a href=#>Explore </a><a href=#>compose </a><a href=#>Profile </a></h4>
           <h2>Inbox</h2>
         </div>
-        <div class = "row" style ="padding-top:20px">
+        <div class = "row" style ="padding-top:20px" ng-cloak>
           <ul class = "list-group" ng-repeat="message in inbox">
             <a href ="{{message.url}}" class = "list-group-item" target="_blank">
               <h4 class = "list-group-item-heading">{{message.title}}</h4>
@@ -31,7 +31,7 @@
               <button type="button" class="btn btn-link btn-sm" style="width:17%"><span class="glyphicon glyphicon-share-alt"></span></button>
             </li>
           </ul>
-          <button type = "button" class = "btn btn-default btn-sm btn-block btn" ng-click="getInbox()>load more</button>
+          <button type = "button" class = "btn btn-default btn-sm btn-block btn" ng-click="getInbox()">load more</button>
         </div>
       </div>
     </div>
