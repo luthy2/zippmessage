@@ -13,7 +13,7 @@
     <div class = "container-fluid">
       <div class = "col-md-8 col-md-offset-2">
         <div class = "row">
-          <h4>Zipp <a href=#>Inbox </a><a href=#>Bookmarks </a><a href=#>Explore </a><a href=#>compose </a><a href=#>Profile </a></h4>
+          <h4 style = "width:100%; text-align:center;">Zipp <a href=#>Inbox </a><a href=#>Bookmarks </a><a href=#>Explore </a><a href=#>compose </a><a href=#>Profile </a></h4>
           <h2>Inbox</h2>
         </div>
         <div class = "row">
@@ -26,7 +26,7 @@
               <p class = "list-group-item-text">{{message.description}}</p>
             </a>
             <li class = "list-group-item">
-              <p><a href = "http://www.zippmessage-staging.herokuapp.com/user/{{message.from_user}}">{{message.from_user}}</a> {{message.note}}</p>
+              <p><a href = "http://zippmessage-staging.herokuapp.com/user/{{message.from_user}}">{{message.from_user}}</a> {{message.note}}</p>
             </li>
             <li class = "list-group-item" style="text-align:center;">
               <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="dismissMessage(message.id)"><span class="glyphicon glyphicon-remove"></span></button>
