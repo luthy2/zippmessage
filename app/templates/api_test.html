@@ -10,20 +10,32 @@
     </style>
   </head>
   <body ng-controller="InboxController" ng-cloak>
-    Zipp<a href=#>Inbox </a><a href=#>Bookmarks </a><a href=#>Explore </a><a href=#>compose </a><a href=#>Profile </a>
-    <h2>Inbox</h2><button type = "button" class = "btn btn-default" ng-click="getInbox()">Reload</button>
-      <ul style = "list-style:none;">
-        <li ng-repeat="message in inbox">
-          <a href = "{{message.url}}"><h4>{{message.title}}</h4></a>
-          <p>{{message.description}}</p>
-          <p>{{message.from_user}} {{message.note}}</p>
-          <div>
-            <button type="button" class="btn btn-default" ng-click="dismissMessage(message.id)"><span class="glyphicon glyphicon-remove"></span></button>
-            <button type="button" class="btn btn-default" ng-click="bookmarkMessage(message.id)"><span class="glyphicon glyphicon-bookmark"></span></button>
-            <a><span class="glyphicon glyphicon-share-alt"></span></a>
-          </div>
-        </li>
-      </ul>
+    <div class = "container-fluid">
+      <div class = "col-md-8 col-md-offset-2">
+        <div class = "row">
+          Zipp<a href=#>Inbox </a><a href=#>Bookmarks </a><a href=#>Explore </a><a href=#>compose </a><a href=#>Profile </a>
+          <h2>Inbox</h2>
+        </div>
+        <div class = "row">
+          <button type = "button" class = "btn btn-default btn-lg btn-block" ng-click="getInbox()">Load New</button>
+          <ul class = "list-group" ng-repeat="message in inbox">
+            <a href ="{{message.url}}" class = "list-group-item">
+              <h4 class = "list-group-item-heading">{{message.title}}</h4>
+              <p class = "list-group-item-text">{{message.description}}</p>
+            </a>
+            <li class = "list-group-item">
+              <p>{{message.from_user}} {{message.note}}</p>
+            </li>
+            <li class = "list-group-item">
+              <button type="button" class="btn btn-default" ng-click="dismissMessage(message.id)"><span class="glyphicon glyphicon-remove"></span></button>
+              <button type="button" class="btn btn-default" ng-click="bookmarkMessage(message.id)"><span class="glyphicon glyphicon-bookmark"></span></button>
+              <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share-alt"></span></button>
+            </li>
+          </ul>
+          <button type = "button" class = "btn btn-default btn-lg btn-block">Next 10</button>
+        </div>
+      </div>
+    </div>
     <script type="text/javascript" src="/static/js/app.js"></script>
   </body>
 
