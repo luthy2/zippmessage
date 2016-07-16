@@ -445,6 +445,8 @@ def api_user_inbox():
 	if offset:
 		offset = int(offset) + 1
 		inbox = inbox.offset(offset).limit(5)
+	else:
+		inbox = inbox.limit(6)	
 	data = []
 	for item in inbox.all():
 		message = {}
