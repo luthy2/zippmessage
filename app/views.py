@@ -440,10 +440,10 @@ def api_user():
 @app.route('/api/1/user/inbox', methods = ["GET"])
 @login_required
 def api_user_inbox():
-	q = request.args.get()
+	offset = request.args.get('offset')
 	inbox = g.user.inbox()
-	if q['offset']:
-		offset = int(q['offset']) + 1
+	if offset:
+		offset = int(offset) + 1
 		inbox = inbox.offset(offset).limit(5)
 	data = []
 	for item in inbox.all():
@@ -508,7 +508,7 @@ def api_dismiss_message(message_id):
 	db.session.commit()
 	return jsonify(ok = True, msg = 'Message' + str(message_id) + ' dismissed')
 #
-# 
+#
 # @app.route('api/1/message/create', methods = ["GET", "POST"])
 # @app.login_required
 # def compose_digest():
