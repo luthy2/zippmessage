@@ -22,6 +22,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     }).then(function success(response){
       console.log(response)
       $scope.inbox.concat(response.data)
+      console.log($scope.inbox)
     }), function error(response){
       console.log(response);
     };
