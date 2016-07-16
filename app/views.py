@@ -131,7 +131,7 @@ def welcome():
 @login_required
 def inbox(page=1):
 	user = g.user
-	inbox = user.inbox().paginate(page,8,False)
+	inbox = user.inbox().paginate(page,6,False)
 	inbox_count = user.inbox().count()
 	user_tags = user.tags_for_user().most_common(20)
 	return render_template('inbox.html', user=user, inbox = inbox, user_tags = user_tags, title = "Inbox", inbox_count=inbox_count)
@@ -429,8 +429,8 @@ def reader(page = 1):
 
 @app.route('/api/1/heartbeat', methods = ["GET", "POST"])
 def api_heartbeat():
-	resp = {"ok": True}
-	return jsonify(resp)
+	data = {"ok": True}
+	return jsonify(data)
 
 @app.route('/api/1/user')
 @login_required
@@ -440,7 +440,11 @@ def api_user():
 @app.route('/api/1/user/inbox', methods = ["GET"])
 @login_required
 def api_user_inbox():
+	q = request.args.get()
 	inbox = g.user.inbox()
+	if q['offset']:
+		offset = int(q['offset']) + 1
+		inbox = inbox.offset(offset).limit(5)
 	data = []
 	for item in inbox.all():
 		message = {}
@@ -488,7 +492,7 @@ def api_bookmark_message(message_id):
 		return jsonify(error = 'Message could not be bookmarked')
 	db.session.add(user)
 	db.session.commit()
-	return jsonify(ok = True, msg = 'Message' + str(message_id) + 'bookmarked')
+	return jsonify(ok = True, msg = 'Message' + str(message_id) + ' bookmarked')
 
 @app.route('/api/1/dismiss/<int:message_id>', methods = ["GET", "POST"])
 @login_required
@@ -502,22 +506,30 @@ def api_dismiss_message(message_id):
 	    return jsonify(error = 'Message could not be dismissed')
 	db.session.add(user)
 	db.session.commit()
-	return jsonify(ok = True, msg = 'Message' + str(message_id) + 'dismissed')
+	return jsonify(ok = True, msg = 'Message' + str(message_id) + ' dismissed')
 #
-# @app.route('api/1/message/compose', methods = ["GET", "POST"])
-# @login_required
-# def api_share_message():
-# 	user = g.user
-# 	message = Message(title = request.json.get_json('title'),
-# 						url = request.json.get_json('url'),
+# 
+# @app.route('api/1/message/create', methods = ["GET", "POST"])
+# @app.login_required
+# def compose_digest():
+# 	data = request.get_json()
+# 	data = dict(data)
+# 	title = data["title"]
+# 	url = data["url"]
+# 	timestamp = datetime.utcnow()
+# 	message = Message( 	title = title,
+# 						url = url,
 # 						author = g.user,
-# 						timestamp = datetime.utcnow())
-# 	recipients = request.json.get_json('recipients')
-# 	for u in recipients:
-# 		message.add_recipient(u)
+# 						timestamp = timestamp)
 # 	db.session.add(message)
 # 	db.session.commit()
-# 	return jsonify(ok = True)
+# 	recipients = [int(i) for i in data['recipient_ids']]
+# 	for r in recipients:
+# 		message.add_recipient(r)
+# 		message.send_message(r)
+# 	message.deliver_message()
+# 	db.session.commit()
+# 	return jsonify(ok=True)
 
 @app.route('/app/inbox', methods = ["GET", "POST"])
 @login_required
@@ -525,14 +537,46 @@ def api_app():
 	user = g.user
 	return make_response(open('app/templates/api_test.html').read())
 
-@app.route('/app/bookmarks', methods = ["GET", "POST"])
-@login_required
-def api_app_bookmarks():
-	user = g.user
-	return
+#
+# @app.route('/app/bookmarks', methods = ["GET", "POST"])
+# @login_required
+# def api_app_bookmarks():
+# 	user = g.user
+# 	return
 
 
 @app.route('/favicon.ico', methods = ["GET", "POST"])
 def favicon():
-	    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico')
+	return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+
+# @app.route('api/1/digest/create', methods = ["GET", "POST"])
+# def compose_digest():
+# 	if g.user:
+# 		author = g.user
+# 	else:
+# 		author = None
+# 	data = request.get_json()
+# 	data = dict(data)
+# 	content = ','.join(data['urls'])
+# 	digest = Digest(url_path = url_path,
+# 					title = data["title"],
+# 					public = data['is_public'],
+# 					timestamp = datetime.utcnow(),
+# 					content = content, author = author)
+# 	db.session.add(digest)
+# 	db.session.commit()
+# 	return jsonify(ok=True)
+#
+#
+# @app.route('/digests', methods = ["GET", "POST"])
+# @app.login_required
+# def digests():
+# 	user = g.user
+# 	digests = Digests.query.filter(Digests.author == user.id)
+# 	return render_template('digests.html', digests = digests)
+#
+# @app.route('/digest/<str:path>')
+# def digest(path):
+# 	path = path.lower()
+# 	digest = Digest.query.filter(Digest.url_path.contains(path))
+# 	return render_template('digest.html', digest = digest, title = digest.title)

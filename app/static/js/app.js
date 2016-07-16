@@ -17,7 +17,8 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
   $scope.getInbox = function(){
     $http ({
       method:'GET',
-      url:'http://zippmessage-staging.herokuapp.com/api/1/user/inbox'
+      url:'http://zippmessage-staging.herokuapp.com/api/1/user/inbox',
+      params:{'offset':$scope.inbox.length};
     }).then(function success(response){
       console.log(response)
       $scope.inbox = response.data
