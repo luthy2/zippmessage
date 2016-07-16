@@ -13,28 +13,28 @@
     <div class = "container-fluid">
       <div class = "col-md-8 col-md-offset-2">
         <div class = "row">
-          Zipp<a href=#>Inbox </a><a href=#>Bookmarks </a><a href=#>Explore </a><a href=#>compose </a><a href=#>Profile </a>
+          <h4>Zipp <a href=#>Inbox </a><a href=#>Bookmarks </a><a href=#>Explore </a><a href=#>compose </a><a href=#>Profile </a></h4>
           <h2>Inbox</h2>
         </div>
         <div class = "row">
           <button type = "button" class = "btn btn-default btn-sm btn-block" ng-click="getInbox()">Load New</button>
         </div>
-        <div class = "row" style ="padding-top:50px">
+        <div class = "row" style ="padding-top:20px">
           <ul class = "list-group" ng-repeat="message in inbox">
             <a href ="{{message.url}}" class = "list-group-item">
               <h4 class = "list-group-item-heading">{{message.title}}</h4>
               <p class = "list-group-item-text">{{message.description}}</p>
             </a>
             <li class = "list-group-item">
-              <p>{{message.from_user}} {{message.note}}</p>
+              <p><a href = "http://www.zippmessage-staging.herokuapp.com/user/{{message.from_user}}">{{message.from_user}}</a> {{message.note}}</p>
             </li>
-            <li class = "list-group-item">
-              <button type="button" class="btn btn-link btn-sm" ng-click="dismissMessage(message.id)"><span class="glyphicon glyphicon-remove"></span></button>
-              <button type="button" class="btn btn-link btn-sm" ng-click="bookmarkMessage(message.id)"><span class="glyphicon glyphicon-bookmark"></span></button>
-              <button type="button" class="btn btn-link btn-sm"><span class="glyphicon glyphicon-share-alt"></span></button>
+            <li class = "list-group-item" style="text-align:center;">
+              <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="dismissMessage(message.id)"><span class="glyphicon glyphicon-remove"></span></button>
+              <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="bookmarkMessage(message.id)"><span class="glyphicon glyphicon-bookmark"></span></button>
+              <button type="button" class="btn btn-link btn-sm" style="width:17%"><span class="glyphicon glyphicon-share-alt"></span></button>
             </li>
           </ul>
-          <button type = "button" class = "btn btn-default btn-sm btn-block">Next 10</button>
+          <button type = "button" class = "btn btn-default btn-sm btn-block btn" disabled="disabled">Next 10</button>
         </div>
       </div>
     </div>
