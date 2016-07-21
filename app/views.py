@@ -533,7 +533,8 @@ def api_dismiss_message(message_id):
 @login_required
 def api_app():
 	user = g.user
-	return make_response(open('app/templates/inbox.html').read())
+	tags = user.tags_for_user()
+	return render_template('inbox.html', title = "Inbox" , user_tags = tags)
 
 #
 # @app.route('/app/bookmarks', methods = ["GET", "POST"])
