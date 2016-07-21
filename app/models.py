@@ -229,11 +229,12 @@ class Message(db.Model):
 		description = resp['description']
 		url = resp['url']
 
-		article_tag = 	'<a class = "list-group-item"  href = "%s" target="_blank">' \
-						'<h4 class = "list-group-item-heading">%s</h4>' \
-						'<p class = "list-group-item-text">%s</p>' \
-						'</a>'
-		return article_tag % (url, title, description)
+		tag = 	'<a class = "list-group-item"  href = "%s" target="_blank">' \
+				'<h4 class = "list-group-item-heading">%s</h4>' \
+				'<p class = "list-group-item-text">%s</p>' \
+				'</a>'
+
+		return tag % (url, title, description)
 
 	def render_no_style(url):
 		#custom render for urls that fail embedly lookup
