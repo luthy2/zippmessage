@@ -251,7 +251,7 @@ class Message(db.Model):
 		resp = self.request_url()
 		if not resp:
 			return render_no_style(self.url)
-		elif:
+		else:
 			url = resp['url']
 			if 'twitter.com' in url:
 				return twitter_tag(url)
