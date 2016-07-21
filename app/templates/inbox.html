@@ -42,7 +42,7 @@
         <button type="button" class="btn btn-link btn-sm" style="width:17%" href ="/share/{{message.id}}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></button>
       </li>
     </ul>
-    <div class = "text-center">
+    <div class = "text-center" ng-cloak>
       <button type = "button" class = "btn btn-default btn-sm btn-block btn" ng-click="getInbox()" ng-hide="loadedAll">load more</button>
       <span ng-show="loadedAll">this is the end :)</span>
     </div>
