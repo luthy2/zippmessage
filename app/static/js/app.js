@@ -12,7 +12,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     }).then(function success(response){
       console.log(response)
       $scope.inbox = response.data
-      if ($scope.inbox.length % response.data.inbox_count == 0){
+      if (response.data.length < 6){
         $scope.loadedAll = true;
       }
     }), function error(response){
@@ -28,6 +28,9 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
       console.log(response)
       $scope.inbox = $scope.inbox.concat(response.data)
       console.log($scope.inbox)
+      if (response.data.length < 6){
+        $scope.loadedAll = true;
+      }
     }), function error(response){
       console.log(response);
     };
