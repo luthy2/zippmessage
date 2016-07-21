@@ -53,7 +53,7 @@ class User(db.Model):
 
 	sent_messages = db.relationship('Message', backref='author', lazy='dynamic')
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
-	digests = db.relationship('Digest', backref='author', lazy='dynamic')
+
 
 	contacts = db.relationship('User',
 								secondary = approved_contacts,
