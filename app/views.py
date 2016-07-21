@@ -1,4 +1,3 @@
-import os
 from flask import request, g, render_template, session, url_for, redirect, request, flash, jsonify, send_from_directory, make_response
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, twitter
@@ -442,9 +441,10 @@ def api_user():
 def api_user_inbox():
 	offset = request.args.get('offset')
 	inbox = g.user.inbox()
+	count  = inbox.count()
 	if offset:
 		offset = int(offset)
-		inbox = inbox.from_self().offset(offset).limit(5)
+		inbox = inbox.from_self().offset(offset).limit(6)
 	else:
 		inbox = inbox.limit(6)
 	data = []
@@ -453,13 +453,9 @@ def api_user_inbox():
 		message['id'] = item.message_id
 		message['note']=item.message.title
 		message['from_user']=item.message.author.username
-		message['url']=item.message.url
-		resp = item.message.request_url()
-		if resp:
-			message['description'] = resp["description"]
-			message['title'] =resp["title"]
+		message['content']= item.message.render_url()
 		data.append(message)
-	return jsonify(data)
+	return jsonify(data, count)
 
 @app.route('/api/1/user/bookmarks', methods = ["GET"])
 @login_required
@@ -537,7 +533,7 @@ def api_dismiss_message(message_id):
 @login_required
 def api_app():
 	user = g.user
-	return make_response(open('app/templates/api_test.html').read())
+	return make_response(open('app/templates/inbox.html').read())
 
 #
 # @app.route('/app/bookmarks', methods = ["GET", "POST"])
@@ -550,35 +546,3 @@ def api_app():
 @app.route('/favicon.ico', methods = ["GET", "POST"])
 def favicon():
 	return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
-
-# @app.route('api/1/digest/create', methods = ["GET", "POST"])
-# def compose_digest():
-# 	if g.user:
-# 		author = g.user
-# 	else:
-# 		author = None
-# 	data = request.get_json()
-# 	data = dict(data)
-# 	content = ','.join(data['urls'])
-# 	digest = Digest(url_path = url_path,
-# 					title = data["title"],
-# 					public = data['is_public'],
-# 					timestamp = datetime.utcnow(),
-# 					content = content, author = author)
-# 	db.session.add(digest)
-# 	db.session.commit()
-# 	return jsonify(ok=True)
-#
-#
-# @app.route('/digests', methods = ["GET", "POST"])
-# @app.login_required
-# def digests():
-# 	user = g.user
-# 	digests = Digests.query.filter(Digests.author == user.id)
-# 	return render_template('digests.html', digests = digests)
-#
-# @app.route('/digest/<str:path>')
-# def digest(path):
-# 	path = path.lower()
-# 	digest = Digest.query.filter(Digest.url_path.contains(path))
-# 	return render_template('digest.html', digest = digest, title = digest.title)

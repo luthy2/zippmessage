@@ -29,22 +29,25 @@
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
     </ul>
   </div>
-	<div class ="col-md-6">
-	  {% if inbox %}
-		  {% for message in inbox.items %}
-        <ul class="list-group">
-	  			{% include "message.html" %}
-        </ul>
-	 		{% endfor %}
-  	{% else %}
-		  <p> Theres nothing here :(. Add some stuff and will show up here</p>
+	<div class ="col-md-6"  ng-controller="InboxController" ng-cloak>
+    {% raw %}
+    <ul class = "list-group" ng-repeat="message in inbox">
+      <span ng-bind-html="$sce.trustAsHtml(message.content)"></span>
+      <li class = "list-group-item">
+        <p><a href = "/user/{{message.from_user}}">{{message.from_user}}:</a> {{message.note}}</p>
+      </li>
+      <li class = "list-group-item" style="text-align:center;">
+        <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="dismissMessage(message.id)"><span class="glyphicon glyphicon-remove"></span></button>
+        <button type="button" class="btn btn-link btn-sm" style="width:17%" href ="/bookmark/{{message.id}}"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-link btn-sm" style="width:17%" href ="/share/{{message.id}}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a></li>
+      </li>
+    </ul>
+    <div class = "text-center">
+      <button type = "button" class = "btn btn-default btn-sm btn-block btn" ng-click="getInbox()" ng-hide="loadedAll">load more</button>
+    </div>
+    {% endraw %}
+    <script type="text/javascript" src="/static/js/app.js"></script>
   </div>
-    {% endif %}
-  <div class = "text-center">
-      <ul class="list-inline">
-        {% if inbox.has_prev %}<li><a class = "btn btn-default" href = "{{url_for('inbox',page = inbox.prev_num)}}">previous</a></li>{% endif %}
-        {% if inbox.has_next %}<li><a class = "btn btn-default" href = "{{url_for('inbox',page = inbox.next_num)}}">next</a></li>{% endif %}
-      </ul>
-  </div>
-</div>  
+</div>
+
 {% endblock %}

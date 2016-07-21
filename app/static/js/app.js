@@ -2,7 +2,8 @@
 
 var zippApp = angular.module("zippApp", []);
 
-zippApp.controller("InboxController", function InboxController($scope, $http, $q){
+zippApp.controller("InboxController", function InboxController($scope, $http, $q, $sce){
+  $scope.loadedAll = false;
   $scope.inbox = []
     $http ({
       method: 'GET',
@@ -10,6 +11,9 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     }).then(function success(response){
       console.log(response)
       $scope.inbox = response.data
+      if ($scope.inbox.length % response.data.inbox_count == 0){
+        $scope.loadedAll = true;
+      }
     }), function error(response){
       console.log(response)
     };
@@ -22,6 +26,9 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     }).then(function success(response){
       console.log(response)
       $scope.inbox = $scope.inbox.concat(response.data)
+      if ($scope.inbox.length % response.data.inbox_count == 0){
+        $scope.loadedAll = true;
+      }
       console.log($scope.inbox)
     }), function error(response){
       console.log(response);
@@ -63,7 +70,22 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
       alert('hmmm... something went wrong and we were unable to dismiss the message.')
     };
   };
+
+  // $scope.createMessage = function(){
+  //   $http({
+  //     method: 'POST',
+  //     url:'http://zippmessage-staging.herokuapp.com/api/1/create/message',
+  //     data:{
+  //
+  //     }
+  //   })
+  // }
+
 });
+
+
+
+
 
 // zippApp.config(['$locationProvider', '$routeProvider', function config($locationProvider, $routeProvider){
 //   $locationProvider.hashPrefix('!');

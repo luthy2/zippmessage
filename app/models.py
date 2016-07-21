@@ -53,6 +53,7 @@ class User(db.Model):
 
 	sent_messages = db.relationship('Message', backref='author', lazy='dynamic')
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
+	digests = db.relationship('Digest', backref='author', lazy='dynamic')
 
 	contacts = db.relationship('User',
 								secondary = approved_contacts,
@@ -109,6 +110,7 @@ class User(db.Model):
 		user_message = UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.message_id == message_id).one()
 		user_message.is_read = True
 		user_message.is_bookmarked = True
+		db.session.commit()
 		return self
 
 	def dismiss_message(self, message_id):
@@ -191,13 +193,81 @@ class Message(db.Model):
 		else:
 			return False
 
-	def twitter_tag(self, url):
+	def twitter_tag(url):
 		url = url
-		TWITTER_SCRIPT_TAG = 	'<blockquote class="twitter-tweet tw-align-center">' \
+		TWITTER_SCRIPT_TAG = 	'<div class="list-group-item">'\
+								'<blockquote class="twitter-tweet tw-align-center">' \
 								'<a href="%s"></a></blockquote>' \
 								'<script async src="https://platform.twitter.com/widgets.js" ' \
-								'charset="utf-8"></script>'
+								'charset="utf-8"></script>'\
+								'</div>'
 		return TWITTER_SCRIPT_TAG % url
+
+	def soundcloud_tag(url):
+		#custom rendering for soundcloud
+		resp = request.get('https://api.soundcloud.com/oembed?format=json&url=%s&iframe=true' % url)
+		if not resp['error']:
+			return resp['html']
+		else:
+			return render_no_style(url)
+
+	def spotify_tag(url):
+		#custom rendering for spotify
+		parse_object = url_parse(url)
+		path = parse_object.path
+		path = path.replace('/',':')
+		p = 'spotify%s' % path
+
+		spotify_tag =	'<div class = "list-group-item">' \
+						'<iframe src="https://embed.spotify.com/?uri=%s"' \
+						'width="100%" height="80" frameborder="0" allowtransparency="true"></iframe>' \
+						'</div>'
+		return spotify_tag % p
+
+	def article_tag(resp):
+		title = resp['title']
+		description = resp['description']
+		url = resp['url']
+
+		article_tag = 	'<a class = "list-group-item"  href = "%s" target="_blank">' \
+						'<h4 class = "list-group-item-heading">%s</h4>' \
+						'<p class = "list-group-item-text">%s</p>' \
+						'</a>'
+		return article_tag % (url, title, description)
+
+	def render_no_style(url):
+		#custom render for urls that fail embedly lookup
+		parse_object = urlparse(url)
+		short_url = parse_object.netloc
+		no_style_tag = '<a href = "%s" class = "list-group-item">Content via %s</a>'
+		return no_style_tag % url , short_url
+
+	def image_tag(url):
+		image_tag = '<li class ="list-group-item"><img src = "%s" width = "100%"></li>'
+		return image_tag % url
+
+
+	def render_url(self):
+		resp = self.request_url()
+		if not resp:
+			return render_no_style(self.url)
+		elif:
+			url = resp['url']
+			if 'twitter.com' in url:
+				return twitter_tag(url)
+			elif 'soundcloud.com' in url:
+				return soundcloud_tag(url)
+			elif 'spotify.com' in url:
+				return spotify_tag(url)
+			elif resp['type'] == 'link':
+				return article_tag(resp)
+			elif resp["type"] == 'photo'
+				return image_tag(url)
+			else:
+				return render_no_style(self.url)
+
+
+
 
 	def url_logo(self):
 		short_url = self.short_url()
