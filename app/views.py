@@ -457,7 +457,7 @@ def api_user_inbox():
 		message['from_user']=item.message.author.username
 		message['content']= item.message.render_url()
 		data.append(message)
-	return jsonify(data, count = count)
+	return jsonify(data)
 
 @app.route('/api/1/user/bookmarks', methods = ["GET"])
 @login_required

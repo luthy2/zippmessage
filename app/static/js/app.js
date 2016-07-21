@@ -26,9 +26,6 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     }).then(function success(response){
       console.log(response)
       $scope.inbox = $scope.inbox.concat(response.data)
-      if ($scope.inbox.length % response.data.inbox_count == 0){
-        $scope.loadedAll = true;
-      }
       console.log($scope.inbox)
     }), function error(response){
       console.log(response);
