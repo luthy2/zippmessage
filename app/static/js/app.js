@@ -3,6 +3,7 @@
 var zippApp = angular.module("zippApp", []);
 
 zippApp.controller("InboxController", function InboxController($scope, $http, $q, $sce){
+  $scope.$sce = $sce;
   $scope.loadedAll = false;
   $scope.inbox = []
     $http ({
