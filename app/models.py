@@ -261,7 +261,7 @@ class Message(db.Model):
 				return spotify_tag(url)
 			elif resp['type'] == 'link':
 				return article_tag(resp)
-			elif resp["type"] == 'photo'
+			elif resp["type"] == 'photo':
 				return image_tag(url)
 			else:
 				return render_no_style(self.url)
