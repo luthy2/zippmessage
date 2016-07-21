@@ -1,3 +1,5 @@
+import os
+
 from flask import request, g, render_template, session, url_for, redirect, request, flash, jsonify, send_from_directory, make_response
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, twitter
@@ -533,8 +535,8 @@ def api_dismiss_message(message_id):
 @login_required
 def api_app():
 	user = g.user
-	tags = user.tags_for_user()
-	return render_template('inbox.html', title = "Inbox" , user_tags = tags)
+	user_tags = user.tags_for_user().most_common(20)
+	return render_template('inbox.html', title = "Inbox" , user_tags = user_tags)
 
 #
 # @app.route('/app/bookmarks', methods = ["GET", "POST"])
