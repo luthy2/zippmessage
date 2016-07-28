@@ -1,6 +1,6 @@
 import os
 
-from flask import request, g, render_template, session, url_for, redirect, request, flash, jsonify, send_from_directory, make_response
+from flask import request, g, render_template, session, url_for, redirect, flash, jsonify, send_from_directory, make_response
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, twitter
 from forms import NewMessageForm, RecipientsForm, TagForm
