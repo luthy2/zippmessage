@@ -4,6 +4,7 @@ from app import embedly
 from urlparse import urlparse
 from datetime import datetime
 from collections import Counter
+import requests
 
 approved_contacts = db.Table('approved_contacts',
 	db.Column('from_contact_id', db.Integer, db.ForeignKey('user.id')),
