@@ -70,7 +70,9 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
         $scope.alert = 'Message Dismissed'
         setTimeout(function(){
           $scope.alert = ''
+          console.log($scope.alert)
         }, 3000);
+        console.log($scope.alert)
     }), function error(response){
       console.log(response)
       alert('hmmm... something went wrong and we were unable to dismiss the message.')
