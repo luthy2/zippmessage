@@ -310,5 +310,7 @@ def render_no_style(url):
 	return no_style_tag % url , short_url
 
 def image_tag(url):
-	image_tag = '<li class ="list-group-item"><img src = "%s" width = "100%"></li>'
-	return image_tag % str(url)
+	image_tag = '<li class = "list-group-item" >' \
+				'<img src = "%s" width="100%%">' \
+				'</li>'
+	return image_tag % url
