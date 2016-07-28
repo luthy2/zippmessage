@@ -198,7 +198,7 @@ class Message(db.Model):
 		if not resp:
 			return render_no_style(self.url)
 		else:
-			if resp['url']:
+			if 'url' in resp:
 				url = resp["url"]
 			else:
 				url = self.url
