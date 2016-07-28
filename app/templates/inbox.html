@@ -7,9 +7,6 @@
     <div class = "alert alert-info"	role= "alert">
       Welcome to Zipp! <a href = "{{url_for('welcome')}}" class = "alert-link">How it works</a>
     </div>
-    <div class = "alert alert-info"	role= "alert" ng-show="alert">
-      {{alert}}
-    </div>
   </div>
 </div>
 
@@ -34,6 +31,9 @@
   </div>
 	<div class ="col-md-6"  ng-controller="InboxController" ng-cloak>
     {% raw %}
+    <div class = "alert alert-info"	role= "alert" ng-show="alert">
+      {{alert}}
+    </div>
     <ul class = "list-group" ng-repeat="message in inbox">
       <span ng-bind-html="$sce.trustAsHtml(message.content)"></span>
       <li class = "list-group-item">
