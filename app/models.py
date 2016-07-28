@@ -193,9 +193,6 @@ class Message(db.Model):
 		else:
 			return False
 
-
-
-
 	def render_url(self):
 		resp = self.request_url()
 		if not resp:
@@ -314,4 +311,4 @@ def render_no_style(url):
 
 def image_tag(url):
 	image_tag = '<li class ="list-group-item"><img src = "%s" width = "100%"></li>'
-	return image_tag % url
+	return image_tag % str(url)
