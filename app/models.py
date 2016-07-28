@@ -198,7 +198,10 @@ class Message(db.Model):
 		if not resp:
 			return render_no_style(self.url)
 		else:
-			url = resp['url'] or self.url
+			if resp['url']:
+				url = resp["url"]
+			else:
+				url = self.url
 			if 'twitter.com' in url:
 				return twitter_tag(url)
 			elif 'soundcloud.com' in url:
