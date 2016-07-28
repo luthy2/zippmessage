@@ -289,7 +289,7 @@ def spotify_tag(url):
 
 	spotify_tag =	'<div class = "list-group-item">' \
 					'<iframe src="https://embed.spotify.com/?uri=%s"' \
-					'width="100%" height="80" frameborder="0" allowtransparency="true"></iframe>' \
+					'width="100%%" height="80" frameborder="0" allowtransparency="true"></iframe>' \
 					'</div>'
 	return spotify_tag % p
 
