@@ -273,14 +273,15 @@ def twitter_tag(url):
 							'</div>'
 	return TWITTER_SCRIPT_TAG % url
 
-# def soundcloud_tag(url):
-# 	#custom rendering for soundcloud
-# 	resp = requests.get('https://api.soundcloud.com/resolve?url=%s' % url)
-# 	new_url = resp.url
-# 	if url:
-# 		return '<iframe width="100%%" height="90" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=%s;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;visual=true"></iframe>' % new_url
-# 	else:
-# 		return render_no_style(url)
+def soundcloud_tag(url):
+	#custom rendering for soundcloud
+	cli = '82b1697a8285401ae1e74be93d8bdc2b'
+	resp = requests.get('https://api.soundcloud.com/oembed?url=%s?client_id=%s' % (url, cli))
+	resp = resp.json()
+	if 'html' in resp:
+		return resp['html']
+	else:
+		return render_no_style(url)
 
 def spotify_tag(url):
 	#custom rendering for spotify
