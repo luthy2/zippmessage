@@ -7,6 +7,9 @@
     <div class = "alert alert-info"	role= "alert">
       Welcome to Zipp! <a href = "{{url_for('welcome')}}" class = "alert-link">How it works</a>
     </div>
+    <div class = "alert alert-info"	role= "alert" ng-show="alert">
+      {{alert}} <span class = 'glyphicon glyphicon-remove' ng-click='hideAlert'><span>
+    </div>
   </div>
 </div>
 
@@ -34,17 +37,17 @@
     <ul class = "list-group" ng-repeat="message in inbox">
       <span ng-bind-html="$sce.trustAsHtml(message.content)"></span>
       <li class = "list-group-item">
-        <p><a href = "/user/{{message.from_user}}">{{message.from_user}}:</a> {{message.note}}</p>
+        <p><a href = "/user/{{message.from_user}}">@{{message.from_user}}:</a> {{message.note}}</p>
       </li>
       <li class = "list-group-item" style="text-align:center;">
         <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="dismissMessage(message.id)"><span class="glyphicon glyphicon-remove"></span></button>
         <button type="button" class="btn btn-link btn-sm" style="width:17%" href ="/bookmark/{{message.id}}"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span></button>
-        <button type="button" class="btn btn-link btn-sm" style="width:17%" href ="/share/{{message.id}}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-link btn-sm" style="width:17%" href ="/share/{{message.id}}"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>
       </li>
     </ul>
     <div class = "text-center" ng-cloak>
       <button type = "button" class = "btn btn-default btn-sm btn-block btn" ng-click="getInbox()" ng-hide="loadedAll">load more</button>
-      <span ng-show="loadedAll">this is the end :)</span>
+      <span ng-show="loadedAll"><h2>You've reached the end of your inbox! :)</h2></span>
     </div>
     {% endraw %}
     <script type="text/javascript" src="/static/js/app.js"></script>

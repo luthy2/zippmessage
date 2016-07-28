@@ -3,6 +3,7 @@
 var zippApp = angular.module("zippApp", []);
 
 zippApp.controller("InboxController", function InboxController($scope, $http, $q, $sce){
+  $scope.alert = ''
   $scope.$sce = $sce;
   $scope.loadedAll = false;
   $scope.inbox = []
@@ -66,12 +67,18 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
             break
         }
       }
+        $scope.alert = 'Message dismissed'
     }), function error(response){
       console.log(response)
       alert('hmmm... something went wrong and we were unable to dismiss the message.')
+      $scope.alert = 'hmmm... something went wrong and we were unable to dismiss the message.'
     };
   };
 
+
+  $scope.hideAlert = function(){
+    $scope.alert = ''
+  }
   // $scope.createMessage = function(){
   //   $http({
   //     method: 'POST',
