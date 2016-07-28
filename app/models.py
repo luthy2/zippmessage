@@ -181,7 +181,7 @@ class Message(db.Model):
 		return parse_object.netloc
 
 	def request_url(self):
-		resp = embedly.oembed(self.url, height = 90, words = 25, luxe = 1)
+		resp = embedly.oembed(self.url, words = 25)
 		if not resp["type"] == "error":
 			return resp
 		else:
@@ -205,8 +205,8 @@ class Message(db.Model):
 				url = self.url
 			if 'twitter.com' in url:
 				return twitter_tag(url)
-			elif 'soundcloud.com' in url:
-				return soundcloud_tag(url)
+			elif 'soundcloud.com' or 'medium.com' in url:
+				return resp['html']
 			elif 'spotify.com' in url:
 				return spotify_tag(url)
 			elif resp['type'] == 'link':
@@ -273,15 +273,15 @@ def twitter_tag(url):
 							'</div>'
 	return TWITTER_SCRIPT_TAG % url
 
-def soundcloud_tag(url):
-	#custom rendering for soundcloud
-	cli = '82b1697a8285401ae1e74be93d8bdc2b'
-	resp = requests.get('https://api.soundcloud.com/oembed?url=%s?client_id=%s' % (url, cli))
-	resp = resp.json()
-	if 'html' in resp:
-		return resp['html']
-	else:
-		return render_no_style(url)
+# def soundcloud_tag(url):
+# 	#custom rendering for soundcloud
+# 	cli = '82b1697a8285401ae1e74be93d8bdc2b'
+# 	resp = requests.get('https://api.soundcloud.com/oembed?url=%s?client_id=%s' % (url, cli))
+# 	resp = resp.json()
+# 	if 'html' in resp:
+# 		return resp['html']
+# 	else:
+# 		return render_no_style(url)
 
 def spotify_tag(url):
 	#custom rendering for spotify
