@@ -282,7 +282,7 @@ def soundcloud_tag(url):
 
 def spotify_tag(url):
 	#custom rendering for spotify
-	parse_object = url_parse(url)
+	parse_object = urlparse(url)
 	path = parse_object.path
 	path = path.replace('/',':')
 	p = 'spotify%s' % path
