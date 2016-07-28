@@ -276,6 +276,7 @@ def twitter_tag(url):
 def soundcloud_tag(url):
 	#custom rendering for soundcloud
 	resp = requests.get('https://api.soundcloud.com/oembed?format=json&url=%s&iframe=true' % url)
+	resp = resp.json()
 	if not 'error' in resp:
 		return resp['html']
 	else:
