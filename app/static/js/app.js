@@ -67,7 +67,10 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
             break
         }
       }
-        $scope.alert = 'Message dismissed'
+        $scope.alert = 'Message Dismissed'
+        setTimeout(function(){
+          $scope.alert = ''
+        }3000);
     }), function error(response){
       console.log(response)
       alert('hmmm... something went wrong and we were unable to dismiss the message.')
@@ -75,10 +78,6 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     };
   };
 
-
-  $scope.hideAlert = function(){
-    $scope.alert = ''
-  }
   // $scope.createMessage = function(){
   //   $http({
   //     method: 'POST',
