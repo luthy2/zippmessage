@@ -316,7 +316,7 @@ def image_tag(url):
 	return image_tag % url
 
 def provider_url(url):
-	resp = requests.get(self.url)
+	resp = requests.get(url)
 	url = resp.url
 	parse_object = urlparse(url)
 	provider = parse_object.netloc
