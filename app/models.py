@@ -290,8 +290,15 @@ def spotify_tag(url):
 	return spotify_tag % p
 
 def article_tag(resp):
-	title = resp['title']
-	description = resp['description']
+	if 'title' in resp:
+		title = resp['title']
+	else:
+		title =''
+	if 'description' in resp:
+		description = resp['description']
+	else:
+		description = ''
+
 	url = resp['url']
 	provider = provider_url(url)
 
