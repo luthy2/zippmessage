@@ -456,7 +456,6 @@ def api_user_inbox():
 		message['note']=item.message.title
 		message['from_user']=item.message.author.username
 		message['timedelta']=item.message.format_timestamp()
-		message['provider']=item.message.provider_url()
 		message['content']= item.message.render_url()
 		data.append(message)
 	return jsonify(data)
