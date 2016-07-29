@@ -221,15 +221,6 @@ class Message(db.Model):
 			else:
 				return render_no_style(self.url)
 
-	def provider_url(self):
-		resp = requests.get(self.url)
-		url = resp.url
-		parse_object = urlparse(url)
-		provider = parse_object.netloc
-		return provider or self.short_url()
-
-
-
 	def url_logo(self):
 		short_url = self.short_url()
 		return "https://logo.clearbit.com/%s?size=18" % short_url
@@ -302,23 +293,31 @@ def article_tag(resp):
 	title = resp['title']
 	description = resp['description']
 	url = resp['url']
+	provider = provider_url(url)
 
 	tag = 	'<a class = "list-group-item"  href = "%s" target="_blank">' \
 			'<h4 class = "list-group-item-heading">%s</h4>' \
 			'<p class = "list-group-item-text">%s</p>' \
+			'<p style = "color:gray"><small>%s</small></p>' \
 			'</a>'
 
-	return tag % (url, title, description)
+	return tag % (url, title, description, provider)
 
 def render_no_style(url):
 	#custom render for urls that fail embedly lookup
-	parse_object = urlparse(url)
-	short_url = parse_object.netloc
+	provider = provider_url(url)
 	no_style_tag = '<a href = "%s" class = "list-group-item" target = "_blank">Content via %s</a>'
-	return no_style_tag % (url , short_url)
+	return no_style_tag % (url , provider)
 
 def image_tag(url):
 	image_tag = '<li class = "list-group-item" >' \
 				'<img src = "%s" width="100%%">' \
 				'</li>'
 	return image_tag % url
+
+def provider_url(url):
+	resp = requests.get(self.url)
+	url = resp.url
+	parse_object = urlparse(url)
+	provider = parse_object.netloc
+	return provider
