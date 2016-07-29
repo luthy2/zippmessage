@@ -212,12 +212,12 @@ class Message(db.Model):
 				return article_tag(resp)
 			elif resp["type"] == 'photo':
 				return image_tag(url)
+			elif resp['type'] == 'video':
+				return resp['html']
 			elif 'soundcloud.com' in url:
 				return resp['html']
 			elif 'medium.com' in resp['provider_url']:
 				 return resp['html']
-			elif 'youtube.com' in url:
-				return resp['html']
 			else:
 				return render_no_style(self.url)
 
