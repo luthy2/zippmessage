@@ -205,9 +205,8 @@ class Message(db.Model):
 			if 'twitter.com' in url:
 				return twitter_tag(url)
 			elif 'soundcloud.com' or 'medium.com' in url:
-				for k, v in resp:
-					print k, v
-				return resp['html']
+				html = resp['html']
+				return html
 			elif 'spotify.com' in url:
 				return spotify_tag(url)
 			elif resp['type'] == 'link':
