@@ -306,7 +306,7 @@ def render_no_style(url):
 	#custom render for urls that fail embedly lookup
 	parse_object = urlparse(url)
 	short_url = parse_object.netloc
-	no_style_tag = '<a href = "%s" class = "list-group-item">Content via %s</a>'
+	no_style_tag = '<a href = "%s" class = "list-group-item" target = "_blank">Content via %s</a>'
 	return no_style_tag % (url , short_url)
 
 def image_tag(url):
