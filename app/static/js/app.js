@@ -3,6 +3,7 @@
 var zippApp = angular.module("zippApp", []);
 
 zippApp.controller("InboxController", function InboxController($scope, $http, $q, $sce, $timeout){
+  $scope.loading = true;
   $scope.alert = '';
   $scope.$sce = $sce;
   $scope.loadedAll = false;
@@ -13,6 +14,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     }).then(function success(response){
       console.log(response)
       $scope.inbox = response.data
+      $scope.loading = false;
       if (response.data.length < 6){
         $scope.loadedAll = true;
       }
@@ -21,6 +23,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     };
 
   $scope.getInbox = function(){
+    $scope.loading = true;
     $http ({
       method:'GET',
       url:'http://zippmessage-staging.herokuapp.com/api/1/user/inbox',
@@ -28,6 +31,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     }).then(function success(response){
       console.log(response)
       $scope.inbox = $scope.inbox.concat(response.data)
+      $scope.loading = false;
       console.log($scope.inbox)
       if (response.data.length < 6){
         $scope.loadedAll = true;
