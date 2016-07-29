@@ -204,16 +204,16 @@ class Message(db.Model):
 				url = self.url
 			if 'twitter.com' in url:
 				return twitter_tag(url)
-			elif 'soundcloud.com' in url:
-				return resp['html']
-			elif 'medium.com' in url:
-				 return resp['html']
 			elif 'spotify.com' in url:
 				return spotify_tag(url)
 			elif resp['type'] == 'link':
 				return article_tag(resp)
 			elif resp["type"] == 'photo':
 				return image_tag(url)
+			elif 'soundcloud.com' in url:
+				return resp['html']
+			elif 'medium.com' in url:
+				 return resp['html']
 			else:
 				return render_no_style(self.url)
 
