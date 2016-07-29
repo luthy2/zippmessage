@@ -214,6 +214,8 @@ class Message(db.Model):
 				return resp['html']
 			elif 'medium.com' in url:
 				 return resp['html']
+			elif 'youtube.com' in url:
+				return resp['html']	 
 			else:
 				return render_no_style(self.url)
 
@@ -305,7 +307,7 @@ def render_no_style(url):
 	parse_object = urlparse(url)
 	short_url = parse_object.netloc
 	no_style_tag = '<a href = "%s" class = "list-group-item">Content via %s</a>'
-	return no_style_tag % url , short_url
+	return no_style_tag % (url , short_url)
 
 def image_tag(url):
 	image_tag = '<li class = "list-group-item" >' \
