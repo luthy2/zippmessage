@@ -4,7 +4,6 @@ from app import embedly
 from urlparse import urlparse
 from datetime import datetime
 from collections import Counter
-import requests
 
 approved_contacts = db.Table('approved_contacts',
 	db.Column('from_contact_id', db.Integer, db.ForeignKey('user.id')),
@@ -183,7 +182,7 @@ class Message(db.Model):
 	def request_url(self):
 		resp = embedly.oembed(self.url, words = 25)
 		if not resp["type"] == "error":
-			return resp.json()
+			return resp
 		else:
 			return False
 
@@ -274,15 +273,6 @@ def twitter_tag(url):
 							'</div>'
 	return TWITTER_SCRIPT_TAG % url
 
-# def soundcloud_tag(url):
-# 	#custom rendering for soundcloud
-# 	cli = '82b1697a8285401ae1e74be93d8bdc2b'
-# 	resp = requests.get('https://api.soundcloud.com/oembed?url=%s?client_id=%s' % (url, cli))
-# 	resp = resp.json()
-# 	if 'html' in resp:
-# 		return resp['html']
-# 	else:
-# 		return render_no_style(url)
 
 def spotify_tag(url):
 	#custom rendering for spotify
