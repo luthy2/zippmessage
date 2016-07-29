@@ -204,8 +204,10 @@ class Message(db.Model):
 				url = self.url
 			if 'twitter.com' in url:
 				return twitter_tag(url)
-			elif 'soundcloud.com' or 'medium.com' in url:
-				 print resp
+			elif 'soundcloud.com' in url:
+				return resp['html']
+			elif 'medium.com' in url:
+				 return resp['html']
 			elif 'spotify.com' in url:
 				return spotify_tag(url)
 			elif resp['type'] == 'link':
