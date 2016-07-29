@@ -4,6 +4,7 @@ var zippApp = angular.module("zippApp", []);
 
 zippApp.controller("InboxController", function InboxController($scope, $http, $q, $sce){
   $scope.alert = '';
+  $scope.hideAlert = true;
   $scope.$sce = $sce;
   $scope.loadedAll = false;
   $scope.inbox = []
@@ -68,9 +69,8 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
         }
       }
         $scope.alert = 'Message Dismissed'
-        setTimeout(function(){
-          $scope.alert = false;
-          console.log('message erased')
+        $timeout(function(){
+            $scope.alert ='';
         }, 3000);
     }), function error(response){
       console.log(response)
