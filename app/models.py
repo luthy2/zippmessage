@@ -224,7 +224,9 @@ class Message(db.Model):
 	def provider_url(self):
 		resp = requests.get(self.url)
 		url = resp.url
-		return url or self.short_url()
+		parse_object = urlparse(url)
+		provider = parse_object.netloc
+		return provider or self.short_url()
 
 
 
