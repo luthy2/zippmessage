@@ -31,12 +31,12 @@
   </div>
 	<div class ="col-md-6"  ng-controller="InboxController" ng-cloak>
     {% raw %}
-    <div class = "alert alert-info"	role= "alert" ng-show="alert">
+    <div class = "alert alert-info"	role= "alert" ng-show="alert" ng-hide = "hideAlert">
       {{alert}}
     </div>
     <ul class = "list-group" ng-repeat="message in inbox">
-      <span ng-bind-html="$sce.trustAsHtml(message.content)"></span>
       <li class = "list-group-item">
+        <span ng-bind-html="$sce.trustAsHtml(message.content)"></span>
         <p><a href = "/user/{{message.from_user}}">@{{message.from_user}}:</a> {{message.note}}</p>
       </li>
       <li class = "list-group-item" style="text-align:center;">
