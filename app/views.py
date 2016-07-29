@@ -455,6 +455,8 @@ def api_user_inbox():
 		message['id'] = item.message_id
 		message['note']=item.message.title
 		message['from_user']=item.message.author.username
+		message['timedelta']=item.message.format_timestamp()
+		message['provider']=item.message.provider_url()
 		message['content']= item.message.render_url()
 		data.append(message)
 	return jsonify(data)
@@ -538,6 +540,19 @@ def api_app():
 	user_tags = user.tags_for_user().most_common(20)
 	return render_template('inbox.html', title = "Inbox" , user_tags = user_tags)
 
+
+@app.route('/admin/dashbaord')
+@login_required
+def dashboard():
+	if g.user is not User.query.get(1):
+		return abort(403)
+	dau =
+	mau =
+	lifetime =
+	daily message
+	monthly
+
+	return render_template('dashboard.html')
 #
 # @app.route('/app/bookmarks', methods = ["GET", "POST"])
 # @login_required

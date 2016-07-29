@@ -4,7 +4,9 @@ from app import embedly
 from urlparse import urlparse
 from datetime import datetime
 from collections import Counter
+import requests
 
+r
 approved_contacts = db.Table('approved_contacts',
 	db.Column('from_contact_id', db.Integer, db.ForeignKey('user.id')),
 	db.Column('to_contact_id', db.Integer, db.ForeignKey('user.id'))
@@ -219,6 +221,10 @@ class Message(db.Model):
 			else:
 				return render_no_style(self.url)
 
+	def provider_url(self):
+		resp = requests.get(self.url)
+		url = resp.url
+		return url or self.short_url()
 
 
 

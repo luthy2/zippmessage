@@ -29,14 +29,14 @@
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
     </ul>
   </div>
-	<div class ="col-md-6"  ng-controller="InboxController" >
+	<div class ="col-md-6"  ng-controller="InboxController" ng-cloak>
     {% raw %}
     <div class = "alert alert-info"	role= "alert" ng-show="alert">
       {{alert}}
     </div>
-    <ul class = "list-group" ng-repeat="message in inbox" ng-cloak >
+    <ul class = "list-group" ng-repeat="message in inbox" >
       <li class = "list-group-item">
-        <p><a href = "/user/{{message.from_user}}">@{{message.from_user}}:</a> {{message.note}}</p>
+        <p><a href = "/user/{{message.from_user}}">@{{message.from_user}}:</a> {{message.note}}<span class = 'text-right' style="color:gray">{{message.timedelta}} via {{message.provider_url}}</span></p>
         <span class = "embedly-embed" ng-bind-html="$sce.trustAsHtml(message.content)"></span>
       </li>
       <li class = "list-group-item" style="text-align:center;">
@@ -49,7 +49,6 @@
       <button type = "button" class = "btn btn-default btn-sm btn-block btn" ng-click="getInbox()" ng-hide="loadedAll">load more</button>
       <span ng-show="loadedAll"><h2>You've reached the end of your inbox! :)</h2></span>
     </div>
-    <div class="loader" ng-show='loading'>Loading...</div>
     {% endraw %}
     <script type="text/javascript" src="/static/js/app.js"></script>
   </div>
