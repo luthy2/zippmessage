@@ -541,18 +541,18 @@ def api_app():
 	return render_template('inbox.html', title = "Inbox" , user_tags = user_tags)
 
 
-@app.route('/admin/dashbaord')
-@login_required
-def dashboard():
-	if g.user is not User.query.get(1):
-		return abort(403)
-	dau =
-	mau =
-	lifetime =
-	daily message
-	monthly
-
-	return render_template('dashboard.html')
+# @app.route('/admin/dashbaord')
+# @login_required
+# def dashboard():
+# 	if g.user is not User.query.get(1):
+# 		return abort(403)
+# 	dau =
+# 	mau =
+# 	lifetime =
+# 	daily message
+# 	monthly
+#
+# 	return render_template('dashboard.html')
 #
 # @app.route('/app/bookmarks', methods = ["GET", "POST"])
 # @login_required

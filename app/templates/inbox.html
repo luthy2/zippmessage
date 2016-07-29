@@ -36,7 +36,7 @@
     </div>
     <ul class = "list-group" ng-repeat="message in inbox" >
       <li class = "list-group-item">
-        <p><a href = "/user/{{message.from_user}}">@{{message.from_user}}:</a> {{message.note}}<span class = 'text-right' style="color:gray">{{message.timedelta}} via {{message.provider_url}}</span></p>
+        <p><a href = "/user/{{message.from_user}}">@{{message.from_user}}:</a> {{message.note}}<span class = 'text-right' style="color:gray">{{message.timedelta}} via {{message.provider}}</span></p>
         <span class = "embedly-embed" ng-bind-html="$sce.trustAsHtml(message.content)"></span>
       </li>
       <li class = "list-group-item" style="text-align:center;">
