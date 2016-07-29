@@ -2,7 +2,7 @@
 
 var zippApp = angular.module("zippApp", []);
 
-zippApp.controller("InboxController", function InboxController($scope, $http, $q, $sce){
+zippApp.controller("InboxController", function InboxController($scope, $http, $q, $sce, $timeout){
   $scope.alert = '';
   $scope.hideAlert = true;
   $scope.$sce = $sce;
