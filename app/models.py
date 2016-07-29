@@ -43,6 +43,7 @@ class UserMessage(db.Model):
 		else:
 			#creates and returns ['list', 'of', 'tags']
 			tags = [t.strip() for t in self.tags.split(',') if t != '']
+			tags = filter(None, tags)
 			return tags
 
 
@@ -131,6 +132,8 @@ class User(db.Model):
 			user_tags += item.tags.lower().split(',')
 		#list comprehension to remove empty strings, and strip whitespace
 		user_tags = [tag.strip() for tag in user_tags if tag != '']
+		#there could still be empty strings from spaces so filter '' again
+		user_tags = filter(None, user_tags)
 		#creates a Counter of tags with the number of each, order by most common
 		user_tags = Counter(user_tags)
 		return user_tags
