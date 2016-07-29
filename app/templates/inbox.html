@@ -46,6 +46,7 @@
       </li>
     </ul>
     <div class = "text-center" ng-cloak>
+      <div class="loader" ng-show="loading">Loading...</div>
       <button type = "button" class = "btn btn-default btn-sm btn-block btn" ng-click="getInbox()" ng-hide="loadedAll">load more</button>
       <span ng-show="loadedAll"><h2>You've reached the end of your inbox! :)</h2></span>
     </div>
