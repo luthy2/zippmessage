@@ -13,13 +13,14 @@
    </style>
 </head>
 <body>
+{% for item in inbox.items %}
   <div class = "row">
     <div class ="col-md-8">
       <a href = "{{url_for('inbox')}}">inbox</a>
       <a href = "{{item.message.url}}" target="_blank">open in new tab</a>
     </div>
   </div>
-  {% for item in inbox.items %}
+
   <div class = "row">
    <div class = "col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="padding-bottom:40px;">
      {% set resp = item.message.get_content() %}
