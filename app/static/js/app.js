@@ -3,7 +3,6 @@
 var zippApp = angular.module("zippApp", []);
 
 zippApp.controller("InboxController", function InboxController($scope, $http, $q, $sce, $timeout){
-  $scope.loading = true;
   $scope.alert = '';
   $scope.$sce = $sce;
   $scope.loadedAll = false;
@@ -14,7 +13,6 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     }).then(function success(response){
       console.log(response)
       $scope.inbox = response.data
-      $scope.loading = false;
       if (response.data.length < 6){
         $scope.loadedAll = true;
       }

@@ -212,10 +212,10 @@ class Message(db.Model):
 				return image_tag(url)
 			elif 'soundcloud.com' in url:
 				return resp['html']
-			elif 'medium.com' in url:
+			elif 'medium.com' in resp['provider_url']:
 				 return resp['html']
 			elif 'youtube.com' in url:
-				return resp['html']	 
+				return resp['html']
 			else:
 				return render_no_style(self.url)
 
