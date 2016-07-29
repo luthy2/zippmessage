@@ -183,7 +183,7 @@ class Message(db.Model):
 	def request_url(self):
 		resp = embedly.oembed(self.url, words = 25)
 		if not resp["type"] == "error":
-			return resp
+			return resp.json()
 		else:
 			return False
 
