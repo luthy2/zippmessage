@@ -37,7 +37,7 @@
     <ul class = "list-group" ng-repeat="message in inbox">
       <li class = "list-group-item">
         <p><a href = "/user/{{message.from_user}}">@{{message.from_user}}:</a> {{message.note}}</p>
-        <span width='100%'' ng-bind-html="$sce.trustAsHtml(message.content)"></span>
+        <span width='100%' ng-bind-html="$sce.trustAsHtml(message.content)"></span>
       </li>
       <li class = "list-group-item" style="text-align:center;">
         <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="dismissMessage(message.id)"><span class="glyphicon glyphicon-remove"></span></button>
