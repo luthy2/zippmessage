@@ -20,7 +20,7 @@
 {% for item in inbox.items %}
   <div class = "row">
     <div class= "col-md-8 col-md-offset-2">
-      <h4 style="position:fixed; background-color:white; width:100%; top:0; height:40px;">
+      <h4>
         <a href = "{{url_for('inbox')}}"><span class = "glyphicon glyphicon-chevron-left"></span>Inbox</a>
         <span class="pull-right">
           <a href = "{{item.message.url}}" target="_blank">
