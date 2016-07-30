@@ -19,7 +19,8 @@
 <div class = "container-fluid">
 {% for item in inbox.items %}
   <div class = "row">
-    <div>
+    <div class= "col-md-8 col-md-offset-2">
+    <div style="width:100%; position:fixed; background-color:white; height:40; top:0;">
       <h4>
         <a href = "{{url_for('inbox')}}"><span class = "glyphicon glyphicon-chevron-left"></span>Inbox</a>
         <span class="pull-right">
@@ -28,6 +29,7 @@
           </a>
         </span>
       </h4>
+    </div>
     </div>
   </div>
 
