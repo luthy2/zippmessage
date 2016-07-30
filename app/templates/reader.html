@@ -17,8 +17,8 @@
 </head>
 <body>
 {% for item in inbox.items %}
-  <div class = "row" style="position:fixed; width:100%; background-color:white; height:30px;">
-    <div class ="col-md-8 col-md-offset-2">
+  <div class = "row">
+    <div class ="col-md-8 col-md-offset-2" style="position:fixed; width:100%; background-color:white; height:30px;">
       <h4>
         <a href = "{{url_for('inbox')}}"><span class = "glyphicon glyphicon-chevron-left"></span>Inbox</a>
         <span class="pull-right">
