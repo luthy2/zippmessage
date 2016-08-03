@@ -134,6 +134,18 @@ def inbox(page=1):
 	form = NewMessageForm()
 	user = g.user
 	user_tags = user.tags_for_user().most_common(20)
+	
+	if form.validate_on_submit():
+			message = Message(title = form.message_title.data,
+								url = form.message_url.data,
+								author = g.user,
+								timestamp = datetime.utcnow())
+			db.session.add(message)
+			db.session.commit()
+			session['message_id'] = message.id
+			flash('Choose Receipients')
+			return redirect(url_for('recipients'))
+
 	#activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
 	return render_template('inbox.html', user=user, user_tags = user_tags, title = "Inbox", form= form)
 
