@@ -19,6 +19,9 @@
   #dismiss:hover{
     color:#CC1A40;
   }
+  button:focus{
+    outline:0;
+  }
   .glyphicon-send:hover{
     color:#54C6EB;
   }
@@ -92,7 +95,7 @@
       </li>
     </ul>
     <div class="loader" ng-show="loading">Loading...</div>
-    <div class = "text-center" style="padding-bottom:20px" ng-cloak>
+    <div class = "text-center" style="padding-bottom:200px" ng-cloak>
       <button type = "button" class = "btn btn-default btn-sm btn-block btn" ng-click="getInbox()" ng-hide="loadedAll">load more</button>
       <span ng-show="loadedAll"><h2>You've reached the end of your inbox! :)</h2></span>
     </div>
