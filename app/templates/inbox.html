@@ -42,7 +42,7 @@
   </div>
 </div>
 <div class = "row" id="compose">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-3" style="padding-bottom:10px;">
     <h4>Share a link</h4>
       <form action="" method = "POST" name="new message">
         <div class="form-group">
@@ -54,7 +54,7 @@
         </div>
           <input type = "submit" value = "Next" class = "btn btn-default pull-right">
       </form>
-  </div style="padding-bottom:10px;">
+  </div >
 </div>
 <div class="row">
   <div class ="col-md-3 hidden-xs hidden-sm">
@@ -86,7 +86,7 @@
         <span class = "embedly-embed" ng-bind-html="$sce.trustAsHtml(message.content)"></span>
       </li>
       <li class = "list-group-item" style="text-align:center;">
-        <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="dismissMessage(message.id)" id="dismiss"><span class="glyphicon glyphicon-remove"></span></button>
+        <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="dismissMessage(message.id)" ><span id="dismiss" class="glyphicon glyphicon-remove"></span></button>
         <a type="button" class="btn btn-link btn-sm" style="width:17%" href ="/bookmark/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span></a>
         <a type="button" class="btn btn-link btn-sm" style="width:17%" href ="/share/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
       </li>
