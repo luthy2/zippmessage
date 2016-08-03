@@ -468,11 +468,12 @@ def api_user_inbox():
 		message['note']=item.message.title
 		message['from_user']=item.message.author.username
 		message['timedelta']=item.message.format_timestamp()
-		if bm.get(item.message.url):
-			message['content']= bm.get(item.message.url)
+		url = str(item.message.url)
+		if bm.get(url):
+			message['content']= bm.get(url)
 		else:
 			message['content'] = item.message.render_url()
-			bm.set(item.message.url,message['content'], 43200)
+			bm.set(url, str(message['content']), int(43200)
 		data.append(message)
 	return jsonify(data)
 
