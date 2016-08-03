@@ -3,13 +3,12 @@
 {% extends "base.html" %}
 {% block content %}
 <style>
-  #toggle {
-    visibility: hidden;
+  #compose {
     display: none;
-    transition: visibility 0s, opacity 0.3s linear;
+    transition: opacity 0.3s linear;
   }
 
-  #toggle:target {
+  #compose:target {
     display: block;
   }
 </style>
@@ -21,9 +20,9 @@
   </div>
 </div>
 <div class = "row text-align text-center">
-  <a href ="#toggle"><span class = "glyphicon glyphicon-edit"></span></a>
+  <a href ="#compose"><span class = "glyphicon glyphicon-edit"></span></a>
 </div>
-<div class = "row" id="toggle">
+<div class = "row" id="compose">
   <div class="col-md-6 col-md-offset-3">
     <h4>Share a link</h4>
       <form action="" method = "POST" name="new message">
