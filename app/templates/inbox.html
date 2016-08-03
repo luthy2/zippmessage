@@ -9,7 +9,23 @@
     </div>
   </div>
 </div>
-
+<div class = "row">
+  <div class="col-md-6 col-md-offset-3">
+    <h4>New Message</h4>
+      <form action="" method = "POST" name="new message">
+        <div class="form-group">
+          {{form.hidden_tag()}}
+            <label>URL</label>
+            {{form.message_url(class_="form-control")}}
+        </div>
+        <div class = "form-group">
+            <label>Add a Note</label>
+            {{form.message_title(class_="form-control")}}
+        </div>
+          <input type = "submit" value = "Next" class = "btn btn-default">
+      </form>
+  </div>
+</div>
 <div class="row">
   <div class ="col-md-3 hidden-xs hidden-sm">
     <ul class = "list-group">
@@ -46,12 +62,19 @@
       </li>
     </ul>
     <div class="loader" ng-show="loading">Loading...</div>
-    <div class = "text-center" ng-cloak>
+    <div class = "text-center" style="padding-bottom:20px" ng-cloak>
       <button type = "button" class = "btn btn-default btn-sm btn-block btn" ng-click="getInbox()" ng-hide="loadedAll">load more</button>
       <span ng-show="loadedAll"><h2>You've reached the end of your inbox! :)</h2></span>
     </div>
     {% endraw %}
     <script type="text/javascript" src="/static/js/app.js"></script>
+  </div>
+  <div class = "col-md-3">
+    <ul class = "list-group">
+      {% for item in activity %}
+        <li class = "list-group-item">{{item.}}</li>
+      {%endfor%}
+    </ul>
   </div>
 </div>
 

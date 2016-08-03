@@ -131,11 +131,12 @@ def welcome():
 @app.route('/inbox/<int:page>', methods = ["GET", "POST"])
 @login_required
 def inbox(page=1):
+	form = NewMessageForm()
 	user = g.user
-	inbox = user.inbox().paginate(page,6,False)
-	inbox_count = user.inbox().count()
 	user_tags = user.tags_for_user().most_common(20)
-	return render_template('inbox.html', user=user, inbox = inbox, user_tags = user_tags, title = "Inbox", inbox_count=inbox_count)
+	activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
+	return render_template('inbox.html', user=user, user_tags = user_tags, title = "Inbox", form= form)
+
 
 @app.route('/top', methods = ["GET", "POST"])
 @login_required
@@ -426,7 +427,7 @@ def reader(page = 1):
 	return render_template('reader.html', user = user, title = 'Reader', inbox = inbox)
 
 
-#start of api routes
+#start of api routes#
 
 @app.route('/api/1/heartbeat', methods = ["GET", "POST"])
 def api_heartbeat():
@@ -532,12 +533,6 @@ def api_dismiss_message(message_id):
 # 	db.session.commit()
 # 	return jsonify(ok=True)
 
-@app.route('/app/inbox', methods = ["GET", "POST"])
-@login_required
-def api_app():
-	user = g.user
-	user_tags = user.tags_for_user().most_common(20)
-	return render_template('inbox.html', title = "Inbox" , user_tags = user_tags)
 
 
 # @app.route('/admin/dashbaord')
@@ -552,12 +547,43 @@ def api_app():
 # 	monthly
 #
 # 	return render_template('dashboard.html')
-#
-# @app.route('/app/bookmarks', methods = ["GET", "POST"])
+
+
+# @app.route('/api/1/activity/messages')
 # @login_required
-# def api_app_bookmarks():
+# def api_activity_create():
+# 	data = request.get_json()
+# 	subject_id = data["owner_id"]
+# 	owner_id = data["owner_id"]
+# 	action = data['action']
+# 	msg_id = data['message_id']
+# 	message = Message.query.get(msg_id)
+# 	owner2_id = message.author.id
+# 	owner_activity = MessageActivity(	owner_id = owner_id,
+# 										subject_id = subject_id,
+# 										action = action,
+# 										message_id = msg_id )
+# 	db.session.add(owner_activity)
+#
+# 	if owner_id != owner2_id:
+# 		owner2_activity = MessageActivity(	owner_id = onwer2_id,
+# 											subject_id = subject_id,
+# 											action = action,
+# 											message_id = msg_id )
+# 		db.session.add(owner2_activity)
+#
+# 	db.session.commit()
+# 	return jsonify(ok="true")
+
+# @app.route('api/1/user/activity')
+# @login_required
+# def api_user_activity():
 # 	user = g.user
-# 	return
+# 	activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
+# 	return jsonify(activity_feed)
+
+
+
 
 
 @app.route('/favicon.ico', methods = ["GET", "POST"])
