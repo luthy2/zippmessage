@@ -2,7 +2,7 @@ import os
 
 from flask import request, g, render_template, session, url_for, redirect, flash, jsonify, send_from_directory, make_response
 from flask_login import login_user, logout_user, current_user, login_required
-from app import app, db, lm, twitter
+from app import app, db, lm, twitter, bm
 from forms import NewMessageForm, RecipientsForm, TagForm
 from models import User, Message, UserMessage
 from datetime import datetime
@@ -134,7 +134,8 @@ def inbox(page=1):
 	form = NewMessageForm()
 	user = g.user
 	user_tags = user.tags_for_user().most_common(20)
-	
+	bm.set('foo', 'bar')
+	print bm.get('foo')
 	if form.validate_on_submit():
 			message = Message(title = form.message_title.data,
 								url = form.message_url.data,

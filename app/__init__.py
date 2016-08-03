@@ -3,9 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_oauth import OAuth
 from embedly import Embedly
-from config import SECRET_KEY
+from config import SECRET_KEY, MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD
 import logging
 import sys
+import bmemcached
+import urlparse
+import json
 
 
 app = Flask(__name__)
@@ -18,6 +21,7 @@ lm.login_message = u'you must login to view this page'
 app.secret_key = SECRET_KEY
 oauth = OAuth()
 embedly = Embedly('3ec6801e9b5e4931925749186fd75996')
+bm = bmemcached.Client(MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD)
 
 twitter = oauth.remote_app('twitter',
     # unless absolute urls are used to make requests, this will be added
