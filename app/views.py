@@ -134,8 +134,6 @@ def inbox(page=1):
 	form = NewMessageForm()
 	user = g.user
 	user_tags = user.tags_for_user().most_common(20)
-	bm.set('foo', 'bar')
-	print bm.get('foo')
 	if form.validate_on_submit():
 			message = Message(title = form.message_title.data,
 								url = form.message_url.data,
@@ -470,7 +468,11 @@ def api_user_inbox():
 		message['note']=item.message.title
 		message['from_user']=item.message.author.username
 		message['timedelta']=item.message.format_timestamp()
-		message['content']= item.message.render_url()
+		if bm.get(item.message.url):
+			message['content']= bm.get(item.message.url)
+		else:
+			message['content'] = item.message.render_url()
+			bm.set(item.message.url,message['content'], 43200)
 		data.append(message)
 	return jsonify(data)
 
