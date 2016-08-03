@@ -37,6 +37,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
         $scope.loadedAll = true;
       }
     }), function error(response){
+      $scope.loading = false;
       console.log(response);
     };
   };
