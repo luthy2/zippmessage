@@ -14,14 +14,17 @@
   .glyphicon{
     color:gray;
   }
-  .glyphicon-dismiss:hover{
+  #dismiss:hover{
     color:#CCA140;
   }
   .glyphicon-send:hover{
     color:#06D6A0;
   }
-  .glyphicon-bookmark{
+  .glyphicon-bookmark:hover{
     color:#54C6EB;
+  }
+  .glyphicon-bookmark-compose:hover{
+
   }
 </style>
 <div class="row">
@@ -81,7 +84,7 @@
         <span class = "embedly-embed" ng-bind-html="$sce.trustAsHtml(message.content)"></span>
       </li>
       <li class = "list-group-item" style="text-align:center;">
-        <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="dismissMessage(message.id)"><span class="glyphicon glyphicon-remove"></span></button>
+        <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="dismissMessage(message.id)" id="dismiss"><span class="glyphicon glyphicon-remove"></span></button>
         <a type="button" class="btn btn-link btn-sm" style="width:17%" href ="/bookmark/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span></a>
         <a type="button" class="btn btn-link btn-sm" style="width:17%" href ="/share/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
       </li>
