@@ -4,7 +4,9 @@
 {% block content %}
 <style>
   #toggle {
+    visibility: hidden;
     display: none;
+    transition: visibility 0s, opacity 0.3s linear;
   }
 
   #toggle:target {
@@ -18,7 +20,7 @@
     </div>
   </div>
 </div>
-<div class = "row">
+<div class = "row text-align text-center">
   <a href ="#toggle"><span class = "glyphicon glyphicon-edit"></span></a>
 </div>
 <div class = "row" id="toggle">
