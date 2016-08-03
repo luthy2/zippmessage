@@ -134,7 +134,7 @@ def inbox(page=1):
 	form = NewMessageForm()
 	user = g.user
 	user_tags = user.tags_for_user().most_common(20)
-	activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
+	#activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
 	return render_template('inbox.html', user=user, user_tags = user_tags, title = "Inbox", form= form)
 
 
