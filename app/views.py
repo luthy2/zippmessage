@@ -473,7 +473,7 @@ def api_user_inbox():
 			message['content']= bm.get(url)
 		else:
 			message['content'] = item.message.render_url()
-			bm.set(url, str(message['content']), int(43200)
+			bm.set(url, str(message['content']), int(43200))
 		data.append(message)
 	return jsonify(data)
 
