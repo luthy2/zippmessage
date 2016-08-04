@@ -524,7 +524,6 @@ def api_dismiss_message(message_id):
 	m = user.dismiss_message(message_id)
 	if m is None:
 	    return jsonify(error = 'Message could not be dismissed')
-	if
 	db.session.add(user)
 	db.session.commit()
 	return jsonify(ok = True, msg = 'Message' + str(message_id) + ' dismissed')
