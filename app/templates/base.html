@@ -14,8 +14,9 @@
 
     	<style type="text/css">
 
-				body { 	padding-top: 70px;
-								background-color: #ffffff;
+				body {
+					padding-top: 70px;
+					background-color: #ffffff;
 				}
 
       	@media (max-width: 980px) {
@@ -42,7 +43,7 @@
 	  				animation: load7 1.2s infinite ease-in-out;
 					}
 					.loader {
-					  color: #009ddc;
+					  color: #06D66E;
 					  font-size: 10px;
 					  margin: 80px auto;
 					  position: relative;
@@ -89,9 +90,15 @@
 					}
 					.navbar{
 						background-color: white;
-						color:#54C6EB;
 						border-bottom: solid 2px;
-						border-bottom-color:#54C6EB;
+						border-bottom-color:#06D66E;
+					}
+					.navbar-brand{
+						font-family:Paytone One;
+						color:#06D66E;
+					}
+					.navbard-text{
+						color:#06D66E;
 					}
    		</style>
 
@@ -113,7 +120,7 @@
         		<span class="icon-bar"></span>
         		<span class="icon-bar"></span>
 		      </button>
-		      <a class="navbar-brand" href="{{url_for('inbox')}}" style = "font-family:Paytone One; color:#166088;">zipp</a>
+		      <a class="navbar-brand" href="{{url_for('inbox')}}">zipp</a>
 		    </div>
 		    <div class="collapse navbar-collapse" id="nav-links">
 		      <ul class="nav navbar-nav">
