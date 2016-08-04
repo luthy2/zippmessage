@@ -468,12 +468,14 @@ def api_user_inbox():
 		message['note']=item.message.title
 		message['from_user']=item.message.author.username
 		message['timedelta']=item.message.format_timestamp()
-		url = str(item.message.url)
+		url = item.message.url
+		url = encode(url, 'utf-8')
 		if bm.get(url):
 			message['content']= bm.get(url)
 		else:
-			message['content'] = item.message.render_url()
-			bm.set(url, str(message['content']), int(43200))
+			content = item.message.render_url()
+			message['content'] = encode(content, 'utf-8')
+			bm.set(url, message['content'], int(43200))
 		data.append(message)
 	return jsonify(data)
 
@@ -522,6 +524,7 @@ def api_dismiss_message(message_id):
 	m = user.dismiss_message(message_id)
 	if m is None:
 	    return jsonify(error = 'Message could not be dismissed')
+	if
 	db.session.add(user)
 	db.session.commit()
 	return jsonify(ok = True, msg = 'Message' + str(message_id) + ' dismissed')
