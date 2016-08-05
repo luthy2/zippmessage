@@ -4,7 +4,7 @@ from flask import request, g, render_template, session, url_for, redirect, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, twitter, bm, celery
 from forms import NewMessageForm, RecipientsForm, TagForm
-from models import User, Message, UserMessage
+from models import User, Message, UserMessage, get_url_content
 from datetime import datetime
 import urllib
 import time
@@ -600,10 +600,9 @@ def api_dismiss_message(message_id):
 # 	return jsonify(activity_feed)
 
 @celery.task
-def cache_url(message):
-	url = message.url
+def cache_url(url):
 	url = url.encode('utf-8')
-	content = message.render_url()
+	content = get_url_content()
 	content = content.encode('utf-8')
 	if bm.get(url):
 		return True
