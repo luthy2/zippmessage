@@ -192,7 +192,7 @@ class Message(db.Model):
 			return False
 
 	def get_content(self):
-		resp = embedly.extract(self.url, autoplay= 'true')
+		resp = embedly.extract(self.url, autoplay= 'false')
 		if not resp["type"] == "error":
 			return resp
 		else:
@@ -244,28 +244,6 @@ class Message(db.Model):
 		db.session.add(u)
 		db.session.commit()
 		return self
-
-
-	def format_timestamp(self):
-		ts = self.timestamp
-		now = datetime.utcnow()
-		tdelta = now - ts
-		s = tdelta.total_seconds()
-		if s <= 59:
-			s = s//1
-			return '{0}s'.format(s)
-		elif 60 <= s < 3600:
-			s = s//60
-			return '{0}m ago'.format(int(s))
-		elif 3600 <= s < 86400:
-			s = s//3600
-			return '{0}h ago'.format(int(s))
-		elif 86400 <= s < 604800:
-			s = s//86400
-			return '{0}d ago'.format(int(s))
-		else:
-			s = s//604800
-			return '{0}w ago'.format(int(s))
 
 
 def twitter_tag(url):
@@ -331,3 +309,46 @@ def provider_url(url):
 	parse_object = urlparse(url)
 	provider = parse_object.netloc
 	return provider
+
+
+
+def get_url_content(message_url):
+	resp = embedly.oembed(message_url, words = 25)
+	if resp["type"]== "error":
+		return render_no_style(message_url)
+	else:
+		if 'url' in resp:
+			url = resp["url"]
+		else:
+			url = self.url
+		if 'twitter.com' in url:
+			return twitter_tag(url)
+		elif 'spotify.com' in url:
+			return spotify_tag(url)
+		elif resp['type'] == 'link':
+			return article_tag(resp)
+		elif resp["type"] == 'photo':
+			return image_tag(url)
+		elif resp['type'] == 'video':
+			return resp['html']
+		elif 'soundcloud.com' in url:
+			return resp['html']
+		elif 'medium.com' in resp['provider_url']:
+			 return resp['html']
+		else:
+			return render_no_style(message_url)
+
+
+# class MessageActivity(db.Model):
+# 	owner_id = db.Column(db.Integer) #index for construction of feeds
+# 	subject_id = db.Column(db.Integer) #who performed the action
+# 	action = db.Column(db.String()) #the type of action
+# 	message_id = db.Column(db.Integer) #the message the action was performed on
+# 	timestamp = db.Column(db.Datetime) #when
+#
+# 	def __init__(self, owner_id, subject_id, action, message_id, timestamp):
+# 		self.owner_id = owner_id
+# 		self.subject_id = subject_id
+# 		self.action = action
+# 		self.message_id = message_id
+# 		self.timestamp = timestamp
