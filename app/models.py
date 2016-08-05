@@ -331,3 +331,30 @@ def provider_url(url):
 	parse_object = urlparse(url)
 	provider = parse_object.netloc
 	return provider
+
+
+def render_url(msg_url):
+	resp = embedly.oembed(msg_url, words = 25 )
+	if resp["type"] == "error":
+		return render_no_style(self.url)
+	else:
+		if 'url' in resp:
+			url = resp["url"]
+		else:
+			url = msg_url
+		if 'twitter.com' in url:
+			return twitter_tag(url)
+		elif 'spotify.com' in url:
+			return spotify_tag(url)
+		elif resp['type'] == 'link':
+			return article_tag(resp)
+		elif resp["type"] == 'photo':
+			return image_tag(url)
+		elif resp['type'] == 'video':
+			return resp['html']
+		elif 'soundcloud.com' in url:
+			return resp['html']
+		elif 'medium.com' in resp['provider_url']:
+			 return resp['html']
+		else:
+			return render_no_style(url)
