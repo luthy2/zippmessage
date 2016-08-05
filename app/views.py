@@ -472,7 +472,7 @@ def api_user_inbox():
 			msg_end = time.time()
 			print "cache miss, content rendered in ", msg_end - msg_start
 			message['content'] = content.encode('utf-8')
-			bm.set(url, message['content'], None)
+			bm.set(url, message['content'], 172800)
 			msg_cached = time.time()
 			print "message cached in ", msg_end-msg_cached
 		data.append(message)
@@ -607,7 +607,7 @@ def cache_url(url):
 	if bm.get(url):
 		return True
 	else:
-		return bm.set(url, content, None)
+		return bm.set(url, content, 172800)
 
 
 
