@@ -7,7 +7,7 @@ from forms import NewMessageForm, RecipientsForm, TagForm
 from models import User, Message, UserMessage
 from datetime import datetime
 import urllib
-
+import time
 
 @app.before_request
 def before_request():
@@ -124,8 +124,7 @@ def index():
 @login_required
 def welcome():
 	user = g.user
-	inbox_count = user.inbox().count()
-	return render_template('welcome.html', title = "Welcome!", inbox_count=inbox_count)
+	return render_template('welcome.html', title = "Welcome!")
 
 @app.route('/inbox', methods = ["GET", "POST"])
 @app.route('/inbox/<int:page>', methods = ["GET", "POST"])
@@ -154,16 +153,14 @@ def inbox(page=1):
 def top():
 	user = g.user
 	inbox = user.inbox()
-	inbox_count = inbox.count()
-	return render_template('inbox.html', user=user, inbox = inbox, inbox_count=inbox_count, title = "Top")
+	return render_template('inbox.html', user=user, inbox = inbox, title = "Top")
 
 @app.route('/contacts', methods = ["GET", "POST"])
 @login_required
 def contacts():
 	user = g.user
 	contacts = user.contacts
-	inbox_count = user.inbox().count()
-	return render_template('contacts.html', user = user, title = 'Contacts', contacts = contacts, inbox = inbox, inbox_count = inbox_count)
+	return render_template('contacts.html', user = user, title = 'Contacts', contacts = contacts, inbox = inbox)
 
 @app.route('/user/<username>')
 @login_required
@@ -171,16 +168,14 @@ def user(username):
 	_user = User.query.filter(User.username.ilike(username)).first()
 	tags = _user.tags_for_user().most_common(20)
 	inbox = g.user.inbox()
-	inbox_count = inbox.count()
-	return render_template('user.html', user = _user, tags = tags, title = 'Profile', inbox=inbox, inbox_count=inbox_count)
+	return render_template('user.html', user = _user, tags = tags, title = 'Profile', inbox=inbox)
 
 
 @app.route('/settings', methods = ["GET", "POST"])
 @login_required
 def settings():
 	user = g.user
-	inbox_count = user.inbox().count()
-	return render_template('settings.html', title = 'Settings', inbox=inbox, inbox_count = inbox_count)
+	return render_template('settings.html', title = 'Settings', inbox=inbox)
 
 
 @app.route('/compose', methods = ["GET", "POST"])
@@ -188,7 +183,6 @@ def settings():
 def compose():
 	user = g.user
 	inbox = user.inbox()
-	inbox_count=inbox.count()
 	form = NewMessageForm()
 	if form.validate_on_submit():
 		message = Message(title = form.message_title.data,
@@ -202,7 +196,7 @@ def compose():
 		return redirect(url_for('recipients'))
 	else:
 		form.flash_errors()
-	return render_template('compose.html', form=form, title = "Compose", inbox =inbox, inbox_count=inbox_count)
+	return render_template('compose.html', form=form, title = "Compose", inbox =inbox)
 
 
 @app.route('/recipients', methods = ["GET", "POST"])
@@ -210,7 +204,6 @@ def compose():
 def recipients():
 	user = g.user
 	form = RecipientsForm()
-	inbox_count = user.inbox().count()
 
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
@@ -232,7 +225,7 @@ def recipients():
 		else:
 			flash(form.errors)
 
-	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form, inbox_count = inbox_count)
+	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
 
 @app.route('/bookmarks', methods = 	["GET", "POST"])
 @app.route('/bookmarks/<int:page>', methods = ["GET", "POST"])
@@ -241,8 +234,7 @@ def bookmarks(page=1):
 	user = g.user
 	bookmarks = user.bookmarks().paginate(page,12,False)
 	user_tags = user.tags_for_user().most_common(20)
-	inbox_count = user.inbox().count()
-	return render_template('bookmarks.html', user = user, bookmarks = bookmarks, user_tags = user_tags, title = "Bookmarks", inbox_count=inbox_count)
+	return render_template('bookmarks.html', user = user, bookmarks = bookmarks, user_tags = user_tags, title = "Bookmarks")
 
 @app.route('/follow/<username>')
 @login_required
@@ -287,7 +279,6 @@ def unfollow(username):
 def bookmark(message_id):
 	user = g.user
 	message = UserMessage.query.filter(UserMessage.message_id == message_id).filter(UserMessage.user_id == user.id).one()
-	inbox_count = user.inbox().count()
 	form = TagForm()
 
 	if message is None:
@@ -311,7 +302,7 @@ def bookmark(message_id):
 	else:
 		flash(form.errors)
 
-		return render_template("bookmark.html", message = message, user = user, form = form, title = "Edit Bookmark", inbox_count=inbox_count)
+		return render_template("bookmark.html", message = message, user = user, form = form, title = "Edit Bookmark")
 
 
 @app.route('/dismiss/<message_id>')
@@ -337,7 +328,6 @@ def dismiss(message_id):
 def quickshare():
 	user = g.user
 	inbox = user.inbox()
-	inbox_count = inbox.count()
 	quickshare = "Sent by " + user.username +" via quickshare"
 	form = RecipientsForm()
 
@@ -360,7 +350,7 @@ def quickshare():
 		else:
 			flash(form.errors)
 
-	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form, inbox_count=inbox_count)
+	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
 
 
 
@@ -371,7 +361,7 @@ def share(message_id):
 	user = g.user
 	message = Message.query.get(message_id)
 	inbox = user.inbox()
-	inbox_count = inbox.count()
+
 
 	#select recipients
 	form = RecipientsForm()
@@ -403,7 +393,7 @@ def share(message_id):
 		else:
 			flash(form.errors)
 
-	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form, inbox_count=inbox_count)
+	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
 
 
 @app.route('/tag/<name>', methods = ["GET", "POST"])
@@ -413,16 +403,14 @@ def tag(name, page = 1):
 	user = g.user
 	tag_name = urllib.unquote(name)
 	bookmarks = user.get_bookmarks_with_tag(tag_name).paginate(page,12,False)
-	inbox_count = user.inbox().count()
-	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, inbox_count=inbox_count, name = name)
+	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, name = name)
 
 @app.route('/tags', methods = ["GET", "POST"])
 @login_required
 def tags():
 	user = g.user
-	inbox_count = user.inbox().count()
 	user_tags = dict(user.tags_for_user())
-	return render_template('tags.html', user = user, title = 'Tags', user_tags = user_tags, inbox_count = inbox_count)
+	return render_template('tags.html', user = user, title = 'Tags', user_tags = user_tags)
 
 
 
@@ -454,8 +442,11 @@ def api_user():
 @login_required
 def api_user_inbox():
 	offset = request.args.get('offset')
+	inbox_start = time.time()
 	inbox = g.user.inbox()
-	count  = inbox.count()
+	inbox_end = time.time()
+	inbox_done = inbox_end - inbox_start
+	print "inbox done in" , inbox_done
 	if offset:
 		offset = int(offset)
 		inbox = inbox.from_self().offset(offset).limit(6)
@@ -463,6 +454,7 @@ def api_user_inbox():
 		inbox = inbox.limit(6)
 	data = []
 	for item in inbox.all():
+		msg_start = time.clock()
 		message = {}
 		message['id'] = item.message_id
 		message['note']=item.message.title
@@ -472,10 +464,16 @@ def api_user_inbox():
 		url = url.encode('utf-8')
 		if bm.get(url):
 			message['content']= bm.get(url)
+			msg_end = time.clock()
+			print "content from cache in ", msg_end - msg_start
 		else:
 			content = item.message.render_url()
+			msg_end = time.clock()
+			print "cache miss, content rendered in " msg_end - msg_start
 			message['content'] = content.encode('utf-8')
 			bm.set(url, message['content'], int(43200))
+			msg_cached = time.clock()
+			print "message cached in " msg_end-msg_cached
 		data.append(message)
 	return jsonify(data)
 
