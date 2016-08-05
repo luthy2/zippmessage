@@ -442,9 +442,9 @@ def api_user():
 @login_required
 def api_user_inbox():
 	offset = request.args.get('offset')
-	inbox_start = time.clock()
+	inbox_start = time.time()
 	inbox = g.user.inbox()
-	inbox_end = time.clock()
+	inbox_end = time.time()
 	inbox_done = inbox_end - inbox_start
 	print "inbox done in" , inbox_done
 	if offset:
@@ -454,7 +454,7 @@ def api_user_inbox():
 		inbox = inbox.limit(6)
 	data = []
 	for item in inbox.all():
-		msg_start = time.clock()
+		msg_start = time.time()
 		message = {}
 		message['id'] = item.message_id
 		message['note']=item.message.title
@@ -464,15 +464,15 @@ def api_user_inbox():
 		url = url.encode('utf-8')
 		if bm.get(url):
 			message['content']= bm.get(url)
-			msg_end = time.clock()
+			msg_end = time.time()
 			print "content from cache in ", msg_end - msg_start
 		else:
 			content = item.message.render_url()
-			msg_end = time.clock()
+			msg_end = time.time()
 			print "cache miss, content rendered in ", msg_end - msg_start
 			message['content'] = content.encode('utf-8')
 			bm.set(url, message['content'], int(43200))
-			msg_cached = time.clock()
+			msg_cached = time.time()
 			print "message cached in ", msg_end-msg_cached
 		data.append(message)
 	return jsonify(data)
