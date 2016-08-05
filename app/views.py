@@ -598,7 +598,7 @@ def api_dismiss_message(message_id):
 # 	activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
 # 	return jsonify(activity_feed)
 
-@app.task
+@celery.task
 def cache_url(message):
 	url = message.message.url
 	url = url.encode('utf-8')
