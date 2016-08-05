@@ -10,6 +10,7 @@ import bmemcached
 import urlparse
 import json
 import redis
+import celery
 
 
 app = Flask(__name__)
