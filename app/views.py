@@ -191,7 +191,7 @@ def compose():
 							timestamp = datetime.utcnow())
 		db.session.add(message)
 		db.session.commit()
-		cache_url.delay(message)
+		cache_url.delay(message.url)
 		session['message_id'] = message.id
 		flash('Choose Receipients')
 		return redirect(url_for('recipients'))
@@ -336,7 +336,7 @@ def quickshare():
 	message = Message(title = quickshare, url = request.args.get('url'), author = g.user, timestamp = datetime.utcnow())
 	db.session.add(message)
 	db.session.commit()
-	cache_url.delay(message)
+	cache_url.delay(message.url)
 	if request.method == 'POST':
 		recipients = form.recipients.data
 		if form.validate_on_submit():
@@ -602,7 +602,7 @@ def api_dismiss_message(message_id):
 @celery.task
 def cache_url(url):
 	url = url.encode('utf-8')
-	content = get_url_content()
+	content = get_url_content(url)
 	content = content.encode('utf-8')
 	if bm.get(url):
 		return True

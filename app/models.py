@@ -311,7 +311,6 @@ def provider_url(url):
 	return provider
 
 
-
 def get_url_content(message_url):
 	resp = embedly.oembed(message_url, words = 25)
 	if resp["type"]== "error":
@@ -320,7 +319,7 @@ def get_url_content(message_url):
 		if 'url' in resp:
 			url = resp["url"]
 		else:
-			url = self.url
+			url = message_url
 		if 'twitter.com' in url:
 			return twitter_tag(url)
 		elif 'spotify.com' in url:
