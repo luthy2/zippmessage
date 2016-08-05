@@ -3,8 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_oauth import OAuth
 from embedly import Embedly
-from config import SECRET_KEY, MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD, CELERY_BROKER, CELERY_RESULT_BACKEND
-import celery
+from config import SECRET_KEY, MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD, CELERY_BROKER
 import logging
 import sys
 import bmemcached
