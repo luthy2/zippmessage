@@ -10,6 +10,7 @@ import sys
 import bmemcached
 import urlparse
 import json
+import redis
 
 
 app = Flask(__name__)
@@ -23,7 +24,7 @@ app.secret_key = SECRET_KEY
 oauth = OAuth()
 embedly = Embedly('3ec6801e9b5e4931925749186fd75996')
 bm = bmemcached.Client(MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD)
-celery = celery.Celery('app')
+celery = celery.Celery('app', backend = CELERY_RESULT_BACKEND, broker = CELERY_BROKER)
 
 twitter = oauth.remote_app('twitter',
     # unless absolute urls are used to make requests, this will be added
