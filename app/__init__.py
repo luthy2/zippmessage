@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_oauth import OAuth
 from embedly import Embedly
-from config import SECRET_KEY, MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD
+from config import SECRET_KEY, MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD, CELERY_BROKER, CELERY_RESULT_BACKEND
 import celery
 import logging
 import sys
@@ -23,7 +23,7 @@ app.secret_key = SECRET_KEY
 oauth = OAuth()
 embedly = Embedly('3ec6801e9b5e4931925749186fd75996')
 bm = bmemcached.Client(MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD)
-celery = celery.Celery('app')
+celery = celery.Celery('app', backend = CELERY_RESULT_BACKEND, broker = CELERY_BROKER)
 
 twitter = oauth.remote_app('twitter',
     # unless absolute urls are used to make requests, this will be added
