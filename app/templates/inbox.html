@@ -45,7 +45,7 @@
 <div class = "row" id="compose">
   <div class="col-md-6 col-md-offset-3" style="padding-bottom:10px;">
     <h4>Share a link</h4>
-      <form action="" method = "POST" name="new message">
+      <form action="" method = "POST" class="">
         <div class="form-group">
           {{form.hidden_tag()}}
             {{form.message_url(class_="form-control", placeholder="paste a URL")}}
@@ -58,7 +58,7 @@
   </div >
 </div>
 <div class="row">
-  <div class ="col-md-3 hidden-xs hidden-sm">
+  <div class ="col-md-3 hidden-xs hidden-sm" style="padding-top:10px;">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
       {% if user_tags %}
@@ -81,7 +81,7 @@
     <div class = "alert alert-info"	role= "alert" ng-show="alert">
       {{alert}}
     </div>
-    <ul class = "list-group" ng-repeat="message in inbox" >
+    <ul class = "list-group" ng-repeat="message in inbox">
       <li class = "list-group-item">
         <p><a href = "/user/{{message.from_user}}">@{{message.from_user}}:</a> {{message.note}}<span class ='pull-right' style="color:gray">{{message.timedelta}}</span></p>
         <span class = "embedly-embed" ng-bind-html="$sce.trustAsHtml(message.content)"></span>
