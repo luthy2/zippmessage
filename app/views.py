@@ -191,6 +191,7 @@ def compose():
 							timestamp = datetime.utcnow())
 		db.session.add(message)
 		db.session.commit()
+		cache_url.delay()
 		session['message_id'] = message.id
 		flash('Choose Receipients')
 		return redirect(url_for('recipients'))
@@ -220,7 +221,6 @@ def recipients():
 			db.session.commit()
 			session.pop('message_id', None)
 			flash('Message Sent!')
-			cache_url.delay(10,10)
 			return redirect(url_for('index'))
 
 		else:
@@ -334,10 +334,11 @@ def quickshare():
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
 
 	message = Message(title = quickshare, url = request.args.get('url'), author = g.user, timestamp = datetime.utcnow())
-
+	db.session.add(message)
+	db.session.commit()
+	cache_url.delay()
 	if request.method == 'POST':
 		recipients = form.recipients.data
-
 		if form.validate_on_submit():
 			db.session.add(message)
 			for recipient in recipients:
