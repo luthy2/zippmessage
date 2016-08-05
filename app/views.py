@@ -605,7 +605,7 @@ def cache_url(message):
 	content = message.message.render_url()
 	content = content.encode('utf-8')
 	if bm.get(url):
-		#return True
+		return True
 	else:
 		return bm.set(url, content, -1)
 
