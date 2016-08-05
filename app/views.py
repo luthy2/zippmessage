@@ -2,7 +2,7 @@ import os
 
 from flask import request, g, render_template, session, url_for, redirect, flash, jsonify, send_from_directory, make_response
 from flask_login import login_user, logout_user, current_user, login_required
-from app import app, db, lm, twitter, bm
+from app import app, db, lm, twitter, bm, celery
 from forms import NewMessageForm, RecipientsForm, TagForm
 from models import User, Message, UserMessage
 from datetime import datetime
@@ -220,6 +220,7 @@ def recipients():
 			db.session.commit()
 			session.pop('message_id', None)
 			flash('Message Sent!')
+			cache_url.delay(10,10)
 			return redirect(url_for('index'))
 
 		else:
@@ -327,7 +328,6 @@ def dismiss(message_id):
 @login_required
 def quickshare():
 	user = g.user
-	inbox = user.inbox()
 	quickshare = "Sent by " + user.username +" via quickshare"
 	form = RecipientsForm()
 
@@ -471,7 +471,7 @@ def api_user_inbox():
 			msg_end = time.time()
 			print "cache miss, content rendered in ", msg_end - msg_start
 			message['content'] = content.encode('utf-8')
-			bm.set(url, message['content'], int(43200))
+			bm.set(url, message['content'], int(-1))
 			msg_cached = time.time()
 			print "message cached in ", msg_end-msg_cached
 		data.append(message)
@@ -597,6 +597,17 @@ def api_dismiss_message(message_id):
 # 	user = g.user
 # 	activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
 # 	return jsonify(activity_feed)
+
+@app.task():
+def cache_url(message):
+	url = message.message.url
+	url = url.encode('utf-8')
+	content = message.message.render_url()
+	content = content.encode('utf-8')
+	if bm.get(url):
+		#return True
+	else:
+		return bm.set(url, content, -1)
 
 
 

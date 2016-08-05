@@ -10,7 +10,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
   $scope.inbox = []
     $http ({
       method: 'GET',
-      url: 'http://www.zippmsg.com/api/1/user/inbox'
+      url: 'http://zippmessage-staging.herokuapp.com/api/1/user/inbox'
     }).then(function success(response){
       console.log(response)
       $scope.inbox = response.data
@@ -26,7 +26,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     $scope.loading = true;
     $http ({
       method:'GET',
-      url:'http://www.zippmsg.com/api/1/user/inbox',
+      url:'http://zippmessage-staging.herokuapp.com/api/1/user/inbox',
       params: {'offset':$scope.inbox.length}
     }).then(function success(response){
       console.log(response)
@@ -63,7 +63,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
   $scope.dismissMessage = function(messageId){
     $http ({
       method: 'GET',
-      url: 'http://www.zippmsg.com/api/1/dismiss/'+messageId
+      url: 'http://zippmessage-staging.herokuapp.com/api/1/dismiss/'+messageId
     }).then(function success(response){
         console.log(response)
         for (var i = 0; i < $scope.inbox.length; i++){
