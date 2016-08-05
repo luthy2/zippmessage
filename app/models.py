@@ -184,6 +184,27 @@ class Message(db.Model):
 		parse_object = urlparse(self.url)
 		return parse_object.netloc
 
+	def format_timestamp(self):
+		ts = self.timestamp
+		now = datetime.utcnow()
+		tdelta = now - ts
+		s = tdelta.total_seconds()
+		if s <= 59:
+			s = s//1
+			return '{0}s'.format(s)
+		elif 60 <= s < 3600:
+			s = s//60
+			return '{0}m ago'.format(int(s))
+		elif 3600 <= s < 86400:
+			s = s//3600
+			return '{0}h ago'.format(int(s))
+		elif 86400 <= s < 604800:
+			s = s//86400
+			return '{0}d ago'.format(int(s))
+		else:
+			s = s//604800
+			return '{0}w ago'.format(int(s))
+
 	def request_url(self):
 		resp = embedly.oembed(self.url, words = 25)
 		if not resp["type"] == "error":
