@@ -19,4 +19,4 @@ embedly==0.5.0
 requests==2.1.0
 Python-Binary-Memcached==0.17
 Celery == 4.0.0rc3
-redis == 3.2.3
+redis == 2.10.5
