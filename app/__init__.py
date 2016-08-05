@@ -23,7 +23,7 @@ app.secret_key = SECRET_KEY
 oauth = OAuth()
 embedly = Embedly('3ec6801e9b5e4931925749186fd75996')
 bm = bmemcached.Client(MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD)
-celery = celery.Celery('app'))
+celery = celery.Celery('app')
 
 twitter = oauth.remote_app('twitter',
     # unless absolute urls are used to make requests, this will be added
