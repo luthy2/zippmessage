@@ -62,7 +62,7 @@
       {%endif%}
       {% if resp["media"]%}
         <div class= 'embedly-embed'> {{resp["media"]["html"] | safe}} </div>
-        {% if resp["media"]["type"]== "photo"}
+        {% if resp["media"]["type"]== "photo"%}
           <img src="{{resp["media"]["url"]}}">
         {%endif%}
       {% endif %}
