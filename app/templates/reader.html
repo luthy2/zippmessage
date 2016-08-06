@@ -25,6 +25,15 @@
               rgba(0, 0, 0, 0.5)
               )
       }
+      #dismiss:hover{
+        color:#CC1A40;
+      }
+      .glyphicon-send:hover{
+        color:#54C6EB;
+      }
+      .glyphicon-bookmark:hover{
+        color:#06D66E;
+      }
    </style>
 </head>
 <body>
@@ -32,14 +41,14 @@
 {% for item in inbox.items %}
   <div class = "row">
     <div class= "col-md-8 col-md-offset-2">
-      <h4>
+      <h5>
         <a href = "{{url_for('inbox')}}"><span class = "glyphicon glyphicon-chevron-left"></span>Inbox</a>
         <span class="pull-right">
           <a href = "{{item.message.url}}" target="_blank">
             <span class = "glyphicon glyphicon-new-window"></span>
           </a>
         </span>
-      </h4>
+      </h5>
     </div>
   </div>
 
@@ -55,9 +64,6 @@
         {% endfor %}
       {% endif %}
       {% if resp["content"] %}
-        {% if resp["title"]%}
-          <h4>{{resp["title"]}}</h4>
-        {% endif %}
         {{resp["content"] | safe}}
       {%endif%}
       {% if resp["media"]%}
@@ -72,12 +78,14 @@
     <div class = "container">
       <div class = "row">
         <div class = "col-xs-12">
-          <ul class="list-inline" style="text-align:center; float:center;">
-            {% if inbox.has_prev %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.prev_num)}}"><span class = "glyphicon glyphicon-chevron-left"></span>prev</a></li>{%else%}<span style="color:light gray;"><span class = "glyphicon glyphicon-chevron-right"></span>prev</span>{% endif %}
-            <li style = "width:17%" ><a href = "{{url_for('dismiss', message_id = item.message_id, next = 'reader', page = item.page)}}"><span class = "glyphicon glyphicon-remove"></span></a></li>
-            <li style = "width:17%" ><a href = "{{url_for('bookmark', message_id = item.message_id, next = 'reader', page = item.page)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
-            <li style = "width:17%" ><a href = "{{url_for('share', message_id = item.message_id, next = 'reader', page = item.page)}}"><span class = "glyphicon glyphicon-send"></span></a></li>
-            {% if inbox.has_next %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.next_num)}}">next<span class = "glyphicon glyphicon-chevron-right"></span></a></li>{%else%}<span style="color:light gray;">next<span class = "glyphicon glyphicon-chevron-right"></span></span>{% endif %}
+          <ul class="list-inline" style="text-align:center; vertical-align:center;">
+            <h5>
+              {% if inbox.has_prev %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.prev_num)}}"><span class = "glyphicon glyphicon-chevron-left"></span>prev</a></li>{%else%}<span style="color:light gray;"><span class = "glyphicon glyphicon-chevron-right"></span>prev</span>{% endif %}
+              <li style = "width:17%" ><a href = "{{url_for('dismiss', message_id = item.message_id, next = 'reader', page = item.page)}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
+              <li style = "width:17%" ><a href = "{{url_for('bookmark', message_id = item.message_id, next = 'reader', page = item.page)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
+              <li style = "width:17%" ><a href = "{{url_for('share', message_id = item.message_id, next = 'reader', page = item.page)}}"><span class = "glyphicon glyphicon-send"></span></a></li>
+              {% if inbox.has_next %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.next_num)}}">next<span class = "glyphicon glyphicon-chevron-right"></span></a></li>{%else%}<span style="color:light gray;">next<span class = "glyphicon glyphicon-chevron-right"></span></span>{% endif %}
+            </h5>
           </ul>
         </div>
       </div>
