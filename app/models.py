@@ -269,12 +269,10 @@ class Message(db.Model):
 
 def twitter_tag(url):
 	url = url
-	TWITTER_SCRIPT_TAG = 	'<div class="list-group-item">'\
-							'<blockquote class="twitter-tweet tw-align-center">' \
+	TWITTER_SCRIPT_TAG = 	'<blockquote class="twitter-tweet tw-align-center">' \
 							'<a href="%s"></a></blockquote>' \
 							'<script async src="https://platform.twitter.com/widgets.js" ' \
-							'charset="utf-8"></script>'\
-							'</div>'
+							'charset="utf-8"></script>'						
 	return TWITTER_SCRIPT_TAG % url
 
 
@@ -320,7 +318,7 @@ def render_no_style(url):
 
 def image_tag(url):
 	image_tag = '<li class = "list-group-item" >' \
-				'<img src = "%s" width="100%%">' \
+				'<img id = "img-message" src = "%s" width="100%%">' \
 				'</li>'
 	return image_tag % url
 
