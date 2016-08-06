@@ -7,11 +7,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8">
   <style>
+    body{
+      background-color:#fafafa;
+      line-height: 200%;
+      font-size:150%;
+
+    }
     .embedly-embed iframe{
         width: 100%;
      }
       img {
         width:100%;
+        background-image:
+          linear-gradient(
+            to bottom,
+              rgba(0, 0, 0, 0),
+              rgba(0, 0, 0, 0.5)
+              )
       }
    </style>
 </head>
@@ -32,13 +44,13 @@
   </div>
 
   <div class = "row">
-   <div class = "col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="padding-bottom:40px; padding-top:50px">
+   <div class = "col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="padding-bottom:40px;">
      {% set resp = item.message.get_content() %}
       {% if not resp %}
         <p> We were unable to extract the content from the original source. Visit {{item.message.url}} to view the content</p>
       {% endif %}
       {% if resp["authors"]%}
-        {% for author in resp["authors"]%}
+        {% for author in resp["authors"][:1]%}
           <a href = "{{author['url']}}">{{author["name"]}} </a>
         {% endfor %}
       {% endif %}
@@ -50,18 +62,21 @@
       {%endif%}
       {% if resp["media"]%}
         <div class= 'embedly-embed'> {{resp["media"]["html"] | safe}} </div>
+        {% if resp["media"]["type"]== "photo"}
+          <img src="{{resp["media"]["url"]}}">
+        {%endif%}
       {% endif %}
    </div>
   </div>
-  <footer style = "background-color:white; position:fixed; bottom:0; height:40; width:100%;">
+  <footer style = "background-color:white; position:fixed; bottom:0; height:60; width:100%;">
     <div class = "container">
       <div class = "row">
         <div class = "col-xs-12">
-          <ul class="list-inline" style="text-align:center;">
-            {% if inbox.has_prev %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.prev_num)}}"><span class = "glyphicon glyphicon-chevron-left"></span>prev</a></li>{% endif %}
-            <li style = "width:17%" ><a href = "{{url_for('dismiss', message_id = item.message_id, next = 'reader', page = inbox.page)}}"><span class = "glyphicon glyphicon-remove"></span></a></li>
-            <li style = "width:17%" ><a href = "{{url_for('bookmark', message_id = item.message_id, next = 'reader', page = inbox.page)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
-            <li style = "width:17%" ><a href = "{{url_for('share', message_id = item.message_id, next = 'reader', page = inbox.page)}}"><span class = "glyphicon glyphicon-send"></span></a></li>
+          <ul class="list-inline" style="text-align:center; float:center;">
+            {% if inbox.has_prev %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.prev_num)}}"><span class = "glyphicon glyphicon-chevron-left"></span>prev</a></li>{%else%}<span style="color:light gray;"><span class = "glyphicon glyphicon-chevron-right"></span>prev</span>{% endif %}
+            <li style = "width:17%" ><a href = "{{url_for('dismiss', message_id = item.message_id, next = 'reader', page = item.page)}}"><span class = "glyphicon glyphicon-remove"></span></a></li>
+            <li style = "width:17%" ><a href = "{{url_for('bookmark', message_id = item.message_id, next = 'reader', page = item.page)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
+            <li style = "width:17%" ><a href = "{{url_for('share', message_id = item.message_id, next = 'reader', page = item.page)}}"><span class = "glyphicon glyphicon-send"></span></a></li>
             {% if inbox.has_next %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.next_num)}}">next<span class = "glyphicon glyphicon-chevron-right"></span></a></li>{%else%}<span style="color:light gray;">next<span class = "glyphicon glyphicon-chevron-right"></span></span>{% endif %}
           </ul>
         </div>
