@@ -269,10 +269,10 @@ class Message(db.Model):
 
 def twitter_tag(url):
 	url = url
-	TWITTER_SCRIPT_TAG = 	'<blockquote class="twitter-tweet tw-align-center">' \
+	TWITTER_SCRIPT_TAG = 	'<blockquote class="twitter-tweet tw-align-center" data-cards="hidden">' \
 							'<a href="%s"></a></blockquote>' \
 							'<script async src="https://platform.twitter.com/widgets.js" ' \
-							'charset="utf-8"></script>'						
+							'charset="utf-8"></script>'
 	return TWITTER_SCRIPT_TAG % url
 
 
