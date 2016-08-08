@@ -81,7 +81,7 @@
     <div class = "alert alert-info"	role= "alert" ng-show="alert">
       {{alert}}
     </div>
-    <ul class = "list-group" ng-repeat="message in inbox"  style ="box-shadow:0 2px 5px 0 gray;">
+    <ul class = "list-group" ng-repeat="message in inbox"  style ="box-shadow:0 3px 8px 0 #bfbfbf;">
       <li class = "list-group-item"  style="border-radius:0px;">
         <p><a href = "/user/{{message.from_user}}">@{{message.from_user}}:</a> {{message.note}}<span class ='pull-right' style="color:gray">{{message.timedelta}}</span></p>
         <span class = "embedly-embed" ng-bind-html="$sce.trustAsHtml(message.content)"></span>
