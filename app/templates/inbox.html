@@ -81,12 +81,12 @@
     <div class = "alert alert-info"	role= "alert" ng-show="alert">
       {{alert}}
     </div>
-    <ul class = "list-group" ng-repeat="message in inbox" style="border-radius:0px;">
-      <li class = "list-group-item">
+    <ul class = "list-group" ng-repeat="message in inbox">
+      <li class = "list-group-item"  style="border-radius:0px;">
         <p><a href = "/user/{{message.from_user}}">@{{message.from_user}}:</a> {{message.note}}<span class ='pull-right' style="color:gray">{{message.timedelta}}</span></p>
         <span class = "embedly-embed" ng-bind-html="$sce.trustAsHtml(message.content)"></span>
       </li>
-      <li class = "list-group-item" style="text-align:center;">
+      <li class = "list-group-item" style="text-align:center; border-radius:0px;">
         <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="dismissMessage(message.id)" ><span id="dismiss" class="glyphicon glyphicon-remove"></span></button>
         <a type="button" class="btn btn-link btn-sm" style="width:17%" href ="/bookmark/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span></a>
         <a type="button" class="btn btn-link btn-sm" style="width:17%" href ="/share/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
