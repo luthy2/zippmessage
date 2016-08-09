@@ -342,7 +342,7 @@ def get_url_content(message_url):
 		elif resp["type"] == 'photo':
 			return image_tag(url)
 		elif resp['type'] == 'video':
-			return resp['html']
+			return '<div class ="embed-responsive embed-responsive-16by9>'+resp['html']+'</div>'
 		elif 'soundcloud.com' in url:
 			return resp['html']
 		elif 'medium.com' in resp['provider_url']:
