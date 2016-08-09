@@ -283,14 +283,12 @@ def article_tag(resp, msg_url = None):
 	if 'description' in resp:
 		description = resp['description']
 		description_tag = '<p class = "list-group-item-text">%s</p>' % description \
-	else:
-		description_tag = ''
+
 
 	if 'thumbnail_url' in resp:
 		img_url = resp['thumbnail_url']
 		img_tag = '<div class = "article hidden-xs"><img src="%s" width="100%%"></div>' img_url \
-	else:
-		img_tag = ''
+
 
 	tag = 	'<a class = "list-group-item"  href = "%s" target="_blank">' \
 			'%s'
