@@ -296,11 +296,11 @@ def article_tag(resp, msg_url = None):
 
 
 	tag = 	'<a class = "list-group-item"  href = "%s" target="_blank">' \
-			'%s'
-			'%s'
-			'%s'
-			'%s'
-			'</a>'
+	'%s'
+	'%s'
+	'%s'
+	'%s'
+	'</a>'
 
 	return tag % (url, image_tag, title_tag, description_tag, provider_tag)
 
