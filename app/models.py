@@ -268,7 +268,7 @@ def spotify_tag(url):
 	return spotify_tag % p
 
 def article_tag(resp, msg_url = None):
-	if url in resp['url']
+	if url in resp:
 		url = resp['url']
 	else:
 		url = msg_url
