@@ -272,15 +272,15 @@ def article_tag(resp, msg_url = None):
 		url = resp['url']
 	else:
 		url = msg_url
-	provider = provider_url(url)
-	provider_tag = '<p style = "color:gray"><small>%s</small></p>' % provider \
+		provider = provider_url(url)
+		provider_tag = '<p style = "color:gray"><small>%s</small></p>' % provider \
 
 	if 'title' in resp:
 		title = resp['title']
 		title_tag = '<h4 class = "list-group-item-heading">%s</h4>' % title \
 	else:
 		title_tag =''
-	
+
 	if 'description' in resp:
 		description = resp['description']
 		description_tag = '<p class = "list-group-item-text">%s</p>' % description \
