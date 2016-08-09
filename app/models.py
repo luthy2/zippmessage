@@ -283,7 +283,7 @@ def article_tag(resp, msg_url = None):
 
 	if 'title' in resp:
 		title = resp['title']
-		title_tag = '<h4 class = "list-group-item-heading" style="padding-top:2%">%s</h4>' % title
+		title_tag = '<h4 class = "list-group-item-heading" style="padding-top:2%%">%s</h4>' % title
 
 	if 'description' in resp:
 		description = resp['description']
