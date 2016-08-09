@@ -276,7 +276,7 @@ def article_tag(resp, msg_url = None):
 	if url in resp:
 		url = resp['url']
 	else:
-		url = msg_url
+		url = msg_url or ''
 
 	provider = provider_url(url)
 	provider_tag = '<p style = "color:gray"><small>%s</small></p>' % provider \
@@ -348,6 +348,7 @@ def get_url_content(message_url):
 		elif 'medium.com' in resp['provider_url']:
 			 return resp['html']
 		elif 'airbnb.com' in resp['provider_url']:
+			message_url = message_url.encode('utf-8')
 			return article_tag(resp, msg_url = message_url)
 		else:
 			return render_no_style(message_url)
