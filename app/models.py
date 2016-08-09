@@ -338,7 +338,7 @@ def get_url_content(message_url):
 		elif 'spotify.com' in url:
 			return spotify_tag(url)
 		elif resp['type'] == 'link':
-			return article_tag(resp)
+			return article_tag(resp, msg_url = message_url)
 		elif resp["type"] == 'photo':
 			return image_tag(url)
 		elif resp['type'] == 'video':
