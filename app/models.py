@@ -347,7 +347,7 @@ def get_url_content(message_url):
 			return resp['html']
 		elif 'medium.com' in resp['provider_url']:
 			 return resp['html']
-		elif 'airbnb.com' in resp['provider_url']
+		elif 'airbnb.com' in resp['provider_url']:
 			return article_tag(resp, msg_url = message_url)
 		else:
 			return render_no_style(message_url)
