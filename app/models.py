@@ -1,4 +1,4 @@
-from app import db
+`from app import db
 from app import app
 from app import embedly
 from urlparse import urlparse
@@ -220,30 +220,8 @@ class Message(db.Model):
 			return False
 
 	def render_url(self):
-		resp = self.request_url()
-		if not resp:
-			return render_no_style(self.url)
-		else:
-			if 'url' in resp:
-				url = resp["url"]
-			else:
-				url = self.url
-			if 'twitter.com' in url:
-				return twitter_tag(url)
-			elif 'spotify.com' in url:
-				return spotify_tag(url)
-			elif resp['type'] == 'link':
-				return article_tag(resp)
-			elif resp["type"] == 'photo':
-				return image_tag(url)
-			elif resp['type'] == 'video':
-				return resp['html']
-			elif 'soundcloud.com' in url:
-				return resp['html']
-			elif 'medium.com' in resp['provider_url']:
-				 return resp['html']
-			else:
-				return render_no_style(self.url)
+		content = get_url_content(self.url)
+		return content
 
 	def url_logo(self):
 		short_url = self.short_url()
@@ -289,26 +267,40 @@ def spotify_tag(url):
 					'</div>'
 	return spotify_tag % p
 
-def article_tag(resp):
+def article_tag(resp, msg_url = None):
+	if url in resp['url']
+		url = resp['url']
+	else:
+		url = ''
+	provider = provider_url(url)
+	provider_tag = '<p style = "color:gray"><small>%s</small></p>' % provider \
+
 	if 'title' in resp:
 		title = resp['title']
+		title_tag = '<h4 class = "list-group-item-heading">%s</h4>' % title \
 	else:
-		title =''
+		title_tag =''
+
 	if 'description' in resp:
 		description = resp['description']
+		description_tag = '<p class = "list-group-item-text">%s</p>' % description \
 	else:
-		description = ''
+		description_tag = ''
 
-	url = resp['url']
-	provider = provider_url(url)
+	if 'thumbnail_url'	in resp:
+		img_url = resp['thumbnail_url']
+		img_tag = '<div class = "article hidden-xs"><img src="%s" width="100%%"></div>' img_url \
+	else:
+		img_tag = ''
 
 	tag = 	'<a class = "list-group-item"  href = "%s" target="_blank">' \
-			'<h4 class = "list-group-item-heading">%s</h4>' \
-			'<p class = "list-group-item-text">%s</p>' \
-			'<p style = "color:gray"><small>%s</small></p>' \
+			'%s'
+			'%s'
+			'%s'
+			'%s'
 			'</a>'
 
-	return tag % (url, title, description, provider)
+	return tag % (url, image_tag, title_tag, description_tag, provider_tag)
 
 def render_no_style(url):
 	#custom render for urls that fail embedly lookup
@@ -353,6 +345,8 @@ def get_url_content(message_url):
 			return resp['html']
 		elif 'medium.com' in resp['provider_url']:
 			 return resp['html']
+		elif 'airbnb.com' in resp['provider_url']
+			return article_tag(resp, msg_url = message_url)
 		else:
 			return render_no_style(message_url)
 
