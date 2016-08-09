@@ -287,7 +287,7 @@ def article_tag(resp, msg_url = None):
 
 	if 'thumbnail_url' in resp:
 		img_url = resp['thumbnail_url']
-		img_tag = '<div class = "article hidden-xs"><img src="%s" width="100%%"></div>' img_url \
+		img_tag = '<div class = "article hidden-xs"><img src="%s" width="100%%"></div>' % img_url \
 
 
 	tag = 	'<a class = "list-group-item"  href = "%s" target="_blank">' \
