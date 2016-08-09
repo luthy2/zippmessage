@@ -279,7 +279,7 @@ def article_tag(resp, msg_url = None):
 		title = resp['title']
 		title_tag = '<h4 class = "list-group-item-heading">%s</h4>' % title \
 	else:
-		title_tag =''
+		title_tag = ''
 
 	if 'description' in resp:
 		description = resp['description']
