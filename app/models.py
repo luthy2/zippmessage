@@ -271,7 +271,7 @@ def article_tag(resp, msg_url = None):
 	if url in resp['url']
 		url = resp['url']
 	else:
-		url = ''
+		url = msg_url
 	provider = provider_url(url)
 	provider_tag = '<p style = "color:gray"><small>%s</small></p>' % provider \
 
