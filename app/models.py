@@ -272,8 +272,9 @@ def article_tag(resp, msg_url = None):
 		url = resp['url']
 	else:
 		url = msg_url
-		provider = provider_url(url)
-		provider_tag = '<p style = "color:gray"><small>%s</small></p>' % provider \
+
+	provider = provider_url(url)
+	provider_tag = '<p style = "color:gray"><small>%s</small></p>' % provider \
 
 	if 'title' in resp:
 		title = resp['title']
@@ -287,7 +288,7 @@ def article_tag(resp, msg_url = None):
 	else:
 		description_tag = ''
 
-	if 'thumbnail_url'	in resp:
+	if 'thumbnail_url' in resp:
 		img_url = resp['thumbnail_url']
 		img_tag = '<div class = "article hidden-xs"><img src="%s" width="100%%"></div>' img_url \
 	else:
