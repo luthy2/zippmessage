@@ -3,15 +3,11 @@
 
 {% block content %}
 <div class = "container-xs-10">
-	<h4>{{user.username}}'s Profile</h4>
-
-	{% if user == g.user %}
-	<p><a href = "">Edit</a></p>
-
-	{% elif not g.user.is_contact(user) %}
-		<a class='button' href = "{{url_for('follow', username=user.username)}}">Follow {{user.username}}</a>
+	<h4>@{{user.username}}</h4>
+	{% if not g.user.is_contact(user) %}
+		<a class='btn btn-default' role='button' href = "{{url_for('follow', username=user.username)}}"><span class = "glyphicon glyphicon-add"></span>follow</a>
 	{% else %}
-		<a class='button' href = "{{url_for('unfollow', username= user.username)}}">Unfollow {{user.username}}</a>
+		<a class='btn btn-default' role="button" href = "{{url_for('unfollow', username= user.username)}}"><span class = "glyphicon glyphicon-remove"></span>unfollow</a>
 	{% endif %}
 </div>
 {% endblock %}
