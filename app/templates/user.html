@@ -4,12 +4,12 @@
 {% block content %}
 <style>
  .button-text-center{
-	 vertical-align:center;
+	 vertical-align:middle;
  }
 </style>
 <div class = "container-xs-10">
 	<h4>@{{user.username}}</h4>
-	<span class = "button-text-center">
+	<span>
 	{% if not g.user.is_contact(user) %}
 		<a class='btn btn-default' role='button' href = "{{url_for('follow', username=user.username)}}"><span class = "glyphicon glyphicon-add"></span> follow</a>
 	{% else %}
