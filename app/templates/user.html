@@ -3,17 +3,17 @@
 
 {% block content %}
 <style>
- .button-text-center{
+ .button-text-middle{
 	 vertical-align:top;
  }
 </style>
-<div class = "container-xs-10">
+<div class = "container-xs-10 text-align text-center">
 	<h4>@{{user.username}}
-	<span class = "button-text-center">
+	<span >
 	{% if not g.user.is_contact(user) %}
-		<a class='btn btn-default' role='button' href = "{{url_for('follow', username=user.username)}}"><span class = "glyphicon glyphicon-plus"></span> follow</a>
+		<a class='btn btn-default' role='button' href = "{{url_for('follow', username=user.username)}}"><span class = "glyphicon glyphicon-plus button-text-middle"></span> follow</a>
 	{% else %}
-		<a class='btn btn-default' role="button" href = "{{url_for('unfollow', username= user.username)}}"><span class = "glyphicon glyphicon-remove"></span> unfollow</a>
+		<a class='btn btn-default' role="button" href = "{{url_for('unfollow', username= user.username)}}"><span class = "glyphicon glyphicon-remove button-text-middle"></span> unfollow</a>
 	{% endif %}
 	</span>
 	</h4>
