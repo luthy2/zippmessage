@@ -333,7 +333,7 @@ def get_url_content(message_url):
 			url = resp["url"]
 		else:
 			url = message_url
-		if 'twitter.com' in url:
+		if 'twitter.com' and 'status' in url:
 			return twitter_tag(url)
 		elif 'spotify.com' in url:
 			return spotify_tag(url)
