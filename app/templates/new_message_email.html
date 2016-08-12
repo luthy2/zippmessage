@@ -19,7 +19,7 @@
         <p>you have a new message from {{sender}} in your inbox</p>
         <ul>
           <li>
-            <a href = "{{url_for('user', username = sender), _external=True}}" target="_blank">{{sender}}</a>{{note}}<span class ='pull-right' style="color:gray">{{timedelta}}</span></p>
+            <a href = "{{url_for('user', username = sender, _external=True)}}" target="_blank">{{sender}}</a>{{note}}<span class ="pull-right" style="color:gray;">{{timedelta}}</span></p>
             <ul>{{content|safe}}</ul>
           </li>
           <li>
