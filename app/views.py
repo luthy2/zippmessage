@@ -228,7 +228,7 @@ def recipients():
 			for recipient in recipients:
 				message.add_recipient(recipient)
 				message.send_message(recipient)
-				new_message_email.delay(user.id, recipient, message.id)
+				send_new_msg_email.delay(user.id, recipient, message.id)
 			message.deliver_message()
 			db.session.commit()
 			session.pop('message_id', None)
