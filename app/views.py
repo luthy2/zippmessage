@@ -641,8 +641,11 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 	html = render_template_string('new_message_email.html', sender = sender, recipient = recipient, note = message.title, content = content, timedelta = message.format_timestamp())
 	if message and email:
 		r = requests.post( 	mailgun_api,
-							auth= (api,mailgun_auth)
-							data = {"from":"Zipp - Notifications info@zippmsg.com","to":r_email,"Subject":"New Message!","html":html})
+							auth= (api,mailgun_auth),
+							data = {"from":"Zipp - Notifications info@zippmsg.com",
+									"to":r_email,
+									"Subject":"New Message!",
+									"html":html})
 		return r
 
 
