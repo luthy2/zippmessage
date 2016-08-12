@@ -228,7 +228,7 @@ def recipients():
 			for recipient in recipients:
 				message.add_recipient(recipient)
 				message.send_message(recipient)
-				send_new_msg_email.delay(user.id, recipient, message.id)
+				send_new_msg_email.delay()
 			message.deliver_message()
 			db.session.commit()
 			session.pop('message_id', None)
@@ -630,26 +630,38 @@ def cache_url(url):
 # 							"subject":"New message from %s" % sender,
 # 							"html":render_template_string(sender = sender, recipient = u.username))
 #
+
 @celery.task
-def send_new_msg_email(sender_id, recipient_id, message_id):
-	print 'task added to queue'
-	print sender_id, recipient_id, message_id
-	sender = User.query.get(sender_id)
-	recipient = User.query.get(recipient_id)
-	r_email = recipient.email
-	r_email = email.encode('utf-8')
-	message = Message.query.get(message_id)
-	content = bm.get(message.url) or message.render_url()
-	html = render_template('new_message_email.html', sender = sender, recipient = recipient, note = message.title, content = content, timedelta = message.format_timestamp())
-	print recipient + ': ' + r_email
-	if r_email:
-		r = requests.post( 	mailgun_api,
-							auth = ("api",mailgun_auth),
-							data = {"from":"Zipp - Notifications <info@zippmsg.com>",
-									"to":r_email,
-									"subject":"New Message!",
-									"html":html})
-		print r
+def send_new_msg_email():
+	print 'New Email Sent'
+	return True
+
+
+
+
+
+
+
+# @celery.task
+# def send_new_msg_email(sender_id, recipient_id, message_id):
+# 	print 'task added to queue'
+# 	print sender_id, recipient_id, message_id
+# 	sender = User.query.get(sender_id)
+# 	recipient = User.query.get(recipient_id)
+# 	r_email = recipient.email
+# 	r_email = email.encode('utf-8')
+# 	message = Message.query.get(message_id)
+# 	content = bm.get(message.url) or message.render_url()
+# 	html = render_template('new_message_email.html', sender = sender, recipient = recipient, note = message.title, content = content, timedelta = message.format_timestamp())
+# 	print recipient + ': ' + r_email
+# 	if r_email:
+# 		r = requests.post( 	mailgun_api,
+# 							auth = ("api",mailgun_auth),
+# 							data = {"from":"Zipp - Notifications <info@zippmsg.com>",
+# 									"to":r_email,
+# 									"subject":"New Message!",
+# 									"html":html})
+# 		print r
 
 
 
