@@ -642,12 +642,12 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 	if message and email:
 		r = requests.post( 	mailgun_api,
 							auth= ("api",mailgun_auth),
-							data = {"from":"Zipp - Notifications info@zippmsg.com",
+							data = {"from":"Zipp - Notifications <info@zippmsg.com>",
 									"to":r_email,
 									"Subject":"New Message!",
 									"html":html})
 		return r
-	return False	
+	return False
 
 
 
