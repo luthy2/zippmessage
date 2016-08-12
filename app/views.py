@@ -358,6 +358,7 @@ def quickshare():
 				message.add_recipient(recipient)
 				message.send_message(recipient)
 				message.deliver_message()
+				send_new_msg_email.delay(g.user.id, recipient, message.id)
 				flash('Message Sent!')
 				return redirect(request.args.get('url'))
 
