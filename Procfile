@@ -1,4 +1,4 @@
 web: gunicorn app:app
 init: python db_create.py
 upgrade: python db_upgrade.py
-worker: celery worker --app=tasks.app
+worker: celery worker --app=app
