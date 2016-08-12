@@ -229,7 +229,7 @@ def recipients():
 				message.add_recipient(recipient)
 				message.send_message(recipient)
 				print 'sending email...'
-				send_new_msg_email.delay()
+				send_new_msg_email.delay(g.user.id, recipient, message.id)
 			message.deliver_message()
 			db.session.commit()
 			session.pop('message_id', None)
@@ -633,49 +633,39 @@ def cache_url(url):
 # 							"html":render_template_string(sender = sender, recipient = u.username))
 #
 
+
+
+
+
+
 @celery.task
-def send_new_msg_email():
-	return send_email()
-
-
-
-@celery.task
-def send_email():
-	print 'SEnding Email'
-
-# def send_email(sender_id, recipient_id, message_id):
-# 	print 'task added to queue'
-# 	print sender_id, recipient_id, message_id
-# 	sender = User.query.get(sender_id)
-# 	recipient = User.query.get(recipient_id)
-# 	r_email = recipient.email
-# 	r_email = email.encode('utf-8')
-# 	message = Message.query.get(message_id)
-# 	content = bm.get(message.url) or message.render_url()
-# 	html = render_template('new_message_email.html', sender = sender, recipient = recipient, note = message.title, content = content, timedelta = message.format_timestamp())
-# 	if html:
-# 		print 'html success'
-# 	if r_email:
-# 		resp = requests.post( 	mailgun_api,
-# 							auth = ("api",mailgun_auth),
-# 							data = {"from":"Zipp - Notifications <info@zippmsg.com>",
-# 									"to":r_email,
-# 									"subject":"New Message!",
-# 									"html":html})
-# 		print resp
-# 		return resp
-# 	return False
+def send_email(sender_id, recipient_id, message_id):
+	print 'task added to queue'
+	print sender_id, recipient_id, message_id
+	sender = User.query.get(sender_id)
+	recipient = User.query.get(recipient_id)
+	r_email = recipient.email
+	r_email = email.encode('utf-8')
+	message = Message.query.get(message_id)
+	content = bm.get(message.url) or message.render_url()
+	html = render_template('new_message_email.html', sender = sender, recipient = recipient, note = message.title, content = content, timedelta = message.format_timestamp())
+	if html:
+		print 'html success'
+	if r_email:
+		resp = requests.post( 	mailgun_api,
+							auth = ("api",mailgun_auth),
+							data = {"from":"Zipp - Notifications <info@zippmsg.com>",
+									"to":r_email,
+									"subject":"New Message!",
+									"html":html})
+		print resp
+		return resp
+	return False
 
 
 
 
-# @celery.task
-# def send_msg_reminder_email():
-# 	pass
-#
-# @celery.task
-
-
+\
 
 @app.route('/favicon.ico', methods = ["GET", "POST"])
 def favicon():
