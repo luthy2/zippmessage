@@ -647,6 +647,8 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 	recipient = User.query.get(recipient_id)
 	r_email = recipient.email
 	r_email = r_email.encode('utf-8')
+	url = message.url
+	url = url.encode('utf-8')
 	message = Message.query.get(message_id)
 	content = bm.get(message.url) or message.render_url()
 	html = render_template('new_message_email.html', sender = sender, recipient = recipient, note = message.title, content = content, timedelta = message.format_timestamp())
