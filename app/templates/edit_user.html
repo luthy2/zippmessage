@@ -1,0 +1,18 @@
+<!-- extends base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class ="row">
+	<div class="col-md-6 col-md-offset-3">
+		<h4>Edit Email<small>({{user.email}})</small></h4>
+			<form action="" method = "POST" name="new message">
+				<div class="form-group">
+					{{form.hidden_tag()}}
+						<label></label>
+						{{form.email(class_="form-control", placeholder="john@example.com")}}
+				</div>
+					<input type = "submit" value = "Next" class = "btn btn-default">
+			</form>
+	</div>
+</div>
+{% endblock %}

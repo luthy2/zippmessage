@@ -1,0 +1,36 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen">
+  <script  type="text/javascript" src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <style>
+    body{
+      background-color:#fafafa;
+    }
+  </style>
+</head>
+<body>
+  <div class = "container">
+    <div class = "row">
+      <div class = "col-md-6 col-md-offset-3">
+        <h2 class = "text-align text-center">Zipp</h2>
+        <p> Hey {{recipient}}! </p>
+        <p>you have a new message from {{sender}} in your inbox</p>
+        <ul>
+          <li>
+            <a href = "{{url_for('user', username = sender), _external=True}}" target="_blank">{{sender}}</a>{{note}}<span class ='pull-right' style="color:gray">{{timedelta}}</span></p>
+            <ul>{{content|safe}}</ul>
+          </li>
+          <li>
+            <ul>
+              <li style="width:17%"><a href ="{{url_for('dismiss', message_id = message_id, next = 'inbox'), _external=True}}" target="_blank"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></li>
+              <li style="width:17%"><a href ="{{url_for('bookmark', message_id = message_id, next = 'inbox'), _external=True}}" target="_blank"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span></a></li>
+              <li style="width:17%"><a href ="{{url_for('share', message_id = mmessage_id, next = 'inbox'), _external=True}}" target="_blank"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>

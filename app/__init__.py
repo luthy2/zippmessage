@@ -25,6 +25,8 @@ oauth = OAuth()
 embedly = Embedly('3ec6801e9b5e4931925749186fd75996')
 bm = bmemcached.Client(MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD)
 celery = celery.Celery('app', broker = CELERY_BROKER)
+mailgun_api = "https://api.mailgun.net/v3/zippmsg.com/messages"
+mailgun_auth = "key-96d0fea83b79dd08312c6c68ea308679"
 
 twitter = oauth.remote_app('twitter',
     # unless absolute urls are used to make requests, this will be added

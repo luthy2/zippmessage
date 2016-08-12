@@ -2,12 +2,13 @@ from flask import flash, g
 from flask_wtf import Form
 from wtforms import StringField, SubmitField, SelectMultipleField, BooleanField, widgets
 from wtforms.widgets import ListWidget
-from wtforms.validators import DataRequired, Length, URL
+from wtforms.validators import DataRequired, Length, URL, Email
 
 
 class NewMessageForm(Form):
 	message_title = StringField('title', validators=[DataRequired(), Length(min = 1, max = 100)])
 	message_url = StringField('url', validators=[DataRequired(), URL(require_tld = False, message = 'Must contain a valid URL'), Length(min = 7, max = 300)])
+	#add bookmarked = True field
 
 	def flash_errors(form):
 		for field, errors in form.errors.items():
@@ -29,3 +30,6 @@ class RecipientsForm(Form):
 
 class TagForm(Form):
 	tags = StringField('title', validators = [Length(max=300)])
+
+class EmailForm(Form):
+	email = StringField('email', validators = [Email(message="Please enter a valid email")])	

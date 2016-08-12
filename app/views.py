@@ -1,13 +1,14 @@
 import os
 
-from flask import request, g, render_template, session, url_for, redirect, flash, jsonify, send_from_directory, make_response
+from flask import request, g, render_template, render_template_string session, url_for, redirect, flash, jsonify, send_from_directory, make_response
 from flask_login import login_user, logout_user, current_user, login_required
-from app import app, db, lm, twitter, bm, celery
-from forms import NewMessageForm, RecipientsForm, TagForm
+from app import app, db, lm, twitter, bm, celery, mailgun_api, mailgun_auth
+from forms import NewMessageForm, RecipientsForm, TagForm, EmailForm
 from models import User, Message, UserMessage, get_url_content
 from datetime import datetime
 import urllib
 import time
+import requests
 
 @app.before_request
 def before_request():
@@ -25,7 +26,6 @@ def after_request(response):
 @app.errorhandler(404)
 def not_found_error():
 	return render_template('404.html'), 404
-
 
 @app.errorhandler(500)
 def internal_error(error):
@@ -167,8 +167,19 @@ def contacts():
 def user(username):
 	_user = User.query.filter(User.username.ilike(username)).first()
 	tags = _user.tags_for_user().most_common(20)
-	inbox = g.user.inbox()
 	return render_template('user.html', user = _user, tags = tags, title = 'Profile', inbox=inbox)
+
+@app.route('/user/<username>/edit', methods = ["GET", "POST"])
+@login_required
+def edit_user(username):
+	user = User.query.filter(User.username.ilike(username)).first()
+	form = EmailForm()
+	if form.validate_on_submit():
+		user.email = form.email.data
+		db.session.add(user)
+		db.sesion.commit()
+		return redirect(url_for('user', username = username))
+	return render_template('edit_user.html', user = user, title = user.username + " - edit")
 
 
 @app.route('/settings', methods = ["GET", "POST"])
@@ -217,6 +228,7 @@ def recipients():
 			for recipient in recipients:
 				message.add_recipient(recipient)
 				message.send_message(recipient)
+				new_message_email.delay(user.id, recipient, message.id)
 			message.deliver_message()
 			db.session.commit()
 			session.pop('message_id', None)
@@ -328,7 +340,7 @@ def dismiss(message_id):
 @login_required
 def quickshare():
 	user = g.user
-	quickshare = "Sent by " + user.username +" via quickshare"
+	quickshare = "Sent via quickshare"
 	form = RecipientsForm()
 
 	form.recipients.choices = [(contact.id, contact.username) for contact in user.contacts]
@@ -526,6 +538,9 @@ def api_dismiss_message(message_id):
 	db.session.add(user)
 	db.session.commit()
 	return jsonify(ok = True, msg = 'Message' + str(message_id) + ' dismissed')
+
+
+
 #
 #
 # @app.route('api/1/message/create', methods = ["GET", "POST"])
@@ -551,19 +566,6 @@ def api_dismiss_message(message_id):
 # 	return jsonify(ok=True)
 
 
-
-# @app.route('/admin/dashbaord')
-# @login_required
-# def dashboard():
-# 	if g.user is not User.query.get(1):
-# 		return abort(403)
-# 	dau =
-# 	mau =
-# 	lifetime =
-# 	daily message
-# 	monthly
-#
-# 	return render_template('dashboard.html')
 
 
 # @app.route('/api/1/activity/messages')
@@ -609,7 +611,51 @@ def cache_url(url):
 	else:
 		return bm.set(url, content, 172800)
 
+# @celery.task
+# def send_analytics():
+# 	params = {'v':1,'tid':'UA-82204986-1','cid':'','t':''}
+# 	request.post('http://www.google-analytics.com',params = params)
 
+# @celery.task
+# def send_followed_email(sender_id, recipient_id, message):
+# 	u = User.query.get(reicipient_id)
+# 	sender = User.query.get(sender_id)
+# 	sender =  "@%s" % str(sender.username)
+# 	if u.email:
+# 		user_email = str(user_email)
+# 	requests.post(	mailgun,
+# 					auth = {"api":MAILGUN_KEY},
+# 					data = {"from":'ZippMsg <info@zippmsg.com>',
+# 							"to":user_email,
+# 							"subject":"New message from %s" % sender,
+# 							"html":render_template_string(sender = sender, recipient = u.username))
+#
+@celery.task
+def send_new_msg_email(sender_id, recipient_id, message_id):
+	sender = User.query.get(sender_id)
+	recipient = User.query.get(recipient_id)
+	r_email = recipient.email
+	r_email = email.encode('utf-8')
+	message = Message.query.get(message_id)
+	content = bm.get(message.url) or message.render_url()
+	html = render_template_string('new_message_email.html', sender = sender, recipient = recipient, note = message.title, content = content, timedelta = message.format_timestamp())
+	if message, email:
+		r = requests.post( 	mailgun_api,
+							auth= (api,mailgun_auth)
+							data = {"from":"Zipp - Notifications info@zippmsg.com",
+									"to":r_email,
+									"Subject":"New Message!",
+									"html":html})
+		return r
+
+
+
+
+# @celery.task
+# def send_msg_reminder_email():
+# 	pass
+#
+# @celery.task
 
 
 
