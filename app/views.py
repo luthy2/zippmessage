@@ -638,7 +638,7 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 	r_email = email.encode('utf-8')
 	message = Message.query.get(message_id)
 	content = bm.get(message.url) or message.render_url()
-	html = render_template_string('new_message_email.html', sender = sender, recipient = recipient, note = message.title, content = content, timedelta = message.format_timestamp())
+	html = render_template('new_message_email.html', sender = sender, recipient = recipient, note = message.title, content = content, timedelta = message.format_timestamp())
 	print recipient + ': ' + r_email
 	if email:
 		r = requests.post( 	mailgun_api,
