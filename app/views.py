@@ -398,6 +398,7 @@ def share(message_id):
 			for recipient in recipients:
 				new_message.add_recipient(recipient)
 				new_message.send_message(recipient)
+				send_new_msg_email.delay(g.user.id, recipient, message.id)
 
 			#deliver message
 			new_message.deliver_message()
