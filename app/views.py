@@ -646,7 +646,7 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 									"to":r_email,
 									"Subject":"New Message!",
 									"html":html})
-		return r
+		print r
 
 
 
