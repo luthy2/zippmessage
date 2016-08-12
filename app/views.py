@@ -179,7 +179,7 @@ def edit_user(username):
 		db.session.add(user)
 		db.sesion.commit()
 		return redirect(url_for('user', username = username))
-	return render_template('edit_user.html', user = user, title = user.username + " - edit")
+	return render_template('edit_user.html',form = form, user = user, title = user.username + " - edit")
 
 
 @app.route('/settings', methods = ["GET", "POST"])
