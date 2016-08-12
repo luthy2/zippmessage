@@ -632,6 +632,8 @@ def cache_url(url):
 #
 @celery.task
 def send_new_msg_email(sender_id, recipient_id, message_id):
+	print 'task added to queue'
+	print sender_id, recipient_id, message_id
 	sender = User.query.get(sender_id)
 	recipient = User.query.get(recipient_id)
 	r_email = recipient.email
@@ -644,8 +646,8 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 		r = requests.post( 	mailgun_api,
 							auth = ("api",mailgun_auth),
 							data = {"from":"Zipp - Notifications <info@zippmsg.com>",
-									"to":'<'+r_email+'>',
-									"Subject":"New Message!",
+									"to":r_email,
+									"subject":"New Message!",
 									"html":html})
 		print r
 
