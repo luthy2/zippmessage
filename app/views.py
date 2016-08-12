@@ -650,7 +650,7 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 	r_email = r_email.encode('utf-8')
 	url = message.url
 	url = url.encode('utf-8')
-	content = bm.get(message.url) or message.render_url()
+	content = bm.get(url) or message.render_url()
 	html = render_template('new_message_email.html', sender = sender, recipient = recipient, note = message.title, content = content, timedelta = message.format_timestamp())
 	if html:
 		print 'html success'
