@@ -639,15 +639,15 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 	message = Message.query.get(message_id)
 	content = bm.get(message.url) or message.render_url()
 	html = render_template_string('new_message_email.html', sender = sender, recipient = recipient, note = message.title, content = content, timedelta = message.format_timestamp())
-	if message and email:
+	print recipient + ': ' r_email 
+	if email:
 		r = requests.post( 	mailgun_api,
-							auth= ("api",mailgun_auth),
+							auth = ("api",mailgun_auth),
 							data = {"from":"Zipp - Notifications <info@zippmsg.com>",
 									"to":r_email,
 									"Subject":"New Message!",
 									"html":html})
-		return r
-	return False
+		print r
 
 
 
