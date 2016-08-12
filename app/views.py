@@ -177,7 +177,7 @@ def edit_user(username):
 	if form.validate_on_submit():
 		user.email = form.email.data
 		db.session.add(user)
-		db.sesion.commit()
+		db.session.commit()
 		return redirect(url_for('user', username = username))
 	return render_template('edit_user.html',form = form, user = user, title = user.username + " - edit")
 
