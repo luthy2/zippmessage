@@ -639,7 +639,7 @@ def cache_url(url):
 
 
 @celery.task
-def send_email(sender_id, recipient_id, message_id):
+def send_new_msg_email(sender_id, recipient_id, message_id):
 	print 'task added to queue'
 	print sender_id, recipient_id, message_id
 	sender = User.query.get(sender_id)
@@ -663,9 +663,6 @@ def send_email(sender_id, recipient_id, message_id):
 	return False
 
 
-
-
-\
 
 @app.route('/favicon.ico', methods = ["GET", "POST"])
 def favicon():
