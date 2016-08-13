@@ -633,11 +633,11 @@ def send_followed_email(sender_id, recipient_id):
 		if recipient_email:
 			user_email = str(user_email)
 			resp = requests.post( 	mailgun_api,
-								auth = ("api",mailgun_auth),
-								data = {"from":"Zipp - Notifications <info@zippmsg.com>",
-										"to":r_email,
-										"subject":"New Follower!",
-										"html":html})
+				auth = ("api",mailgun_auth),
+				data = {"from":"Zipp - Notifications <info@zippmsg.com>",
+						"to":r_email,
+						"subject":"New Follower!",
+						"html":html})
 			print resp
 			return resp
 	return False
