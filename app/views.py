@@ -681,5 +681,6 @@ def admind_dashboard():
 	if g.user != User.query.get(1):
 		return abort(), 403
 	users = User.query.all()
+	n_users = len(users)
 	messages_sent = len(Message.query.all())
 	return render_template('dashboard.html', users=users, messages_sent=messages_sent)
