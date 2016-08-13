@@ -266,6 +266,7 @@ def follow(username):
         return redirect(url_for('user', username=username))
     db.session.add(u)
     db.session.commit()
+	send_followed_email.delay(g.user.id, user.id)
     flash('You are now following ' + username + '!')
     return redirect(url_for('user', username=username))
 
@@ -620,20 +621,27 @@ def cache_url(url):
 # 	params = {'v':1,'tid':'UA-82204986-1','cid':'','t':''}
 # 	request.post('http://www.google-analytics.com',params = params)
 
-# @celery.task
-# def send_followed_email(sender_id, recipient_id, message):
-# 	u = User.query.get(reicipient_id)
-# 	sender = User.query.get(sender_id)
-# 	sender =  "@%s" % str(sender.username)
-# 	if u.email:
-# 		user_email = str(user_email)
-# 	requests.post(	mailgun,
-# 					auth = {"api":MAILGUN_KEY},
-# 					data = {"from":'ZippMsg <info@zippmsg.com>',
-# 							"to":user_email,
-# 							"subject":"New message from %s" % sender,
-# 							"html":render_template_string(sender = sender, recipient = u.username))
-#
+@celery.task
+def send_followed_email(sender_id, recipient_id):
+	with app.app_context():
+		print "email task added to queue "
+		recipient = User.query.get(reicipient_id)
+		sender = User.query.get(sender_id)
+		r_email  = recipient.email
+		r_email = r_email.encode('utf-8')
+		html = render_template('follow_email.html', sender = sender.username, recipient = recipient.username)
+		if recipient_email:
+			user_email = str(user_email)
+			resp = requests.post( 	mailgun_api,
+								auth = ("api",mailgun_auth),
+								data = {"from":"Zipp - Notifications <info@zippmsg.com>",
+										"to":r_email,
+										"subject":"New Follower!",
+										"html":html})
+			print resp
+			return resp
+	return False
+
 
 
 
@@ -644,7 +652,6 @@ def cache_url(url):
 def send_new_msg_email(sender_id, recipient_id, message_id):
 	with app.app_context():
 		print 'task added to queue'
-		print sender_id, recipient_id, message_id
 		sender = User.query.get(sender_id)
 		recipient = User.query.get(recipient_id)
 		message = Message.query.get(message_id)
@@ -654,8 +661,6 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 		url = url.encode('utf-8')
 		content = bm.get(url) or message.render_url()
 		html = render_template('new_message_email.html', sender = sender.username, recipient = recipient.username, note = message.title, content = content, timedelta = message.format_timestamp())
-		if html:
-			print 'html success'
 		if r_email:
 			resp = requests.post( 	mailgun_api,
 								auth = ("api",mailgun_auth),

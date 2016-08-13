@@ -1,0 +1,27 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen">
+  <script  type="text/javascript" src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <style>
+    body{
+      background-color:#fafafa;
+    }
+  </style>
+</head>
+  <body>
+    <div class = "container">
+      <div class = "row">
+        <div class = "col-md-6 col-md-offset-3">
+          <h2 class = "text-align text-center">ZippMsg</h2>
+          <ul class = "list-group">
+            <a class = "list-group-item" href = "{{url_for('user', username = sender, _external=True}}">
+              <h2>hey @{{sender}}</h2>
+              <h2><small>@{{recipient}} is now following you on ZippMsg. cool.</small></h2>
+            </a>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
