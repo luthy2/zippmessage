@@ -8,7 +8,7 @@
 <body>
   <h1>Current Users<p>{{len(users)}}</p></h1>
   {% for  user in users%}
-    {{print user.username}}
+    {{user.username}}
   {% endfor %}
   <h1>Messages Sent<p>{{messages_sent}}</p></h1>
 </body>
