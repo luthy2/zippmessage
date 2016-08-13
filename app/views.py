@@ -253,22 +253,22 @@ def bookmarks(page=1):
 @app.route('/follow/<username>')
 @login_required
 def follow(username):
-    user = User.query.filter_by(username=username).first()
-    if user is None:
-        flash('User %s not found.' % username)
-        return redirect(url_for('index'))
-    if user == g.user:
-        flash('You can\'t follow yourself!')
-        return redirect(url_for('user', username=username))
-    u = g.user.add_contact(user)
-    if u is None:
-        flash('Cannot follow ' + nickname + '.')
-        return redirect(url_for('user', username=username))
-    db.session.add(u)
-    db.session.commit()
+	user = User.query.filter_by(username=username).first()
+	if user is None:
+		flash('User %s not found.' % username)
+		return redirect(url_for('index'))
+	if user == g.user:
+		flash('You can\'t follow yourself!')
+		return redirect(url_for('user', username=username))
+	u = g.user.add_contact(user)
+	if u is None:
+		flash('Cannot follow ' + nickname + '.')
+		return redirect(url_for('user', username=username))
+	db.session.add(u)
+	db.session.commit()
 	send_followed_email.delay(g.user.id, user.id)
-    flash('You are now following ' + username + '!')
-    return redirect(url_for('user', username=username))
+	flash('You are now following ' + username + '!')
+	return redirect(url_for('user', username=username))
 
 @app.route('/unfollow/<username>')
 @login_required
