@@ -680,6 +680,6 @@ def favicon():
 def admind_dashboard():
 	if g.user != User.query.get(1):
 		return abort(), 403
-	users = User.query(User.all()).count()
-	messages_sent = Message.query(User.all()).count()
+	users = User.query(all()).count()
+	messages_sent = Message.query(all()).count()
 	return render_template('dashboard.html', users=users, messages_sent=messages_sent)
