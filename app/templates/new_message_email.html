@@ -17,17 +17,10 @@
         <h2 class = "text-align text-center">Zipp</h2>
         <p> Hey {{recipient}}! </p>
         <p>you have a new message from {{sender}} in your inbox</p>
-        <ul>
-          <li>
-            <a href = "{{url_for('user', username = sender, _external=True)}}" target="_blank">{{sender}}</a>{{note}}<span class ="pull-right" style="color:gray;">{{timedelta}}</span></p>
-            <ul>{{content|safe}}</ul>
-          </li>
-          <li>
-            <ul>
-              <li style="width:17%"><a href ="{{url_for('dismiss', message_id = message_id, next = 'inbox', _external=True)}}" target="_blank"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></li>
-              <li style="width:17%"><a href ="{{url_for('bookmark', message_id = message_id, next = 'inbox', _external=True)}}" target="_blank"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span></a></li>
-              <li style="width:17%"><a href ="{{url_for('share', message_id = mmessage_id, next = 'inbox', _external=True)}}" target="_blank"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a></li>
-            </ul>
+        <ul class = "list-group">
+          <li class = "list-group-item">
+            <a href = "{{url_for('user', username = sender, _external=True)}}" target="_blank">{{sender}}:</a> {{note}}<span class ="pull-right" style="color:gray;">{{timedelta}}</span></p>
+            <ul class = "list-group">{{content|safe}}</ul>
           </li>
         </ul>
       </div>

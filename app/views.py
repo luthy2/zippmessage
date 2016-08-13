@@ -672,3 +672,14 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 @app.route('/favicon.ico', methods = ["GET", "POST"])
 def favicon():
 	return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+
+
+
+@app.route('/admin/dashboard')
+@login_required
+def admind_dashboard():
+	if g.user != User.query.get(1):
+		return abort(), 403
+	users = User.query.all().count()
+	messages_sent = Messages.query.all().count()
+	return render_template('dashboard.html', users, messages_sent)
