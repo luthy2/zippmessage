@@ -229,7 +229,8 @@ def recipients():
 				message.add_recipient(recipient)
 				message.send_message(recipient)
 				print 'sending email...'
-				send_new_msg_email.delay(g.user.id, recipient, message.id)
+				if recipient!= g.user.id:
+					send_new_msg_email.delay(g.user.id, recipient, message.id)
 			message.deliver_message()
 			db.session.commit()
 			session.pop('message_id', None)
@@ -359,7 +360,8 @@ def quickshare():
 				message.add_recipient(recipient)
 				message.send_message(recipient)
 				message.deliver_message()
-				send_new_msg_email.delay(g.user.id, recipient, message.id)
+				if recipient!= g.user.id:
+					send_new_msg_email.delay(g.user.id, recipient, message.id)
 				flash('Message Sent!')
 				return redirect(request.args.get('url'))
 
@@ -399,7 +401,8 @@ def share(message_id):
 			for recipient in recipients:
 				new_message.add_recipient(recipient)
 				new_message.send_message(recipient)
-				send_new_msg_email.delay(g.user.id, recipient, message.id)
+				if recipient!=g.user.id:
+					send_new_msg_email.delay(g.user.id, recipient, message.id)
 
 			#deliver message
 			new_message.deliver_message()
