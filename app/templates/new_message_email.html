@@ -15,8 +15,8 @@
     <div class = "row">
       <div class = "col-md-6 col-md-offset-3">
         <h2 class = "text-align text-center">Zipp</h2>
-        <p> Hey {{recipient}}! </p>
-        <p>you have a new message from {{sender}} in your inbox</p>
+        <p> Hey @{{recipient}}! </p>
+        <p>you have a new message from @{{sender}}! open in <a href = "{{url_for('inbox', _external = True)}}">inbox<span class= "glyphicon glyphicon-new-window"></span></a></p>
         <ul class = "list-group">
           <li class = "list-group-item">
             <a href = "{{url_for('user', username = sender, _external=True)}}" target="_blank">{{sender}}:</a> {{note}}<span class ="pull-right" style="color:gray;">{{timedelta}}</span></p>
