@@ -295,12 +295,14 @@ def article_tag(resp, msg_url = None):
 		image_tag = '<div class = "article hidden-xs"><img src="%s" width="100%%"></div>' % img_url
 
 
-	tag = 	'<a class = "list-group-item"  href = "%s" target="_blank">' \
+	tag = 	'<ul class = "list-group" style="padding-top:2%;">' \
+	'<a class = "list-group-item"  href = "%s" target="_blank">' \
 	'%s' \
 	'%s' \
 	'%s' \
 	'%s' \
-	'</a>'
+	'</a>'\
+	'</ul>'
 
 	return tag % (url, image_tag, title_tag, description_tag, provider_tag)
 
