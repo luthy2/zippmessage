@@ -65,7 +65,15 @@
       {% endif %}
       {% if resp["content"] %}
         {{resp["content"] | safe}}
-      {%endif%}
+      {%elif%}
+        <ul class = "list-group">
+          <p>We were unable to extract the content from this url. View it at the original source.</p>
+          <a class = "list-group-item" href="{{message.message.url}}">
+            <p class ="list-group-item-heading">{{resp['title']}}</p>
+            <p class = "list-group-item-text">{{resp['description']}}</p>
+            <p style="color:gray"><small>message.message.short_url()</small></p>
+          </a>
+
       {% if resp["media"]%}
         <div class= 'embedly-embed'> {{resp["media"]["html"] | safe}} </div>
         {% if resp["media"]["type"]== "photo"%}
@@ -80,11 +88,11 @@
         <div class = "col-xs-12">
           <h5>
             <ul class="list-inline" style="text-align:center; vertical-align:center;">
-              {% if inbox.has_prev %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.prev_num)}}"><span class = "glyphicon glyphicon-chevron-left"></span>prev</a></li>{%else%}<span style="color:light gray;"><span class = "glyphicon glyphicon-chevron-left"></span>prev</span>{% endif %}
-              <li style = "width:17%" ><a href = "{{url_for('dismiss', message_id = item.message_id, next = url_for('reader', page = inbox.page))|safe}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
-              <li style = "width:17%" ><a href = "{{url_for('bookmark', message_id = item.message_id, next = url_for('reader', page = inbox.page))|safe}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
-              <li style = "width:17%" ><a href = "{{url_for('share', message_id = item.message_id, next = url_for('reader', page = inbox.page)) | safe}}"><span class = "glyphicon glyphicon-send"></span></a></li>
-              {% if inbox.has_next %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.next_num)}}">next<span class = "glyphicon glyphicon-chevron-right"></span></a></li>{%else%}<span style="color:light gray;">next<span class = "glyphicon glyphicon-chevron-right"></span></span>{% endif %}
+              {% if inbox.has_prev %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.prev_num)}}"><span class = "glyphicon glyphicon-chevron-left"></span>prev</a></li>{%else%}<span style="color:#fafafa;"><span class = "glyphicon glyphicon-chevron-left"></span>prev</span>{% endif %}
+              <li style = "width:17%" ><a href = "{{url_for('dismiss', message_id = item.message_id, next = url_for('reader', page = inbox.page))}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
+              <li style = "width:17%" ><a href = "{{url_for('bookmark', message_id = item.message_id, next = url_for('reader', page = inbox.page))}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
+              <li style = "width:17%" ><a href = "{{url_for('share', message_id = item.message_id, next = url_for('reader', page = inbox.page))}}"><span class = "glyphicon glyphicon-send"></span></a></li>
+              {% if inbox.has_next %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.next_num)}}">next<span class = "glyphicon glyphicon-chevron-right"></span></a></li>{%else%}<span style="color:#fafafa;">next<span class = "glyphicon glyphicon-chevron-right"></span></span>{% endif %}
             </ul>
           </h5>
         </div>
