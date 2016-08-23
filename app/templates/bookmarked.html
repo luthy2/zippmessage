@@ -1,5 +1,10 @@
 <a class="list-group-item" href="{{message.message.url}}" target = "_blank" rel = "noopener">
-  <h5 class = "truncate">{{message.message.request_url()['title']}}</h5>
+  {% set resp = message.message.request.url() %}
+    {%if resp['title']%}
+      <h5 class = "truncate">{{resp['title']}}</h5>
+    {%else%}
+      <h5>Content available at {{message.message.short_url()}}
+    {%endif%}  
 </a>
 <li class="list-group-item">
   <p>
