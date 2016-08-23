@@ -65,7 +65,7 @@
       {% endif %}
       {% if resp["content"] %}
         {{resp["content"] | safe}}
-        {% elif %}
+        {% else %}
         <ul class = "list-group">
           <p>We were unable to extract the content from this url. View it at the original source.</p>
           <a class = "list-group-item" href="{{message.message.url}}">
