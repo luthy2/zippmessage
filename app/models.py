@@ -272,6 +272,7 @@ def article_tag(resp, msg_url = None):
 	image_tag = ''
 	title_tag = ''
 	description_tag= ''
+	small_image_tag=''
 
 	if url in resp:
 		url = resp['url']
