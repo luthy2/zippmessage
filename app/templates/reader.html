@@ -65,7 +65,7 @@
       {% endif %}
       {% if resp["content"] %}
         {{resp["content"] | safe}}
-      {%elif%}
+        {% elif %}
         <ul class = "list-group">
           <p>We were unable to extract the content from this url. View it at the original source.</p>
           <a class = "list-group-item" href="{{message.message.url}}">
@@ -73,7 +73,7 @@
             <p class = "list-group-item-text">{{resp['description']}}</p>
             <p style="color:gray"><small>message.message.short_url()</small></p>
           </a>
-      {%endif%}
+      {% endif %}
       {% if resp["media"]%}
         <div class= 'embedly-embed'> {{resp["media"]["html"] | safe}} </div>
         {% if resp["media"]["type"]== "photo"%}
