@@ -292,19 +292,19 @@ def article_tag(resp, msg_url = None):
 
 	if 'thumbnail_url' in resp:
 		img_url = resp['thumbnail_url']
-		image_tag = '<a class = "list-group-item article hidden-xs"><img src="%s" width="100%%"></a>' % img_url
+		image_tag = '<li class = "list-group-item article hidden-xs"><img src="%s" width="100%%"></li>' % img_url
 
 
 	tag = 	'<ul class = "list-group">' \
-	'<a class = "list-group-item"  href = "%s" target="_blank">' \
 	'%s' \
+	'<a class = "list-group-item"  href = "%s" target="_blank">' \
 	'%s' \
 	'%s' \
 	'%s' \
 	'</a>'\
 	'</ul>'
 
-	return tag % (url, image_tag, title_tag, description_tag, provider_tag)
+	return tag % (image_tag, url, title_tag, description_tag, provider_tag)
 
 def render_no_style(url):
 	#custom render for urls that fail embedly lookup
