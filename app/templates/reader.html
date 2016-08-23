@@ -66,9 +66,17 @@
           <a href = "{{author['url']}}" style="padding-bottom:4%">{{author["name"]}} </a>
         {% endfor %}
       {% endif %}
-      {% if resp["content"] %}
-        {{resp["content"] | safe}}
-        {% else %}
+      {% if resp["content"] or resp["media"] %}
+        {% if resp["content"] %}
+          {{resp["content"] | safe}}
+        {% endif %}
+        {% if resp["media"]%}
+          <div class= 'embedly-embed'> {{resp["media"]["html"] | safe}} </div>
+          {% if resp["media"]["type"]== "photo"%}
+            <img src="{{resp["media"]["url"]}}">
+          {%endif%}
+        {% endif %}
+      {% else %}
         <ul class = "list-group">
           <p>We were unable to extract the content from this url. View it at the original source.</p>
           <a class = "list-group-item" href="{{item.message.url}}">
@@ -76,13 +84,8 @@
             <p class = "list-group-item-text">{{resp['description']}}</p>
             <p style="color:gray"><small>{{item.message.short_url()}}</small></p>
           </a>
-      {% endif %}
-      {% if resp["media"]%}
-        <div class= 'embedly-embed'> {{resp["media"]["html"] | safe}} </div>
-        {% if resp["media"]["type"]== "photo"%}
-          <img src="{{resp["media"]["url"]}}">
-        {%endif%}
-      {% endif %}
+        <ul>
+      {%endif%}
    </div>
   </div>
   <footer style = "background-color:white; position:fixed; bottom:0; height:60; width:100%;">
