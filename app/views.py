@@ -435,7 +435,7 @@ def tags():
 
 
 def redirect_url(default='index'):
-	return request.args.get('next') or request.referrer or default
+	return request.args.get('next') or request.referrer or url_for(request.referrer) or url_for(default)
 
 @app.route('/reader', methods = ["GET", "POST"])
 @app.route('/reader/<int:page>', methods = ["GET", "POST"])
