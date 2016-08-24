@@ -546,6 +546,12 @@ def api_dismiss_message(message_id):
 	db.session.commit()
 	return jsonify(ok = True, msg = 'Message' + str(message_id) + ' dismissed')
 
+@app.route('/api/1/p/u', methods = ["GET", "POST"])
+def api_demo():
+	if g.user:
+		return jsonify(username = g.user.username)
+	else:
+		return jsonify(ok=False)	
 
 
 #
