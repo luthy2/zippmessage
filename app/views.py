@@ -441,8 +441,6 @@ def redirect_url(default='index'):
 @app.route('/reader/<int:page>', methods = ["GET", "POST"])
 @login_required
 def reader(page = 1):
-	p = request.args.get('page')
-	page = p
 	user = g.user
 	inbox = user.inbox().paginate(page,1,False)
 	return render_template('reader.html', user = user, title = 'Reader', inbox = inbox)
