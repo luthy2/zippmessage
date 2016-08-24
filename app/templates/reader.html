@@ -89,7 +89,7 @@
           <h5>
             <ul class="list-inline" style="text-align:center; vertical-align:center;">
               {% if inbox.has_prev %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.prev_num)}}"><span class = "glyphicon glyphicon-chevron-left"></span>prev</a></li>{%else%}<span style="color:gray;"><span class = "glyphicon glyphicon-chevron-left"></span>prev</span>{% endif %}
-              <li style = "width:17%" ><a href = "{{url_for('dismiss', message_id = item.message_id, next = url_for('reader', page = inbox.page))}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
+              <li style = "width:17%" ><a href = "{{url_for('dismiss', message_id = item.message_id, next = url_for(reader, page = inbox.page))}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
               <li style = "width:17%" ><a href = "{{url_for('bookmark', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
               <li style = "width:17%" ><a href = "{{url_for('share', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-send"></span></a></li>
               {% if inbox.has_next %}<li style = "width:17%" ><a href = "{{url_for('reader', page = inbox.next_num)}}">next<span class = "glyphicon glyphicon-chevron-right"></span></a></li>{%else%}<span style="color:gray;">next<span class = "glyphicon glyphicon-chevron-right"></span></span>{% endif %}
