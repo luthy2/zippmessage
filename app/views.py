@@ -546,12 +546,17 @@ def api_dismiss_message(message_id):
 	db.session.commit()
 	return jsonify(ok = True, msg = 'Message' + str(message_id) + ' dismissed')
 
-@app.route('/api/1/p/u', methods = ["GET", "POST"])
-def api_demo():
-	if g.user:
-		return jsonify(username = g.user.username)
-	else:
-		return jsonify(ok=False)	
+@app.route('/api/1/m/user/inbox', methods = ["GET", "POST"])
+@login_required
+def m_api_inbox():
+	user = g.user
+	inbox = user.inbox()
+	data = []
+	for message in inbox:
+		m = {id: message.id, title: message.title, url: message.url}
+		data.append(m)
+	return jsonify(data)
+
 
 
 #
