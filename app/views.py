@@ -552,7 +552,7 @@ def m_api_inbox():
 	user = g.user
 	inbox = user.inbox()
 	data = []
-	for message in inbox:
+	for message in inbox.all():
 		m = {id: message.id, title: message.title, url: message.url}
 		data.append(m)
 	return jsonify(data)
