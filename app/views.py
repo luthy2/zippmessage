@@ -563,15 +563,15 @@ def m_api_inbox():
 			if "description" in c:
 				m["description"] = c["description"]
 			else:
-				m["description"] = 	''
+				m["description"] = 	None
 			if 'url' in c.get('media',{}):
 				m["img"] = c['media']['url']
 			else:
-				m['img'] = ''
+				m['img'] = None
 		else:
-			m['title']=''
-			m['description']=''
-			m['img']=''
+			m['title']=None
+			m['description']=None
+			m['img']=None
 		data.append(m)
 	return jsonify(data)
 
