@@ -553,7 +553,7 @@ def m_api_inbox():
 	inbox = user.inbox()
 	data = []
 	for message in inbox.all():
-		m = {'id': str(message.message.id), 'title': message.message.title, 'author':message.message.author.username}
+		m = {'id': str(message.message.id), 'note': message.message.title, 'author':message.message.author.username}
 		c = message.message.render_url()
 		if c['title']:
 			m['title']=c['title']
@@ -562,7 +562,7 @@ def m_api_inbox():
 		if c[description]:
 			m["description"] = c["description"]
 		else:
-			m["description"] = 	''	
+			m["description"] = 	''
 		data.append(m)
 	return jsonify(data)
 
