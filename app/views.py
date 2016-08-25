@@ -555,11 +555,11 @@ def m_api_inbox():
 	for message in inbox.all():
 		m = {'id': str(message.message.id), 'note': message.message.title, 'author':message.message.author.username}
 		c = message.message.get_content()
-		if c['title']:
+		if 'title' in c:
 			m['title']=c['title']
 		else:
 			m["title"]=''
-		if c['description']:
+		if 'description' in c:
 			m["description"] = c["description"]
 		else:
 			m["description"] = 	''
