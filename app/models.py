@@ -213,7 +213,7 @@ class Message(db.Model):
 			return False
 
 	def get_content(self):
-		resp = embedly.extract(self.url, autoplay= 'false')
+		resp = embedly.extract(self.url, autoplay= 'false', words = 25)
 		if not resp["type"] == "error":
 			return resp
 		else:
