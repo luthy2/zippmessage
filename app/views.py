@@ -554,7 +554,7 @@ def m_api_inbox():
 	data = []
 	for message in inbox.all():
 		m = {'id': str(message.message.id), 'note': message.message.title, 'author':message.message.author.username}
-		c = message.message.render_url()
+		c = message.message.get_content()
 		if c['title']:
 			m['title']=c['title']
 		else:
