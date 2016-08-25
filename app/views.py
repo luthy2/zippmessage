@@ -567,10 +567,11 @@ def m_api_inbox():
 			if 'url' in c.get('media',{}):
 				m["img"] = c['media']['url']
 			else:
-				m['img'] = ''			
+				m['img'] = ''
 		else:
 			m['title']=''
 			m['description']=''
+			m['img']=''
 		data.append(m)
 	return jsonify(data)
 
