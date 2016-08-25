@@ -559,7 +559,7 @@ def m_api_inbox():
 			m['title']=c['title']
 		else:
 			m["title"]=''
-		if c[description]:
+		if c['description']:
 			m["description"] = c["description"]
 		else:
 			m["description"] = 	''
