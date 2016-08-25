@@ -555,14 +555,18 @@ def m_api_inbox():
 	for message in inbox.all():
 		m = {'id': str(message.message.id), 'note': message.message.title, 'author':message.message.author.username}
 		c = message.message.get_content()
-		if 'title' in c:
-			m['title']=c['title']
+		if c:
+			if "title" in c:
+				m['title']=c['title']
+			else:
+				m["title"]=''
+			if "description" in c:
+				m["description"] = c["description"]
+			else:
+				m["description"] = 	''
 		else:
-			m["title"]=''
-		if 'description' in c:
-			m["description"] = c["description"]
-		else:
-			m["description"] = 	''
+			m['title']=''
+			m['description']=''	
 		data.append(m)
 	return jsonify(data)
 
