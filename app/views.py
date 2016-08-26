@@ -553,7 +553,7 @@ def m_api_inbox():
 	inbox = user.inbox()
 	data = []
 	for message in inbox.all():
-		m = {'id': str(message.message.id), 'note': message.message.title, 'author':message.message.author.username}
+		m = {'id': str(message.message.id), 'note': message.message.title, 'author':message.message.author.username, 'url':message.message.url}
 		c = message.message.get_content()
 		if c:
 			if "title" in c:
