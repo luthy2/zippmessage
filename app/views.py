@@ -162,6 +162,19 @@ def contacts():
 	contacts = user.contacts
 	return render_template('contacts.html', user = user, title = 'Contacts', contacts = contacts, inbox = inbox)
 
+@app.route('/contacts/find', methods = ["GET", "POST"])
+@login_required
+def find_contacts():
+	user = g.user
+	f = twitter.get('/friends/ids.json',data ={screen_name:str(user.username)})
+	f = twitter.post("/users/", data = {user_id:f['ids']})
+	friends = [(i["name"], i['profile_image_url']) for i in f]
+	for i in friends:
+		if not User.query.filter(User.username.ilike(i[0]):
+			friends.remove(i)
+	return render_template('find_contacts.html', friends = friends)
+	
+
 @app.route('/user/<username>')
 @login_required
 def user(username):
