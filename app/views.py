@@ -173,7 +173,7 @@ def find_contacts():
 	print "data from twitter in", s-e
 	friends = [(i["name"], i['profile_image_url']) for i in f]
 	for i in friends:
-		if not User.query.filter(User.username.ilike(i[0].first()):
+		if not User.query.filter(User.username.ilike(i[0])).first():
 			friends.remove(i)
 	return render_template('find_contacts.html', friends = friends)
 
