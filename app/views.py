@@ -166,9 +166,11 @@ def contacts():
 @login_required
 def find_contacts():
 	user = g.user
-	time
+	s = time.time()
 	f = twitter.get('/friends/ids.json',data ={screen_name:str(user.username)})
 	f = twitter.post("/users/", data = {user_id:f['ids']})
+	e = time.time()
+	print "data from twitter in" s-e
 	friends = [(i["name"], i['profile_image_url']) for i in f]
 	for i in friends:
 		if not User.query.filter(User.username.ilike(i[0].first()):
