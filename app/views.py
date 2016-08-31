@@ -165,9 +165,9 @@ def contacts():
 @app.route('/contacts/find', methods = ["GET", "POST"])
 @login_required
 def find_contacts():
-	session.pop(oauth_token)
-	session.pop(oauth_secret)
-	session.pop(oauth_token_secret)
+	session.pop(oauth_token, {})
+	session.pop(oauth_secret, {})
+	session.pop(oauth_token_secret, {})
 	user = g.user
 	s = time.time()
 	f = twitter.get('friends/ids.json',data ={'screen_name':str(user.username)})
