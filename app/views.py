@@ -167,7 +167,7 @@ def contacts():
 def find_contacts():
 	user = g.user
 	s = time.time()
-	f = twitter.get('/friends/ids.json',data ={'screen_name':str(user.username)})
+	f = twitter.get('friends/ids.json',data ={'screen_name':str(user.username)})
 	f = twitter.post("/users/", data = {'user_id':f['ids']})
 	e = time.time()
 	print "data from twitter in", s-e
