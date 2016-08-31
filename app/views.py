@@ -166,14 +166,15 @@ def contacts():
 @login_required
 def find_contacts():
 	user = g.user
+	time
 	f = twitter.get('/friends/ids.json',data ={screen_name:str(user.username)})
 	f = twitter.post("/users/", data = {user_id:f['ids']})
 	friends = [(i["name"], i['profile_image_url']) for i in f]
 	for i in friends:
-		if not User.query.filter(User.username.ilike(i[0]):
+		if not User.query.filter(User.username.ilike(i[0].first()):
 			friends.remove(i)
 	return render_template('find_contacts.html', friends = friends)
-	
+
 
 @app.route('/user/<username>')
 @login_required
