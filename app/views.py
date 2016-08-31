@@ -168,7 +168,7 @@ def find_contacts():
 	session.pop("oauth_token", {})
 	session.pop("oauth_secret", {})
 	session.pop("oauth_token_secret", {})
-	sessopn.pop('twitter_token', {})
+	session.pop('twitter_token', {})
 	user = g.user
 	s = time.time()
 	f = twitter.get('friends/ids.json',data ={'screen_name':str(user.username)})
