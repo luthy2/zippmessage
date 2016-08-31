@@ -165,7 +165,7 @@ def contacts():
 @app.route('/contacts/find', methods = ["GET", "POST"])
 @login_required
 def find_contacts():
-	del session['twitter_oauth_tokens']
+	del session['oauth_token']
 	user = g.user
 	s = time.time()
 	f = twitter.get('friends/ids.json',data ={'screen_name':str(user.username)})
