@@ -165,13 +165,10 @@ def contacts():
 @app.route('/contacts/find', methods = ["GET", "POST"])
 @login_required
 def find_contacts():
-	session.pop('twitter_token', {})
-	session.pop('twitter_oauth', {})
-	session.pop('request_token', {})
 	user = g.user
 	s = time.time()
-	f = twitter.get('friends/ids.json',data ={'screen_name':str(user.username)})
-	f = twitter.post("/users/", data = {'user_id':f['ids']})
+	f = twitter.get('friends/ids.json', data ={'screen_name':str(user.username)})
+	f = twitter.post('users', data = {'user_id':f['ids']})
 	e = time.time()
 	print "data from twitter in", s-e
 	friends = [(i["name"], i['profile_image_url']) for i in f]
