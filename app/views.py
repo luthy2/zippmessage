@@ -47,9 +47,7 @@ def get_twitter_token():
 	session instead.
 	"""
 	user = g.user
-	if "twitter_token" in session:
-		return session.get("twitter_token")
-	elif user is not None:
+	if user is not None:
 		return user.oauth_token, user.oauth_secret
 
 
@@ -108,7 +106,6 @@ def oauth_authorized(resp):
 	user.oath_secret = resp['oauth_token_secret']
 	db.session.commit()
 
-	session['twitter_token'] = (resp["oauth_token"], resp['oauth_token_secret'])
 	session['user_id'] = user.id
 
 	login_user(user)
