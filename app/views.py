@@ -17,6 +17,7 @@ def before_request():
 		g.user = User.query.get(session['user_id'])
 
 
+
 @app.after_request
 def after_request(response):
 	db.session.remove()
@@ -38,16 +39,16 @@ def load_user(id):
 
 @twitter.tokengetter
 def get_twitter_token():
-    """This is used by the API to look for the auth token and secret
-    it should use for API calls.  During the authorization handshake
-    a temporary set of token and secret is used, but afterwards this
-    function has to return the token and secret.  If you don't want
-    to store this in the database, consider putting it into the
-    session instead.
-    """
-    user = g.user
-    if user is not None:
-        return user.oauth_token, user.oauth_secret
+	"""This is used by the API to look for the auth token and secret
+	it should use for API calls.  During the authorization handshake
+	a temporary set of token and secret is used, but afterwards this
+	function has to return the token and secret.  If you don't want
+	to store this in the database, consider putting it into the
+	session instead.
+	"""
+	user = g.user
+	if user is not None:
+		return user.oauth_token, user.oauth_secret
 
 
 
@@ -101,16 +102,16 @@ def oauth_authorized(resp):
     # in any case we update the authenciation token in the db
     # In case the user temporarily revoked access we will have
     # new tokens here.
-    user.oauth_token = resp['oauth_token']
-    user.oath_secret = resp['oauth_token_secret']
-    db.session.commit()
+	user.oauth_token = resp['oauth_token']
+	user.oath_secret = resp['oauth_token_secret']
+	db.session.commit()
 
-    session['user_id'] = user.id
+	session['user_id'] = user.id
 
-    login_user(user)
-    flash('You were signed in')
+	login_user(user)
+	flash('You were signed in')
 
-    return redirect(next_url or url_for('inbox'))
+	return redirect(next_url or url_for('inbox'))
 
 
 @app.route('/', methods = ["GET", "POST"])
@@ -167,8 +168,8 @@ def contacts():
 def find_contacts():
 	user = g.user
 	s = time.time()
-	f = twitter.get('friends/ids.json',data ={'screen_name':str(user.username)})
-	f = twitter.post("/users/", data = {'user_id':f['ids']})
+	f = twitter.request('friends/ids.json', method = "GET", data ={'screen_name':str(user.username)})
+	f = twitter.get('users', data = {'user_id':f['ids']})
 	e = time.time()
 	print "data from twitter in", s-e
 	friends = [(i["name"], i['profile_image_url']) for i in f]
