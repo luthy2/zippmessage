@@ -38,7 +38,7 @@ def load_user(id):
 	return User.query.get(int(id))
 
 @twitter.tokengetter
-def get_twitter_token(token=None):
+def get_twitter_token():
 	"""This is used by the API to look for the auth token and secret
 	it should use for API calls.  During the authorization handshake
 	a temporary set of token and secret is used, but afterwards this
@@ -106,9 +106,9 @@ def oauth_authorized(resp):
     # new tokens here.
 	user.oauth_token = resp['oauth_token']
 	user.oath_secret = resp['oauth_token_secret']
-	session['twitter_token'] = (resp["oauth_token"], resp['oauth_token_secret'])
 	db.session.commit()
 
+	session['twitter_token'] = (resp["oauth_token"], resp['oauth_token_secret'])
 	session['user_id'] = user.id
 
 	login_user(user)
