@@ -49,9 +49,9 @@ def get_twitter_token():
     user = g.user
 	if "twitter_token" in session:
 		return session.get("twitter_token")
-    else:
+	else:
 		if user is not None:
-        	return user.oauth_token, user.oauth_secret
+			return user.oauth_token, user.oauth_secret
 
 
 
