@@ -17,6 +17,7 @@ def before_request():
 		g.user = User.query.get(session['user_id'])
 
 
+
 @app.after_request
 def after_request(response):
 	db.session.remove()
@@ -46,8 +47,11 @@ def get_twitter_token():
     session instead.
     """
     user = g.user
-    if user is not None:
-        return user.oauth_token, user.oauth_secret
+	if "twitter_token" in session:
+		return session.get("twitter_token")
+    else:
+		if user is not None:
+        	return user.oauth_token, user.oauth_secret
 
 
 
@@ -103,6 +107,7 @@ def oauth_authorized(resp):
     # new tokens here.
     user.oauth_token = resp['oauth_token']
     user.oath_secret = resp['oauth_token_secret']
+	session['twitter_token'] = (resp["oauth_token"], resp['oauth_token_secret'])
     db.session.commit()
 
     session['user_id'] = user.id
@@ -167,8 +172,8 @@ def contacts():
 def find_contacts():
 	user = g.user
 	s = time.time()
-	f = twitter.get('friends/ids.json', data ={'screen_name':str(user.username)})
-	f = twitter.post('users', data = {'user_id':f['ids']})
+	f = twitter.request('friends/ids.json', method= data ={'screen_name':str(user.username)})
+	f = twitter.request('users', data = {'user_id':f['ids']})
 	e = time.time()
 	print "data from twitter in", s-e
 	friends = [(i["name"], i['profile_image_url']) for i in f]
