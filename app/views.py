@@ -39,13 +39,13 @@ def load_user(id):
 
 @twitter.tokengetter
 def get_twitter_token():
-    """This is used by the API to look for the auth token and secret
-    it should use for API calls.  During the authorization handshake
-    a temporary set of token and secret is used, but afterwards this
-    function has to return the token and secret.  If you don't want
-    to store this in the database, consider putting it into the
-    session instead.
-    """
+	"""This is used by the API to look for the auth token and secret
+	it should use for API calls.  During the authorization handshake
+	a temporary set of token and secret is used, but afterwards this
+	function has to return the token and secret.  If you don't want
+	to store this in the database, consider putting it into the
+	session instead.
+	"""
 	user = g.user
 	if "twitter_token" in session:
 		return session.get("twitter_token")
