@@ -46,7 +46,7 @@ def get_twitter_token():
     to store this in the database, consider putting it into the
     session instead.
     """
-    user = g.user
+	user = g.user
 	if "twitter_token" in session:
 		return session.get("twitter_token")
 	elif user is not None:
