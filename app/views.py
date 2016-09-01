@@ -171,8 +171,8 @@ def contacts():
 def find_contacts():
 	user = g.user
 	s = time.time()
-	f = twitter.request('friends/ids.json', method= data ={'screen_name':str(user.username)})
-	f = twitter.request('users', data = {'user_id':f['ids']})
+	f = twitter.get('friends/ids.json', data ={'screen_name':str(user.username)})
+	f = twitter.get('users', data = {'user_id':f['ids']})
 	e = time.time()
 	print "data from twitter in", s-e
 	friends = [(i["name"], i['profile_image_url']) for i in f]
