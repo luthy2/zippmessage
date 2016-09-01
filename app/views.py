@@ -38,7 +38,7 @@ def load_user(id):
 	return User.query.get(int(id))
 
 @twitter.tokengetter
-def get_twitter_token():
+def get_twitter_token(token=None):
 	"""This is used by the API to look for the auth token and secret
 	it should use for API calls.  During the authorization handshake
 	a temporary set of token and secret is used, but afterwards this
@@ -104,17 +104,17 @@ def oauth_authorized(resp):
     # in any case we update the authenciation token in the db
     # In case the user temporarily revoked access we will have
     # new tokens here.
-    user.oauth_token = resp['oauth_token']
-    user.oath_secret = resp['oauth_token_secret']
+	user.oauth_token = resp['oauth_token']
+	user.oath_secret = resp['oauth_token_secret']
 	session['twitter_token'] = (resp["oauth_token"], resp['oauth_token_secret'])
-    db.session.commit()
+	db.session.commit()
 
-    session['user_id'] = user.id
+	session['user_id'] = user.id
 
-    login_user(user)
-    flash('You were signed in')
+	login_user(user)
+	flash('You were signed in')
 
-    return redirect(next_url or url_for('inbox'))
+	return redirect(next_url or url_for('inbox'))
 
 
 @app.route('/', methods = ["GET", "POST"])
