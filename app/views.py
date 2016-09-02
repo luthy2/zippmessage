@@ -85,8 +85,7 @@ def oauth_authorized():
     to the function will be `None`.  Otherwise a dictionary with the values
     the application submitted.  Note that Twitter itself does not really
     redirect back unless the user clicks on the application name.
-    """
-
+	"""
 	resp = twitter.authorized_response()
 	if resp is None:
 		flash(u'You denied the request to sign in.')
