@@ -85,7 +85,6 @@ def oauth_authorized(resp):
     the application submitted.  Note that Twitter itself does not really
     redirect back unless the user clicks on the application name.
     """
-    next_url = request.args.get('next') or url_for('index')
     if resp is None:
         flash(u'You denied the request to sign in.')
         return redirect(next_url)
@@ -110,7 +109,7 @@ def oauth_authorized(resp):
 
 	login_user(user)
 	flash('You were signed in')
-	return redirect(next_url or url_for('index'))
+	return redirect(redirect_url or url_for('index'))
 
 
 @app.route('/', methods = ["GET", "POST"])
