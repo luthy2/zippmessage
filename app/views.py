@@ -59,7 +59,7 @@ def login():
     in.  When all worked out as expected, the remote application will
     redirect back to the callback URL provided.
     """
-	return twitter.authorize(callback=url_for('oauth_authorized', next=request.args.get('next') or request.referrer or None))
+	return twitter.authorize(callback=url_for('oauthorized', next=request.args.get('next') or request.referrer or None))
 
 @app.route('/logout')
 def logout():
@@ -72,9 +72,9 @@ def logout():
 	return redirect(url_for('index'))
 
 
-@app.route('/oauth-authorized')
+@app.route('/oauthorized')
 @twitter.authorized_handler
-def oauth_authorized():
+def oauthorized():
 	"""Called after authorization.  After this function finished handling,
 	the OAuth information is removed from the session again.  When this
 	happened, the tokengetter from above is used to retrieve the oauth
