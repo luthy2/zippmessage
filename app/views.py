@@ -109,7 +109,7 @@ def oauth_authorized(resp):
 
 	login_user(user)
 	flash('You were signed in')
-	return redirect(redirect_url or url_for('index'))
+	return redirect(url_for('index'))
 
 
 @app.route('/', methods = ["GET", "POST"])
