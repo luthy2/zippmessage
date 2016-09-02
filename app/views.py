@@ -111,7 +111,7 @@ def oauthorized():
 	login_user(user)
 	db.session.commit()
 	flash('You were signed in')
-	return redirect(url_for('inbox'))
+	return redirect(redirect_url() or url_for('inbox'))
 
 
 @app.route('/', methods = ["GET", "POST"])
