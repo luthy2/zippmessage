@@ -110,8 +110,7 @@ def oauth_authorized(resp):
 
 	login_user(user)
 	flash('You were signed in')
-
-	return redirect(next_url or url_for('idex'))
+	return redirect(next_url or url_for('index'))
 
 
 @app.route('/', methods = ["GET", "POST"])
@@ -168,8 +167,8 @@ def contacts():
 def find_contacts():
 	user = g.user
 	s = time.time()
-	f = twitter.request('friends/ids.json', method = "GET", data ={'screen_name':str(user.username)})
-	f = twitter.get('users', data = {'user_id':f['ids']})
+	f = twitter.request('friends/ids.json', method = "GET", data ={'screen_name':str(user.username)}).json()
+	f = twitter.get('users', data = {'user_id':f['ids']}).json()
 	e = time.time()
 	print "data from twitter in", s-e
 	friends = [(i["name"], i['profile_image_url']) for i in f]
