@@ -167,19 +167,20 @@ def contacts():
 @login_required
 def find_contacts():
 	user = g.user
-	s = time.time()
-	resp = twitter.get('friends/ids.json', data ={'cursor':-1,'screen_name':str(user.username)})
-	print resp.status
-	ids = resp.data
-	print ids
-	r = twitter.post('users/lookup.json', data = {ids})
-	e = time.time()
-	print "data from twitter in", s-e
-	friends = [(i["name"], i['profile_image_url']) for i in r.data]
-	for i in friends:
-		if not User.query.filter(User.username.ilike(i[0])).first():
-			friends.remove(i)
-	return render_template('find_contacts.html', friends = friends)
+	# s = time.time()
+	# resp = twitter.get('friends/ids.json', data ={'cursor':-1,'screen_name':str(user.username)})
+	# print resp.status
+	# ids = resp.data
+	# print ids
+	# r = twitter.post('users/lookup.json', data = {ids})
+	# e = time.time()
+	# print "data from twitter in", s-e
+	# friends = [(i["name"], i['profile_image_url']) for i in r.data]
+	# for i in friends:
+	# 	if not User.query.filter(User.username.ilike(i[0])).first():
+	# 		friends.remove(i)
+	# return render_template('find_contacts.html', friends = friends)
+	resp = twitter.get('statuses/home_timeline.json', data={'screen_name':str(user.username)}, content_type='application/x-www-form-urlencoded')
 
 
 @app.route('/user/<username>')
