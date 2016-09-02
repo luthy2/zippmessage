@@ -75,16 +75,16 @@ def logout():
 @app.route('/oauth-authorized')
 @twitter.authorized_handler
 def oauth_authorized():
-    """Called after authorization.  After this function finished handling,
-    the OAuth information is removed from the session again.  When this
-    happened, the tokengetter from above is used to retrieve the oauth
-    token and secret.
-    Because the remote application could have re-authorized the application
-    it is necessary to update the values in the database.
-    If the application redirected back after denying, the response passed
-    to the function will be `None`.  Otherwise a dictionary with the values
-    the application submitted.  Note that Twitter itself does not really
-    redirect back unless the user clicks on the application name.
+	"""Called after authorization.  After this function finished handling,
+	the OAuth information is removed from the session again.  When this
+	happened, the tokengetter from above is used to retrieve the oauth
+	token and secret.
+	Because the remote application could have re-authorized the application
+	it is necessary to update the values in the database.
+	If the application redirected back after denying, the response passed
+	to the function will be `None`.  Otherwise a dictionary with the values
+	the application submitted.  Note that Twitter itself does not really
+	redirect back unless the user clicks on the application name.
 	"""
 	resp = twitter.authorized_response()
 	if resp is None:
@@ -93,16 +93,16 @@ def oauth_authorized():
 
 	user = User.query.filter_by(username=resp['screen_name']).first()
 
-    # user never signed on
-    if user is None:
-        user = User(username = resp['screen_name'], contacts=(), sent_messages=(), inbox_messages=())
+	# user never signed on
+	if user is None:
+		user = User(username = resp['screen_name'], contacts=(), sent_messages=(), inbox_messages=())
 		#**todo issue a user a new token for  mobile auth. **
-        db.session.add(user)
-        user.add_contact(user)
+		db.session.add(user)
+		user.add_contact(user)
 
-    # in any case we update the authenciation token in the db
-    # In case the user temporarily revoked access we will have
-    # new tokens here.
+	# in any case we update the authenciation token in the db
+	# In case the user temporarily revoked access we will have
+	# new tokens here.
 	user.oauth_token = resp['oauth_token']
 	user.oath_secret = resp['oauth_token_secret']
 
