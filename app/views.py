@@ -169,10 +169,12 @@ def find_contacts():
 	user = g.user
 	s = time.time()
 	resp = twitter.get('friends/ids.json', data ={'screen_name':str(user.username)})
-	r = twitter.post('users/lookup.json', data = {resp.content["ids"]})
+	ids = resp.data.get("ids")
+	print ids
+	r = twitter.post('users/lookup.json', data = {ids})
 	e = time.time()
 	print "data from twitter in", s-e
-	friends = [(i["name"], i['profile_image_url']) for i in r.content]
+	friends = [(i["name"], i['profile_image_url']) for i in r.data]
 	for i in friends:
 		if not User.query.filter(User.username.ilike(i[0])).first():
 			friends.remove(i)
