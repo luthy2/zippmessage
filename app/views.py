@@ -179,8 +179,10 @@ def find_contacts():
 	# for i in friends:
 	# 	if not User.query.filter(User.username.ilike(i[0])).first():
 	# 		friends.remove(i)
-	resp = twitter.get('statuses/home_timeline.json', data={'screen_name':str(user.username)}, content_type='application/x-www-form-urlencoded')
-	print resp.status
+	u = g.user.username
+	u = u.encode('utf-8')
+	resp = twitter.get('statuses/home_timeline.json', data={'screen_name':user}, content_type='application/x-www-form-urlencoded')
+	print resp.status, resp
 	friends = None
 	return render_template('find_contacts.html', friends = friends)
 
