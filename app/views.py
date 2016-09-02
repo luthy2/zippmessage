@@ -46,6 +46,7 @@ def get_twitter_token():
 	to store this in the database, consider putting it into the
 	session instead.
 	"""
+
 	user = g.user
 	if user is not None:
 		return user.oauth_token, user.oauth_secret
@@ -85,12 +86,13 @@ def oauth_authorized():
     the application submitted.  Note that Twitter itself does not really
     redirect back unless the user clicks on the application name.
     """
-	resp = twitter.authorized_response()
-    if resp is None:
-        flash(u'You denied the request to sign in.')
-        return redirect(next_url)
 
-    user = User.query.filter_by(username=resp['screen_name']).first()
+	resp = twitter.authorized_response()
+	if resp is None:
+		flash(u'You denied the request to sign in.')
+		return redirect(next_url)
+
+	user = User.query.filter_by(username=resp['screen_name']).first()
 
     # user never signed on
     if user is None:
