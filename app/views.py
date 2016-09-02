@@ -111,7 +111,7 @@ def oauth_authorized(resp):
 	login_user(user)
 	flash('You were signed in')
 
-	return redirect(next_url or url_for('inbox'))
+	return redirect(next_url or url_for('idex'))
 
 
 @app.route('/', methods = ["GET", "POST"])

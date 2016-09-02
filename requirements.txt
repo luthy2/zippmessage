@@ -14,9 +14,10 @@ itsdangerous==0.24
 Jinja2==2.7.3
 psycopg2==2.6.1
 sqlalchemy-migrate==0.9.6
--e git://github.com/werdnum/flask-oauth.git#egg=flask-oauth
+Flask-OAuthlib==0.9.3
 embedly==0.5.0
 requests==2.1.0
 Python-Binary-Memcached==0.17
 Celery == 4.0.0rc3
 redis == 2.10.5
+oauthlib==1.1.2
