@@ -73,7 +73,7 @@ def logout():
 
 @app.route('/oauth-authorized')
 @twitter.authorized_handler
-def oauth_authorized(resp):
+def oauth_authorized():
     """Called after authorization.  After this function finished handling,
     the OAuth information is removed from the session again.  When this
     happened, the tokengetter from above is used to retrieve the oauth
@@ -85,6 +85,7 @@ def oauth_authorized(resp):
     the application submitted.  Note that Twitter itself does not really
     redirect back unless the user clicks on the application name.
     """
+	resp = twitter.authorized_response()
     if resp is None:
         flash(u'You denied the request to sign in.')
         return redirect(next_url)
