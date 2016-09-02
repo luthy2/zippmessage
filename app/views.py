@@ -103,12 +103,12 @@ def oauth_authorized(resp):
     # new tokens here.
 	user.oauth_token = resp['oauth_token']
 	user.oath_secret = resp['oauth_token_secret']
-	db.session.add(user)
-	db.session.commit()
+
 
 	session['user_id'] = user.id
-
+	current_user = user
 	login_user(user)
+	db.session.commit()
 	flash('You were signed in')
 	return redirect(redirect_url or url_for('inbox'))
 
