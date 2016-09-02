@@ -169,7 +169,8 @@ def find_contacts():
 	user = g.user
 	s = time.time()
 	resp = twitter.get('friends/ids.json', data ={'screen_name':str(user.username)})
-	ids = resp.data.get("ids")
+	print resp.status
+	ids = resp.data
 	print ids
 	r = twitter.post('users/lookup.json', data = {ids})
 	e = time.time()
