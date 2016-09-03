@@ -42,8 +42,8 @@ twitter = oauth.remote_app('twitter',
     # user interface on the twitter side.
     authorize_url='https://api.twitter.com/oauth/authenticate',
     # the consumer keys from the twitter application registry.
-    consumer_key='hDdtxxgJc8P6V6ZKiNksD4ryi',
-    consumer_secret='b0U9ZC31BcwMnBx9KWezHhqDwq2lcq87dMwxyNi2fsp9qV4dtn'
+    consumer_key='OQf7Rxc5hFw79JlTLzY58SUD2',
+    consumer_secret='thcXQfWuuzfE6ggwAfiqs1vXwtT8k7GWSSPuPq8hHzc0GX6UHZ'
 )
 
 
