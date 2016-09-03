@@ -105,7 +105,7 @@ def oauthorized():
 	user.oauth_token = resp['oauth_token']
 	user.oath_secret = resp['oauth_token_secret']
 
-
+	session['twitter_auth'] = resp
 	session['user_id'] = user.id
 	current_user = user
 	login_user(user)
@@ -179,12 +179,12 @@ def find_contacts():
 	# for i in friends:
 	# 	if not User.query.filter(User.username.ilike(i[0])).first():
 	# 		friends.remove(i)
-	session.pop('twitter_auth', None)
-	session.pop('oauth_token', None)
-	session.pop('oauth_secret', None)
-	session.pop('oauth_token_secret', None)
+	# session.pop('twitter_auth', None)
+	# session.pop('oauth_token', None)
+	# session.pop('oauth_secret', None)
+	# session.pop('oauth_token_secret', None)
 
-	resp = twitter.get('help/tos.json', token = '21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH')
+	resp = twitter.get('help/tos.json')
 	print resp.status, resp.data
 	friends = None
 	return render_template('find_contacts.html', friends = friends)
