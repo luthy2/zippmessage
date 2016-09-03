@@ -1,7 +1,7 @@
 <h4>Find Friends already on zipp!</h4>
 {% if friends %}
   {% for friend in friends %}
-    <p><image src="{{friend['profile_image_url']}}" style = "border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['name'])}}">{{friend["name"]}}</a></p>
+    <p><image src="{{friend['profile_image_url']}}" style = "border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['name'])}}">{{friend['name']}}</a></p>
   {%endfor%}
 {% else %}
   <p>hmm, we're having a problem connecting. Try again later.</p>
