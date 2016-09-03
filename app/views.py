@@ -179,8 +179,12 @@ def find_contacts():
 	# for i in friends:
 	# 	if not User.query.filter(User.username.ilike(i[0])).first():
 	# 		friends.remove(i)
-	session['twitter_oauth'] = (user.oauth_token, user.oauth_secret)
-	resp = twitter.get('friends/list.json')
+	session.pop('twitter_auth', None)
+	session.pop('oauth_token', None)
+	session.pop('oauth_secret', None)
+	sesion.pop('oauth_token_secret', None)
+
+	resp = twitter.get('friends/list.json', data = {'screen_name':'thebigjl'})
 	print resp.status, resp.data
 	friends = None
 	return render_template('find_contacts.html', friends = friends)
