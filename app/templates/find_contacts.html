@@ -18,7 +18,7 @@
       {% if not_users %}
       <h4>invite</h4>
         {% for friend in not_users%}
-        <p><image src="{{friend['profile_image_url']}}" style = "border:1px solid #fafafa; border-radius:50%; height:30px;">   {{friend['name']}} <span class="pull-right"><a href = "https://twitter.com/intent/tweet?screen_name={{f['screen_name']}}&text=I'm+Using+Zipp" type="button" class="btn btn-default btn-xs" target="_blank">invite</a></span></p>
+        <p><image src="{{friend['profile_image_url']}}" style = "border:1px solid #fafafa; border-radius:50%; height:30px;">   {{friend['name']}} <span class="pull-right"><a href = "https://twitter.com/intent/tweet?screen_name={{friend['screen_name']}}&text=I'm+Using+Zipp" type="button" class="btn btn-default btn-xs" target="_blank">invite</a></span></p>
           {%endfor%}
       {% endif %}
     </div>
