@@ -184,12 +184,12 @@ def find_contacts():
 			s +=100
 			_r = twitter.post('users/lookup.json', data = {"user_id":_ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
 			print _r.status
-			print _r.data
 			if _r.status == 200:
 				friends = _r.data
 				for f in friends:
 					u = User.query.filter(User.username.ilike(f["screen_name"])).first() #check if theyre a user
 					if u:
+						print u
 						if g.user.is_contact(u) == False: #check if they're our friend
 							not_contacts.append(f) # if not, let us add them
 						else:
@@ -197,7 +197,8 @@ def find_contacts():
 					else:
 						not_users.append(f) #if they not a user let us invite them
 			else:
-				error = "We're having trouble connecting to twitter. Try again later."
+				print _r.status
+				error = "We're having trouble connecting from twitter. Try again later."
 				return render_template('find_contacts.html', contacts = c, not_contacts=not_contacts, not_users = not_users, title = "Find Contacts", error=error)
 	else:
 		not_users, not_contacts, c = None, None, None
