@@ -91,9 +91,10 @@ def oauthorized():
 		return redirect(next_url)
 
 	user = User.query.filter_by(username=resp['screen_name']).first()
-
+	first_login = False
 	# user never signed on
 	if user is None:
+		first_login = True
 		user = User(username = resp['screen_name'], contacts=(), sent_messages=(), inbox_messages=())
 		#**todo issue a user a new token for  mobile auth. **
 		db.session.add(user)
@@ -110,6 +111,8 @@ def oauthorized():
 	login_user(user)
 	db.session.commit()
 	flash('You were signed in')
+	if first_login:
+		return redirect(url_for('find_contacts'))
 	return redirect(redirect_url() or url_for('inbox'))
 
 
@@ -686,7 +689,7 @@ def cache_url(url):
 def send_followed_email(sender_id, recipient_id):
 	with app.app_context():
 		print "email task added to queue "
-		recipient = User.query.get(reicipient_id)
+		recipient = User.query.get(recipient_id)
 		sender = User.query.get(sender_id)
 		r_email  = recipient.email
 		r_email = r_email.encode('utf-8')
