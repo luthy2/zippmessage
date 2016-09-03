@@ -105,7 +105,7 @@ def oauthorized():
 	user.oauth_token = resp['oauth_token']
 	user.oath_secret = resp['oauth_token_secret']
 
-	session['twitter_auth'] = resp
+	session['twitter_oauth'] = resp
 	session['user_id'] = user.id
 	current_user = user
 	login_user(user)
