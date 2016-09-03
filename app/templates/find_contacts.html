@@ -6,8 +6,8 @@
 {% endif %}
 <br>
 {% if not_users %}
+<h4>Zipp is better with friends would you like to invite some?</h4>
   {% for friend in not_users%}
-  <h4>Zipp is better with friends would you like to invite some?</h4>
   <p><image src="{{friend['profile_image_url']}}" style = "border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['name'])}}">{{friend['name']}}</a><a href = # type="button" class="btn btn-default">invite</a></p>
     {%endfor%}
 {% endif %}
