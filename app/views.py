@@ -167,6 +167,8 @@ def contacts():
 def find_contacts():
 	user = g.user
 	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
+	not_contacts=[]
+	not_users = []
 	if resp.status == 200:
 		ids = resp.data.get("ids")
 		ids = ids[:100]
@@ -181,10 +183,9 @@ def find_contacts():
 			else:
 				not_users.append(f)
 	else:
-		friends = None
+		not_users, not_contacts = None, None
 		print resp.status, resp.data
-	not_contacts=[]
-	not_users = []
+
 	return render_template('find_contacts.html', not_contacts=not_contacts, not_users = not_users)
 
 
