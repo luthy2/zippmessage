@@ -6,7 +6,7 @@
 		<h4>{{g.user.username}}'s Contacts<a href = "{{url_for('find_contacts')}}" type="button" class = "btn btn-default"><span class ="glyphicon glyphicon-user"></span><span class ="glyphicon glyphicon-plus"></span></a></h4>
 		<ul class = "list-group">
 		{% for contact in user.contacts %}
-			<li class="list-group-item"><a href="{{url_for('user', username=contact.username)}}">@{{contact.username}}<span class = "pull-right"><a href =# type = "button" class = "btn btn-default button-xs">unfollow</a></span></li>
+			<li class="list-group-item"><a href="{{url_for('user', username=contact.username)}}">@{{contact.username}} <span class ="text-align text-right"><a href =# type = "button" class = "btn btn-default btn-xs">unfollow</a></span></li>
 		{% else %}
 			<li class = "list-group-item"> You have no friends :( </li>
 		{% endfor %}
