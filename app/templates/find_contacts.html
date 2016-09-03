@@ -6,19 +6,19 @@
       {% if contacts %}
         <h4>Some of your friends are already here!</h4>
         {% for friend in contacts %}
-          <p><image src="{{friend['profile_image_url']}}" style = "border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['name'])}}">{{friend['name']}} </a><a href = # type="button" class="btn btn-default btn-sm">unfollow</a></p>
+          <p><image src="{{friend['profile_image_url']}}" style = "border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['name'])}}"> {{friend['name']}} </a><a href = # type="button" class="btn btn-default btn-xs">unfollow</a></p>
         {%endfor%}
       {% endif %}
       {% if not_contacts %}
         {% for friend in not_contact %}
-          <p><image src="{{friend['profile_image_url']}}" style = "border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['name'])}}">{{friend['name']}} </a><a href = # type="button" class="btn btn-default btn-sm">follow</a></p>
+          <p><image src="{{friend['profile_image_url']}}" style = "border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['name'])}}"> {{friend['name']}} </a><a href = # type="button" class="btn btn-default btn-xs">follow</a></p>
         {%endfor%}
       {% endif %}
       <br>
       {% if not_users %}
       <h4>invite</h4>
         {% for friend in not_users%}
-        <p><image src="{{friend['profile_image_url']}}" style = "border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['name'])}}">{{friend['name']}} </a><a href = # type="button" class="btn btn-default btn-sm">invite</a></p>
+        <p><image src="{{friend['profile_image_url']}}" style = "border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['name'])}}"> {{friend['name']}} </a><a href = # type="button" class="btn btn-default btn-xs">invite</a></p>
           {%endfor%}
       {% endif %}
     </div>

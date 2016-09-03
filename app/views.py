@@ -187,7 +187,7 @@ def find_contacts():
 		not_users, not_contacts = None, None
 		print resp.status, resp.data
 
-	return render_template('find_contacts.html', contacts = c, not_contacts=not_contacts, not_users = not_users)
+	return render_template('find_contacts.html', contacts = c, not_contacts=not_contacts, not_users = not_users, title = "Find Contacts")
 
 
 
