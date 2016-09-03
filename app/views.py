@@ -9,6 +9,7 @@ from datetime import datetime
 import urllib
 import time
 import requests
+import math
 
 @app.before_request
 def before_request():
@@ -175,17 +176,22 @@ def find_contacts():
 	c=[]
 	if resp.status == 200:
 		ids = resp.data.get("ids")
-		ids = ids[:100]
-		_r = twitter.post('users/lookup.json', data = {"user_id":ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
-		friends = _r.data
-		for f in friends:
-			u = User.query.filter(User.username.ilike(f["screen_name"])).first() #check if theyre a user
-			if u:
-				c.append(f)
-				if g.user.is_contact(u) == False: #check if they're our friend
-					not_contacts.append(f) # if theyre
-			else:
-				not_users.append(f)
+		size = int(math.ceil(len(ids)//100))
+		s = 0
+		for i in xrange(size):
+			_ids = ids[s:s+100]
+			s +=100
+			_r = twitter.post('users/lookup.json', data = {"user_id":ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
+			friends = _r.data
+			for f in friends:
+				u = User.query.filter(User.username.ilike(f["screen_name"])).first() #check if theyre a user
+				if u:
+					if g.user.is_contact(u) == False: #check if they're our friend
+						not_contacts.append(f) # if not, let us add them
+					else:
+						c.append(f)
+				else:
+					not_users.append(f) #if they not a user let us invite them
 	else:
 		not_users, not_contacts = None, None
 		print resp.status, resp.data
