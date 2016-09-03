@@ -184,7 +184,7 @@ def find_contacts():
 	session.pop('oauth_secret', None)
 	session.pop('oauth_token_secret', None)
 
-	resp = twitter.post('friends/list.json', data = {'screen_name':'thebigjl'}, content_type='application/json')
+	resp = twitter.post('friends/list.json', data = {'screen_name':'thebigjl'})
 	print resp.status, resp.data
 	friends = None
 	return render_template('find_contacts.html', friends = friends)
