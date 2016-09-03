@@ -166,23 +166,6 @@ def contacts():
 @login_required
 def find_contacts():
 	user = g.user
-	# s = time.time()
-	# resp = twitter.get('friends/ids.json', data ={'cursor':-1,'screen_name':str(user.username)})
-	# print resp.status
-	# ids = resp.data
-	# print ids
-	# r = twitter.post('users/lookup.json', data = {ids})
-	# e = time.time()
-	# print "data from twitter in", s-e
-	# friends = [(i["name"], i['profile_image_url']) for i in r.data]
-	# for i in friends:
-	# 	if not User.query.filter(User.username.ilike(i[0])).first():
-	# 		friends.remove(i)
-	# session.pop('twitter_auth', None)
-	# session.pop('oauth_token', None)
-	# session.pop('oauth_secret', None)
-	# session.pop('oauth_token_secret', None)
-
 	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
 	if resp.status == 200:
 		ids = resp.data.get("ids")
@@ -190,10 +173,19 @@ def find_contacts():
 		_r = twitter.post('users/lookup.json', data = {"user_id":ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
 		print _r.data
 		friends = _r.data
+		for f in friends:
+			u = User.query.filter(User.username.ilike(f["name"])).first()
+			if u:
+				if not g.user.is_contact(u):
+					not_contacts.append(f)
+			else:
+				not_users.append(f)
 	else:
 		friends = None
 		print resp.status, resp.data
-	return render_template('find_contacts.html', friends = friends)
+	not_contacts=[]
+	not_users = []
+	return render_template('find_contacts.html', not_contacts=not_contacts, not_users = not_users)
 
 
 
