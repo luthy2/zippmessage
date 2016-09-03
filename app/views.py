@@ -186,7 +186,7 @@ def find_contacts():
 	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
 	if resp.status == 200:
 		print resp.status
-		r = twitter.post('users/lookup.json', data = {resp.data["ids"]}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
+		r = twitter.post('users/lookup.json', data = {resp.data.get("ids")}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
 	else:
 		r = None
 		print resp.status, resp.data
