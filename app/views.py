@@ -181,7 +181,6 @@ def find_contacts():
 	# 		friends.remove(i)
 	u = user.username
 	u = u.encode('utf-8')
-	data = jsonify('screen_name':u)
 	resp = twitter.get('friends/list.json', data={'screen_name:u'}, content_type='application/json')
 	print resp.status, resp.data
 	friends = None
