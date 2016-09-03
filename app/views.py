@@ -174,6 +174,7 @@ def find_contacts():
 	not_contacts=[]
 	not_users = []
 	c=[]
+	error = None
 	if resp.status == 200:
 		ids = resp.data.get("ids")
 		size = int(math.ceil(len(ids)//100))
@@ -181,24 +182,29 @@ def find_contacts():
 		for i in xrange(size):
 			_ids = ids[s:s+100]
 			s +=100
-			_r = twitter.post('users/lookup.json', data = {"user_id":ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
+			_r = twitter.post('users/lookup.json', data = {"user_id":_ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
 			print _r.status
 			print _r.data
-			friends = _r.data
-			for f in friends:
-				u = User.query.filter(User.username.ilike(f["screen_name"])).first() #check if theyre a user
-				if u:
-					if g.user.is_contact(u) == False: #check if they're our friend
-						not_contacts.append(f) # if not, let us add them
+			if _r.status == 200:
+				friends = _r.data
+				for f in friends:
+					u = User.query.filter(User.username.ilike(f["screen_name"])).first() #check if theyre a user
+					if u:
+						if g.user.is_contact(u) == False: #check if they're our friend
+							not_contacts.append(f) # if not, let us add them
+						else:
+							c.append(f)
 					else:
-						c.append(f)
-				else:
-					not_users.append(f) #if they not a user let us invite them
+						not_users.append(f) #if they not a user let us invite them
+			else:
+				error = "We're having trouble connecting to twitter. Try again later."
+				return render_template('find_contacts.html', contacts = c, not_contacts=not_contacts, not_users = not_users, title = "Find Contacts", error=error)
 	else:
-		not_users, not_contacts = None, None
+		not_users, not_contacts, c = None, None, None
+		error = "We're having trouble connecting to twitter right now. Try again later."
 		print resp.status, resp.data
 
-	return render_template('find_contacts.html', contacts = c, not_contacts=not_contacts, not_users = not_users, title = "Find Contacts")
+	return render_template('find_contacts.html', contacts = c, not_contacts=not_contacts, not_users = not_users, title = "Find Contacts", error=error)
 
 
 
