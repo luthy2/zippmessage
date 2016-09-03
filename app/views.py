@@ -182,7 +182,7 @@ def find_contacts():
 	session.pop('twitter_auth', None)
 	session.pop('oauth_token', None)
 	session.pop('oauth_secret', None)
-	sesion.pop('oauth_token_secret', None)
+	session.pop('oauth_token_secret', None)
 
 	resp = twitter.get('friends/list.json', data = {'screen_name':'thebigjl'})
 	print resp.status, resp.data
