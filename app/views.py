@@ -173,7 +173,7 @@ def find_contacts():
 	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
 	not_contacts=[]
 	not_users = []
-	c=[]
+	c = []
 	error = None
 	if resp.status == 200:
 		ids = resp.data.get("ids")
@@ -186,10 +186,10 @@ def find_contacts():
 			if _r.status == 200:
 				friends = _r.data
 				for f in friends:
-					u = User.query.filter(User.username.ilike(f["screen_name"])).first() #check if theyre a user
+					u = User.query.filter(User.username.ilike(str(f["screen_name"]))).first() #check if theyre a user
 					if u:
 						if g.user.is_contact(u) == False: #check if they're our friend
-							not_contacts.append(f) # if not, let us add them
+							not_contacts.append(f) # if not, let us add them	
 						else:
 							c.append(f)
 					else:

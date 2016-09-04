@@ -14,6 +14,7 @@
         {%endfor%}
       {% endif %}
       {% if not_contacts %}
+      <p>stuff</p>
         {% for friend in not_contact %}
           <p><image src="{{friend['profile_image_url']}}" style = "border:1px solid #fafafa; border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['screen_name'])}}">   {{friend['name']}} </a><span class="pull-right"><a href = "{{url_for('follow', username = friend['screen_name'])}}" type="button" class="btn btn-default btn-xs">follow</a></span></p>
         {%endfor%}
