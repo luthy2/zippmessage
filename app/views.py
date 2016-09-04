@@ -188,7 +188,7 @@ def find_contacts():
 				for f in friends:
 					u = User.query.filter(User.username.ilike(str(f["screen_name"]))).first() #check if theyre a user
 					if u:
-						if g.user.is_contact(u) or u.is_contact(user): #check if they're our friend
+						if user.is_contact(u): #check if they're our friend
 							c.append(f) # if not, let us add them
 						else:
 							not_contacts.append(f)
@@ -203,7 +203,7 @@ def find_contacts():
 		error = "We're having trouble connecting to twitter right now. Try again later."
 		print resp.status, resp.data
 
-	return render_template('find_contacts.html', contacts = c, not_contacts=not_contacts, not_users = not_users, title = "Find Contacts", error=error)
+	return render_template('find_contacts.html', not_contacts=not_contacts, contacts = c, not_users = not_users, title = "Find Contacts", error=error)
 
 
 
