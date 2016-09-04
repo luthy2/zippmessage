@@ -188,7 +188,7 @@ def find_contacts():
 				for f in friends:
 					u = User.query.filter(User.username.ilike(str(f["screen_name"]))).first() #check if theyre a user
 					if u:
-						if g.user.is_contact(u): #check if they're our friend
+						if g.user.is_contact(u) or u.is_contact(user): #check if they're our friend
 							c.append(f) # if not, let us add them
 						else:
 							not_contacts.append(f)
