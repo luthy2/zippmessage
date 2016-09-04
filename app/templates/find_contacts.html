@@ -7,22 +7,20 @@
       {% if error %}
        <div class = "alert alert danger">{{error}} <a href = "{{url_for(inbox)}}">Back to Inbox</a></div>
       {%endif%}
-      {% if contacts %}
-        <h4>Some of your friends are already here!</h4>
-        {% for friend in contacts %}
-          <p><img src="{{friend['profile_image_url']}}" style = "border:1px solid #fafafa; border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['screen_name'])}}">   {{friend['name']}} </a><span class = "pull-right"><a href = "{{url_for('unfollow', username = friend['screen_name'])}}" type="button" class="btn btn-default btn-xs">unfollow</a></span></p>
-        {%endfor%}
-      {% endif %}
-      <br>
       {% if not_contacts %}
         <h4>Add Friends</h4>
         {% for friend in not_contacts %}
           <p><img src="{{friend['profile_image_url']}}" style = "border:1px solid #fafafa; border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['screen_name'])}}">   {{friend['name']}} </a> <span class="pull-right"><a href = "{{url_for('follow', username = friend['screen_name'])}}" type="button" class="btn btn-default btn-xs">follow</a></span></p>
         {%endfor%}
       {% endif %}
+      {% if contacts %}
+        {% for friend in contacts %}
+          <p><img src="{{friend['profile_image_url']}}" style = "border:1px solid #fafafa; border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['screen_name'])}}">   {{friend['name']}} </a><span class = "pull-right"><a href = "{{url_for('unfollow', username = friend['screen_name'])}}" type="button" class="btn btn-default btn-xs">unfollow</a></span></p>
+        {%endfor%}
+      {% endif %}
       <br>
       {% if not_users %}
-      <h4>invite</h4>
+      <h4>Invite More!</h4>
         {% for friend in not_users%}
         <p><image src="{{friend['profile_image_url']}}" style = "border:1px solid #fafafa; border-radius:50%; height:30px;">   {{friend['name']}} <span class="pull-right"><a href = "https://twitter.com/intent/tweet?screen_name={{friend['screen_name']}}&text=I'm+Using+Zipp+a+new+social+bookmarking+app.+Check+it+out!+&url=http%3A%2F%2Fwww.zippmsg.com" type="button" class="btn btn-default btn-xs" target="_blank">invite</a></span></p>
           {%endfor%}
