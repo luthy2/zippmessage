@@ -320,20 +320,20 @@ def follow(username):
 @login_required
 def unfollow(username):
 	user = User.query.filter(User.username.ilike(username)).first()
-    if user is None:
-        flash('User %s not found.' % username)
-        return redirect(url_for(redirect_url()))
-    if user == g.user:
-        flash('You can\'t unfollow yourself!')
-        return redirect(url_for(redirect_url()))
-    u = g.user.remove_contact(user)
-    if u is None:
-        flash('Cannot unfollow ' + nickname + '.')
-        return redirect(url_for(redirect_url()))
-    db.session.add(u)
-    db.session.commit()
-    flash('You have stopped following ' + username + '.')
-    return redirect(url_for(redirect_url()))
+	if user is None:
+		flash('User %s not found.' % username)
+		return redirect(url_for(redirect_url()))
+	if user == g.user:
+		flash('You can\'t unfollow yourself!')
+		return redirect(url_for(redirect_url()))
+	u = g.user.remove_contact(user)
+	if u is None:
+		flash('Cannot unfollow ' + nickname + '.')
+		return redirect(url_for(redirect_url()))
+	db.session.add(u)
+	db.session.commit()
+	flash('You have stopped following ' + username + '.')
+	return redirect(url_for(redirect_url()))
 
 @app.route('/bookmark/<message_id>', methods = ["GET", "POST"])
 @login_required
