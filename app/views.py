@@ -180,7 +180,6 @@ def find_contacts():
 		size = int(math.ceil(len(ids)//100))
 		s = 0
 		for i in xrange(size):
-			print f["screen_name"]
 			_ids = ids[s:(s+100)]
 			s +=100
 			_r = twitter.post('users/lookup.json', data = {"user_id":_ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
@@ -188,6 +187,7 @@ def find_contacts():
 			if _r.status == 200:
 				friends = _r.data
 				for f in friends:
+					print f["screen_name"]
 					u = User.query.filter(User.username.ilike(f["screen_name"])).first() #check if theyre a user
 					if u:
 						print u
