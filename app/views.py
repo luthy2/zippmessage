@@ -179,7 +179,7 @@ def find_contacts():
 		ids = resp.data.get("ids")
 		size = int(math.ceil(len(ids)/100.0))
 		s = 0
-		for i in xrange(size):
+		for i in range(size):
 			_ids = ids[s:(s+100)]
 			s += 100
 			_r = twitter.post('users/lookup.json', data = {"user_id":_ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
