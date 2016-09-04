@@ -302,19 +302,19 @@ def follow(username):
 	user = User.query.filter(User.username.ilike(username)).first()
 	if user is None:
 		flash('User %s not found.' % username)
-		return redirect(url_for(redirect_url()))
+		return redirect(redirect_url())
 	if user == g.user:
 		flash('You can\'t follow yourself!')
-		return redirect(url_for(redirect_url()))
+		return redirect(redirect_url())
 	u = g.user.add_contact(user)
 	if u is None:
 		flash('Cannot follow ' + nickname + '.')
-		return redirect(url_for(redirect_url()))
+		return redirect(redirect_url())
 	db.session.add(u)
 	db.session.commit()
 	send_followed_email.delay(g.user.id, user.id)
 	flash('You are now following ' + username + '!')
-	return redirect(url_for(redirect_url()))
+	return redirect(redirect_url())
 
 @app.route('/unfollow/<username>')
 @login_required
@@ -322,18 +322,18 @@ def unfollow(username):
 	user = User.query.filter(User.username.ilike(username)).first()
 	if user is None:
 		flash('User %s not found.' % username)
-		return redirect(url_for(redirect_url()))
+		return redirect(redirect_url())
 	if user == g.user:
 		flash('You can\'t unfollow yourself!')
-		return redirect(url_for(redirect_url()))
+		return redirect(redirect_url())
 	u = g.user.remove_contact(user)
 	if u is None:
 		flash('Cannot unfollow ' + nickname + '.')
-		return redirect(url_for(redirect_url()))
+		return redirect(redirect_url())
 	db.session.add(u)
 	db.session.commit()
 	flash('You have stopped following ' + username + '.')
-	return redirect(url_for(redirect_url()))
+	return redirect(redirect_url())
 
 @app.route('/bookmark/<message_id>', methods = ["GET", "POST"])
 @login_required
@@ -359,7 +359,7 @@ def bookmark(message_id):
 		db.session.add(message, user)
 		db.session.commit()
 		flash("tags updated")
-		return redirect(url_for(redirect_url()))
+		return redirect(redirect_url())
 	else:
 		flash(form.errors)
 
@@ -381,7 +381,7 @@ def dismiss(message_id):
     db.session.add(user)
     db.session.commit()
     flash('Message dismissed')
-    return redirect(url_for(redirect_url()))
+    return redirect(redirect_url())
 
 
 @app.route('/quickshare', methods = ["GET", "POST"])
