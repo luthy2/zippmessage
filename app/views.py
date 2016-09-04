@@ -181,9 +181,9 @@ def find_contacts():
 		s = 0
 		for i in xrange(size):
 			_ids = ids[s:(s+100)]
-			s +=100
+			s += 100
 			_r = twitter.post('users/lookup.json', data = {"user_id":_ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
-			print _r.status
+			print _r.status, len(_ids), ' of', len(ids)
 			if _r.status == 200:
 				friends = _r.data
 				for f in friends:
