@@ -180,7 +180,8 @@ def find_contacts():
 		size = int(math.ceil(len(ids)//100))
 		s = 0
 		for i in xrange(size):
-			_ids = ids[s:s+100]
+			print f["screen_name"]
+			_ids = ids[s:(s+100)]
 			s +=100
 			_r = twitter.post('users/lookup.json', data = {"user_id":_ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
 			print _r.status
