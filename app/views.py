@@ -183,14 +183,11 @@ def find_contacts():
 			_ids = ids[s:(s+100)]
 			s += 100
 			_r = twitter.post('users/lookup.json', data = {"user_id":_ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
-			print _r.status, len(_ids), ' of', len(ids)
 			if _r.status == 200:
 				friends = _r.data
 				for f in friends:
-					print f["screen_name"]
 					u = User.query.filter(User.username.ilike(f["screen_name"])).first() #check if theyre a user
 					if u:
-						print u
 						if g.user.is_contact(u) == False: #check if they're our friend
 							not_contacts.append(f) # if not, let us add them
 						else:
@@ -302,41 +299,41 @@ def bookmarks(page=1):
 @app.route('/follow/<username>')
 @login_required
 def follow(username):
-	user = User.query.filter_by(username=username).first()
+	user = User.query.filter(User.username.ilike(username)).first()
 	if user is None:
 		flash('User %s not found.' % username)
-		return redirect(url_for('index'))
+		return redirect(url_for(redirect_url()))
 	if user == g.user:
 		flash('You can\'t follow yourself!')
-		return redirect(url_for('user', username=username))
+		return redirect(url_for(redirect_url()))
 	u = g.user.add_contact(user)
 	if u is None:
 		flash('Cannot follow ' + nickname + '.')
-		return redirect(url_for('user', username=username))
+		return redirect(url_for(redirect_url()))
 	db.session.add(u)
 	db.session.commit()
 	send_followed_email.delay(g.user.id, user.id)
 	flash('You are now following ' + username + '!')
-	return redirect(url_for('user', username=username))
+	return redirect(url_for(redirect_url()))
 
 @app.route('/unfollow/<username>')
 @login_required
 def unfollow(username):
-    user = User.query.filter_by(username=username).first()
+	user = User.query.filter(User.username.ilike(username)).first()
     if user is None:
         flash('User %s not found.' % username)
-        return redirect(url_for('index'))
+        return redirect(url_for(redirect_url()))
     if user == g.user:
         flash('You can\'t unfollow yourself!')
-        return redirect(url_for('user', username))
+        return redirect(url_for(redirect_url()))
     u = g.user.remove_contact(user)
     if u is None:
         flash('Cannot unfollow ' + nickname + '.')
-        return redirect(url_for('user', username=username))
+        return redirect(url_for(redirect_url()))
     db.session.add(u)
     db.session.commit()
     flash('You have stopped following ' + username + '.')
-    return redirect(url_for('user', username=username))
+    return redirect(url_for(redirect_url()))
 
 @app.route('/bookmark/<message_id>', methods = ["GET", "POST"])
 @login_required
