@@ -177,7 +177,7 @@ def find_contacts():
 	error = None
 	if resp.status == 200:
 		ids = resp.data.get("ids")
-		size = int(math.ceil(len(ids)//100))
+		size = int(math.ceil(len(ids)/100.0))
 		s = 0
 		for i in xrange(size):
 			_ids = ids[s:(s+100)]
