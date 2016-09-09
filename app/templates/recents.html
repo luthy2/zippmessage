@@ -1,15 +1,41 @@
 {% extends "base.html"%}
 {% block content %}
+<style>
+.article {
+    position: relative;
+    overflow: hidden;
+    height:20em;
+    width:100%;
+}
+
+.article-small {
+    position: relative;
+    overflow: hidden;
+    height:12em;
+    width:100%;
+}
+
+.article img {
+    position: absolute;
+    top: -9999px;
+    bottom: -9999px;
+    left: -9999px;
+    right: -9999px;
+    margin: auto;
+    }
+</style>
 <h1>Recently Shared</h1>
 <div class = "container">
   <div class = "row">
     <div class = "col-md-6 col-md-offset-3">
       {% for item in recents %}
         <ul class = "list-group">
-          {{item["content"] | safe}}
+          <span class = "embedly-embed">
+            {{item["content"] | safe}}
+          </span>
           <li class = "list-group-item">
             <ul class = "list-inline">
-              <li><a href = {{url_for("share", message_id = item["id"])}}></a></li>
+              <li><a href = {{url_for("share", message_id = item["id"])}}><span class ="glyphicon glyphicon-send"></span></a></li>
             </ul>
           </li>
         </ul>
