@@ -510,13 +510,13 @@ def recents():
 	m = Message.query.order_by(Message.id.desc()).limit(30).all()
 	recents = []
 	for i in m:
-		if bm.get(str(m.url)):
+		if bm.get(str(i.url)):
 			item = {}
-			item["id"] = m.id
-			item["content"] = bm.get(str(m.url))
+			item["id"] = i.id
+			item["content"] = bm.get(str(i.url))
 		else:
-			item["content"] = m.render_url()
-			bm.set(str(url), item["content"], 172000)
+			item["content"] = i.render_url()
+			bm.set(str(i.url), item["content"], 172000)
 	return render_template('recents.html', title = 'Recents', recents = recents)
 
 # @app.route("popular", methods = ["GET", "POST"])
