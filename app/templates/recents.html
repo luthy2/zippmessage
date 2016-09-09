@@ -31,7 +31,7 @@
       {% for item in recents %}
         <ul class = "list-group">
           <span class = "embedly-embed">
-            {{item["content"] | safe}}
+            <li>{{item["content"] | safe}}</li>
           </span>
           <li class = "list-group-item">
             <ul class = "list-inline">
