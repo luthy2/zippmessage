@@ -1,0 +1,18 @@
+{%extends "base.html"%}
+{% block content %}
+<h1>Recently Shared</h1>
+<div class = "container">
+  <div class = "row">
+    {% for item in recents %}
+      <ul>
+        {{item["content"] | safe}}
+        <li class = "list-group-item">
+          <ul class = "list-inline">
+            <li><a href = {{url_for("share", message_id = item["id"])}}></li>
+          </ul>
+        </li>
+      </ul>
+    {% endfor %}
+  </div>
+</div>
+{%endblock%}

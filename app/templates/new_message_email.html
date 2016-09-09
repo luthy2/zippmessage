@@ -19,7 +19,7 @@
         <p>You have a new message from @{{sender}}! open in <a href = "{{url_for('inbox', _external = True)}}">Inbox <span class= "glyphicon glyphicon-new-window"></span></a></p>
         <ul class = "list-group">
           <li class = "list-group-item">
-            <a href = "{{url_for('user', username = sender, _external=True)}}" target="_blank">{{sender}}:</a> {{note}}<span class ="pull-right" style="color:gray;">{{timedelta}}</span></p>
+            <a href = "{{url_for('user', username = sender, _external=True)}}" target="_blank">{{sender}}:</a> {{note}}</p>
             <ul class = "list-group">{{content|safe}}</ul>
           </li>
         </ul>

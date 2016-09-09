@@ -131,12 +131,13 @@ def welcome():
 	return render_template('welcome.html', title = "Welcome!")
 
 @app.route('/inbox', methods = ["GET", "POST"])
-@app.route('/inbox/<int:page>', methods = ["GET", "POST"])
 @login_required
-def inbox(page=1):
-	form = NewMessageForm()
+def inbox():
 	user = g.user
 	user_tags = user.tags_for_user().most_common(20)
+	activity = None
+	# activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
+	form = NewMessageForm()
 	if form.validate_on_submit():
 			message = Message(title = form.message_title.data,
 								url = form.message_url.data,
@@ -148,8 +149,7 @@ def inbox(page=1):
 			flash('Choose Receipients')
 			return redirect(url_for('recipients'))
 
-	#activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
-	return render_template('inbox.html', user=user, user_tags = user_tags, title = "Inbox", form= form)
+	return render_template('inbox.html', user=user, user_tags = user_tags, title = "Inbox", form= form, activity = activity)
 
 
 @app.route('/top', methods = ["GET", "POST"])
@@ -453,13 +453,21 @@ def share(message_id):
 			new_message.deliver_message()
 			db.session.commit()
 			flash('Message Shared!')
-			return redirect(url_for(redirect_url()))
+			return redirect(redirect_url())
 
 		else:
 			flash(form.errors)
 
 	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
 
+# @app.route("<action_name>/<message_id>", methods = ["GET", "POST"])
+# @login_required
+# def action(action_name, message_id):
+# 	user = g.user
+# 	m = Message.query.get(message_id)
+# 	a = user.create_activity(subject_id = m.author.id, action = action_name, message_id = m.id)
+# 	send_activity_email.delay(user.id, m.author.id, action_name)
+# 	return redirect(redirect_url())
 
 @app.route('/tag/<name>', methods = ["GET", "POST"])
 @app.route('/tag/<name>/<int:page>', methods = ["GET", "POST"])
@@ -490,6 +498,33 @@ def reader(page = 1):
 	inbox = user.inbox().paginate(page,1,False)
 	return render_template('reader.html', user = user, title = 'Reader', inbox = inbox)
 
+@app.route('/message/reader/<message_id>', methods = ["GET", "POST"])
+def message_reader(message_id):
+	user = g.user
+	m = Message.query.get(message_id)
+	return render_template('message_reader.html', user = user, title = 'Reader')
+
+
+@app.route("recent")
+def recents():
+	m = Message.query.filter_by(Message.id.desc()).limit(30)
+	recents = []
+	urls = []
+	for i in m:
+		if bm.get(str(m.url)):
+			urls.append(str(m.url))
+			item = {}
+			item["id"] = m.id
+			item["content"] = gm.get(m.url)
+		else:
+			item["content"] = m.render_url()
+			bm.set(str(url), item["content"], 172000)
+	return render_template('recent.html', title = 'Recents', recents = recents)
+
+# @app.route("popular", methods = ["GET", "POST"])
+# def popular(gravity=1.8):
+# 	p = Messages.query.limit(50).order_by(Message.score(gravity=gravity).desc())
+# 	return render_template("popular.html", title = 'Popular')
 
 #start of api routes#
 
@@ -620,6 +655,9 @@ def m_api_inbox():
 		data.append(m)
 	return jsonify(data)
 
+# @app.route('api/1/m/login', methods = ["GET", "POST"])
+# def m_api_login():
+# 	return redirect(url_for())
 
 
 #
@@ -682,6 +720,7 @@ def m_api_inbox():
 # 	activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
 # 	return jsonify(activity_feed)
 
+#*********----------------------ASYNC TASKS-----------------------********
 @celery.task
 def cache_url(url):
 	url = url.encode('utf-8')
@@ -694,9 +733,9 @@ def cache_url(url):
 		return bm.set(url, content, 172800)
 
 # @celery.task
-# def send_analytics():
-# 	params = {'v':1,'tid':'UA-82204986-1','cid':'','t':''}
-# 	request.post('http://www.google-analytics.com',params = params)
+# def send_reminder_email(recipient_id):
+# 	with app.app_context():
+# 		recipient = User.query.get(recipient_id)
 
 @celery.task
 def send_followed_email(sender_id, recipient_id):
@@ -707,8 +746,8 @@ def send_followed_email(sender_id, recipient_id):
 		r_email  = recipient.email
 		r_email = r_email.encode('utf-8')
 		html = render_template('follow_email.html', sender = sender.username, recipient = recipient.username)
-		if recipient_email:
-			user_email = str(user_email)
+		if r_email:
+			r_email = str(r_email)
 			resp = requests.post( 	mailgun_api,
 				auth = ("api",mailgun_auth),
 				data = {"from":"Zipp - Notifications <info@zippmsg.com>",
@@ -719,11 +758,25 @@ def send_followed_email(sender_id, recipient_id):
 			return resp
 	return False
 
-
-
-
-
-
+# @celery.task
+# def send_activity_email(sender_id, recipient_id, action):
+# 	with app.app_context():
+# 		recipient = User.query.get(recipient_id)
+# 		sender = User.query.get(sender_id)
+# 		r_email  = recipient.email
+# 		r_email = r_email.encode('utf-8')
+# 		html = render_template('activity_email.html', sender = sender.username, recipient = recipient.username, action = action)
+# 		if recipient_email:
+# 			r_email = str(r_email)
+# 			resp = requests.post( 	mailgun_api,
+# 				auth = ("api",mailgun_auth),
+# 				data = {"from":"Zipp - Notifications <info@zippmsg.com>",
+# 						"to":r_email,
+# 						"subject":"New Follower!",
+# 						"html":html})
+# 			print resp
+# 			return resp
+# 	return False
 
 @celery.task
 def send_new_msg_email(sender_id, recipient_id, message_id):
@@ -750,12 +803,10 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 	return False
 
 
-
+#*****--------------------------HELPER ROUTES------------------------******
 @app.route('/favicon.ico', methods = ["GET", "POST"])
 def favicon():
 	return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
-
-
 
 @app.route('/admin/dashboard')
 @login_required
