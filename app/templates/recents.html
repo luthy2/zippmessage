@@ -5,11 +5,11 @@
   <div class = "row">
     <div class = "col-md-6 col-md-offset-3">
       {% for item in recents %}
-        <ul>
+        <ul class = "list-group">
           {{item["content"] | safe}}
           <li class = "list-group-item">
             <ul class = "list-inline">
-              <li><a href = {{url_for("share", message_id = item["id"])}}></li>
+              <li><a href = {{url_for("share", message_id = item["id"])}}></a></li>
             </ul>
           </li>
         </ul>
