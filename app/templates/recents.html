@@ -34,9 +34,7 @@
             <li class = "list-group-item">{{item["content"] | safe}}</li>
           </span>
           <li class = "list-group-item">
-            <ul class = "list-inline">
-              <li><a href = {{url_for("share", message_id = item["id"])}}><span class ="glyphicon glyphicon-send"></span></a></li>
-            </ul>
+            <a style="text-align:center" href = {{url_for("share", message_id = item["id"])}}><span class ="glyphicon glyphicon-send"></span></a></li>
           </li>
         </ul>
       {% endfor %}
