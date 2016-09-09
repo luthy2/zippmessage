@@ -507,7 +507,7 @@ def message_reader(message_id):
 
 @app.route("/recents", methods = ["GET", "POST"] )
 def recents():
-	m = Message.query.order_by(Message.id.desc()).limit(30)
+	m = Message.query.order_by(Message.id.desc()).limit(30).all()
 	recents = []
 	for i in m:
 		if bm.get(str(m.url)):
