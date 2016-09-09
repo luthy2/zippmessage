@@ -107,9 +107,9 @@
       {% if activity_feed %}
         {% for item in activity_feed%}
         <a class = "list-group-item" href = "{{url_for(reader, message = message_id)}}">{{item.subject.username}} {{item.action}} your message: {{item.message.note}}</a>
-          {% endfor %}
+        {% endfor %}
       {% else %}
-        <a class = "list-group-tem" href = #>
+        <a class = "list-group-item" href = #>
           No activity. Add some <a href = "{{url_for('find_contacts')}}">friends!</a>
         </a>
       {% endif %}
