@@ -113,7 +113,7 @@ def oauthorized():
 	db.session.commit()
 	flash('You were signed in')
 	if first_login:
-		return redirect(url_for('find_contacts'))
+		return redirect(url_for('contacts/find'))
 	return redirect(redirect_url() or url_for('inbox'))
 
 
