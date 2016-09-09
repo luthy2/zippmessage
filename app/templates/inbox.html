@@ -102,7 +102,7 @@
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
     </ul>
   </div>
-  <div class = "col-md-3 col-md-offset-9">
+  <div class = "col-md-3 col-md-push-9">
     <ul class = "list-group">
       {% if activity_feed %}
         {% for item in activity_feed%}
@@ -113,7 +113,7 @@
       {% endif %}
     </ul>
   </div>
-	<div class ="col-md-6"  ng-controller="InboxController" ng-cloak>
+	<div class ="col-md-6 col-md-pull-3"  ng-controller="InboxController" ng-cloak>
     {% raw %}
     <div class = "alert alert-info"	role= "alert" ng-show="alert">
       {{alert}}
