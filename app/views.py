@@ -121,7 +121,7 @@ def oauthorized():
 @app.route('/index', methods = ["GET", "POST"])
 def index():
 	if g.user is None:
-		return render_template('home.html')
+		return render_template('recents.html')
 	return redirect(url_for('inbox'))
 
 @app.route('/welcome', methods = ['GET', 'POST'])
@@ -505,7 +505,7 @@ def message_reader(message_id):
 	return render_template('message_reader.html', user = user, title = 'Reader')
 
 
-@app.route("recent")
+@app.route("/recent", methods = ["GET", "POST"] )
 def recents():
 	m = Message.query.filter_by(Message.id.desc()).limit(30)
 	recents = []
