@@ -509,13 +509,11 @@ def message_reader(message_id):
 def recents():
 	m = Message.query.filter_by(Message.id.desc()).limit(30)
 	recents = []
-	urls = []
 	for i in m:
 		if bm.get(str(m.url)):
-			urls.append(str(m.url))
 			item = {}
 			item["id"] = m.id
-			item["content"] = bm.get(m.url)
+			item["content"] = bm.get(str(m.url))
 		else:
 			item["content"] = m.render_url()
 			bm.set(str(url), item["content"], 172000)
