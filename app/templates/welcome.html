@@ -7,11 +7,19 @@
 	<p>Save a link to read later by sending it to yourself, or share with friends.</p>
   <p>Once you're finished with a link, you can click the bookmark to save it for later, or click the X to dismiss an article for good.</p>
   <p>Click the airplane to reshare a message!</p>
-  <p>Edit your <a href="{{url_for('edit_user', username = g.user.username)}}">profile</a> to enable email notifications when you recieve a new message.</p>
+  <br>
+  <p>Edit your <a href="{{url_for('edit_user', username = g.user.username)}}">profile</a> to enable email notifications when you recieve a new message, or someone follows you.</p>
 	<p>Drag this link <a href = "javascript:window.location=%22http://www.zippmsg.com/quickshare?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)">Zipp-Quickshare</a> to your browser's bookmarks bar to create a bookmarklet. Click the bookmarklet to easily share your browsers current page.</p>
+  <br>
   <p>Note: this is a very early version of zipp and the product still contains various known bugs. Have patience if something breaks, and feel free to alert me to the problem.</p>
   <p>I am currently working on implementing new features like public shares, reminders, reactions to messages, chat, recommendations, integrations with other apps, and more cool stuff! <a href = "mailto:info@gzippmsg.com?Subject=ZippMsg-feedback" target="_top">feedback</a> welcome and appreciated! </p></p>
   <p>made with <span class = "glyphicon glyphicon-heart" style ="color:red"></span> by <a href = "https://twitter.com/thebigJL">thebigJL</a>
   </div>
+  <div>
+    <h4>Changelog</h4>
+    <h6>9/9/2016</h6>
+    <p>added placeholder for activity feed</p>
+    <p>added recents page</p>
+    <p>added link to reader view from message preview</p>
 </div>
 {% endblock %}

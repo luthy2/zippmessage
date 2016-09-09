@@ -515,7 +515,7 @@ def recents():
 			urls.append(str(m.url))
 			item = {}
 			item["id"] = m.id
-			item["content"] = gm.get(m.url)
+			item["content"] = bm.get(m.url)
 		else:
 			item["content"] = m.render_url()
 			bm.set(str(url), item["content"], 172000)

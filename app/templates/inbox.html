@@ -28,6 +28,9 @@
   .glyphicon-bookmark:hover{
     color:#06D66E;
   }
+  .glyphicon-book:hover{
+    color:#06D66E;
+  }
 
   .article {
       position: relative;
@@ -99,6 +102,17 @@
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
     </ul>
   </div>
+  <div class = "col-md-3 col-md-offset-9">
+    <ul class = "list-group">
+      {% if activity_feed %}
+        {% for item in activity_feed%}
+        <a class = "list-group-item" href = "{{url_for(reader, message = message_id)}}">{{item.subject.username}} {{item.action}} your message: {{item.message.note}}
+          {% endfor %}
+      {% else %}
+        <a class = "list-group-tem" href = #>No activity. Add some <a href = "{{url_for(find_contacts)}}">friends!</a>
+      {% endif %}
+    </ul>
+  </div>
 	<div class ="col-md-6"  ng-controller="InboxController" ng-cloak>
     {% raw %}
     <div class = "alert alert-info"	role= "alert" ng-show="alert">
@@ -110,9 +124,10 @@
         <span class = "embedly-embed" ng-bind-html="$sce.trustAsHtml(message.content)"></span>
       </li>
       <li class = "list-group-item" style="text-align:center;">
-        <button type="button" class="btn btn-link btn-sm" style="width:17%" ng-click="dismissMessage(message.id)" ><span id="dismiss" class="glyphicon glyphicon-remove"></span></button>
-        <a type="button" class="btn btn-link btn-sm" style="width:17%" href ="/bookmark/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span></a>
-        <a type="button" class="btn btn-link btn-sm" style="width:17%" href ="/share/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
+        <button type="button" class="btn btn-link btn-sm" style="width:14%" ng-click="dismissMessage(message.id)" ><span id="dismiss" class="glyphicon glyphicon-remove"></span></button>
+        <a type="button" class="btn btn-link btn-sm" style="width:14%" href ="/bookmark/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span></a>
+        <a type="button" class="btn btn-link btn-sm" style="width:14%" href = "/message/reader/{{message.id}}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
+        <a type="button" class="btn btn-link btn-sm" style="width:14%" href ="/share/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
       </li>
     </ul>
     <div class="loader" ng-show="loading">Loading...</div>
