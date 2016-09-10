@@ -71,7 +71,7 @@
       {% else %}
         <ul class = "list-group">
           <p>We were unable to extract the content from this url. View it at the original source.</p>
-          <a class = "list-group-item" href="{{.message.url}}">
+          <a class = "list-group-item" href="{{message.url}}">
             <p class ="list-group-item-heading">{{resp['title']}}</p>
             <p class = "list-group-item-text">{{resp['description']}}</p>
             <p style="color:gray"><small>{{message.short_url()}}</small></p>
