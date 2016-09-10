@@ -102,19 +102,6 @@
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
     </ul>
   </div>
-  <div class = "col-md-3">
-    <ul class = "list-group">
-      {% if activity_feed %}
-        {% for item in activity_feed %}
-          <a class = "list-group-item" href = "{{url_for(reader, message = message_id)}}">{{item.subject.username}} {{item.action}} your message: {{item.message.note}}</a>
-        {% endfor %}
-      {% else %}
-        <a class = "list-group-item" href = "{{url_for('find_contacts')}}">
-          <p>No activity. Add some friends!</p>
-        </a>
-      {% endif %}
-    </ul>
-  </div>
 	<div class ="col-md-6"  ng-controller="InboxController" ng-cloak>
     {% raw %}
     <div class = "alert alert-info"	role= "alert" ng-show="alert">
@@ -139,6 +126,19 @@
     </div>
     {% endraw %}
     <script type="text/javascript" src="/static/js/app.js"></script>
+  </div>
+  <div class = "col-md-3">
+    <ul class = "list-group">
+      {% if activity_feed %}
+        {% for item in activity_feed %}
+          <a class = "list-group-item" href = "{{url_for(reader, message = message_id)}}">{{item.subject.username}} {{item.action}} your message: {{item.message.note}}</a>
+        {% endfor %}
+      {% else %}
+        <a class = "list-group-item" href = "{{url_for('find_contacts')}}">
+          <p>No activity. Add some friends!</p>
+        </a>
+      {% endif %}
+    </ul>
   </div>
 </div>
 
