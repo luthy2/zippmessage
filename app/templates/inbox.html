@@ -84,7 +84,7 @@
   </div >
 </div>
 <div class="row">
-  <div class ="col-md-3 hidden-xs hidden-sm" style="padding-top:10px;">
+  <div class ="col-md-3 hidden-xs hidden-sm col-md-pull-9" style="padding-top:10px;">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
       {% if user_tags %}
@@ -102,7 +102,7 @@
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
     </ul>
   </div>
-  <div class = "col-md-3 col-md-offset-6">
+  <div class = "col-md-3 col-md-push-9">
     <ul class = "list-group">
       {% if activity_feed %}
         {% for item in activity_feed %}
