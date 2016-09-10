@@ -52,7 +52,7 @@
       {% endif %}
       {% if resp["title"]%}
         <h2>{{resp['title']}}</h2>
-      {%endif%}
+      {% endif %}
       {% if resp["authors"]%}
         {% for author in resp["authors"][:1]%}
           <a href = "{{author['url']}}" style="padding-bottom:4%">{{author["name"]}} </a>
@@ -85,7 +85,7 @@
       <div class = "row">
         <div class = "col-xs-12">
           <h5>
-            <a class = "btn btn-default" type="button" href = "{{url_for('reader')}}"><span class = "glyphicon glyphicon-chevron-left"></span>prev</a></li>{%else%}<span style="color:gray;"><span class = "glyphicon glyphicon-chevron-left"></span>prev</span>
+            <a class = "btn btn-default" type="button" href = "{{url_for('reader')}}">reader</a>
           </h5>
         </div>
       </div>
