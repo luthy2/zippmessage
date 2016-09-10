@@ -203,7 +203,7 @@ def find_contacts():
 		error = "We're having trouble connecting to twitter right now. Try again later."
 		print resp.status, resp.data
 
-	return render_template('find_contacts.html', not_contacts=not_contacts, contacts = c, not_users = not_users, title = "Find Contacts", error=error)
+	return render_template('find_contacts.html', not_contacts=not_contacts, contacts = c, not_users = not_users, title = "Find Contacts", error=error, user = user)
 
 
 
