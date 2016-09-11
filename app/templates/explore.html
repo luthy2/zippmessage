@@ -7,7 +7,8 @@
   var msnry = new Masonry( elem, {
     // options
     itemSelector: '.item',
-    columnWidth: '.item'
+    columnWidth: '.item',
+    percentPosition: true
   });
 </script>
 <style>
@@ -39,12 +40,10 @@
   }
 </style>
 <h3 class="text-align text-center">Explore</h3>
-<div class = "row masonry">
+<div class = "masonry">
 
         {% for item in items %}
-
-          <div class = "col-md-4 col-sm-6">
-            <div class= "item">
+          <div class = "col-md-4 col-sm-6 item">
             <ul class = "list-group">
               <li class = "list-group-item">
                 <span class = "embedly-embed">{{item["content"] | safe}}</span>
