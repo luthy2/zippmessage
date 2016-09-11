@@ -46,10 +46,10 @@ $(function(){
     <div class=" wi col-md-4">
       <div class="item">
         <div class="content">
-          <li class = "list-group-item">
+          <li class = "unstyled">
             <span class = "embedly-embed">{{item["content"] | safe}}</span>
           </li>
-          <li class = "list-group-item" style="text-align:center">
+          <li class = "unstyled" style="text-align:center">
             <a href = {{url_for("share", message_id = item["id"])}}><span class ="glyphicon glyphicon-send"></span></a>
           </li>
         </div>
