@@ -45,7 +45,7 @@
 <div class="masonry row">
   {% for item in items %}
     <div class="item">
-      <div class="content tumbnail">
+      <div class="content col-md-4 tumbnail">
         <span class = "embedly-embed">{{item["content"] | safe}}</span>
         <a href = {{url_for("share", message_id = item["id"])}}>
           <span class ="glyphicon glyphicon-send text-align text-center"></span>
