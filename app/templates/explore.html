@@ -3,14 +3,12 @@
 <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
 <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
 <script type="text/javascript">
-$(function(){
   $('.masonry').masonry({
       itemSelector: '.item',
       columnWidth: '.item',
       percentPosition: true,
       gutter:5,
     });
-  });
 </script>
 <style>
 .content{
@@ -42,22 +40,6 @@ $(function(){
   .glyphicon{
     color:gray;
   }
-  .list-group-horizontal .list-group-item {
-    display: inline-block;
-}
-.list-group-horizontal .list-group-item {
-	margin-bottom: 0;
-	margin-left:-4px;
-	margin-right: 0;
-}
-.list-group-horizontal .list-group-item:first-child {
-	border-top-right-radius:0;
-	border-bottom-left-radius:4px;
-}
-.list-group-horizontal .list-group-item:last-child {
-	border-top-right-radius:4px;
-	border-bottom-left-radius:0;
-}
 </style>
 <h3 class="text-align text-center">Explore</h3>
 <div class="row masonry">
