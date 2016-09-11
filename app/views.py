@@ -121,7 +121,7 @@ def oauthorized():
 @app.route('/index', methods = ["GET", "POST"])
 def index():
 	if g.user is None:
-		return redirect(url_for('recents'))
+		return redirect(url_for('explore'))
 	return redirect(url_for('inbox'))
 
 @app.route('/welcome', methods = ['GET', 'POST'])
@@ -505,21 +505,21 @@ def message_reader(message_id):
 	return render_template('message_reader.html', user = user, title = 'Reader', message = m)
 
 
-@app.route("/recents", methods = ["GET", "POST"] )
-def recents():
+@app.route("/explore", methods = ["GET", "POST"] )
+def explore():
 	m = Message.query.order_by(Message.id.desc()).limit(30).all()
-	recents = []
+	items = []
 	for i in m:
 		item = {}
 		item["id"] = i.id
 		if bm.get(str(i.url)):
 			item["content"] = bm.get(str(i.url))
-			recents.append(item)
+			items.append(item)
 		else:
 			item["content"] = i.render_url()
 			bm.set(str(i.url), item["content"], 172000)
-			recents.append(item)
-	return render_template('recents.html', title = 'Recents', recents = recents)
+			items.append(item)
+	return render_template('explore.html', title = 'Explore', items = items)
 
 # @app.route("popular", methods = ["GET", "POST"])
 # def popular(gravity=1.8):
@@ -664,7 +664,7 @@ def m_api_inbox():
 #
 # @app.route('api/1/message/create', methods = ["GET", "POST"])
 # @app.login_required
-# def compose_digest():
+# def api_message_create():
 # 	data = request.get_json()
 # 	data = dict(data)
 # 	title = data["title"]
