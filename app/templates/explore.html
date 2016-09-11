@@ -44,8 +44,7 @@
 <div class="row masonry">
   <div class="items">
   {% for item in items %}
-    <div class = "item">
-      <ul class = "list-group">
+      <ul class = "list-group item">
         <li class = "list-group-item">
           <span class = "embedly-embed">{{item["content"] | safe}}</span>
         </li>
@@ -53,8 +52,7 @@
           <a href = {{url_for("share", message_id = item["id"])}}><span class ="glyphicon glyphicon-send"></span></a></li>
         </li>
       </ul>
-    </div>
   {% endfor %}
-</div>
+  </div>
 </div>
 {%endblock%}
