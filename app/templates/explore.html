@@ -2,18 +2,8 @@
 {% block content %}
 <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
 <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
-<script type="text/javascript">
-  var $container = $('.masonry');
-  $container.imagesLoaded( function () {
-    $container.masonry({
-      itemSelector: '.item'
-    });
-  });
-</script>
+
 <style>
-.content{
-  margin:auto;
-}
 .article {
     position: relative;
     overflow: hidden;
@@ -45,13 +35,25 @@
 <div class="masonry row">
   {% for item in items %}
     <div class="item">
-      <div class="content col-md-4 tumbnail">
-        <span class = "embedly-embed">{{item["content"] | safe}}</span>
-        <a href = {{url_for("share", message_id = item["id"])}}>
-          <span class ="glyphicon glyphicon-send text-align text-center"></span>
-        </a>
-      </div>
+      <ul class="list-group col-md-4 col-sm-6 col-xs-12">
+        <li class ="list-group-item">
+          <span class = "embedly-embed">{{item["content"] | safe}}</span>
+        </li>
+        <li class = "list-group-item">
+          <a href = {{url_for("share", message_id = item["id"])}}>
+            <span class ="glyphicon glyphicon-send text-align text-center"></span>
+          </a>
+        </li>
+      </ul>
     </div>
   {% endfor %}
 </div>
+<script type="text/javascript">
+  var $container = $('.masonry');
+  $container.imagesLoaded( function () {
+    $container.masonry({
+      itemSelector: '.item'
+    });
+  });
+</script>
 {%endblock%}
