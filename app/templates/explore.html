@@ -34,8 +34,8 @@
 <h3 class="text-align text-center">Explore</h3>
 <div class="masonry row">
   {% for item in items %}
-    <div class="item">
-      <ul class="list-group col-md-4 col-sm-6 col-xs-12">
+    <div class="col-md-4 col-sm-6 col-xs-12 item">
+      <ul class="list-group">
         <li class ="list-group-item">
           <span class = "embedly-embed">{{item["content"] | safe}}</span>
         </li>
@@ -52,7 +52,9 @@
   var $container = $('.masonry');
   $container.imagesLoaded( function () {
     $container.masonry({
-      itemSelector: '.item'
+      columnWidth:'.item',
+      itemSelector: '.item',
+      percentPosition: true
     });
   });
 </script>
