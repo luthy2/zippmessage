@@ -3,13 +3,15 @@
 <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
 <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
 <script type="text/javscript">
-  var elem = document.querySelector('.masonry');
-  var msnry = new Masonry( elem, {
-    // options
-    itemSelector: '.item',
-    columnWidth:'.item',
-    percentPosition:true
-  });
+function( $ ) {
+
+	var $container = $('.masonry');
+	$container.imagesLoaded( function () {
+		$container.masonry({
+			columnWidth: '.item',
+			itemSelector: '.item'
+		});
+	});
 </script>
 <style>
 .article {
