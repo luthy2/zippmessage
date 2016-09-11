@@ -46,6 +46,7 @@ $('.masonry').masonry({
   <div class = "masonry">
 
   {% for item in items %}
+    <div class = "col-md-4 col-sm-6">
         <div class="item">
         <ul class = "list-group">
           <li class = "list-group-item">
@@ -56,8 +57,8 @@ $('.masonry').masonry({
           </li>
         </ul>
       </div>
-  {% endfor %}
-      </div>
     </div>
+  {% endfor %}
+  </div>
 </div>
 {%endblock%}
