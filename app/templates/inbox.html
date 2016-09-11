@@ -11,10 +11,6 @@
     display: block;
   }
 
-  .glyphicon{
-    color:gray;
-  }
-
   #dismiss:hover{
     color:#CC1A40;
   }
@@ -22,20 +18,16 @@
     outline:0;
     border:none;
   }
-  .glyphicon-send:hover{
+  .blue-hover:hover{
     color:#54C6EB;
   }
-  .glyphicon-bookmark:hover{
+  .green-hover:hover{
     color:#06D66E;
   }
-  .glyphicon-book:hover{
-    color:#06D66E;
-  }
-
   .article {
       position: relative;
       overflow: hidden;
-      height:20em;
+      height:17em;
       width:100%;
   }
 
@@ -53,8 +45,7 @@
       left: -9999px;
       right: -9999px;
       margin: auto;
-      }
-
+    }
 </style>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
@@ -114,20 +105,20 @@
       </li>
       <li class = "list-group-item" style="text-align:center;">
         <button type="button" class="btn btn-link btn-sm" style="width:14%" ng-click="dismissMessage(message.id)" ><span id="dismiss" class="glyphicon glyphicon-remove"></span></button>
-        <a type="button" class="btn btn-link btn-sm" style="width:14%" href ="/bookmark/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span></a>
-        <a type="button" class="btn btn-link btn-sm" style="width:14%" href = "/message/reader/{{message.id}}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a>
-        <a type="button" class="btn btn-link btn-sm" style="width:14%" href ="/share/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
+        <a type="button" class="btn btn-link btn-sm" style="width:14%" href ="/bookmark/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-bookmark green-hover" aria-hidden="true"></span></a>
+        <a type="button" class="btn btn-link btn-sm" style="width:14%" href = "/message/reader/{{message.id}}"><span class="glyphicon glyphicon-book green-hover" aria-hidden="true"></span></a>
+        <a type="button" class="btn btn-link btn-sm" style="width:14%" href ="/share/{{message.id}}?next=inbox"><span class="glyphicon glyphicon-send green-hover" aria-hidden="true"></span></a>
       </li>
     </ul>
     <div class="loader" ng-show="loading">Loading...</div>
     <div class = "text-center" style="padding-bottom:50px" ng-cloak>
-      <button type = "button" class = "btn btn-default btn-sm btn-block btn" ng-click="getInbox()" ng-hide="loadedAll" style="border: none; color:#06D66E;">Load Next 6</button>
-      <span ng-show="loadedAll"><h2>You've reached the end of your inbox! :)</h2></span>
+      <button type = "button" class = "btn btn-default btn-block" id="outline" ng-click="getInbox()" ng-hide="loadedAll">Load Next 6</button>
+      <span ng-show="loadedAll"><h3>You've reached the end of your inbox! :)</h3></span>
     </div>
     {% endraw %}
     <script type="text/javascript" src="/static/js/app.js"></script>
   </div>
-  <div class = "col-md-3 hidden-sm hidde-xs">
+  <div class = "col-md-3 hidden-sm hidden-xs">
     <ul class = "list-group">
       {% if activity_feed %}
         {% for item in activity_feed %}
