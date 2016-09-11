@@ -7,12 +7,13 @@ $(function(){
   $('.masonry').masonry({
       itemSelector: '.item',
       columnWidth: '.item',
-      percentPosition: true
+      percentPosition: true,
     });
   });
 </script>
 <style>
-.item{
+.content{
+  margin:auto;
 }
 .article {
     position: relative;
@@ -44,14 +45,16 @@ $(function(){
 <h3 class="text-align text-center">Explore</h3>
 <div class="row masonry">
   {% for item in items %}
-    <div class="col-md-4 item">
+    <div class="item col-md-4">
       <div class="content">
         <ul class="list-group">
           <li class = "list-group-item">
             <span class = "embedly-embed">{{item["content"] | safe}}</span>
           </li>
           <li class = "list-group-item">
-            <a href = {{url_for("share", message_id = item["id"])}}><span class ="glyphicon glyphicon-send"></span></a>
+            <a href = {{url_for("share", message_id = item["id"])}}>
+              <span class ="glyphicon glyphicon-send text-align text-center"></span>
+            </a>
           </li>
         </ul>
       </div>
