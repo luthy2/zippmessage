@@ -4,7 +4,6 @@
 <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
 <script type="text/javscript">
 function( $ ) {
-
 	var $container = $('.masonry');
 	$container.imagesLoaded( function () {
 		$container.masonry({
@@ -45,8 +44,7 @@ function( $ ) {
 <h3 class="text-align text-center">Explore</h3>
 <div class="row masonry">
   {% for item in items %}
-    <div class = "col-md-4 col-sm-6">
-
+    <div class = "col-md-4 col-sm-6 item">
       <ul class = "list-group">
         <li class = "list-group-item">
           <span class = "embedly-embed">{{item["content"] | safe}}</span>
