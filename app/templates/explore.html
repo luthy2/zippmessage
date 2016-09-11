@@ -10,13 +10,14 @@
     columnWidth: 'wi',
     percentPosition:true,
   });
-  imagesLoaded( grid ).on( 'progress', function() {
+  imagesLoaded( elem ).on( 'progress', function() {
     // layout Masonry after each image loads
     msnry.layout();
   });
 </script>
 <style>
-.wi{
+.wi,
+.item{
   width:30%
 }
 .article {
@@ -49,7 +50,7 @@
 <h3 class="text-align text-center">Explore</h3>
 <div class="row masonry">
   {% for item in items %}
-    <div class= "wi">
+    <div class= "wi"></div>
       <ul class = "list-group item">
         <li class = "list-group-item">
           <span class = "embedly-embed">{{item["content"] | safe}}</span>
@@ -58,7 +59,6 @@
           <a href = {{url_for("share", message_id = item["id"])}}><span class ="glyphicon glyphicon-send"></span></a></li>
         </li>
       </ul>
-    </div>
   {% endfor %}
 </div>
 {%endblock%}
