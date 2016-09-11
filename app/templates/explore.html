@@ -7,7 +7,7 @@
   var msnry = new Masonry( elem, {
     // options
     itemSelector: 'item',
-    columnWidth: 'wi',
+    columnWidth: 'item',
     percentPosition:true,
   });
   imagesLoaded( elem ).on( 'progress', function() {
@@ -16,11 +16,6 @@
   });
 </script>
 <style>
-.wi,
-.item{
-  width:30%;
-  display:block;
-}
 .article {
     position: relative;
     overflow: hidden;
@@ -50,17 +45,16 @@
 </style>
 <h3 class="text-align text-center">Explore</h3>
 <div class="row masonry">
-  <div class= "wi"></div>
   {% for item in items %}
-
-    <div class="item">
+      <div class="col-md-4 wi">
+        <div class="item">
         <li class = "list-group-item">
           <span class = "embedly-embed">{{item["content"] | safe}}</span>
         </li>
         <li class = "list-group-item" style="text-align:center">
           <a href = {{url_for("share", message_id = item["id"])}}><span class ="glyphicon glyphicon-send"></span></a></li>
         </li>
-      </ul>
+      </div>
     </diV>
   {% endfor %}
 </div>
