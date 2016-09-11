@@ -8,6 +8,7 @@ $(function(){
       itemSelector: '.item',
       columnWidth: '.item',
       percentPosition: true,
+      gutter:5,
     });
   });
 </script>
@@ -45,7 +46,7 @@ $(function(){
 <h3 class="text-align text-center">Explore</h3>
 <div class="row masonry">
   {% for item in items %}
-    <div class="item col-md-4">
+    <div class="item col-md-3">
       <div class="content">
         <ul class="list-group">
           <li class = "list-group-item">
