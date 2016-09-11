@@ -12,6 +12,7 @@ function( $ ) {
 			itemSelector: '.item'
 		});
 	});
+};
 </script>
 <style>
 .article {
@@ -45,7 +46,7 @@ function( $ ) {
 <div class="row masonry">
   {% for item in items %}
     <div class = "col-md-4 col-sm-6">
-      <div class="item">
+
       <ul class = "list-group">
         <li class = "list-group-item">
           <span class = "embedly-embed">{{item["content"] | safe}}</span>
