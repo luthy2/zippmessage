@@ -5,10 +5,10 @@
 <script type="text/javscript">
   var elem = document.querySelector('.masonry');
   var msnry = new Masonry( elem, {
-  // options
-  itemSelector: '.grid-item',
-  columnWidth: 200,
-  percentPosition: true
+    // options
+    itemSelector: '.grid-item',
+    columnWidth: 200,
+    percentPosition: true
   });
 </script>
 <style>
@@ -40,12 +40,12 @@
   }
 </style>
 <h3 class="text-align text-center">Explore</h3>
-<div class = "container">
-  <div class = "row masonry">
+<div class = "container-fluid">
+  <div class = "masonry">
 
 
         {% for item in items %}
-          <div class = "col-md-4 item">
+          <div class = "item col-md-4">
             <ul class = "list-group">
               <li class = "list-group-item">
                 <span class = "embedly-embed">{{item["content"] | safe}}</span>
