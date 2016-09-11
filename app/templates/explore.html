@@ -4,6 +4,9 @@
 <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
 
 <style>
+.item{
+  margin:1em
+}
 .article {
     position: relative;
     overflow: hidden;
@@ -39,9 +42,9 @@
         <li class ="list-group-item">
           <span class = "embedly-embed">{{item["content"] | safe}}</span>
         </li>
-        <li class = "list-group-item">
+        <li class = "list-group-item text-align text-center">
           <a href = {{url_for("share", message_id = item["id"])}}>
-            <span class ="glyphicon glyphicon-send text-align text-center"></span>
+            <span class ="glyphicon glyphicon-send"></span>
           </a>
         </li>
       </ul>
@@ -54,7 +57,8 @@
     $container.masonry({
       columnWidth:'.item',
       itemSelector: '.item',
-      percentPosition: true
+      percentPosition: true,
+      gutter:5,
     });
   });
 </script>

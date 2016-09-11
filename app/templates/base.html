@@ -18,6 +18,9 @@
 					padding-top: 70px;
 					background-color: #fafafa;
 				}
+				.glyphicon{
+					color:gray;
+				}
 
       	@media (max-width: 980px) {
         	/* Enable use of floated navbar text */
@@ -88,17 +91,54 @@
 						box-shadow: 0 2.5em 0 0;
 						}
 					}
-					.navbar{
+					.navbar-default{
 						background-color: white;
-						border-bottom: solid 2px;
-						border-bottom-color:#06D66E;
 					}
-					.navbar.navbar-brand{
+					.navbar-default .navbar-brand{
 						font-family:Paytone One;
+					}
+					.navbar-default .navbar-nav li:hover a{
+						color:gray;
+					}
+					.navbar-default .navbard-brand:hover{
 						color:#06D66E;
 					}
-					.navbar.navbard-text{
+					#navBottomBorder:hover a {
+						box-shadow: 0 -5px #06D66E inset;
+						transition: all .5s ease 0s;
+				}
+					#outline{
+						border:1px solid #06D66E;
+						border-radius:5px;
 						color:#06D66E;
+					}
+					#outline:hover{
+						color:white;
+						background-color: #06D66E;
+						border-color:#06D66E;
+						transition: all .5s ease 0s;
+					}
+					#outline-red{
+						border:1px solid #CC1A40;
+						border-radius:5px;
+						color:#CC1A40;
+					}
+					#outline-red:hover{
+						color:white;
+						background-color: #CC1A40;
+						border-color:#CC1A40;
+						transition: all .5s ease 0s;
+					}
+					#outline-blue{
+						border:1px solid ##54C6EB;
+						border-radius:5px;
+						color:##54C6EB;
+					}
+					#outline-blue:hover{
+						color:white;
+						background-color: ##54C6EB;
+						border-color:##54C6EB;
+						transition: all .5s ease 0s;
 					}
    		</style>
 
@@ -124,24 +164,26 @@
 		    </div>
 		    <div class="collapse navbar-collapse" id="nav-links">
 		      <ul class="nav navbar-nav">
-		        <li><a href="{{url_for('contacts')}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Contacts</a></li>
-						<li><a href="{{url_for('bookmarks')}}"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Bookmarks</a></li>
+						<li id = "navBottomBorder"><a href="{{url_for('inbox')}}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Inbox</a></li>
+						<li id = "navBottomBorder"><a href="{{url_for('bookmarks')}}"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Bookmarks</a></li>
+            <li id = "navBottomBorder"><a href="{{url_for('contacts')}}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Reader</a></li>
+            <li id = "navBottomBorder"><a href="{{url_for('explore')}}"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Explore</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-							<li><a href="{{url_for('compose')}}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Compose</a></li>
 							{% if g.user %}
+							<li id = "navBottomBorder"><a href="{{url_for('compose')}}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Compose</a></li>
 							<li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@{{g.user.username}} <span class="caret"></span></a>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="{{url_for('user', username=g.user.username)}}">Profile</a></li>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@thebigJL<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="{{url_for('user', username=g.user.username)}}">Profile</a></li>
 									<li><a href ="{{url_for('tags')}}">#tags</a></li>
-	            	  <li class="divider"></li>
-	            	  <li><a href="{{url_for('settings')}}">Settings</a></li>
-	            	  <li><a href="{{url_for('logout')}}">Logout</a></li>
-	            	</ul>
-	        	  </li>
+									<li><a href ="{{url_for('contacts')}}">Contacts</a></li>
+									<li class="divider"></li>
+									<li><a href="{{url_for('logout')}}">Logout</a></li>
+								</ul>
+							</li>
 							{%else%}
-							<li><a href = "{{url_for('login')}}">Login</a></li>
+							<li><a href = "{{url_for('login')}}">Sign up or Login</a></li>
 							{% endif %}
           </ul>
 		  	 </div>
