@@ -5,7 +5,7 @@
 <script type="text/javscript">
   $('.masonry').masonry({
     itemSelector: '.item',
-    columnWidth: '.item',
+    columnWidth: '.items',
     percentPosition: true
   });
 </script>
@@ -39,6 +39,7 @@
 </style>
 <h3 class="text-align text-center">Explore</h3>
 <div class="row masonry">
+  <div class="items">
   {% for item in items %}
     <div class = "col-md-4 col-sm-6">
       <ul class = "list-group item">
@@ -51,5 +52,6 @@
       </ul>
     </div>
   {% endfor %}
+  </div>
 </div>
 {%endblock%}
