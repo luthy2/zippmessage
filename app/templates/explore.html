@@ -18,7 +18,8 @@
 <style>
 .wi,
 .item{
-  width:30%
+  width:30%;
+  display:block;
 }
 .article {
     position: relative;
@@ -49,10 +50,10 @@
 </style>
 <h3 class="text-align text-center">Explore</h3>
 <div class="row masonry">
+  <div class= "wi"></div>
   {% for item in items %}
-    <div class= "wi"></div>
+
     <div class="item">
-      <div class = "list-group">
         <li class = "list-group-item">
           <span class = "embedly-embed">{{item["content"] | safe}}</span>
         </li>
@@ -60,7 +61,6 @@
           <a href = {{url_for("share", message_id = item["id"])}}><span class ="glyphicon glyphicon-send"></span></a></li>
         </li>
       </ul>
-    </div>
     </diV>
   {% endfor %}
 </div>
