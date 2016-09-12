@@ -126,6 +126,8 @@ def index():
 
 @app.route('/home')
 def home():
+	if g.user
+		return redirect(url_for("index"))
 	return render_template('home.html')
 
 @app.route('/welcome', methods = ['GET', 'POST'])
@@ -512,7 +514,7 @@ def message_reader(message_id):
 @app.route("/explore", methods = ["GET", "POST"] )
 def explore():
 	bot = User.query.filter(User.username.ilike('zippbot')).first()
-	m = UserMessage.query.filter(UserMessage.user_id==bot.id).order_by(UserMessage.message_id.desc()).limit(30).all()
+	m = UserMessage.query.filter(UserMessage.user_id==bot.id).order_by(UserMessage.message_id.desc()).limit(12).all()
 	items = []
 	for i in m:
 		item = {}
