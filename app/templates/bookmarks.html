@@ -9,8 +9,7 @@
   }
 </style>
 <div class="row">
-
-  <div class ="col-md-3 hidden-xs hidden-sm">
+  <div class ="col-md-3 hidden-xs">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
       {% if user_tags %}
@@ -23,27 +22,34 @@
       {% endif %}
     </ul>
   </div>
-  <div class ="col-sm-6 col-sm-offset-3 hidden-md hidden-lg">
+  <div class ="col-xs-12 hidden-sm hidden-md hidden-lg">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
     </ul>
   </div>
 
-  <div class = "col-xs-10 col-md-9 masonry">
+  <div class = "col-xs-12 col-sm-9">
+    <div class ="row masonry">
     {% if bookmarks %}
       {% for message in bookmarks.items %}
-        <div class = "col-sm-5 col-md-4 col-sm-offset-1 col-md-offset-0 item">
+        <div class = "col-xs-12 col-sm-6 cold-md-4 item">
           <ul class = "list-group">
             {% include "bookmarked.html" %}
           </ul>
         </div>
       {% endfor %}
+    </div>
     {% else %}
       <ul class ="list-group">
         <li class = "list-group-item">nothing here yet :/</li>
       </ul>
     {% endif %}
-    <div class = "text-center">
+
+  </div>
+</div>
+<div class = "row">
+  <div class = "col-xs-12">
+    <div class = "text-align text-center">
         <ul class="list-inline">
           {% if bookmarks.has_prev %}<li><a class = "btn btn-default" href = "{{url_for('bookmarks',page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
           {% if bookmarks.has_next %}<li><a class = "btn btn-default" href = "{{url_for('bookmarks',page = bookmarks.next_num)}}">next</a></li>{% endif %}
@@ -58,7 +64,6 @@
       columnWidth:'.item',
       itemSelector: '.item',
       percentPosition: true,
-      gutter:5,
     });
   });
 </script>
