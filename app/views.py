@@ -507,7 +507,8 @@ def message_reader(message_id):
 
 @app.route("/explore", methods = ["GET", "POST"] )
 def explore():
-	m = UserMessage.query.filter(UserMessage.username=='zippbot').order_by(UserMessage.message_id.desc()).limit(30).all()
+	bot = User.query.filter(User.username.ilike('zippbot'))
+	m = UserMessage.query.filter(UserMessage.user_id==bot.id).order_by(UserMessage.message_id.desc()).limit(30).all()
 	items = []
 	for i in m:
 		item = {}
