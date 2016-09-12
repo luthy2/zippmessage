@@ -177,7 +177,7 @@
 							{% if g.user %}
 							<li id = "navBottomBorder"><a href="{{url_for('compose')}}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Compose</a></li>
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@thebigJL<span class="caret"></span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@{{g.user.username}}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="{{url_for('user', username=g.user.username)}}">Profile</a></li>
 									<li><a href ="{{url_for('tags')}}">#tags</a></li>
