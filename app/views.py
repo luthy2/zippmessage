@@ -507,17 +507,17 @@ def message_reader(message_id):
 
 @app.route("/explore", methods = ["GET", "POST"] )
 def explore():
-	m = Message.query.order_by(Message.id.desc()).limit(30).all()
+	m = UserMessage.query.filter(UserMessage.username=='zippbot').order_by(UserMessage.message_id.desc()).limit(30).all()
 	items = []
 	for i in m:
 		item = {}
-		item["id"] = i.id
-		if bm.get(str(i.url)):
-			item["content"] = bm.get(str(i.url))
+		item["id"] = i.message_id
+		if bm.get(str(i.message.url)):
+			item["content"] = bm.get(str(i.message.url))
 			items.append(item)
 		else:
-			item["content"] = i.render_url()
-			bm.set(str(i.url), item["content"], 172000)
+			item["content"] = i.message.render_url()
+			bm.set(str(i.message.url), item["content"], 172000)
 			items.append(item)
 	return render_template('explore.html', title = 'Explore', items = items)
 
