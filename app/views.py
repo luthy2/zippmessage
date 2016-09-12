@@ -126,8 +126,6 @@ def index():
 
 @app.route('/home')
 def home():
-	if g.user
-		return redirect(url_for("index"))
 	return render_template('home.html')
 
 @app.route('/welcome', methods = ['GET', 'POST'])
