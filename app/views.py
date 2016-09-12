@@ -124,6 +124,10 @@ def index():
 		return redirect(url_for('explore'))
 	return redirect(url_for('inbox'))
 
+@app.route('/home')
+def home():
+	return render_template('home.html')
+
 @app.route('/welcome', methods = ['GET', 'POST'])
 @login_required
 def welcome():
