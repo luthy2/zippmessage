@@ -29,10 +29,10 @@
     </ul>
   </div>
 
-  <div class = "col-xs-10 col-md-9 masonry" style = "display:inline-block;">
+  <div class = "col-xs-10 col-md-9 masonry">
     {% if bookmarks %}
       {% for message in bookmarks.items %}
-        <div class = "col-sm-5 col-md-4 col-sm-offset-1 col-md-offset-0 item" style = "height:300px;">
+        <div class = "col-sm-5 col-md-4 col-sm-offset-1 col-md-offset-0 item">
           <ul class = "list-group">
             {% include "bookmarked.html" %}
           </ul>
