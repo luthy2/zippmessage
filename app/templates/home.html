@@ -115,7 +115,7 @@
           </p>
           <p class = "text-align text-center pad-top pad-bottom-2">
             <span >
-              <a class="btn btn-default btn-lg btn-br" href = "{{url_for('login')}}">
+              <a class="btn btn-default btn-lg btn-br" href = "{{url_for('login', next='inbox')}}">
                 Sign Up with twitter
               </a>
             </span>
@@ -149,7 +149,7 @@
             <p class="text-center pad-bottom">There is nothing to setup. Just connect your twitter and you're ready to go.</p>
             <p class = "text-center">
               <span class="pad-top">
-                <a class="btn btn-default btn-lg btn-alt" href = "{{url_for('login')}}">Sign up with twitter</a>
+                <a class="btn btn-default btn-lg btn-alt" href = "{{url_for('login', next='index')}}">Sign up with twitter</a>
               </span>
             </p>
           </div>
