@@ -144,6 +144,24 @@
 						border-color:##54C6EB;
 						transition: all .5s ease 0s;
 					}
+					.welcome-user{
+						margin-top:-20px;
+						height:150px;
+						width:100%;
+						background:#06d66e;
+						display:table;
+						position: fixed;
+						overflow:hidden;
+						z-index:1000;
+					}
+					.welcome-user .welcome-text{
+						vertical-align: middle;
+						display:table-cell;
+						padding-left:10px;
+						padding-right:10px;
+						color:white;
+						margin:auto;
+					}
    		</style>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -154,6 +172,18 @@
 	</head>
 
 	<body>
+		{% if not g.user%}
+		<div class="welcome-user">
+			<div class= "welcome-text">
+				<div>
+					<h3>Explore.</h3>
+					<p>Zipp is a social link sharing and bookmarking platform.</p>
+					<p> Easily save any type of content for later</p>
+					<p>Share anything with your friends! <a href=# id="inverted">Learn more</a></p>
+				</div>
+			</div>
+		</div>
+		{%endif%}
 	<div class="container">
 		<nav class="navbar navbar-default navbar-fixed-top">
 		  <div class="container-fluid">
@@ -164,9 +194,10 @@
         		<span class="icon-bar"></span>
         		<span class="icon-bar"></span>
 		      </button>
-		      <a class="navbar-brand" href="{{url_for('inbox')}}">zipp</a>
+		      <a class="navbar-brand" href="{{url_for('index')}}">zipp</a>
 		    </div>
 		    <div class="collapse navbar-collapse" id="nav-links">
+					{% if g.user %}
 		      <ul class="nav navbar-nav">
 						<li id = "navBottomBorder"><a href="{{url_for('inbox')}}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Inbox</a></li>
 						<li id = "navBottomBorder"><a href="{{url_for('bookmarks')}}"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Bookmarks</a></li>
@@ -174,7 +205,6 @@
             <li id = "navBottomBorder"><a href="{{url_for('explore')}}"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Explore</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-							{% if g.user %}
 							<li id = "navBottomBorder"><a href="{{url_for('compose')}}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Compose</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@{{g.user.username}}<span class="caret"></span></a>
@@ -187,7 +217,7 @@
 								</ul>
 							</li>
 							{%else%}
-							<li style="color:green;"><a href = "{{url_for('login')}}">Sign up or Login</a></li>
+							<li style="color:#06d66e;"><a href = "{{url_for('login')}}">Sign up or Login</a></li>
 							{% endif %}
           </ul>
 		  	 </div>
