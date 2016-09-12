@@ -176,10 +176,10 @@
 		<div class="welcome-user">
 			<div class= "welcome-text">
 				<div>
-					<h3>Explore.</h3>
+					<h3>Welcome to Zipp.</h3>
 					<p>Zipp is a social link sharing and bookmarking platform.</p>
 					<p> Easily save any type of content for later</p>
-					<p>Share anything with your friends! <a href=# id="inverted">Learn more</a></p>
+					<p>Share anything with your friends! <a href="{{url_for('home')}}" style="color:white;">Learn more</a></p>
 				</div>
 			</div>
 		</div>
@@ -218,7 +218,7 @@
 							</li>
 							{%else%}
 							<ul class="nav navbar-nav navbar-right">
-								<li style="color:#06d66e;"><a href = "{{url_for('login')}}">Sign up or Login</a></li>
+								<li ><a href = "{{url_for('login')}}" style="color:#06d66e;">Sign up or Login</a></li>
 							</ul>
 							{% endif %}
           </ul>
