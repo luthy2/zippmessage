@@ -30,8 +30,11 @@
   .glyphicon{
     color:gray;
   }
+  #hover:hover{
+    color:#54C6eb;
+  }
 </style>
-<div class="masonry row" style="padding-top:100px;">
+<div class="masonry row" style="padding-top:120px;">
   {% for item in items %}
     <div class="col-md-4 col-sm-6 col-xs-12 item">
       <ul class="list-group">
@@ -39,8 +42,8 @@
           <span class = "embedly-embed">{{item["content"] | safe}}</span>
         </li>
         <li class = "list-group-item text-align text-center">
-          <a href = {{url_for("share", message_id = item["id"])}}>
-            <span class ="glyphicon glyphicon-send"></span>
+          <a href = {{url_for("share", message_id = item["id"], next='inbox')}}>
+            <span class ="glyphicon glyphicon-send" id="hover"></span>
           </a>
         </li>
       </ul>
