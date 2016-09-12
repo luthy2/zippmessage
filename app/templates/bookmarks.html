@@ -9,7 +9,7 @@
   }
 </style>
 <div class="row">
-  <div class ="col-md-3 hidden-xs">
+  <div class ="col-md-3 hidden-sm">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
       {% if user_tags %}
@@ -22,7 +22,7 @@
       {% endif %}
     </ul>
   </div>
-  <div class ="col-xs-12 hidden-sm hidden-md hidden-lg">
+  <div class ="col-xs-12 hidden-md hidden-lg">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
     </ul>
@@ -32,7 +32,7 @@
     <div class ="row masonry">
     {% if bookmarks %}
       {% for message in bookmarks.items %}
-        <div class = "col-xs-12 col-sm-6 cold-md-4 item">
+        <div class = "col-xs-12 col-sm-4 col-md-4 item">
           <ul class = "list-group">
             {% include "bookmarked.html" %}
           </ul>
