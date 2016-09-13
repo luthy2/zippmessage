@@ -26,14 +26,13 @@
     right: -9999px;
     margin: auto;
     }
-
-  .glyphicon{
-    color:gray;
-  }
   #hover:hover{
     color:#54C6eb;
   }
 </style>
+{% if not g.user %}
+<div class="pad-explore"></div>
+{% endif %}
 <div class="masonry row">
   {% for item in items %}
     <div class="col-md-4 col-sm-6 col-xs-12 item">

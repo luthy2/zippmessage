@@ -1,7 +1,19 @@
 body {
-	padding-top: 70px;
 	background-color: #fafafa;
 	font-family:Muli, sans;
+}
+body .pad-nav{
+		padding-top: 70px;
+}
+.pad-top{
+	padding-top:50px;
+}
+.pad-bottom{
+	padding-bottom: 50px;
+}
+.pad-explore{
+	width:100%;
+	height:120px;
 }
 /*-------------------------navbar styles----------------------*/
 @media (max-width: 980px) {
@@ -114,7 +126,7 @@ body {
 		background-color: white
 		color:#06D66E;
 	}
-	#outline .glyphicon{
+	.glyph-br{
 		color:#06D66E;
 	}
 	#outline:hover{
