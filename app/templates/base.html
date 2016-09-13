@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"ng-app= "zippApp">
+<html lang="en" ng-app= "zippApp">
 	<title> Zipp - {{title}}</title>
 	<head>
-
    		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen">
+			<link rel='stylesheet' type="text/css" href="/app/static/css/zipp-styles.css">
     	<script src="http://code.jquery.com/jquery-latest.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
    		<script  type="text/javascript" src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -11,175 +11,26 @@
 			<script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
   		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 			<link href='https://fonts.googleapis.com/css?family=Paytone+One' rel='stylesheet' type='text/css'>
+			<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta charset="utf-8">
-
-    	<style type="text/css">
-
-				body {
-					padding-top: 70px;
-					background-color: #fafafa;
-				}
-				.glyphicon{
-					color:gray;
-				}
-
-      	@media (max-width: 980px) {
-        	/* Enable use of floated navbar text */
-        	.navbar-text.pull-right {
-          	float: none;
-          	padding-left: 5px;
-          	padding-right: 5px;
-        		}
-     		 }
-				 .embedly-embed iframe{
-						width: 100%;
-					}
-					/*spinner from http://projects.lukehaas.me/css-loaders/ */
-					.loader:before,
-					.loader:after,
-					.loader {
-		  			border-radius: 50%;
-	  				width: 1.5em;
-	  				height: 1.5em;
-	  				-webkit-animation-fill-mode: both;
-	  				animation-fill-mode: both;
-	  				-webkit-animation: load7 1.2s infinite ease-in-out;
-	  				animation: load7 1.2s infinite ease-in-out;
-					}
-					.loader {
-					  color: #06D66E;
-					  font-size: 10px;
-					  margin: 80px auto;
-					  position: relative;
-					  text-indent: -9999em;
-					  -webkit-transform: translateZ(0);
-					  -ms-transform: translateZ(0);
-					  transform: translateZ(0);
-					  -webkit-animation-delay: -0.16s;
-					  animation-delay: -0.16s;
-					}
-					.loader:before {
-					  left: -3.5em;
-					  -webkit-animation-delay: -0.32s;
-					  animation-delay: -0.32s;
-					}
-					.loader:after {
-						left: 3.5em;
-					}
-					.loader:before,
-					.loader:after {
-						content: '';
-						position: absolute;
-						top: 0;
-					}
-					@-webkit-keyframes load7 {
-					0%,
-					80%,
-					100% {
-							box-shadow: 0 2.5em 0 -1.3em;
-						}
-					40% {
-							box-shadow: 0 2.5em 0 0;
-						}
-					}
-					@keyframes load7 {
-						0%,
-						80%,
-						100% {
-						box-shadow: 0 2.5em 0 -1.3em;
-					}
-					40% {
-						box-shadow: 0 2.5em 0 0;
-						}
-					}
-					.navbar-default{
-						background-color: white;
-					}
-					.navbar-default .navbar-brand{
-						font-family:Paytone One;
-					}
-					.navbar-default .navbar-nav li:hover a{
-						color:gray;
-					}
-					.navbar-default .navbar-brand:hover{
-				    font-family:Paytone One;
-				    color:#06D66E;
-				    transition: all .5s ease 0s;
-				  }
-					#navBottomBorder:hover a {
-						box-shadow: 0 -5px #06D66E inset;
-						transition: all .5s ease 0s;
-				}
-					#outline{
-						border:1px solid #06D66E;
-						border-radius:5px;
-						color:#06D66E;
-					}
-					#outline:hover{
-						color:white;
-						background-color: #06D66E;
-						border-color:#06D66E;
-						transition: all .5s ease 0s;
-					}
-					#outline-red{
-						border:1px solid #CC1A40;
-						border-radius:5px;
-						color:#CC1A40;
-					}
-					#outline-red:hover{
-						color:white;
-						background-color: #CC1A40;
-						border-color:#CC1A40;
-						transition: all .5s ease 0s;
-					}
-					#outline-blue{
-						border:1px solid ##54C6EB;
-						border-radius:5px;
-						color:##54C6EB;
-					}
-					#outline-blue:hover{
-						color:white;
-						background-color: ##54C6EB;
-						border-color:##54C6EB;
-						transition: all .5s ease 0s;
-					}
-					.welcome-user{
-						margin-top:-20px;
-						height:150px;
-						width:100%;
-						background:#06d66e;
-						display:table;
-						position: fixed;
-						overflow:hidden;
-						z-index:1000;
-					}
-					.welcome-user .welcome-text{
-						vertical-align: middle;
-						display:table-cell;
-						padding-left:10px;
-						padding-right:10px;
-						color:white;
-						margin:auto;
-					}
-   		</style>
-
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="../assets/js/html5shiv.js"></script>
     <![endif]-->
-
 	</head>
 
 	<body>
 		{% if not g.user%}
-		<div class="welcome-user">
+		<div class="welcome-user" style="padding-bottom:120px;">
 			<div class= "welcome-text">
 				<div>
 					<h3>Welcome to Zipp.</h3>
 					<p>Zipp is a social link sharing and bookmarking platform.</p>
 					<p> Easily save any type of content for later</p>
-					<p>Share anything with your friends! <a href="{{url_for('home')}}" style="color:white;">Learn more</a></p>
+					<p>Share anything with your friends! <strong><a href="{{url_for('home')}}" class="text-white">Learn more</a></strong></p>
 				</div>
 			</div>
 		</div>
@@ -199,13 +50,13 @@
 		    <div class="collapse navbar-collapse" id="nav-links">
 					{% if g.user %}
 		      <ul class="nav navbar-nav">
-						<li id = "navBottomBorder"><a href="{{url_for('inbox')}}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Inbox</a></li>
-						<li id = "navBottomBorder"><a href="{{url_for('bookmarks')}}"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Bookmarks</a></li>
-            <li id = "navBottomBorder"><a href="{{url_for('reader')}}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Reader</a></li>
-            <li id = "navBottomBorder"><a href="{{url_for('explore')}}"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Explore</a></li>
+						<li id = "nav-bottom-border"><a href="{{url_for('inbox')}}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Inbox</a></li>
+						<li id = "nav-bottom-border"><a href="{{url_for('bookmarks')}}"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Bookmarks</a></li>
+            <li id = "nav-bottom-border"><a href="{{url_for('reader')}}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Reader</a></li>
+            <li id = "nav-bottom-border"><a href="{{url_for('explore')}}"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Explore</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-							<li id = "navBottomBorder"><a href="{{url_for('compose')}}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Compose</a></li>
+							<li id = "nav-bottom-border"><a href="{{url_for('compose')}}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Compose</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@{{g.user.username}}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
@@ -218,7 +69,7 @@
 							</li>
 							{%else%}
 							<ul class="nav navbar-nav navbar-right">
-								<li ><a href = "{{url_for('login')}}" style="color:#06d66e;">Sign up or Login</a></li>
+								<li ><a href = "{{url_for('login')}}" class="text-brand-color">Sign up or Login</a></li>
 							</ul>
 							{% endif %}
           </ul>
