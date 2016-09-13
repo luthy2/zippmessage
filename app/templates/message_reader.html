@@ -11,13 +11,8 @@
   <meta charset="utf-8">
   <style>
     body{
-      background-color:#fafafa;
       line-height: 200%;
       font-size:150%;
-
-    }
-    .glyphicon{
-      color:gray;
     }
     .embedly-embed iframe{
         width: 100%;
@@ -49,7 +44,7 @@
     </div>
   </div>
   <div class = "row">
-   <div class = "col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" style="padding-bottom:40px;">
+   <div class = "col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
      {% set resp = message.get_content() %}
       {% if not resp %}
         <p> We were unable to extract the content from the original source. <a href ="{{message.url}}" target ="_blank">Open the link in a new window<span class = "glyphicon glyphicon-new-window"></span></a> to view the content.</p>
