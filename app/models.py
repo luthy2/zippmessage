@@ -127,7 +127,7 @@ class User(db.Model):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message_id.desc())
 
 	def bookmarks(self):
-		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_bookmarked == True)
+		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_bookmarked == True).order_by(UserMessage.message_id.desc())
 
 	def bookmark_message(self, message_id):
 		user_message = UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.message_id == message_id).one()
@@ -374,7 +374,7 @@ def image_tag(url):
 				'<img id = "img-message" src = "%s" width="100%%">' \
 				'<p style="padding-top:2%%">Image via <a href = "%s" target="_blank" rel="noopener">%s</a></p>'\
 				'</li>'\
-				'<ul>'
+				'</ul>'
 	return image_tag % (url, url, p)
 
 def provider_url(url):
