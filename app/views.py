@@ -404,7 +404,6 @@ def quickshare():
 	if request.method == 'POST':
 		recipients = form.recipients.data
 		if form.validate_on_submit():
-			db.session.add(message)
 			for recipient in recipients:
 				message.add_recipient(recipient)
 				message.send_message(recipient)
@@ -412,7 +411,9 @@ def quickshare():
 				if recipient!= g.user.id:
 					send_new_msg_email.delay(g.user.id, recipient, message.id)
 				flash('Message Sent!')
-				return redirect(request.args.get('url'))
+			db.session.add(message)
+			db.session.commit()
+			return redirect(request.args.get('url'))
 
 		else:
 			flash(form.errors)
@@ -455,7 +456,7 @@ def share(message_id):
 
 			#deliver message
 			new_message.deliver_message()
-			db.session.add(message)
+			db.session.add(new_message)
 			db.session.commit()
 			flash('Message Shared!')
 			return redirect(redirect_url())
