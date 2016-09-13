@@ -749,9 +749,9 @@ def send_followed_email(sender_id, recipient_id):
 		recipient = User.query.get(recipient_id)
 		sender = User.query.get(sender_id)
 		r_email  = recipient.email
-		r_email = r_email.encode('utf-8')
 		html = render_template('follow_email.html', sender = sender.username, recipient = recipient.username)
 		if r_email:
+			r_email = r_email.encode('utf-8')
 			r_email = str(r_email)
 			resp = requests.post( 	mailgun_api,
 				auth = ("api",mailgun_auth),
