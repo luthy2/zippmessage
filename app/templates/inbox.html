@@ -75,25 +75,28 @@
   </div >
 </div>
 <div class="row">
-  <div class ="col-md-3 hidden-xs hidden-sm" style="padding-top:10px;">
+  <div class ="col-md-3 col-sm-3 hidden-xs" style="padding-top:10px;">
     <ul class = "list-group">
-      <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
+      <li class="list-group-item">
+      <a href ="{{url_for('tags')}}"><h4>tags</h4></a>
+      <hr>
       {% if user_tags %}
         {% for tag in user_tags%}
-          <a class ="list-group-item" href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}<label class="badge">{{tag[1]}}</a>
+          <p><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}</a><small>{{tag[1]}}</small></p>
         {% endfor %}
-        <a class = "list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right text-right"></span></a>
+      </li>
+        <a class="list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right text-right"></span></a>
       {% else %}
-        <li class = "list-group-item">no tagged items yet :/</li>
+        <p>no tagged items yet :/</p>
       {% endif %}
     </ul>
   </div>
-  <div class ="col-sm-6 col-sm-offset-3 hidden-md hidden-lg">
+  <div class ="col-xs-10 hidden-sm hidden-md hidden-lg">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
     </ul>
   </div>
-	<div class ="col-md-6"  ng-controller="InboxController" ng-cloak>
+	<div class ="col-md-5"  ng-controller="InboxController" ng-cloak>
     {% raw %}
     <div class = "alert alert-info"	role= "alert" ng-show="alert">
       {{alert}}
