@@ -815,9 +815,9 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 def favicon():
 	return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
-@app.route('/<path:path>')
+@app.route('/styles.css')
 def styles():
-	return send_from_directory(os.path.join(app.root_path, 'static'), "zipp-styles.css")	
+	return send_from_directory(os.path.join(app.root_path, 'static/css'), "zipp-styles.css")
 
 @app.route('/admin/dashboard')
 @login_required
