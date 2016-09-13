@@ -7,7 +7,7 @@
 		<br>
 		<ul class = "list-group">
 		{% for contact in user.contacts %}
-			<li class="list-group-item"><a href="{{url_for('user', username=contact.username)}}">@{{contact.username}} <a id="outline" href ="{{url_for('unfollow', username = contact.username)}}" type = "button" class = "btn btn-default btn-xs pull-right">unfollow</a></li>
+			<li class="list-group-item"><a href="{{url_for('user', username=contact.username)}}">@{{contact.username}} <a id="outline-red" href ="{{url_for('unfollow', username = contact.username)}}" type = "button" class = "btn btn-default btn-xs pull-right">unfollow</a></li>
 		{% else %}
 			<li class = "list-group-item"> You have no friends :( </li>
 		{% endfor %}

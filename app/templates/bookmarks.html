@@ -9,7 +9,7 @@
   }
 </style>
 <div class="row">
-  <div class ="col-md-3 hidden-sm">
+  <div class ="col-sm-3 hidden-xs">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>tags</h4></a>
       {% if user_tags %}
@@ -22,7 +22,7 @@
       {% endif %}
     </ul>
   </div>
-  <div class ="col-xs-12 hidden-md hidden-lg">
+  <div class ="col-xs-12 hidden-sm hidden-md hidden-lg">
     <ul class = "list-group">
       <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
     </ul>
@@ -48,7 +48,7 @@
   </div>
 </div>
 <div class = "row">
-  <div class = "col-xs-12">
+  <div class = "col-xs-12 col-md-offset-2">
     <div class = "text-align text-center">
         <ul class="list-inline">
           {% if bookmarks.has_prev %}<li><a class = "btn btn-default" href = "{{url_for('bookmarks',page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
