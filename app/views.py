@@ -455,6 +455,7 @@ def share(message_id):
 
 			#deliver message
 			new_message.deliver_message()
+			db.session.add(message)
 			db.session.commit()
 			flash('Message Shared!')
 			return redirect(redirect_url())
