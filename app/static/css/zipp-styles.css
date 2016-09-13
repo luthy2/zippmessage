@@ -38,6 +38,9 @@ body {
 	color:#06d66E;
 }
 
+.nav .glyphicon{
+    color:gray;
+}
  .glyphicon{
    color:#c8c8c8;
  }
