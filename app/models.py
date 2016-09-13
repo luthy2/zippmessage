@@ -372,17 +372,17 @@ def image_tag(url):
 	image_tag = '<ul class="list-group">'\
 				'<li class = "list-group-item" >' \
 				'<img id = "img-message" src = "%s" width="100%%">' \
-				'<p style="padding-top:2%%">Image via <a href = "%s" target="_blank" rel="noopener">%s</a> </p>'\
+				'<p style="padding-top:2%%">Image via <a href = "%s" target="_blank" rel="noopener">%s</a></p>'\
 				'</li>'\
 				'<ul>'
-	return image_tag % url, url, p
+	return image_tag % (url, url, p)
 
 def provider_url(url):
 	resp = requests.get(url)
 	url = resp.url
 	parse_object = urlparse(url)
 	provider = parse_object.netloc
-	return provider
+	return provider or 'No Source'
 
 
 def get_url_content(message_url):
