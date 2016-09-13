@@ -10,13 +10,13 @@
         {% if not_contacts %}
           <h4>Add Friends</h4>
           {% for friend in not_contacts %}
-            <p><img src="{{friend['profile_image_url']}}" style = "border:1px solid #fafafa; border-radius:50%; height:30px;"><a id="outline" href = "{{url_for('user', username = friend['screen_name'])}}">   {{friend['name']}} </a> <span class="pull-right"><a href = "{{url_for('follow', username = friend['screen_name'])}}" type="button" class="btn btn-default btn-xs" id="outline">follow</a></span></p>
+            <p><img src="{{friend['profile_image_url']}}" style = "border:1px solid #fafafa; border-radius:50%; height:30px;"><a href = "{{url_for('user', username = friend['screen_name'])}}">   {{friend['name']}} </a> <span class="pull-right"><a href = "{{url_for('follow', username = friend['screen_name'])}}" type="button" class="btn btn-default btn-xs" id="outline">follow</a></span></p>
           {%endfor%}
         {% endif %}
         {% if contacts %}
           <h4>Already Following</h4>
           {% for friend in contacts %}
-            <p><img src="{{friend['profile_image_url']}}" style = "border:1px solid #fafafa; border-radius:50%; height:30px;"><a id="outline-red" href = "{{url_for('user', username = friend['screen_name'])}}">   {{friend['name']}} </a><span class = "pull-right"><a href = "{{url_for('unfollow', username = friend['screen_name'])}}" type="button" class="btn btn-default btn-xs" id="outline-red">unfollow</a></span></p>
+            <p><img src="{{friend['profile_image_url']}}" style = "border:1px solid #fafafa; border-radius:50%; height:30px;"><a  href = "{{url_for('user', username = friend['screen_name'])}}">   {{friend['name']}} </a><span class = "pull-right"><a href = "{{url_for('unfollow', username = friend['screen_name'])}}" type="button" class="btn btn-default btn-xs" id="outline-red">unfollow</a></span></p>
           {%endfor%}
         {% endif %}
         <br>

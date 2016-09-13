@@ -57,7 +57,12 @@ body .pad-nav{
  .glyphicon{
    color:#c8c8c8;
  }
-
+.btn .glyphicon #outline{
+	color:#06d66e;
+}
+.btn .glyphicon #outline:hover{
+	color:white
+}
  .embedly-embed iframe{
     width: 100%;
   }
@@ -124,7 +129,7 @@ body .pad-nav{
 	#outline{
 		border:1px solid #06D66E;
 		border-radius:5px;
-		background-color: white
+		background-color: white;
 		color:#06D66E;
 	}
 	.glyph-br{
@@ -148,14 +153,14 @@ body .pad-nav{
 		transition: all .5s ease 0s;
 	}
 	#outline-blue{
-		border:1px solid ##54C6EB;
+		border:1px solid #54C6EB;
 		border-radius:5px;
-		color:##54C6EB;
+		color:#54C6EB;
 	}
 	#outline-blue:hover{
 		color:white;
-		background-color: ##54C6EB;
-		border-color:##54C6EB;
+		background-color: #54C6EB;
+		border-color:#54C6EB;
 		transition: all .5s ease 0s;
 	}
 
