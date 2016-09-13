@@ -82,7 +82,7 @@
       <hr>
       {% if user_tags %}
         {% for tag in user_tags%}
-          <p><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}</a><small>{{tag[1]}}</small></p>
+          <p><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}} </a><small>{{tag[1]}}</small></p>
         {% endfor %}
       </li>
         <a class="list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right text-right"></span></a>
