@@ -78,7 +78,7 @@
   <div class ="col-md-3 col-sm-3 hidden-xs" style="padding-top:10px;">
     <ul class = "list-group">
       <li class="list-group-item">
-      <a href ="{{url_for('tags')}}"><h4>tags</h4></a>
+      <a href ="{{url_for('tags')}}"><h4>Tags</h4></a>
       <hr>
       {% if user_tags %}
         {% for tag in user_tags%}
@@ -91,10 +91,12 @@
       {% endif %}
     </ul>
   </div>
-  <div class ="col-xs-10 hidden-sm hidden-md hidden-lg">
-    <ul class = "list-group">
-      <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
-    </ul>
+  <div class="row">
+    <div class ="col-xs-10 hidden-sm hidden-md hidden-lg">
+      <ul class = "list-group">
+        <a class="list-group-item" href ="{{url_for('tags')}}"><h4>see all tags<span class ="glyphicon glyphicon-chevron-right pull-right"></span></h4></a>
+      </ul>
+    </div>
   </div>
 	<div class ="col-md-5"  ng-controller="InboxController" ng-cloak>
     {% raw %}
