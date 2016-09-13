@@ -75,7 +75,7 @@
   </div >
 </div>
 <div class="row">
-  <div class ="col-md-3 col-sm-3 hidden-xs" style="padding-top:10px;">
+  <div class ="col-md-3 col-sm-3 hidden-xs">
     <ul class = "list-group">
       <li class="list-group-item">
       <a href ="{{url_for('tags')}}"><h4>Tags</h4></a>
@@ -85,13 +85,13 @@
           <p><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}} </a><small>{{tag[1]}}</small></p>
         {% endfor %}
       </li>
-        <a class="list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right text-right"></span></a>
+        <a class="list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right pull-right"></span></a>
       {% else %}
         <p>no tagged items yet :/</p>
       {% endif %}
     </ul>
   </div>
-	<div class ="col-md-5"  ng-controller="InboxController" ng-cloak>
+	<div class ="col-md-5 col-sm-8"  ng-controller="InboxController" ng-cloak>
     {% raw %}
     <div class = "alert alert-info"	role= "alert" ng-show="alert">
       {{alert}}
@@ -119,19 +119,17 @@
   <div class = "col-md-3 hidden-sm hidden-xs">
     <ul class = "list-group">
       <li class="list-group-item">
-        <a href=# class="pull-right"><h4>Activity</h4><a>
+          <a href=# class="pull-right"><h4>Activity</h4><a>
         </hr>
       {% if activity_feed %}
         {% for item in activity_feed %}
           <a class = "list-group-item" href = "{{url_for(reader, message = message_id)}}">{{item.subject.username}} {{item.action}} your message: {{item.message.note}}</a>
         {% endfor %}
       {% else %}
-        <a class = "list-group-item" href = "{{url_for('find_contacts')}}">
-          <p>Coming Soon</p>
-        </a>
+          <p>Coming Soon. Make sure you <ahref = "{{url_for('find_contacts')}}">add your friends!</a></p>
       {% endif %}
       </li>
-      <li class="list-group-item">See All activity<span class="glyphicon glyphicon-chevron-right"></span></li>
+      <li class="list-group-item">See All activity<span class="glyphicon glyphicon-chevron-right pull-right"></span></li>
     </ul>
   </div>
 </div>
