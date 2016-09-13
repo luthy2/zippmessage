@@ -407,10 +407,10 @@ def quickshare():
 			for recipient in recipients:
 				message.add_recipient(recipient)
 				message.send_message(recipient)
-				message.deliver_message()
 				if recipient!= g.user.id:
 					send_new_msg_email.delay(g.user.id, recipient, message.id)
 				flash('Message Sent!')
+			message.deliver_message()
 			db.session.add(message)
 			db.session.commit()
 			return redirect(request.args.get('url'))

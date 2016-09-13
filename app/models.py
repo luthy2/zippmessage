@@ -53,6 +53,9 @@ class User(db.Model):
 	oauth_secret = db.Column(db.String(200))
 	username = db.Column(db.String(80))
 	email = db.Column(db.String(240))
+	# email_token db.Column(db.String)
+	# notifications_status = db.Column(db.Integer)
+	# api_token = db.Column(db.String)
 
 	sent_messages = db.relationship('Message', backref='author', lazy='dynamic')
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
@@ -103,6 +106,24 @@ class User(db.Model):
 	def is_contact(self, user):
 		return self.contacts.filter(approved_contacts.c.to_contact_id == user.id).count() > 0
 
+	# def create_api_token(self):
+	# 	return 'token'
+	#
+	# def verify_api_token(self, token):
+	# 	if token == self.api_token:
+	# 		return True
+	# 	else:
+	# 		return False
+	#
+	# def create_email_token(self):
+	# 	return token
+	#
+	# def verify_email_token(self, token):
+	# 	if token == self.email_token:
+	# 		return True
+	# 	else:
+	# 		return False
+
 	def inbox(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message_id.desc())
 
@@ -122,6 +143,17 @@ class User(db.Model):
 		user_message.is_bookmarked = False
 		db.session.commit()
 		return self
+
+	# def user_activity(self):
+	# 	activity = Activity.query.filter_by(Activity.owner_id == self.id).limit(50).order_by(self.timestamp.desc())
+	# 	return activity
+	#
+	# def create_activity(self, subject_id, action, message_id, timestamp = datetime.utcnow()):
+	# 	a = Activity(owner_id = self.id, subject_id = subject_id, action = action, message_id = message_id, timestamp = timestamp)
+	# 	db.session.add(a)
+	# 	db.session.commit(a)
+	# 	return self
+
 
 	def tags_for_user(self):
 		# empty list
@@ -151,7 +183,11 @@ class Message(db.Model):
 	url = db.Column(db.String(300))
 	from_user = db.Column(db.Integer, db.ForeignKey('user.id'))
 	is_delivered = db.Column(db.Boolean, default = False)
+	# points = db.Column(db.Integer)
 	timestamp = db.Column(db.DateTime)
+	# activity = relationship(backref = 'message', ) #todo
+	# private = db.Column(db.Boolean, default = True)
+
 	recipients = db.relationship(	'User',
 									secondary = recipients,
 									primaryjoin = (recipients.c.message_id == id),
@@ -183,6 +219,15 @@ class Message(db.Model):
 	def short_url(self):
 		parse_object = urlparse(self.url)
 		return parse_object.netloc
+
+	# def score(self, gravity = 1.8):
+	# 	p = self.points
+	# 	ts = self.timestamp
+	# 	now = datetime.utcnow()
+	# 	tdelta = now-ts
+	# 	s = tdelta.total_seconds / 3600.0
+	# 	score = (p / s**gravity)
+	# 	return score
 
 	def format_timestamp(self):
 		ts = self.timestamp
@@ -242,6 +287,7 @@ class Message(db.Model):
 		u.inbox_messages.append(UserMessage(message = self, is_read = False, is_bookmarked = False, tags = ''))
 		db.session.add(u)
 		db.session.commit()
+		print "message added to inbox for " + str(u.username)
 		return self
 
 
@@ -323,10 +369,14 @@ def render_no_style(url):
 	return no_style_tag % (url , provider)
 
 def image_tag(url):
-	image_tag = '<li class = "list-group-item" >' \
+	p = provider_url(url)
+	image_tag = '<ul class="list-group">'\
+				'<li class = "list-group-item" >' \
 				'<img id = "img-message" src = "%s" width="100%%">' \
-				'</li>'
-	return image_tag % url
+				'<p style="padding-top:2%%">Image via <a href = "%s" target="_blank" rel="noopener">%s</a> </p>'\
+				'</li>'\
+				'<ul>'
+	return image_tag % url, url, p
 
 def provider_url(url):
 	resp = requests.get(url)
@@ -366,11 +416,11 @@ def get_url_content(message_url):
 			return render_no_style(message_url)
 
 
-# class MessageActivity(db.Model):
-# 	owner_id = db.Column(db.Integer) #index for construction of feeds
-# 	subject_id = db.Column(db.Integer) #who performed the action
+# class Activity(db.Model):
+# 	owner_id = db.Column(db.Integer, db.ForeignKey, primary_key = True) #index for construction of feeds
+# 	subject_id = db.Column(db.Integer, db.ForeignKey, primary_key=True) #who performed the action
 # 	action = db.Column(db.String()) #the type of action
-# 	message_id = db.Column(db.Integer) #the message the action was performed on
+# 	message_id = db.Column(db.Integer, db.ForeignKey, primary_key=True) #the message the action was performed on
 # 	timestamp = db.Column(db.Datetime) #when
 #
 # 	def __init__(self, owner_id, subject_id, action, message_id, timestamp):
