@@ -3,11 +3,11 @@
 {% block content %}
 <div class = "row">
 	<div class = "col-md-4 col-md-offset-4">
-		<h4>{{g.user.username}}'s Contacts<a href = "{{url_for('find_contacts')}}" type="button" class = "btn btn-default pull-right"><span class ="glyphicon glyphicon-user"></span><span class ="glyphicon glyphicon-plus"></span></a></h4>
+		<h4>{{g.user.username}}'s Contacts<a id ="outline" href = "{{url_for('find_contacts')}}" type="button" class = "btn btn-default btn-sm pull-right">add contacts <span class ="glyphicon glyphicon-user"></span><span class ="glyphicon glyphicon-plus"></span></a></h4>
 		<br>
 		<ul class = "list-group">
 		{% for contact in user.contacts %}
-			<li class="list-group-item"><a href="{{url_for('user', username=contact.username)}}">@{{contact.username}} <a href =# type = "button" class = "btn btn-default btn-xs pull-right">unfollow</a></li>
+			<li class="list-group-item"><a href="{{url_for('user', username=contact.username)}}">@{{contact.username}} <a id="outline" href ="{{url_for('unfollow', username = contact.username)}}" type = "button" class = "btn btn-default btn-xs pull-right">unfollow</a></li>
 		{% else %}
 			<li class = "list-group-item"> You have no friends :( </li>
 		{% endfor %}
