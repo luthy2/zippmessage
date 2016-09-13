@@ -114,6 +114,9 @@ body {
 		background-color: white
 		color:#06D66E;
 	}
+	#outline .glyphicon{
+		color:#06D66E;
+	}
 	#outline:hover{
 		color:white;
 		background-color: #06D66E;
