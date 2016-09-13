@@ -37,14 +37,12 @@
 <div class = "container-fluid">
   <div class = "row">
     <div class= "col-md-8 col-md-offset-2">
-      <h5>
-        <a href = "{{url_for('inbox')}}"><span class = "glyphicon glyphicon-chevron-left"></span>Inbox</a>
-        <span class="pull-right">
-          <a href = "{{message.url}}" target="_blank">
-            open in new window <span class = "glyphicon glyphicon-new-window"></span>
-          </a>
-        </span>
-      </h5>
+      <a href = "{{url_for('inbox')}}"><span class = "glyphicon glyphicon-chevron-left"></span>Inbox</a>
+      <span class="pull-right">
+        <a class="btn btn-default btn-sm" id="outline" href = "{{message.url}}" target="_blank">
+          new window <span class = "glyphicon glyphicon-new-window"></span>
+        </a>
+      </span>
     </div>
   </div>
   <div class = "row">
@@ -89,7 +87,7 @@
       <div class = "row">
         <div class = "col-xs-6 col-xs-offset-3">
           <h5 class = "pull-right">
-            <a class = "btn btn-default" type="button" href = "{{url_for('reader')}}">to reader</a>
+            <a class = "btn btn-default" type="button" href = "{{url_for('reader')}}" id="outline">to reader</a>
           </h5>
         </div>
       </div>
