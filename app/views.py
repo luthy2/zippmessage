@@ -793,12 +793,12 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 		recipient = User.query.get(recipient_id)
 		message = Message.query.get(message_id)
 		r_email = recipient.email
-		r_email = r_email.encode('utf-8')
 		url = message.url
 		url = url.encode('utf-8')
 		content = bm.get(url) or message.render_url()
 		html = render_template('new_message_email.html', sender = sender.username, recipient = recipient.username, note = message.title, content = content, timedelta = message.format_timestamp())
 		if r_email:
+			r_email = r_email.encode('utf-8')
 			resp = requests.post( 	mailgun_api,
 								auth = ("api",mailgun_auth),
 								data = {"from":"Zipp - Notifications <info@zippmsg.com>",
