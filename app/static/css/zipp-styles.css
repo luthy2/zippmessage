@@ -184,7 +184,50 @@ body .pad-nav{
 		margin:auto;
 	}
 
+	#dismiss:hover{
+    color:#CC1A40;
+  }
+  .btn:focus{
+    outline:0;
+    border:none;
+  }
+  .blue-hover:hover{
+    color:#54C6EB;
+  }
+  .green-hover:hover{
+    color:#06D66E;
+  }
+	#compose {
+		display: none;
+	}
 
+	#compose:target {
+		display: block;
+	}
+
+
+	.article {
+			position: relative;
+			overflow: hidden;
+			height:17em;
+			width:100%;
+	}
+
+	.article-small {
+			position: relative;
+			overflow: hidden;
+			height:12em;
+			width:100%;
+	}
+
+	.article img {
+			position: absolute;
+			top: -9999px;
+			bottom: -9999px;
+			left: -9999px;
+			right: -9999px;
+			margin: auto;
+		}
 /*------------------------type--------------------------*/
 .article-title-text{
 	font-family: Lora, serif;
