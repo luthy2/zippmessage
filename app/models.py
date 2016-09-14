@@ -325,7 +325,7 @@ def article_tag(resp, msg_url = None):
 		url = msg_url or ''
 
 	provider = provider_url(url)
-	provider_tag = '<p style = "color:gray"><img src="https://logo.clearbit.com/%s?size=18%s"><small>%s</small></p>' % (provider, provider)
+	provider_tag = '<p style = "color:gray"><img src="https://logo.clearbit.com/%s?size=18"><small>%s</small></p>' % (provider, provider)
 
 	if 'title' in resp:
 		title = resp['title']
