@@ -325,7 +325,7 @@ def article_tag(resp, msg_url = None):
 		url = msg_url or ''
 
 	provider = provider_url(url)
-	provider_tag = '<p style = "color:gray"><img src="https://logo.clearbit.com/%s?size=18"><small>%s</small></p>' % (provider, provider)
+	provider_tag = '<p style = "color:gray"><img src="https://logo.clearbit.com/%s?size=18"><small> %s</small></p>' % (provider, provider)
 
 	if 'title' in resp:
 		title = resp['title']
@@ -411,6 +411,8 @@ def get_url_content(message_url):
 		elif 'airbnb.com' in resp['provider_url']:
 			message_url = message_url.encode('utf-8')
 			return article_tag(resp, msg_url = message_url)
+		elif 'amazon.com' in resp['provider_url']:
+			return article_tag(resp, msg_url = url)
 		else:
 			return render_no_style(message_url)
 

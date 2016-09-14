@@ -1,3 +1,6 @@
+<li class="list-group-item">
+    <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}: </a>{{message.message.title}}<small><span class="pull-right">{{message.message.format_timestamp()}}</span></small>
+</li>
 <a class="list-group-item" href="{{message.message.url}}" target = "_blank" rel = "noopener">
   {% set resp = message.message.request_url() %}
     {%if resp['title']%}
@@ -5,23 +8,8 @@
     {%else%}
       <h5>Content available at {{message.message.short_url()}}</h5>
     {%endif%}
-</a>
-<li class="list-group-item">
-  <p>
-    From: <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}</a><span class ="pull-right">{{message.message.format_timestamp()}}</span>
-  </p>
-  <p>
     <span style="display:inline-block"><img src="{{message.message.url_logo()}}"> <span  class = "truncate">{{message.message.short_url()}}</span></span>
-  </p>
-  <h5><small>{{message.message.title}}</small><h5>
-</li>
-<li class="list-group-item">
-  <ul class="list-inline" style="text-align:center;">
-    <li style="width:17%"><a href ="{{url_for('dismiss', message_id = message.message_id, next = 'bookmarks')}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><a></li>
-    <li style="width:17%"><a href ="{{url_for('bookmark', message_id = message.message_id, next ='bookmarks')}}"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span><a></li>
-    <li style="width:17%"><a href ="{{url_for('share', message_id = message.message_id, next = 'bookmarks')}}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span><a></li>
-  </ul>
-</li>
+</a>
 {% with tags = message.usermessage_tags() %}
   {% if tags %}
     <li class = "list-group-item">
@@ -31,3 +19,10 @@
     </li>
   {% endif %}
 {% endwith %}
+<li class="list-group-item">
+  <ul class="list-inline" style="text-align:center;">
+    <li style="width:17%"><a href ="{{url_for('dismiss', message_id = message.message_id, next = 'bookmarks')}}"><span id="dismiss" class="glyphicon glyphicon-remove" aria-hidden="true"></span><a></li>
+    <li style="width:17%"><a href ="{{url_for('bookmark', message_id = message.message_id, next ='bookmarks')}}"><span class="glyphicon glyphicon-tags green-hover" aria-hidden="true"></span><a></li>
+    <li style="width:17%"><a href ="{{url_for('share', message_id = message.message_id, next = 'bookmarks')}}"><span class="glyphicon glyphicon-share-alt blue-hover" aria-hidden="true"></span><a></li>
+  </ul>
+</li>
