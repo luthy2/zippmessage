@@ -58,6 +58,10 @@
       percentPosition: true,
     });
   });
-  window.onload = $container.masonry().layout()
+  window.onload = $container.masonry({
+    columnWidth:'.item',
+    itemSelector: '.item',
+    percentPosition: true,
+  });
 </script>
 {%endblock%}
