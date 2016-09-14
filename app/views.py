@@ -480,9 +480,10 @@ def share(message_id):
 @login_required
 def tag(name, page = 1):
 	user = g.user
+	user_tags=dict(user.tags_for_user())
 	tag_name = urllib.unquote(name)
 	bookmarks = user.get_bookmarks_with_tag(tag_name).paginate(page,12,False)
-	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, name = name)
+	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, name = name, user_tags=user_tags)
 
 @app.route('/tags', methods = ["GET", "POST"])
 @login_required

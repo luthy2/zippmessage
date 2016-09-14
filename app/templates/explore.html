@@ -41,7 +41,7 @@
           <span class = "embedly-embed">{{item["content"] | safe}}</span>
         </li>
         <li class = "list-group-item text-align text-center">
-          <a href = {{url_for("share", message_id = item["id"], next='inbox')}}>
+          <a href = {{url_for("share", message_id = item["id"], next='explore')}}>
             <span class ="glyphicon glyphicon-send" id="hover"></span>
           </a>
         </li>
@@ -58,5 +58,6 @@
       percentPosition: true,
     });
   });
+  window.onload = $container.masonry().layout()
 </script>
 {%endblock%}
