@@ -1,15 +1,6 @@
 <!-- extend from base layout -->
 {% extends "base.html" %}
 {% block content %}
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul>
-    {% for message in messages %}
-      <li><div class="alert alert-warning">{{ message }}</div></li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
 <div class="row">
 	<div class="col-md-4 col-md-offset-4">
 		<h4>Select Recipients:</h4><br>
