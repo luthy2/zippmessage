@@ -1,15 +1,6 @@
 <!-- extends base layout -->
 {% extends "base.html" %}
 {% block content %}
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul>
-    {% for message in messages %}
-      <li><div class="alert alert-warning">{{ message }}</div></li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
 <div class ="row">
 	<div class="col-md-6 col-md-offset-3">
 		<h4>New Message</h4>
