@@ -37,14 +37,13 @@
     </ul>
   </div>
   <div class = "col-sm-9">
+    <div class="row masonry">
     {% if bookmarks %}
       {% for message in bookmarks.items %}
-          <div class="row masonry">
-            <div class = "col-sm-5 col-md-4 item">
-              <ul class = "list-group">
-                {% include "bookmarked.html" %}
-              </ul>
-            </div>
+          <div class = "col-sm-5 col-md-4 item">
+            <ul class = "list-group">
+              {% include "bookmarked.html" %}
+            </ul>
           </div>
       {% endfor %}
     {% else %}
@@ -52,6 +51,7 @@
         <li class = "list-group-item">nothing here yet :/</li>
       </ul>
     {% endif %}
+    </div>
   </div>
 </div>
 <div class = "row">
