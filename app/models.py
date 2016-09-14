@@ -325,15 +325,15 @@ def article_tag(resp, msg_url = None):
 		url = msg_url or ''
 
 	provider = provider_url(url)
-	provider_tag = '<p style = "color:gray"><small>%s</small></p>' % provider
+	provider_tag = '<p style = "color:gray"><img src="https://logo.clearbit.com/%s?size=18%s"><small>%s</small></p>' % (provider, provider)
 
 	if 'title' in resp:
 		title = resp['title']
-		title_tag = '<h4 class = "list-group-item-heading" style="padding-top:2%%">%s</h4>' % title
+		title_tag = '<h4 class = "list-group-item-heading article-title-text" style="padding-top:2%%">%s</h4>' % title
 
 	if 'description' in resp:
 		description = resp['description']
-		description_tag = '<p class = "list-group-item-text">%s</p>' % description
+		description_tag = '<p class = "list-group-item-text article-body-text">%s</p>' % description
 
 
 	if 'thumbnail_url' in resp:
