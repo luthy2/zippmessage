@@ -58,6 +58,8 @@
       percentPosition: true,
     });
   });
-  $(window).load($container.masonry('layout'))
+  $(window).load(function(){
+    $container.masonry('layout')
+  });
 </script>
 {%endblock%}
