@@ -44,6 +44,8 @@
         <p>no tagged items yet :/</p>
       {% endif %}
     </ul>
+  </div>
+  <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
     <ul class = "list-group hidden-sm">
       {% if user_tags %}
         <a class="list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right pull-right"></span></a>
