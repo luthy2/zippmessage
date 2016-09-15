@@ -32,10 +32,12 @@
   {% endfor %}
 </div>
 <div class = "container">
-  <ul class="pager">
-    {% if bookmarks.has_prev %}<li><a id="outline" href = "{{url_for('tag', name = name, page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
-    {% if bookmarks.has_next %}<li><a id = "outline" href = "{{url_for('tag', name = name, page = bookmarks.next_num)}}">next</a></li>{% endif %}
-  </ul>
+  <div class = "row">
+    <div class="col-md-6 text-align text-center">
+      {% if bookmarks.has_prev %}<a id="outline" href = "{{url_for('tag', name = name, page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
+      {% if bookmarks.has_next %}<a id = "outline" href = "{{url_for('tag', name = name, page = bookmarks.next_num)}}">next</a></li>{% endif %}
+    </div>
+  </div>
 </div>
 <script type="text/javascript">
   var $container = $('.masonry');
