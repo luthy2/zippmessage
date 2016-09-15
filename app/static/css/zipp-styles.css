@@ -43,6 +43,9 @@ body .pad-nav{
 	 box-shadow: 0 -5px #06D66E inset;
 	 transition: all .5s ease 0s;
 }
+#nav-bottom-border a .active {
+	box-shadow: 0 -5px #06D66E inset;
+}
 /*-------------------COLORS-------------------*/
 .text-white{
 	color:white;
