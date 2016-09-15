@@ -183,9 +183,9 @@ class Message(db.Model):
 	url = db.Column(db.String(300))
 	from_user = db.Column(db.Integer, db.ForeignKey('user.id'))
 	is_delivered = db.Column(db.Boolean, default = False)
-	# points = db.Column(db.Integer)
+	points = db.Column(db.Integer)
 	timestamp = db.Column(db.DateTime)
-	message_activity = relationship("Activity", backref = 'message', lazy = 'dyanmic')
+	message_activity = db.relationship("Activity", backref = 'message', lazy = 'dyanmic')
 	# private = db.Column(db.Boolean, default = True)
 
 	recipients = db.relationship(	'User',
@@ -220,14 +220,14 @@ class Message(db.Model):
 		parse_object = urlparse(self.url)
 		return parse_object.netloc
 
-	# def score(self, gravity = 1.8):
-	# 	p = self.points
-	# 	ts = self.timestamp
-	# 	now = datetime.utcnow()
-	# 	tdelta = now-ts
-	# 	s = tdelta.total_seconds / 3600.0
-	# 	score = (p / s**gravity)
-	# 	return score
+	def score(self, gravity = 1.8):
+		p = self.points
+		ts = self.timestamp
+		now = datetime.utcnow()
+		tdelta = now-ts
+		s = tdelta.total_seconds / 3600.0
+		score = (p / s**gravity)
+		return score
 
 	def format_timestamp(self):
 		ts = self.timestamp
