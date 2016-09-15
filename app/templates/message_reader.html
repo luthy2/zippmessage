@@ -37,7 +37,7 @@
     <div class= "col-md-8 col-md-offset-2">
       <a href = "{{url_for('inbox')}}"><span class = "glyphicon glyphicon-chevron-left"></span>Inbox</a>
       <span class="pull-right">
-        <a class="btn btn-default btn-sm" id="outline" href = "{{message.url}}" target="_blank">
+        <a class="btn btn-default btn-sm" id="outline" href = "{{message.message.url}}" target="_blank">
           new window <span class = "glyphicon glyphicon-new-window"></span>
         </a>
       </span>
@@ -45,9 +45,9 @@
   </div>
   <div class = "row">
    <div class = "col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-     {% set resp = message.get_content() %}
+     {% set resp = message.message.get_content() %}
       {% if not resp %}
-        <p> We were unable to extract the content from the original source. <a href ="{{message.url}}" target ="_blank">Open the link in a new window<span class = "glyphicon glyphicon-new-window"></span></a> to view the content.</p>
+        <p> We were unable to extract the content from the original source. <a href ="{{message.message.url}}" target ="_blank">Open the link in a new window<span class = "glyphicon glyphicon-new-window"></span></a> to view the content.</p>
       {% else %}
         {% if resp["title"]%}
           <h2>{{resp['title']}}</h2>
@@ -71,10 +71,10 @@
         {% else %}
         <p>We were unable to extract the content from this url. View it at the original source.</p>
           <ul class = "list-group">
-            <a class = "list-group-item" href="{{message.url}}">
+            <a class = "list-group-item" href="{{message.message.url}}">
               <p class ="list-group-item-heading">{{resp['title']}}</p>
               <p class = "list-group-item-text">{{resp['description']}}</p>
-              <p style="color:gray"><small>{{message.short_url()}}</small></p>
+              <p style="color:gray"><small>{{message.message.short_url()}}</small></p>
             </a>
           </ul>
         {%endif%}
