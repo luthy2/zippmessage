@@ -664,6 +664,13 @@ def m_api_inbox():
 		data.append(m)
 	return jsonify(data)
 
+@app.route('/activity', methods=["GET", "POST"])
+@login_required
+def activity():
+	user = g.user
+	activity = user.user_activity()
+	return render_templater('activity.html', activity=activity)
+
 # @app.route('api/1/m/login', methods = ["GET", "POST"])
 # def m_api_login():
 # 	return redirect(url_for())

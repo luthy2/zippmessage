@@ -53,12 +53,13 @@ class User(db.Model):
 	oauth_secret = db.Column(db.String(200))
 	username = db.Column(db.String(80))
 	email = db.Column(db.String(240))
-	# email_token db.Column(db.String)
+	# email_token = db.Column(db.String)
 	# notifications_status = db.Column(db.Integer)
 	# api_token = db.Column(db.String)
 	sent_messages = db.relationship('Message', backref='author', lazy='dynamic')
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
-
+	activity_feed = db.relationship('Activity', backref='owner', lazy='dynamic')
+	actions_created = db.relationship('Activity', backref='subject', lazy='dynamic')
 
 	contacts = db.relationship('User',
 								secondary = approved_contacts,
@@ -143,15 +144,15 @@ class User(db.Model):
 		db.session.commit()
 		return self
 
-	# def user_activity(self):
-	# 	activity = Activity.query.filter_by(Activity.owner_id == self.id).limit(50).order_by(self.timestamp.desc())
-	# 	return activity
-	#
-	# def create_activity(self, subject_id, action, message_id, timestamp = datetime.utcnow()):
-	# 	a = Activity(owner_id = self.id, subject_id = subject_id, action = action, message_id = message_id, timestamp = timestamp)
-	# 	db.session.add(a)
-	# 	db.session.commit(a)
-	# 	return self
+	def user_activity(self):
+		activity = Activity.query.filter(Activity.owner_id == self.id).limit(50).order_by(self.timestamp.desc())
+		return activity
+
+	def create_activity(self, owner_id, action, message_id, timestamp = datetime.utcnow()):
+		a = Activity(owner_id = owner_id, subject_id = self.id, action = action, message_id = message_id, timestamp = timestamp)
+		db.session.add(a)
+		db.session.commit(a)
+		return self
 
 
 	def tags_for_user(self):
@@ -184,7 +185,7 @@ class Message(db.Model):
 	is_delivered = db.Column(db.Boolean, default = False)
 	# points = db.Column(db.Integer)
 	timestamp = db.Column(db.DateTime)
-	# activity = relationship(backref = 'message', ) #todo
+	message_activity = relationship("Activity", backref = 'message', lazy = 'dyanmic')
 	# private = db.Column(db.Boolean, default = True)
 
 	recipients = db.relationship(	'User',
@@ -417,16 +418,16 @@ def get_url_content(message_url):
 			return render_no_style(message_url)
 
 
-# class Activity(db.Model):
-# 	owner_id = db.Column(db.Integer, db.ForeignKey, primary_key = True) #index for construction of feeds
-# 	subject_id = db.Column(db.Integer, db.ForeignKey, primary_key=True) #who performed the action
-# 	action = db.Column(db.String()) #the type of action
-# 	message_id = db.Column(db.Integer, db.ForeignKey, primary_key=True) #the message the action was performed on
-# 	timestamp = db.Column(db.Datetime) #when
-#
-# 	def __init__(self, owner_id, subject_id, action, message_id, timestamp):
-# 		self.owner_id = owner_id
-# 		self.subject_id = subject_id
-# 		self.action = action
-# 		self.message_id = message_id
-# 		self.timestamp = timestamp
+class Activity(db.Model):
+	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True) #index for construction of feeds
+	subject_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True) #who performed the action
+	action = db.Column(db.String()) #the type of action
+	message_id = db.Column(db.Integer, db.ForeignKey("message.id"), primary_key=True) #the message the action was performed on
+	timestamp = db.Column(db.Datetime) #when
+
+	def __init__(self, owner_id, subject_id, action, message_id, timestamp):
+		self.owner_id = owner_id #who receives the activity
+		self.subject_id = subject_id #who performed the action
+		self.action = action
+		self.message_id = message_id
+		self.timestamp = timestamp
