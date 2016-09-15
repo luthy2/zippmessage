@@ -1,7 +1,6 @@
 body {
 	background-color: #fafafa;
 	font-family:Muli, sans;
-	padding-top: 70px;
 }
 body .pad-nav{
 		padding-top: 70px;
@@ -237,7 +236,4 @@ body .pad-nav{
 }
 .article-body-text{
 	font-family: Noto Sans, sans;
-}
-#dismiss:hover{
-	color:#CC1A40;
 }
