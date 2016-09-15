@@ -13,10 +13,12 @@
     body{
       line-height: 200%;
       font-size:150%;
-      padding:none;
     }
       img {
         width:100%;
+      }
+      .negative{
+        padding-top: -70px;
       }
       .glyphicon-send:hover{
         color:#54C6EB;
@@ -27,7 +29,7 @@
    </style>
 </head>
 <body>
-<div class = "container-fluid">
+<div class = "container-fluid negative">
   <div class = "row">
     <div class= "col-md-8 col-md-offset-2">
       <a href = "{{url_for('inbox')}}"><span class = "glyphicon glyphicon-chevron-left"></span>Inbox</a>
