@@ -33,8 +33,8 @@
 </div>
 <div class = "container">
   <ul class="pager">
-    {% if bookmarks.has_prev %}<li><a id="outline" href = "{{url_for('tag',page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
-    {% if bookmarks.has_next %}<li><a id = "outline" href = "{{url_for('tag',page = bookmarks.next_num)}}">next</a></li>{% endif %}
+    {% if bookmarks.has_prev %}<li><a id="outline" href = "{{url_for('tag', name = name, page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
+    {% if bookmarks.has_next %}<li><a id = "outline" href = "{{url_for('tag', name = name, page = bookmarks.next_num)}}">next</a></li>{% endif %}
   </ul>
 </div>
 <script type="text/javascript">
