@@ -32,6 +32,8 @@
 </style>
 {% if not g.user %}
 <div class="pad-explore"></div>
+{%else%}
+<div class="pad-top"></div>
 {% endif %}
 <div class="masonry row">
   {% for item in items %}
