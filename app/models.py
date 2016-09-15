@@ -185,7 +185,7 @@ class Message(db.Model):
 	is_delivered = db.Column(db.Boolean, default = False)
 	points = db.Column(db.Integer)
 	timestamp = db.Column(db.DateTime)
-	message_activity = db.relationship("Activity", backref = 'message', lazy = 'dyanmic')
+	message_activity = db.relationship("Activity", backref = 'message', lazy = 'dynamic')
 	# private = db.Column(db.Boolean, default = True)
 
 	recipients = db.relationship(	'User',
