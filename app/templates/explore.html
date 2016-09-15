@@ -50,6 +50,7 @@
   {% endfor %}
 </div>
 <script type="text/javascript">
+  $(".explore").addClass("active");
   var $container = $('.masonry');
   $container.imagesLoaded( function () {
     $container.masonry({
@@ -61,6 +62,6 @@
   $(window).load(function(){
     $container.masonry('layout')
   });
-  $(".explore").addClass("active")
 </script>
+
 {%endblock%}
