@@ -59,7 +59,7 @@ class User(db.Model):
 	sent_messages = db.relationship('Message', backref='author', lazy='dynamic')
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
 	activity_feed = db.relationship('Activity', foreign_keys="Activity.owner_id", backref='owner', lazy='dynamic')
-	actions_created = db.relationship('Activity', foregin_keys= "Activity.subject_id", backref='subject', lazy='dynamic')
+	actions_created = db.relationship('Activity', foreign_keys= "Activity.subject_id", backref='subject', lazy='dynamic')
 
 	contacts = db.relationship('User',
 								secondary = approved_contacts,
