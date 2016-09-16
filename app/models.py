@@ -58,8 +58,8 @@ class User(db.Model):
 	# api_token = db.Column(db.String)
 	sent_messages = db.relationship('Message', backref='author', lazy='dynamic')
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
-	activity_feed = db.relationship('Activity', backref='owner', lazy='dynamic')
-	actions_created = db.relationship('Activity', backref='subject', lazy='dynamic')
+	activity_feed = db.relationship('Activity', foreign_keys="Activity.owner_id", backref='owner', lazy='dynamic')
+	actions_created = db.relationship('Activity', foregin_keys= "Activity.subject_id", backref='subject', lazy='dynamic')
 
 	contacts = db.relationship('User',
 								secondary = approved_contacts,
@@ -419,8 +419,8 @@ def get_url_content(message_url):
 
 
 class Activity(db.Model):
-	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), foreign_keys=['activity_feed'], primary_key = True) #index for construction of feeds
-	subject_id = db.Column(db.Integer, db.ForeignKey('user.id'), foreign_keys=["actions_created"], primary_key=True) #who performed the action
+	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True) #index for construction of feeds
+	subject_id = db.Column(db.Integer, db.ForeignKey('user.id'),  primary_key=True) #who performed the action
 	action = db.Column(db.String()) #the type of action
 	message_id = db.Column(db.Integer, db.ForeignKey("message.id"), primary_key=True) #the message the action was performed on
 	timestamp = db.Column(db.DateTime) #when
