@@ -96,8 +96,8 @@
       <li class="list-group-item">
         <a href=# ><h4 class="text-right">Activity</h4></a>
         <hr>
-      {% if activity_feed %}
-        {% for item in activity_feed %}
+      {% if activity %}
+        {% for item in activity %}
           <a class = "list-group-item" href = "{{url_for(reader, message = message_id)}}">{{item.subject.username}} {{item.action}} your message: {{item.message.note}}</a>
         {% endfor %}
       {% else %}
