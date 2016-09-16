@@ -779,13 +779,14 @@ def send_activity_email(sender_id, recipient_id, action):
 		r_email  = recipient.email
 		if r_email:
 			r_email = r_email.encode('utf-8')
-			r_email = str(r_email)html = render_template('activity_email.html', sender = sender.username, recipient = recipient.username, action = action)
+			r_email = str(r_email)
+			html = render_template('activity_email.html', sender = sender.username, recipient = recipient.username, action = action)
 			resp = requests.post( 	mailgun_api,
 				auth = ("api",mailgun_auth),
 				data = {"from":"Zipp - Notifications <info@zippmsg.com>",
-						"to":r_email,
-						"subject":"New activty on your message!",
-						"html":html})
+				"to":r_email,
+				"subject":"New activty on your message!",
+				"html":html})
 			print resp
 			return resp
 	return False
