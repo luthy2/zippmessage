@@ -139,8 +139,7 @@ def welcome():
 def inbox():
 	user = g.user
 	user_tags = user.tags_for_user().most_common(20)
-	activity = None
-	# activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
+	activity = user.user_activity()
 	form = NewMessageForm()
 	if form.validate_on_submit():
 			message = Message(title = form.message_title.data,
