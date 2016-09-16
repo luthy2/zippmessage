@@ -419,8 +419,8 @@ def get_url_content(message_url):
 
 
 class Activity(db.Model):
-	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True) #index for construction of feeds
-	subject_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True) #who performed the action
+	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), foreignkeys=[activity_feed], primary_key = True) #index for construction of feeds
+	subject_id = db.Column(db.Integer, db.ForeignKey('user.id'), foreignkeys=[actions_created], primary_key=True) #who performed the action
 	action = db.Column(db.String()) #the type of action
 	message_id = db.Column(db.Integer, db.ForeignKey("message.id"), primary_key=True) #the message the action was performed on
 	timestamp = db.Column(db.DateTime) #when
