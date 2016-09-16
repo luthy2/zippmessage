@@ -423,7 +423,7 @@ class Activity(db.Model):
 	subject_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True) #who performed the action
 	action = db.Column(db.String()) #the type of action
 	message_id = db.Column(db.Integer, db.ForeignKey("message.id"), primary_key=True) #the message the action was performed on
-	timestamp = db.Column(db.Datetime) #when
+	timestamp = db.Column(db.DateTime) #when
 
 	def __init__(self, owner_id, subject_id, action, message_id, timestamp):
 		self.owner_id = owner_id #who receives the activity
