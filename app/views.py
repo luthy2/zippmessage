@@ -155,6 +155,17 @@ def inbox():
 
 	return render_template('inbox.html', user=user, user_tags = user_tags, title = "Inbox", form= form, activity = activity)
 
+@app.route('/activity', methods=["GET", "POST"])
+@login_required
+def activity():
+	user = g.user
+	activity = user.user_activity()
+	return render_templater('activity.html', activity=activity)
+
+
+
+
+
 
 @app.route('/top', methods = ["GET", "POST"])
 @login_required
@@ -360,7 +371,8 @@ def bookmark(message_id):
 		tags = form.tags.data + ','
 		# we can use the += operator because there will at least be an empty string. convert input to lowercase.
 		message.tags += tags.lower()
-		db.session.add(message, user)
+		a = user.create_activity(message.message.author.id, 'bookmarked', message.message.id)
+		db.session.add(message, user, a)
 		db.session.commit()
 		flash("tags updated")
 		return redirect(redirect_url())
@@ -466,14 +478,6 @@ def share(message_id):
 
 	return render_template('selectrecipient.html', user = user, title = "Recipients", message = message, form = form)
 
-# @app.route("<action_name>/<message_id>", methods = ["GET", "POST"])
-# @login_required
-# def action(action_name, message_id):
-# 	user = g.user
-# 	m = Message.query.get(message_id)
-# 	a = user.create_activity(subject_id = m.author.id, action = action_name, message_id = m.id)
-# 	send_activity_email.delay(user.id, m.author.id, action_name)
-# 	return redirect(redirect_url())
 
 @app.route('/tag/<name>', methods = ["GET", "POST"])
 @app.route('/tag/<name>/<int:page>', methods = ["GET", "POST"])
@@ -535,7 +539,7 @@ def explore():
 # 	p = Messages.query.limit(50).order_by(Message.score(gravity=gravity).desc())
 # 	return render_template("popular.html", title = 'Popular')
 
-#start of api routes#
+#start of api routes---------------------------------------------------------#
 
 @app.route('/api/1/heartbeat', methods = ["GET", "POST"])
 def api_heartbeat():
@@ -664,13 +668,6 @@ def m_api_inbox():
 		data.append(m)
 	return jsonify(data)
 
-@app.route('/activity', methods=["GET", "POST"])
-@login_required
-def activity():
-	user = g.user
-	activity = user.user_activity()
-	return render_templater('activity.html', activity=activity)
-
 # @app.route('api/1/m/login', methods = ["GET", "POST"])
 # def m_api_login():
 # 	return redirect(url_for())
@@ -760,8 +757,8 @@ def send_followed_email(sender_id, recipient_id):
 		recipient = User.query.get(recipient_id)
 		sender = User.query.get(sender_id)
 		r_email  = recipient.email
-		html = render_template('follow_email.html', sender = sender.username, recipient = recipient.username)
 		if r_email:
+			html = render_template('follow_email.html', sender = sender.username, recipient = recipient.username)
 			r_email = r_email.encode('utf-8')
 			r_email = str(r_email)
 			resp = requests.post( 	mailgun_api,
@@ -774,25 +771,24 @@ def send_followed_email(sender_id, recipient_id):
 			return resp
 	return False
 
-# @celery.task
-# def send_activity_email(sender_id, recipient_id, action):
-# 	with app.app_context():
-# 		recipient = User.query.get(recipient_id)
-# 		sender = User.query.get(sender_id)
-# 		r_email  = recipient.email
-# 		r_email = r_email.encode('utf-8')
-# 		html = render_template('activity_email.html', sender = sender.username, recipient = recipient.username, action = action)
-# 		if recipient_email:
-# 			r_email = str(r_email)
-# 			resp = requests.post( 	mailgun_api,
-# 				auth = ("api",mailgun_auth),
-# 				data = {"from":"Zipp - Notifications <info@zippmsg.com>",
-# 						"to":r_email,
-# 						"subject":"New Follower!",
-# 						"html":html})
-# 			print resp
-# 			return resp
-# 	return False
+@celery.task
+def send_activity_email(sender_id, recipient_id, action):
+	with app.app_context():
+		recipient = User.query.get(recipient_id)
+		sender = User.query.get(sender_id)
+		r_email  = recipient.email
+		if r_email:
+			r_email = r_email.encode('utf-8')
+			r_email = str(r_email)html = render_template('activity_email.html', sender = sender.username, recipient = recipient.username, action = action)
+			resp = requests.post( 	mailgun_api,
+				auth = ("api",mailgun_auth),
+				data = {"from":"Zipp - Notifications <info@zippmsg.com>",
+						"to":r_email,
+						"subject":"New activty on your message!",
+						"html":html})
+			print resp
+			return resp
+	return False
 
 @celery.task
 def send_new_msg_email(sender_id, recipient_id, message_id):
@@ -805,9 +801,9 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 		url = message.url
 		url = url.encode('utf-8')
 		content = bm.get(url) or message.render_url()
-		html = render_template('new_message_email.html', sender = sender.username, recipient = recipient.username, note = message.title, content = content, timedelta = message.format_timestamp())
 		if r_email:
 			r_email = r_email.encode('utf-8')
+			html = render_template('new_message_email.html', sender = sender.username, recipient = recipient.username, note = message.title, content = content, timedelta = message.format_timestamp())
 			resp = requests.post( 	mailgun_api,
 								auth = ("api",mailgun_auth),
 								data = {"from":"Zipp - Notifications <info@zippmsg.com>",
@@ -817,6 +813,7 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 			print resp
 			return resp
 	return False
+
 
 
 #*****--------------------------HELPER ROUTES------------------------******
