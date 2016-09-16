@@ -54,7 +54,7 @@ class User(db.Model):
 	username = db.Column(db.String(80))
 	email = db.Column(db.String(240))
 	# email_token = db.Column(db.String)
-	# notifications_status = db.Column(db.Integer)
+	notifications_status = db.Column(db.Integer)
 	# api_token = db.Column(db.String)
 	sent_messages = db.relationship('Message', backref='author', lazy='dynamic')
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
@@ -151,7 +151,7 @@ class User(db.Model):
 	def create_activity(self, owner_id, action, message_id, timestamp = datetime.utcnow()):
 		a = Activity(owner_id = owner_id, subject_id = self.id, action = action, message_id = message_id, timestamp = timestamp)
 		db.session.add(a)
-		db.session.commit(a)
+		db.session.commit()
 		return self
 
 

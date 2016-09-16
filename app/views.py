@@ -371,8 +371,8 @@ def bookmark(message_id):
 		tags = form.tags.data + ','
 		# we can use the += operator because there will at least be an empty string. convert input to lowercase.
 		message.tags += tags.lower()
-		a = user.create_activity(message.message.author.id, 'bookmarked', message.message.id)
-		db.session.add(message, user, a)
+		user.create_activity(message.message.author.id, 'bookmarked', message.message.id)
+		db.session.add(message, user)
 		db.session.commit()
 		flash("tags updated")
 		return redirect(redirect_url())
