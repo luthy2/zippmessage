@@ -149,7 +149,7 @@ class User(db.Model):
 		return activity
 
 	def create_activity(self, owner_id, action, message_id, timestamp = datetime.utcnow()):
-		s = Activity.query.filter(Activity.message_id==message_id).filter(Activity.subject_id == self.id).filter(Activity.action == action).one()
+		s = Activity.query.filter(Activity.message_id==message_id).filter(Activity.subject_id == self.id).filter(Activity.action == action).scalar()
 		if s:
 			a = Activity(owner_id = owner_id, subject_id = self.id, action = action, message_id = message_id, timestamp = timestamp)
 			db.session.add(a)
