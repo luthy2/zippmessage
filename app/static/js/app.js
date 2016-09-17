@@ -96,7 +96,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     $http ({
       method: 'POST',
       url: api_base+'activity/create',
-      data:{"owner_id":owner_id, "message_id":messageId, "action":"reacted "+reaction }
+      data:{ "message_id":messageId, "action":"reacted "+reaction }
     }).then(function success(response){
         console.log(response)
         $scope.alert = 'Reaction' + reaction + 'Sent!'
