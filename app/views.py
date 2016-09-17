@@ -324,6 +324,7 @@ def follow(username):
 	if u is None:
 		flash('Cannot follow ' + nickname + '.')
 		return redirect(redirect_url())
+	u.create_activity(owner_id = message.author.id, action = 'followed', message_id = ()) #todo
 	db.session.add(u)
 	db.session.commit()
 	send_followed_email.delay(g.user.id, user.id)
@@ -467,6 +468,7 @@ def share(message_id):
 
 			#deliver message
 			new_message.deliver_message()
+			user.create_activity(owner_id = message.author.id, action='reshared', message_id = message.id)
 			db.session.add(new_message)
 			db.session.commit()
 			flash('Message Shared!')
@@ -725,12 +727,16 @@ def m_api_inbox():
 # 	db.session.commit()
 # 	return jsonify(ok="true")
 
-# @app.route('api/1/user/activity')
-# @login_required
-# def api_user_activity():
-# 	user = g.user
-# 	activity = MessageActivity.query.filter_by(MessageActivity.owner_id == user.id)
-# 	return jsonify(activity_feed)
+@app.route('api/1/activity/create', methods=["GET","POST"])
+@login_required
+def api_user_activity():
+	user = g.user
+	data = request.get_json()
+	owner_id = data["owner_id"]
+	action = data["action"]
+	message_id = data["message_id"]
+	user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
+	return jsonify(ok=True)
 
 #*********----------------------ASYNC TASKS-----------------------********
 @celery.task
