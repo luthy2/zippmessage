@@ -152,6 +152,7 @@ class User(db.Model):
 		a = Activity(owner_id = owner_id, subject_id = self.id, action = action, message_id = message_id, timestamp = timestamp)
 		db.session.add(a)
 		db.session.commit()
+		print "activity created"
 		return self
 
 
