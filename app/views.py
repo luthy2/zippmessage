@@ -732,9 +732,10 @@ def m_api_inbox():
 def api_user_activity():
 	user = g.user
 	data = request.get_json()
-	owner_id = data["owner_id"]
 	action = data["action"]
 	message_id = data["message_id"]
+	m = Message.query.get(message_id)
+	owner_id = m.author.username
 	user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
 	return jsonify(ok=True)
 
