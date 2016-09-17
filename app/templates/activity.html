@@ -6,13 +6,10 @@
       <li class="list-group-item">
         <h4>Activity</h4>
         <hr>
-        {% if activity%}
           {% for item in activity%}
             <p>{{item.subject.username}} {{item.action}} your message <a href = "{{url_for('message_reader', message_id = 'item.message_id')}}">{{item.message.title}}</a><span class="pull-right">{{item.timestamp}}</span></p>
-          {%endfor%}
-        {%else%}
-          <p>No activity yet. Why don't you add some <a href ="{{url_for('find_contacts')}}">friends?</a></p>
-        {%endif%}
+          {% endfor %}
+          <!-- <p>No activity yet. Why don't you add some <a href ="{{url_for('find_contacts')}}">friends?</a></p> -->
       </li>
     </ul>
   </div>

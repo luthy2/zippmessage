@@ -145,7 +145,7 @@ class User(db.Model):
 		return self
 
 	def user_activity(self):
-		activity = Activity.query.filter(Activity.owner_id == self.id).order_by(Activity.timestamp.desc()).limit(50)
+		activity = Activity.query.filter(Activity.owner_id == self.id).order_by(Activity.timestamp.desc()).limit(50).all()
 		return activity
 
 	def create_activity(self, owner_id, action, message_id, timestamp = datetime.utcnow()):
