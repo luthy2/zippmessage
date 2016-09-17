@@ -727,7 +727,7 @@ def m_api_inbox():
 # 	db.session.commit()
 # 	return jsonify(ok="true")
 
-@app.route('api/1/activity/create', methods=["GET","POST"])
+@app.route('/api/1/activity/create', methods=["GET","POST"])
 @login_required
 def api_user_activity():
 	user = g.user
