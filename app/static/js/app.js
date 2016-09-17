@@ -105,7 +105,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
         }, 2800);
     }), function error(response){
       console.log(response)
-      $scope.alert = 'hmmm... something went wrong and we were unable to share your reaction.'
+      $scope.alert = response.error
     };
   };
 
