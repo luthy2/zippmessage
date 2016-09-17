@@ -23,13 +23,14 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     }), function error(response){
       console.log(response)
     };
-    $http({
-      method:'GET',
-      url: api_base + 'user/bookmarks'
-    }).then(function success(response){
-      console.log(response)
-      $scope.bookmarks = response.data
-    })
+    //
+    // $http({
+    //   method:'GET',
+    //   url: api_base + 'user/bookmarks'
+    // }).then(function success(response){
+    //   console.log(response)
+    //   $scope.bookmarks = response.data
+    // })
 
   $scope.getInbox = function(){
     $scope.loading = true;
@@ -73,7 +74,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
   $scope.dismissMessage = function(messageId){
     $http ({
       method: 'GET',
-      url: 'http://www.zippmsg.com/api/1/dismiss/'+messageId
+      url: api_base+'dismiss/'+messageId
     }).then(function success(response){
         console.log(response)
         for (var i = 0; i < $scope.inbox.length; i++){
@@ -89,6 +90,22 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     }), function error(response){
       console.log(response)
       $scope.alert = 'hmmm... something went wrong and we were unable to dismiss the message.'
+    };
+  };
+  $scope.createReaction = function(messageId, reaction){
+    $http ({
+      method: 'POST',
+      url: api_base+'activity/create',
+      data:{"owner_id":owner_id, "message_id":messageId, "action":"reacted "+reaction }
+    }).then(function success(response){
+        console.log(response)
+        $scope.alert = 'Reaction' + reaction + 'Sent!'
+        $timeout(function(){
+            $scope.alert ='';
+        }, 2800);
+    }), function error(response){
+      console.log(response)
+      $scope.alert = 'hmmm... something went wrong and we were unable to share your reaction.'
     };
   };
 

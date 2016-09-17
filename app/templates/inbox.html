@@ -98,7 +98,7 @@
         <hr>
       {% if activity %}
         {% for item in activity %}
-          <p> {{item.subject.username}} {{item.action}} your message: <a href = "{{url_for('message_reader', message_id = item.message_id)}}">{{item.message.title}}</a></p>
+          <p> <a href="{{url_for('user', username=item.subject.username)}}">@{{item.subject.username}}</a> {{item.action}} your message: <a href = "{{url_for('message_reader', message_id = item.message_id)}}">{{item.message.title}}</a></p>
         {% endfor %}
       {% else %}
           <p>Coming Soon. Make sure you <a href = "{{url_for('find_contacts')}}">add your friends!</a></p>
