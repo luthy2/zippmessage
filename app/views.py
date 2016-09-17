@@ -159,7 +159,7 @@ def inbox():
 def activity():
 	user = g.user
 	activity = user.user_activity()
-	return render_templater('activity.html', activity=activity)
+	return render_template('activity.html', activity=activity)
 
 
 
