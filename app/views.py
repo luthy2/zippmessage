@@ -736,7 +736,9 @@ def api_user_activity():
 	message_id = data["message_id"]
 	m = Message.query.get(message_id)
 	owner_id = m.author.id
-	user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
+	u = user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
+	if not u:
+		return jsonify(error="action could not be performed. you might have done this already, or the message was deleted.")
 	return jsonify(ok=True)
 
 #*********----------------------ASYNC TASKS-----------------------********
