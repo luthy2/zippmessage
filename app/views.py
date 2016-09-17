@@ -737,7 +737,7 @@ def api_user_activity():
 	m = Message.query.get(message_id)
 	owner_id = m.author.id
 	u = user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
-	if not u:
+	if u is False:
 		return jsonify(error="action could not be performed. you might have done this already, or the message was deleted.")
 	return jsonify(ok=True)
 
