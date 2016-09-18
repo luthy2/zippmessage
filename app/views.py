@@ -161,16 +161,11 @@ def activity():
 	activity = user.user_activity()
 	return render_template('activity.html', activity=activity)
 
-
-
-
-
-
 @app.route('/top', methods = ["GET", "POST"])
 @login_required
 def top():
 	user = g.user
-	inbox = user.inbox()
+	inbox = user.sorted_inbox()
 	return render_template('inbox.html', user=user, inbox = inbox, title = "Top")
 
 @app.route('/contacts', methods = ["GET", "POST"])
@@ -537,11 +532,6 @@ def explore():
 			bm.set(str(i.message.url), item["content"], 172000)
 			items.append(item)
 	return render_template('explore.html', title = 'Explore', items = items)
-
-@app.route("popular", methods = ["GET", "POST"])
-def popular(gravity=1.8):
-	p = Messages.query.limit(50).order_by(Message.score(gravity=gravity).desc())
-	return render_template("popular.html", title = 'Popular')
 
 #start of api routes---------------------------------------------------------#
 
