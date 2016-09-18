@@ -238,3 +238,8 @@ body .pad-nav{
 .article-body-text{
 	font-family: Noto Sans, sans;
 }
+.truncate {
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
