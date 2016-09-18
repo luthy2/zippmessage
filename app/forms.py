@@ -33,4 +33,4 @@ class TagForm(Form):
 
 class EmailForm(Form):
 	email = StringField('email', validators = [Email(message="Please enter a valid email")])
-	notifications_status = BooleanField('notifications', defualt = 'checked')
+	notifications_status = BooleanField('notifications', default = 'checked')
