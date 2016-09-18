@@ -165,7 +165,7 @@ def activity():
 @login_required
 def top():
 	user = g.user
-	inbox = user.sorted_inbox()
+	inbox = user.ranked_inbox()
 	return render_template('inbox.html', user=user, inbox = inbox, title = "Top")
 
 @app.route('/contacts', methods = ["GET", "POST"])
