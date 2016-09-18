@@ -81,13 +81,20 @@
   <footer style = "background-color:white; position:fixed; bottom:0; height:60; width:100%;">
     <div class = "container">
       <div class = "row">
-        <div class = "col-xs-6 col-xs-offset-3">
-          <h5 class = "pull-right">
-            <a id="outline" class = "btn btn-default" type="button" href = "{{url_for('reader')}}" >to reader</a>
+        <div class = "col-xs-12">
+          <h5>
+            <ul class="list-inline" style="text-align:center; vertical-align:center;">
+              <li style = "width:17%" ><a  href = "{{url_for('dismiss', message_id = item.message_id, next = url_for('reader', page = inbox.page))}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
+              <li style = "width:17%" ><a  href = "{{url_for('bookmark', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
+              <li style = "width:17%" ><a href = "{{url_for('share', message_id = item.message_id)}}"><span class = "glyphicon glyphicon-send"></span></a></li>
+              <li style - "wdith:17%"><a id="outline" class = "btn btn-default" type="button" href = "{{url_for('reader')}}" >to reader</a></li>
+            </ul>
           </h5>
         </div>
       </div>
     </div>
   </footer>
+
+
 </div>
 </body>

@@ -19,11 +19,11 @@
 				{{form.hidden_tag()}}
 				<ul class = "list-group">
 				{% for recipient in form.recipients %}
-					<li class = "list-group-item">
-						<div>
-							@{{recipient.label}}<span class="pull-right">{{recipient}}</span>
-						</div>
-					</li>
+						<li class = "list-group-item">
+							<div>
+								@{{recipient.label}}{% if recipient.label == g.user.username %} (Save for Later){%endif%}<span class="pull-right">{{recipient}}</span>
+							</div>
+						</li>
 				{% endfor %}
 				</ul>
 				<span class= "pull-right"><input id ="outline" type = "submit" value = "Send!" class = "btn btn-default"></span>

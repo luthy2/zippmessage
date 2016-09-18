@@ -112,7 +112,7 @@ def oauthorized():
 	login_user(user)
 	db.session.commit()
 	flash('You were signed in')
-	if first_login:
+	if first_login is True:
 		return redirect(url_for('find_contacts'))
 	return redirect(redirect_url() or url_for('inbox'))
 
@@ -200,7 +200,7 @@ def find_contacts():
 			if _r.status == 200:
 				friends = _r.data
 				for f in friends:
-					u = User.query.filter(User.username.ilike(str(f["screen_name"]))).first() #check if theyre a user
+					u = User.query.filter(User.username.ilike(str(f["screen_name"]))).first() #check if they are a user
 					if u:
 						if user.is_contact(u): #check if they're our friend
 							c.append(f) # if not, let us add them
@@ -235,6 +235,7 @@ def edit_user(username):
 	form = EmailForm()
 	if form.validate_on_submit():
 		user.email = form.email.data
+		user.notifications_status = form.notifications.data
 		db.session.add(user)
 		db.session.commit()
 		return redirect(url_for('user', username = username))
@@ -469,6 +470,8 @@ def share(message_id):
 			#deliver message
 			new_message.deliver_message()
 			user.create_activity(owner_id = message.author.id, action='reshared', message_id = message.id)
+			message.incr_pts(points=2)
+			new_message.incr_pts(points=2)
 			db.session.add(new_message)
 			db.session.commit()
 			flash('Message Shared!')
@@ -535,10 +538,10 @@ def explore():
 			items.append(item)
 	return render_template('explore.html', title = 'Explore', items = items)
 
-# @app.route("popular", methods = ["GET", "POST"])
-# def popular(gravity=1.8):
-# 	p = Messages.query.limit(50).order_by(Message.score(gravity=gravity).desc())
-# 	return render_template("popular.html", title = 'Popular')
+@app.route("popular", methods = ["GET", "POST"])
+def popular(gravity=1.8):
+	p = Messages.query.limit(50).order_by(Message.score(gravity=gravity).desc())
+	return render_template("popular.html", title = 'Popular')
 
 #start of api routes---------------------------------------------------------#
 
@@ -737,6 +740,7 @@ def api_user_activity():
 	m = Message.query.get(message_id)
 	owner_id = m.author.id
 	u = user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
+	m.incr_pts()
 	if u is False:
 		return jsonify(error="action could not be performed. you might have done this already, or the message was deleted.")
 	return jsonify(ok=True)

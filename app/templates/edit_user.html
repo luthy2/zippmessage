@@ -4,12 +4,14 @@
 {% block content %}
 <div class ="row">
 	<div class="col-md-6 col-md-offset-3">
-		<h4>Edit Email <small>({{user.email}})</small></h4>
+		<h4>Edit Settings </h4>
 			<form action="" method = "POST" name="new message">
 				<div class="form-group">
 					{{form.hidden_tag()}}
-						<label></label>
+						<label>Email (currently <small>({{user.email}})</small>)</label>
 						{{form.email(class_="form-control", placeholder="john@example.com")}}
+						<label>I'd like to receive notifications from Zipp</label>
+						{{form.notifications(class_="form-control")}}
 				</div>
 					<input type = "submit" value = "Next" class = "btn btn-default" id="outline">
 			</form>

@@ -32,4 +32,5 @@ class TagForm(Form):
 	tags = StringField('title', validators = [Length(max=300)])
 
 class EmailForm(Form):
-	email = StringField('email', validators = [Email(message="Please enter a valid email")])	
+	email = StringField('email', validators = [Email(message="Please enter a valid email")])
+	notifications_status = BooleanField('notifications', defualt = 'checked')

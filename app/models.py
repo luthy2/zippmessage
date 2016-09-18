@@ -54,7 +54,7 @@ class User(db.Model):
 	username = db.Column(db.String(80))
 	email = db.Column(db.String(240))
 	# email_token = db.Column(db.String)
-	# notifications_status = db.Column(db.Integer)
+	notifications_status = db.Column(db.Boolean, default = True)
 	# api_token = db.Column(db.String)
 	sent_messages = db.relationship('Message', backref='author', lazy='dynamic')
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
@@ -127,6 +127,9 @@ class User(db.Model):
 	def inbox(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message_id.desc())
 
+	def ranked_inbox(self):
+		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message.score().desc())
+
 	def bookmarks(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_bookmarked == True).order_by(UserMessage.message_id.desc())
 
@@ -134,6 +137,7 @@ class User(db.Model):
 		user_message = UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.message_id == message_id).one()
 		user_message.is_read = True
 		user_message.is_bookmarked = True
+		user_message.message.incr_pts(points=4)
 		db.session.commit()
 		return self
 
@@ -190,7 +194,7 @@ class Message(db.Model):
 	points = db.Column(db.Integer)
 	timestamp = db.Column(db.DateTime)
 	message_activity = db.relationship("Activity", backref = 'message', lazy = 'dynamic')
-	# private = db.Column(db.Boolean, default = True)
+	private = db.Column(db.Boolean, default = True)
 
 	recipients = db.relationship(	'User',
 									secondary = recipients,
@@ -232,6 +236,12 @@ class Message(db.Model):
 		s = tdelta.total_seconds / 3600.0
 		score = (p / s**gravity)
 		return score
+
+	def incr_pts(self, points=1):
+		if not self.points:
+			self.points=0
+		self.points+=points
+		return self
 
 	def format_timestamp(self):
 		ts = self.timestamp
@@ -435,6 +445,9 @@ class Activity(db.Model):
 		self.action = action
 		self.message_id = message_id
 		self.timestamp = timestamp
+
+	def __repr__(self):
+		return '<Activity %r>' % (self.action)
 
 	def format_timestamp(self):
 		ts = self.timestamp
