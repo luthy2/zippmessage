@@ -128,7 +128,7 @@ class User(db.Model):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message_id.desc())
 
 	def ranked_inbox(self):
-		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message.score().desc())
+		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message.points.desc())
 
 	def bookmarks(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_bookmarked == True).order_by(UserMessage.message_id.desc())
