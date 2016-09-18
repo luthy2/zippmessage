@@ -8,12 +8,12 @@
 			<form action="" method = "POST" name="new message">
 				<div class="form-group">
 					{{form.hidden_tag()}}
-						<label>Email (currently <small>({{user.email}})</small>)</label>
+						<label>Email <small>{{user.email}}</small></label>
 						{{form.email(class_="form-control", placeholder="john@example.com")}}
-						<label>I'd like to receive notifications from Zipp</label>
+						<label>receive notifications?</label>
 						{{form.notifications_status}}
 				</div>
-					<input type = "submit" value = "Next" class = "btn btn-default" id="outline">
+					<input type = "submit" value = "Next" class = "btn btn-default pull right" id="outline">
 			</form>
 	</div>
 </div>
