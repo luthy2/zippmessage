@@ -816,7 +816,7 @@ def send_activity_email(action):
 					auth = ("api",mailgun_auth),
 					data = {"from":"Zipp - Notifications <info@zippmsg.com>",
 					"to":r_email,
-					"subject":"New activty on your message!",
+					"subject":"New activity on your message!",
 					"html":html})
 				print resp
 				return resp
