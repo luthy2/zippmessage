@@ -160,7 +160,7 @@ class User(db.Model):
 			db.session.commit()
 			print "activity created"
 			return (self, a)
-		return False
+		return (self, False)
 
 
 	def tags_for_user(self):
