@@ -207,11 +207,12 @@ class Message(db.Model):
 
 
 
-	def __init__(self, title, url, author, timestamp):
+	def __init__(self, title, url, author, timestamp, points=0):
 		self.title = title
 		self.url = url
 		self.author = author
 		self.timestamp = timestamp
+		self.points = points
 
 	def __repr__(self):
 		return '<Message %r>' % (self.title)
