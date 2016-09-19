@@ -161,12 +161,12 @@ def activity():
 	activity = user.user_activity()
 	return render_template('activity.html', activity=activity)
 
-@app.route('/top', methods = ["GET", "POST"])
-@login_required
-def top():
-	user = g.user
-	inbox = user.ranked_inbox()
-	return render_template('inbox.html', user=user, inbox = inbox, title = "Top")
+# @app.route('/top', methods = ["GET", "POST"])
+# @login_required
+# def top():
+# 	user = g.user
+# 	inbox = user.ranked_inbox()
+# 	return render_template('inbox.html', user=user, inbox = inbox, title = "Top")
 
 @app.route('/contacts', methods = ["GET", "POST"])
 @login_required
