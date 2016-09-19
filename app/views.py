@@ -367,7 +367,8 @@ def bookmark(message_id):
 		tags = form.tags.data + ','
 		# we can use the += operator because there will at least be an empty string. convert input to lowercase.
 		message.tags += tags.lower()
-		user.create_activity(message.message.author.id, 'bookmarked', message.message.id)
+		if g.user.id != message.author.id:
+			user.create_activity(message.message.author.id, 'bookmarked', message.message.id)
 		db.session.add(message, user)
 		db.session.commit()
 		flash("tags updated")
@@ -464,7 +465,8 @@ def share(message_id):
 
 			#deliver message
 			new_message.deliver_message()
-			user.create_activity(owner_id = message.author.id, action='reshared', message_id = message.id)
+			if g.user.id != message.author.id:
+				user.create_activity(owner_id = message.author.id, action='reshared', message_id = message.id)
 			# message.incr_pts(points=2)
 			# new_message.incr_pts(points=2)
 			db.session.add(new_message)
