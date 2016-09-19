@@ -159,7 +159,7 @@ class User(db.Model):
 			db.session.add(a)
 			db.session.commit()
 			print "activity created"
-			return self
+			return (self, a)
 		return False
 
 
@@ -191,7 +191,7 @@ class Message(db.Model):
 	url = db.Column(db.String())
 	from_user = db.Column(db.Integer, db.ForeignKey('user.id'))
 	is_delivered = db.Column(db.Boolean, default = False)
-	points = db.Column(db.Integer)
+	points = db.Column(db.Integer, defualt = 0)
 	timestamp = db.Column(db.DateTime)
 	message_activity = db.relationship("Activity", backref = 'message', lazy = 'dynamic')
 	private = db.Column(db.Boolean, default = True)

@@ -1,9 +1,21 @@
 <!doctype html>
+<title>Zipp - New Notification</title>
 <head>
-
+  <link rel='stylesheet' type="text/css" href={{url_for('styles')}}>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen">
+  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
 </head>
 <body>
-Hey @{{recipient}}!
-@{{sender}} {{action}} your message: <a href="{{url_for('reader', message_id=message.id)}}">{{message.note}} </a> on zippmsg!
-<a id ="outline" class="btn btn-default">Go to Inbox</a>
+  <div class="container">
+    <div class ="row">
+      <div class = "col-md-4 col-sm-8 col-md-offset-4 col-sm-offset-2">
+        <h4>Hey @{{recipient}}!</h4>
+        @{{sender}} {{action.action}} your message <ul class="list-group"> <a class = "list-group-item" href="{{url_for('reader', message_id=message.id)}}">{{action.message.title}} <small style="color:gray;">{{action.message.url}}</small></a> on zippmsg!</ul>
+        <a id ="outline" class="btn btn-default" href = "{{url_for('inbox')}}">Go to Inbox</a>
+      </div>
+    </div>
+  </div>
 </body>
