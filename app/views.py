@@ -465,8 +465,8 @@ def share(message_id):
 			#deliver message
 			new_message.deliver_message()
 			user.create_activity(owner_id = message.author.id, action='reshared', message_id = message.id)
-			message.incr_pts(points=2)
-			new_message.incr_pts(points=2)
+			# message.incr_pts(points=2)
+			# new_message.incr_pts(points=2)
 			db.session.add(new_message)
 			db.session.commit()
 			flash('Message Shared!')
@@ -732,7 +732,7 @@ def api_user_activity():
 	u = None
 	if owner_id != user.id:
 		u = user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
-		m.incr_pts()
+		# m.incr_pts()
 		send_activity_email.delay(u[1])
 	if u is None:
 		return jsonify(error="action could not be performed. you might have done this already, or the message was deleted.")
