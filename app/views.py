@@ -765,7 +765,7 @@ def send_reminder_email(recipient_id, message_id):
 		message = message.query.get(message_id)
 		if recipient.email:
 			r_email = str(recipient.email)
-			if recipient.notifications_status = True:
+			if recipient.notifications_status == True:
 				html = render_template('reminder_email.html', recipient = recipient.username, message = message)
 				resp = requests.post(	mailgun_api,
 										auth = ("api":mailgun_auth),
@@ -842,6 +842,7 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 			return resp
 	return False
 
+#todo
 @celery.task
 def send_analytics(*args, **kwargs):
 	pass
