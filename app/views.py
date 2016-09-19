@@ -768,7 +768,7 @@ def send_reminder_email(recipient_id, message_id):
 			if recipient.notifications_status == True:
 				html = render_template('reminder_email.html', recipient = recipient.username, message = message)
 				resp = requests.post(	mailgun_api,
-										auth = ("api":mailgun_auth),
+										auth = ("api",mailgun_auth),
 										data = {"from":"Zipp - Reminder <info@zippmsg.com>",
 												"to":r_email,
 												"subject":"Scheduled Reminder",
