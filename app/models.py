@@ -434,7 +434,6 @@ def get_url_content(message_url):
 
 
 class Activity(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
 	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True) #index for construction of feeds
 	subject_id = db.Column(db.Integer, db.ForeignKey('user.id'),  primary_key=True) #who performed the action
 	action = db.Column(db.String()) #the type of action
