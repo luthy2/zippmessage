@@ -747,10 +747,35 @@ def cache_url(url):
 		print 'content cached via thread'
 		return bm.set(url, content, 172800)
 
-# @celery.task
-# def send_reminder_email(recipient_id):
-# 	with app.app_context():
-# 		recipient = User.query.get(recipient_id)
+#todo
+@celery.task
+def cache_bookmarks():
+	pass
+
+#todo
+@celery.task
+def load_next():
+	pass
+
+
+@celery.task
+def send_reminder_email(recipient_id, message_id):
+	with app.app_context():
+		recipient = User.query.get(recipient_id)
+		message = message.query.get(message_id)
+		if recipient.email:
+			r_email = str(recipient.email)
+			if recipient.notifications_status = True:
+				html = render_template('reminder_email.html', recipient = recipient.username, message = message)
+				resp = requests.post(	mailgun_api,
+										auth = ("api":mailgun_auth),
+										data = {"from":"Zipp - Reminder <info@zippmsg.com>",
+												"to":r_email,
+												"subject":"Scheduled Reminder",
+												"html":html})
+				print resp
+				return resp
+	return False
 
 @celery.task
 def send_followed_email(sender_id, recipient_id):
@@ -816,6 +841,10 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 			print resp
 			return resp
 	return False
+
+@celery.task
+def send_analytics(*args, **kwargs):
+	pass
 
 
 

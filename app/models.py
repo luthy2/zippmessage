@@ -187,8 +187,8 @@ class User(db.Model):
 
 class Message(db.Model):
 	id= db.Column(db.Integer, primary_key = True)
-	title = db.Column(db.String(100))
-	url = db.Column(db.String(300))
+	title = db.Column(db.String())
+	url = db.Column(db.String())
 	from_user = db.Column(db.Integer, db.ForeignKey('user.id'))
 	is_delivered = db.Column(db.Boolean, default = False)
 	points = db.Column(db.Integer)
@@ -340,7 +340,7 @@ def article_tag(resp, msg_url = None):
 		url = msg_url or ''
 
 	provider = provider_url(url)
-	provider_tag = '<p style = "color:gray"><img src="https://logo.clearbit.com/%s?size=18"><small> %s</small></p>' % (provider, provider)
+	provider_tag = '<p class="provider"><img src="https://logo.clearbit.com/%s?size=18"><small> %s</small></p>' % (provider, provider)
 
 	if 'title' in resp:
 		title = resp['title']
