@@ -729,11 +729,12 @@ def api_user_activity():
 	message_id = data["message_id"]
 	m = Message.query.get(message_id)
 	owner_id = m.author.id
+	u = None
 	if owner_id != user.id:
 		u = user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
 		m.incr_pts()
 		send_activity_email.delay(u[1])
-	if u is False:
+	if u is None:
 		return jsonify(error="action could not be performed. you might have done this already, or the message was deleted.")
 	return jsonify(ok=True)
 
