@@ -472,9 +472,9 @@ class Activity(db.Model):
 			s = s//604800
 			return '{0}w ago'.format(int(s))
 
-class Action(db.Model):
-	id = db.Column(db.Integer, primary_key = True)
-	name = db.Column(db.String())
-
-	def __init__(self, name):
-		self name
+# class Action(db.Model):
+# 	id = db.Column(db.Integer, primary_key = True)
+# 	name = db.Column(db.String())
+#
+# 	def __init__(self, name):
+# 		self.name = name
