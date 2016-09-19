@@ -191,7 +191,7 @@ class Message(db.Model):
 	url = db.Column(db.String())
 	from_user = db.Column(db.Integer, db.ForeignKey('user.id'))
 	is_delivered = db.Column(db.Boolean, default = False)
-	points = db.Column(db.Integer, defualt = 0)
+	points = db.Column(db.Integer, default = 0)
 	timestamp = db.Column(db.DateTime)
 	message_activity = db.relationship("Activity", backref = 'message', lazy = 'dynamic')
 	private = db.Column(db.Boolean, default = True)
