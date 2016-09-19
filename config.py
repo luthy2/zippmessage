@@ -26,4 +26,4 @@ CELERY_BROKER = os.environ.get("REDIS_URL")
 CELERY_TASK_SERIALIZER = json
 BROKER_POOL_LIMIT = 1
 
-SERVER_NAME = 'zipp-staging.herokuapp.com'
+SERVER_NAME = 'www.zippmsg.com'

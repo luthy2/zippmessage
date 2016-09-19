@@ -9,7 +9,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
   $scope.loadedAll = false;
   $scope.inbox = []
   $scope.bookmarks = []
-    var api_base="http://zipp-staging.herokuapp.com/api/1/"
+    var api_base="http://www.zippmsg.com/api/1/"
     $http ({
       method: 'GET',
       url: api_base + 'user/inbox'
