@@ -4,7 +4,7 @@ from flask import request, g, render_template, render_template_string, session, 
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, twitter, bm, celery, mailgun_api, mailgun_auth
 from forms import NewMessageForm, RecipientsForm, TagForm, EmailForm
-from models import User, Message, UserMessage, Activity, get_url_content
+from models import User, Message, UserMessage, get_url_content
 from datetime import datetime
 import urllib
 import time
