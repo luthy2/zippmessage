@@ -127,8 +127,8 @@ class User(db.Model):
 	def inbox(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message_id.desc())
 
-	def ranked_inbox(self):
-		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message.points.desc())
+	# def ranked_inbox(self):
+	# 	return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.is_read == False).order_by(UserMessage.message.points.desc())
 
 	def bookmarks(self):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter( UserMessage.is_bookmarked == True).order_by(UserMessage.message_id.desc())
@@ -137,7 +137,7 @@ class User(db.Model):
 		user_message = UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.message_id == message_id).one()
 		user_message.is_read = True
 		user_message.is_bookmarked = True
-		user_message.message.incr_pts(points=4)
+		# user_message.message.incr_pts(points=4)
 		db.session.commit()
 		return self
 
@@ -207,12 +207,12 @@ class Message(db.Model):
 
 
 
-	def __init__(self, title, url, author, timestamp, points=0):
+	def __init__(self, title, url, author, timestamp):
 		self.title = title
 		self.url = url
 		self.author = author
 		self.timestamp = timestamp
-		self.points = points
+
 
 	def __repr__(self):
 		return '<Message %r>' % (self.title)
@@ -229,20 +229,20 @@ class Message(db.Model):
 		parse_object = urlparse(self.url)
 		return parse_object.netloc
 
-	def score(self, gravity = 1.8):
-		p = self.points
-		ts = self.timestamp
-		now = datetime.utcnow()
-		tdelta = now-ts
-		s = tdelta.total_seconds / 3600.0
-		score = (p / s**gravity)
-		return score
-
-	def incr_pts(self, points=1):
-		if not self.points:
-			self.points=0
-		self.points+=points
-		return self
+	# def score(self, gravity = 1.8):
+	# 	p = self.points
+	# 	ts = self.timestamp
+	# 	now = datetime.utcnow()
+	# 	tdelta = now-ts
+	# 	s = tdelta.total_seconds / 3600.0
+	# 	score = (p / s**gravity)
+	# 	return score
+	#
+	# def incr_pts(self, points=1):
+	# 	if not self.points:
+	# 		self.points=0
+	# 	self.points+=points
+	# 	return self
 
 	def format_timestamp(self):
 		ts = self.timestamp
