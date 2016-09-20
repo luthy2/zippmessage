@@ -418,7 +418,7 @@ def quickshare():
 				message.send_message(recipient)
 				if recipient!= g.user.id:
 					send_new_msg_email.delay(g.user.id, recipient, message.id)
-				flash('Message Sent!')
+					flash('Message Sent!')
 			message.deliver_message()
 			db.session.commit()
 			return redirect(request.args.get('url'))
@@ -733,7 +733,7 @@ def api_user_activity():
 	u = None
 	if owner_id != user.id:
 		u = user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
-		activity_id = u[0].id
+		activity_id = u[1].id
 		# m.incr_pts()
 		send_activity_email.delay(activity_id)
 	if u is None:
@@ -808,8 +808,8 @@ def send_activity_email(activity_id):
 	if activity_id:
 		with app.app_context():
 			activity = Activity.query.get(activity_id)
-			recipient = User.query.get(action.owner_id)
-			sender = User.query.get(action.subject_id)
+			recipient = activity.owner
+			sender = activity.subject
 			r_email  = recipient.email
 			if r_email:
 				r_email = r_email.encode('utf-8')
