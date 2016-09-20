@@ -390,20 +390,20 @@ def bookmark(message_id):
 @app.route('/dismiss/<message_id>')
 @login_required
 def dismiss(message_id):
-    message = UserMessage.query.filter(UserMessage.message_id == message_id)
-    user = g.user
-    if message is None:
-        flash('Message not found.')
-        return redirect(url_for('index'))
-    m = user.dismiss_message(message_id)
-    if m is None:
-        flash('Could not dismiss message')
-        return redirect(url_for('index'))
-    db.session.add(user)
-    db.session.commit()
+	message = UserMessage.query.filter(UserMessage.message_id == message_id)
+	user = g.user
+	if message is None:
+		flash('Message not found.')
+		return redirect(url_for('index'))
+	m = user.dismiss_message(message_id)
+	if m is None:
+		flash('Could not dismiss message')
+		return redirect(url_for('index'))
+	db.session.add(user)
+	db.session.commit()
 	send_analytics.delay("message dismiss", messageId = int(message.id), userId=int(user.id))
 	flash('Message dismissed')
-    return redirect(redirect_url())
+	return redirect(redirect_url())
 
 
 @app.route('/quickshare', methods = ["GET", "POST"])
