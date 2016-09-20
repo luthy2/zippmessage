@@ -10,6 +10,7 @@ import urllib
 import time
 import requests
 import math
+import keen
 
 @app.before_request
 def before_request():
@@ -855,8 +856,15 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 
 #todo
 @celery.task
-def send_analytics(*args, **kwargs):
-	pass
+def send_analytics(collection, **kwargs):
+	for kw in kwargs:
+		event = {kw:kwargs[kw]}
+	resp = keen.add_event(collection, event)
+	if resp == 200 or 201:
+		return True
+	else:
+		print resp
+		return False
 
 
 
@@ -877,4 +885,5 @@ def admin_dashboard():
 	n_users = len(User.query.all())
 	messages_sent = len(Message.query.all())
 	activities = len(Activity.query.all())
+	send_analytics.delay("test", test="test")
 	return render_template('dashboard.html', n_users=n_users, messages_sent=messages_sent, activities = activities)
