@@ -734,7 +734,7 @@ def api_user_activity():
 	u = None
 	if owner_id != user.id:
 		u = user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
-		activity_id = u[o].id
+		activity_id = u[0].id
 		# m.incr_pts()
 		send_activity_email.delay(activity_id)
 	if u is None:
