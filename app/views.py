@@ -153,7 +153,7 @@ def inbox():
 			session['message_id'] = message.id
 			flash('Choose Receipients')
 			return redirect(url_for('recipients'))
-	send_analytics.delay('pageview', userId=int(g.user.id), title='inbox')
+	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
 	return render_template('inbox.html', user=user, user_tags = user_tags, title = "Inbox", form= form, activity = activity)
 
 @app.route('/activity', methods=["GET", "POST"])
@@ -285,7 +285,7 @@ def recipients():
 			for recipient in recipients:
 				message.add_recipient(recipient)
 				message.send_message(recipient)
-				send_analytics.delay('message sent', fromUser={"userId":int(g.user.id)}, toUser={"userId":int(recipient.id)})
+				send_analytics.delay('message sent', fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient.id)})
 				print 'sending email...'
 				if recipient!= g.user.id:
 					send_new_msg_email.delay(g.user.id, recipient, message.id)
@@ -328,7 +328,7 @@ def follow(username):
 	db.session.add(u)
 	db.session.commit()
 	send_followed_email.delay(g.user.id, user.id)
-	send_analytics.delay("follow", follower={"userId":int(g.user.id)}, followed={"userId":int(user.id)})
+	send_analytics.delay("follow", follower={"userId":str(g.user.id)}, followed={"userId":str(user.id)})
 	flash('You are now following ' + username + '!')
 	return redirect(redirect_url())
 
@@ -348,7 +348,7 @@ def unfollow(username):
 		return redirect(redirect_url())
 	db.session.add(u)
 	db.session.commit()
-	send_analytics.delay("follow", unfollower={"userId":int(g.user.id)}, unfollowed={"userId":int(user.id)})
+	send_analytics.delay("follow", unfollower={"userId":str(g.user.id)}, unfollowed={"userId":str(user.id)})
 	flash('You have stopped following ' + username + '.')
 	return redirect(redirect_url())
 
@@ -364,7 +364,7 @@ def bookmark(message_id):
 		return redirect(url_for('index'))
 
 	m = user.bookmark_message(message_id)
-	send_analytics.delay("message bookmark", fromUser={"userId":int(message.message.author.id)}, toUser={"userId":int(g.user.id)}, messageId=int(message.message.id))
+	send_analytics.delay("message bookmark", fromUser={"userId":str(message.message.author.id)}, toUser={"userId":str(g.user.id)}, messageId=str(message.message.id))
 	if m is None:
 		flash('Could not bookmark message')
 		return redirect(url_for('index'))
@@ -379,7 +379,7 @@ def bookmark(message_id):
 		db.session.add(message, user)
 		db.session.commit()
 		flash("tags updated")
-		send_analytics.delay("bookmark tag", userId=int(g.user.id), tags=message.usermessage_tags())
+		send_analytics.delay("bookmark tag", userId=str(g.user.id), tags=message.usermessage_tags())
 		return redirect(redirect_url())
 	else:
 		flash(form.errors)
@@ -401,7 +401,7 @@ def dismiss(message_id):
 		return redirect(url_for('index'))
 	db.session.add(user)
 	db.session.commit()
-	send_analytics.delay("message dismiss", messageId = int(message.id), userId=int(user.id))
+	send_analytics.delay("message dismiss", messageId = str(message.id), userId=str(user.id))
 	flash('Message dismissed')
 	return redirect(redirect_url())
 
@@ -425,13 +425,13 @@ def quickshare():
 			for recipient in recipients:
 				message.add_recipient(recipient)
 				message.send_message(recipient)
-				send_analytics.delay("message sent", fromUser={"userId":int(g.user.id)}, toUser={"userId":int(recipient.id)})
+				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient.id)})
 				if recipient!= g.user.id:
 					send_new_msg_email.delay(g.user.id, recipient, message.id)
 					flash('Message Sent!')
 			message.deliver_message()
 			db.session.commit()
-			send_analytics.delay("quickshare", userId=int(g.user.id))
+			send_analytics.delay("quickshare", userId=str(g.user.id))
 			return redirect(request.args.get('url'))
 
 		else:
@@ -470,8 +470,8 @@ def share(message_id):
 			for recipient in recipients:
 				new_message.add_recipient(recipient)
 				new_message.send_message(recipient)
-				send_analytics.delay("message sent", fromUser={"userId":int(g.user.id)}, toUser={"userId":int(recipient.id)})
-				send_analytics.delay("message sent shared", fromUser={"userId":int(g.user.id)}, toUser={"userId":int(recipient.id)})
+				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient.id)})
+				send_analytics.delay("message sent shared", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient.id)})
 				if recipient!=g.user.id:
 					send_new_msg_email.delay(g.user.id, recipient, message.id)
 
@@ -483,7 +483,7 @@ def share(message_id):
 			# new_message.incr_pts(points=2)
 			db.session.add(new_message)
 			db.session.commit()
-			send_analytics.delay("message shared", userId=int(g.user.id))
+			send_analytics.delay("message shared", userId=str(g.user.id))
 			flash('Message Shared!')
 			return redirect(redirect_url())
 
@@ -501,7 +501,7 @@ def tag(name, page = 1):
 	user_tags=dict(user.tags_for_user())
 	tag_name = urllib.unquote(name)
 	bookmarks = user.get_bookmarks_with_tag(tag_name).paginate(page,12,False)
-	send_analytics.delay("pageview", userId=int(g.user.id), title="tag", page=page)
+	send_analytics.delay("pageview", userId=str(g.user.id), title="tag", page=page)
 	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, name = name, user_tags=user_tags)
 
 @app.route('/tags', methods = ["GET", "POST"])
@@ -509,7 +509,7 @@ def tag(name, page = 1):
 def tags():
 	user = g.user
 	user_tags = dict(user.tags_for_user())
-	send_analytics.delay("pageview", userId=int(g.user.id), title="tags")
+	send_analytics.delay("pageview", userId=str(g.user.id), title="tags")
 	return render_template('tags.html', user = user, title = 'Tags', user_tags = user_tags)
 
 
@@ -523,7 +523,7 @@ def redirect_url(default='index'):
 def reader(page = 1):
 	user = g.user
 	inbox = user.inbox().paginate(page,1,False)
-	send_analytics.delay("pageview", userId=int(g.user.id), title="reader", page=page)
+	send_analytics.delay("pageview", userId=str(g.user.id), title="reader", page=page)
 	return render_template('reader.html', user = user, title = 'Reader', inbox = inbox)
 
 @app.route('/message/reader/<message_id>', methods = ["GET", "POST"])
@@ -531,7 +531,7 @@ def message_reader(message_id):
 	user = g.user
 	m = Message.query.get(message_id)
 	m = UserMessage.query.filter(UserMessage.message_id == m.id).filter(UserMessage.user_id == user.id).one()
-	send_analytics.delay("pageview", userId=int(g.user.id), title="message reader", messageId=int(message_id))
+	send_analytics.delay("pageview", userId=str(g.user.id), title="message reader", messageId=str(message_id))
 	return render_template('message_reader.html', user = user, title = 'Reader', message = m)
 
 
@@ -650,7 +650,7 @@ def api_dismiss_message(message_id):
 	    return jsonify(error = 'Message could not be dismissed')
 	db.session.add(user)
 	db.session.commit()
-	send_analytics.delay("message dismiss", userId=int(g.user.id), messageId=int(message.message.id))
+	send_analytics.delay("message dismiss", userId=str(g.user.id), messageId=str(message.message.id))
 	return jsonify(ok = True, msg = 'Message' + str(message_id) + ' dismissed')
 
 @app.route('/api/1/m/user/inbox', methods = ["GET", "POST"])
@@ -680,7 +680,7 @@ def m_api_inbox():
 			m['description']=None
 			m['img']=None
 		data.append(m)
-	send_analytics.delay("inbox get", userId=int(g.user.id))
+	send_analytics.delay("inbox get", userId=str(g.user.id))
 	return jsonify(data)
 
 # @app.route('api/1/m/login', methods = ["GET", "POST"])
@@ -758,7 +758,7 @@ def api_user_activity():
 		send_activity_email.delay(activity)
 	if u is None:
 		return jsonify(error="action could not be performed. you might have done this already, or the message was deleted.")
-	send_analytics.delay("reaction", fromUser={"userId":int(g.user.id)}, toUser={"userId":int(owner_id)}, messageId=int(message_id), reactionName=action)
+	send_analytics.delay("reaction", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(owner_id)}, messageId=str(message_id), reactionName=action)
 	return jsonify(ok=True)
 
 #*********----------------------ASYNC TASKS-----------------------********
