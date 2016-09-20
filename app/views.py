@@ -285,7 +285,7 @@ def recipients():
 			for recipient in recipients:
 				message.add_recipient(recipient)
 				message.send_message(recipient)
-				send_analytics.delay('message sent', from={userId:int(g.user.id)}, to={userId:int(recipient.id)})
+				send_analytics.delay('message sent', fromUser={"userId":int(g.user.id)}, toUser={"userId":int(recipient.id)})
 				print 'sending email...'
 				if recipient!= g.user.id:
 					send_new_msg_email.delay(g.user.id, recipient, message.id)
@@ -328,7 +328,7 @@ def follow(username):
 	db.session.add(u)
 	db.session.commit()
 	send_followed_email.delay(g.user.id, user.id)
-	send_analytics.delay("follow", follower={userId:int(g.user.id)}, followed={userId:int(user.id)})
+	send_analytics.delay("follow", follower={"userId":int(g.user.id)}, followed={"userId":int(user.id)})
 	flash('You are now following ' + username + '!')
 	return redirect(redirect_url())
 
@@ -348,7 +348,7 @@ def unfollow(username):
 		return redirect(redirect_url())
 	db.session.add(u)
 	db.session.commit()
-	send_analytics.delay("follow", unfollower={userId:int(g.user.id)}, unfollowed={userId:int(user.id)})
+	send_analytics.delay("follow", unfollower={"userId":int(g.user.id)}, unfollowed={"userId":int(user.id)})
 	flash('You have stopped following ' + username + '.')
 	return redirect(redirect_url())
 
@@ -368,7 +368,7 @@ def bookmark(message_id):
 		flash('Could not bookmark message')
 		return redirect(url_for('index'))
 
-	send_analytics.delay("message bookmark", fromUser={userId:int(message.message.author.id)}, toUser={userId:int(g.user.id)}, messageId=int(message.message.id)})
+	send_analytics.delay("message bookmark", fromUser={"userId":int(message.message.author.id)}, toUser={"userId":int(g.user.id)}, messageId=int(message.message.id)})
 
 	if form.validate_on_submit():
 		#form data will be in format 'list, of, tags' we add a comma to the end so we can add more tags later
@@ -426,7 +426,7 @@ def quickshare():
 			for recipient in recipients:
 				message.add_recipient(recipient)
 				message.send_message(recipient)
-				send_analytics.delay("message sent", fromUser={userId:int(g.user.id)}, toUser={userId:int(recipient.id)})
+				send_analytics.delay("message sent", fromUser={"userId":int(g.user.id)}, toUser={"userId":int(recipient.id)})
 				if recipient!= g.user.id:
 					send_new_msg_email.delay(g.user.id, recipient, message.id)
 					flash('Message Sent!')
@@ -471,8 +471,8 @@ def share(message_id):
 			for recipient in recipients:
 				new_message.add_recipient(recipient)
 				new_message.send_message(recipient)
-				send_analytics.delay("message sent", fromUser={userId:int(g.user.id)}, toUser={userId:int(recipient.id)})
-				send_analytics.delay("message sent shared", fromUser={userId:int(g.user.id)}, toUser={userId:int(recipient.id)})
+				send_analytics.delay("message sent", fromUser={"userId":int(g.user.id)}, toUser={"userId":int(recipient.id)})
+				send_analytics.delay("message sent shared", fromUser={"userId":int(g.user.id)}, toUser={"userId":int(recipient.id)})
 				if recipient!=g.user.id:
 					send_new_msg_email.delay(g.user.id, recipient, message.id)
 
@@ -759,7 +759,7 @@ def api_user_activity():
 		send_activity_email.delay(activity)
 	if u is None:
 		return jsonify(error="action could not be performed. you might have done this already, or the message was deleted.")
-	send_analytics.delay("reaction", fromUser={userId:int(g.user.id)}, toUser={userId:int(owner_id)}, messageId=int(message_id), reactionName=action)
+	send_analytics.delay("reaction", fromUser={"userId":int(g.user.id)}, toUser={"userId":int(owner_id)}, messageId=int(message_id), reactionName=action)
 	return jsonify(ok=True)
 
 #*********----------------------ASYNC TASKS-----------------------********
