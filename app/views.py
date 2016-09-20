@@ -420,7 +420,6 @@ def quickshare():
 					send_new_msg_email.delay(g.user.id, recipient, message.id)
 				flash('Message Sent!')
 			message.deliver_message()
-			db.session.add(message)
 			db.session.commit()
 			return redirect(request.args.get('url'))
 
@@ -514,7 +513,7 @@ def reader(page = 1):
 def message_reader(message_id):
 	user = g.user
 	m = Message.query.get(message_id)
-	m = UserMessage.query.filter(UserMessage.message_id == m.id).filter(UserMessage.user_id == user.id).first()
+	m = UserMessage.query.filter(UserMessage.message_id == m.id).filter(UserMessage.user_id == user.id).one()
 	return render_template('message_reader.html', user = user, title = 'Reader', message = m)
 
 
