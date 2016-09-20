@@ -367,7 +367,7 @@ def bookmark(message_id):
 		tags = form.tags.data + ','
 		# we can use the += operator because there will at least be an empty string. convert input to lowercase.
 		message.tags += tags.lower()
-		if g.user.id != message.author.id:
+		if g.user.id != message.message.author.id:
 			user.create_activity(message.message.author.id, 'bookmarked', message.message.id)
 		db.session.add(message, user)
 		db.session.commit()
