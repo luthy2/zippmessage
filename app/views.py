@@ -230,7 +230,7 @@ def edit_user(username):
 	form = EmailForm()
 	if form.validate_on_submit():
 		user.email = form.email.data
-		user.notifications_status = form.notifications.data
+		user.notifications_status = form.notifications_status.data
 		db.session.add(user)
 		db.session.commit()
 		return redirect(url_for('user', username = username))
@@ -821,7 +821,7 @@ def send_activity_email(activity_id):
 					"to":r_email,
 					"subject":"New activity on your message!",
 					"html":html})
-				print resp
+				print  'activity email sent'
 				return resp
 	else:
 		return False
