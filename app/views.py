@@ -379,7 +379,7 @@ def bookmark(message_id):
 		db.session.add(message, user)
 		db.session.commit()
 		flash("tags updated")
-		send_analytics.delay("bookmark tag", userId=int(g.user.id), tags=[str(message.usermessage_tags())])
+		send_analytics.delay("bookmark tag", userId=int(g.user.id), tags=message.usermessage_tags())
 		return redirect(redirect_url())
 	else:
 		flash(form.errors)
@@ -402,7 +402,7 @@ def dismiss(message_id):
     db.session.add(user)
     db.session.commit()
 	send_analytics.delay("message dismiss", messageId = int(message.id), userId=int(user.id))
-    flash('Message dismissed')
+	flash('Message dismissed')
     return redirect(redirect_url())
 
 
