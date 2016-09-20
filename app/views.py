@@ -364,11 +364,10 @@ def bookmark(message_id):
 		return redirect(url_for('index'))
 
 	m = user.bookmark_message(message_id)
+	send_analytics.delay("message bookmark", fromUser={"userId":int(message.message.author.id)}, toUser={"userId":int(g.user.id)}, messageId=int(message.message.id))
 	if m is None:
 		flash('Could not bookmark message')
 		return redirect(url_for('index'))
-
-	send_analytics.delay("message bookmark", fromUser={"userId":int(message.message.author.id)}, toUser={"userId":int(g.user.id)}, messageId=int(message.message.id)})
 
 	if form.validate_on_submit():
 		#form data will be in format 'list, of, tags' we add a comma to the end so we can add more tags later
