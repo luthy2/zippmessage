@@ -231,6 +231,15 @@ body .pad-nav{
 			right: -9999px;
 			margin: auto;
 		}
+		.no-style a{
+  text-decoration: none;
+		}
+		.no-style a:hover{
+		  text-decoration: none:
+		}
+		.reaction{
+		  width:100%;
+		}
 /*------------------------type--------------------------*/
 .article-title-text{
 	font-family: Lora, serif;
