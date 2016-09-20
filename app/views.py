@@ -734,8 +734,9 @@ def api_user_activity():
 	u = None
 	if owner_id != user.id:
 		u = user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
+		activity_id = u[o].id
 		# m.incr_pts()
-		send_activity_email.delay(u[1])
+		send_activity_email.delay(activity_id)
 	if u is None:
 		return jsonify(error="action could not be performed. you might have done this already, or the message was deleted.")
 	return jsonify(ok=True)
@@ -804,16 +805,17 @@ def send_followed_email(sender_id, recipient_id):
 	return False
 
 @celery.task
-def send_activity_email(action):
-	if action:
+def send_activity_email(activity_id):
+	if activity_id:
 		with app.app_context():
+			activity = Activity.query.get(activity_id)
 			recipient = User.query.get(action.owner_id)
 			sender = User.query.get(action.subject_id)
 			r_email  = recipient.email
 			if r_email:
 				r_email = r_email.encode('utf-8')
 				r_email = str(r_email)
-				html = render_template('activity_email.html', sender = sender.username, recipient = recipient.username, action = action)
+				html = render_template('activity_email.html', sender = sender.username, recipient = recipient.username, action = activity.action)
 				resp = requests.post( 	mailgun_api,
 					auth = ("api",mailgun_auth),
 					data = {"from":"Zipp - Notifications <info@zippmsg.com>",
