@@ -34,7 +34,7 @@
     <div class= "col-md-8 col-md-offset-2">
       <a id="outline" class="btn btn-default btn-sm" href = "{{url_for('inbox')}}"><span class = "glyphicon glyphicon-chevron-left"></span>Inbox</a>
       <span class="pull-right">
-        <a class="btn btn-default btn-sm" id="outline" href = "{{url_for(message.message.url, external=True)}}" target="_blank">
+        <a class="btn btn-default btn-sm" id="outline" href = "{{message.message.url}}" target="_blank">
           new window <span class = "glyphicon glyphicon-new-window"></span>
         </a>
       </span>
