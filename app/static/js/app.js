@@ -93,14 +93,14 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
     };
   };
   $scope.createReaction = function(messageId, action){
-    reaction = "reacted: "+action+" to"
+    var reaction = "reacted: "+action+" to"
     $http ({
       method: 'POST',
       url: api_base+'activity/create',
       data:{ "message_id":messageId, "action":reaction }
     }).then(function success(response){
         console.log(response)
-        $scope.alert = 'Reaction ' + action + 'Sent!'
+        $scope.alert = 'Reaction ' + action + ' Sent!'
         $timeout(function(){
             $scope.alert ='';
         }, 2800);
