@@ -881,6 +881,7 @@ def send_analytics(collection, **kwargs):
 		event = {kw:kwargs[kw]}
 	resp = keen.add_event(collection, event)
 	if resp == 200 or 201:
+		print "event successfully created"
 		return True
 	else:
 		print resp
