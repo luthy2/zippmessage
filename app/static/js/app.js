@@ -92,15 +92,15 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
       $scope.alert = 'hmmm... something went wrong and we were unable to dismiss the message.'
     };
   };
-  $scope.createReaction = function(messageId, reaction){
-    reaction = "reacted: "+reaction+" to"
+  $scope.createReaction = function(messageId, action){
+    reaction = "reacted: "+action+" to"
     $http ({
       method: 'POST',
       url: api_base+'activity/create',
       data:{ "message_id":messageId, "action":reaction }
     }).then(function success(response){
         console.log(response)
-        $scope.alert = 'Reaction' + reaction + 'Sent!'
+        $scope.alert = 'Reaction ' + action + 'Sent!'
         $timeout(function(){
             $scope.alert ='';
         }, 2800);

@@ -733,9 +733,9 @@ def api_user_activity():
 	u = None
 	if owner_id != user.id:
 		u = user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
-		activity_id = u[1].id
+		activity = u[1]
 		# m.incr_pts()
-		send_activity_email.delay(activity_id)
+		send_activity_email.delay(activity)
 	if u is None:
 		return jsonify(error="action could not be performed. you might have done this already, or the message was deleted.")
 	return jsonify(ok=True)
@@ -804,10 +804,9 @@ def send_followed_email(sender_id, recipient_id):
 	return False
 
 @celery.task
-def send_activity_email(activity_id):
+def send_activity_email(activity):
 	if activity_id:
 		with app.app_context():
-			activity = Activity.query.get(activity_id)
 			recipient = activity.owner
 			sender = activity.subject
 			r_email  = recipient.email
