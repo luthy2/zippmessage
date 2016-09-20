@@ -880,7 +880,7 @@ def styles():
 @app.route('/admin/dashboard')
 @login_required
 def admin_dashboard():
-	if g.user != User.query.get(1) or User.query.get()
+	if g.user != User.query.get(1) or g.user.username != "eyesacktaylor":
 		return abort(), 403
 	n_users = len(User.query.all())
 	messages_sent = len(Message.query.all())
