@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_oauthlib.client import OAuth
 from embedly import Embedly
-from config import SECRET_KEY, MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD, CELERY_BROKER
+from config import SECRET_KEY, MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHEDCLOUD_PASSWORD, CELERY_BROKER, KEEN_PROJECT_ID, KEEN_WRITE_KEY, KEEN_READ_KEY
 import logging
 import sys
 import bmemcached
@@ -11,7 +11,7 @@ import urlparse
 import json
 import redis
 import celery
-
+import keen
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -27,6 +27,7 @@ bm = bmemcached.Client(MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHE
 celery = celery.Celery('app', broker = CELERY_BROKER)
 mailgun_api = "https://api.mailgun.net/v3/zippmsg.com/messages"
 mailgun_auth = "key-96d0fea83b79dd08312c6c68ea308679"
+
 
 twitter = oauth.remote_app('twitter',
     # unless absolute urls are used to make requests, this will be added

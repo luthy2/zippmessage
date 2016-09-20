@@ -790,17 +790,18 @@ def send_followed_email(sender_id, recipient_id):
 		sender = User.query.get(sender_id)
 		r_email  = recipient.email
 		if r_email:
-			html = render_template('follow_email.html', sender = sender.username, recipient = recipient.username)
-			r_email = r_email.encode('utf-8')
-			r_email = str(r_email)
-			resp = requests.post( 	mailgun_api,
-				auth = ("api",mailgun_auth),
-				data = {"from":"Zipp - Notifications <info@zippmsg.com>",
-						"to":r_email,
-						"subject":"New Follower!",
-						"html":html})
-			print resp
-			return resp
+			if recipient.notifications_status == True:
+				html = render_template('follow_email.html', sender = sender.username, recipient = recipient.username)
+				r_email = r_email.encode('utf-8')
+				r_email = str(r_email)
+				resp = requests.post( 	mailgun_api,
+					auth = ("api",mailgun_auth),
+					data = {"from":"Zipp - Notifications <info@zippmsg.com>",
+							"to":r_email,
+							"subject":"New Follower!",
+							"html":html})
+				print resp
+				return resp
 	return False
 
 @celery.task
@@ -812,17 +813,18 @@ def send_activity_email(activity_id):
 			sender = activity.subject
 			r_email  = recipient.email
 			if r_email:
-				r_email = r_email.encode('utf-8')
-				r_email = str(r_email)
-				html = render_template('activity_email.html', sender = sender.username, recipient = recipient.username, action = activity.action)
-				resp = requests.post( 	mailgun_api,
-					auth = ("api",mailgun_auth),
-					data = {"from":"Zipp - Notifications <info@zippmsg.com>",
-					"to":r_email,
-					"subject":"New activity on your message!",
-					"html":html})
-				print  'activity email sent'
-				return resp
+				if recipient.notifications_status == True:
+					r_email = r_email.encode('utf-8')
+					r_email = str(r_email)
+					html = render_template('activity_email.html', sender = sender.username, recipient = recipient.username, action = activity.action)
+					resp = requests.post( 	mailgun_api,
+						auth = ("api",mailgun_auth),
+						data = {"from":"Zipp - Notifications <info@zippmsg.com>",
+						"to":r_email,
+						"subject":"New activity on your message!",
+						"html":html})
+					print  'activity email sent'
+					return resp
 	else:
 		return False
 
@@ -838,16 +840,17 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 		url = url.encode('utf-8')
 		content = bm.get(url) or message.render_url()
 		if r_email:
-			r_email = r_email.encode('utf-8')
-			html = render_template('new_message_email.html', sender = sender.username, recipient = recipient.username, note = message.title, content = content, timedelta = message.format_timestamp())
-			resp = requests.post( 	mailgun_api,
-								auth = ("api",mailgun_auth),
-								data = {"from":"Zipp - Notifications <info@zippmsg.com>",
-										"to":r_email,
-										"subject":"New Message!",
-										"html":html})
-			print resp
-			return resp
+			if recipient.notifications_status == True:
+				r_email = r_email.encode('utf-8')
+				html = render_template('new_message_email.html', sender = sender.username, recipient = recipient.username, note = message.title, content = content, timedelta = message.format_timestamp())
+				resp = requests.post( 	mailgun_api,
+									auth = ("api",mailgun_auth),
+									data = {"from":"Zipp - Notifications <info@zippmsg.com>",
+											"to":r_email,
+											"subject":"New Message!",
+											"html":html})
+				print resp
+				return resp
 	return False
 
 #todo

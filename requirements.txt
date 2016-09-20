@@ -21,3 +21,4 @@ Python-Binary-Memcached==0.17
 Celery == 4.0.0rc3
 redis == 2.10.5
 oauthlib==1.1.2
+keen == 0.3.26
