@@ -734,7 +734,7 @@ def api_user_activity():
 	u = None
 	if owner_id != user.id:
 		u = user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
-		activity = u[1].activity_id
+		activity = u[1].id
 		# m.incr_pts()
 		send_activity_email.delay(activity)
 	if u is None:
@@ -809,7 +809,7 @@ def send_followed_email(sender_id, recipient_id):
 def send_activity_email(activity_id):
 	if activity_id:
 		with app.app_context():
-			activity = Activity.query.filter(Activity.activity_id==activity_id)
+			activity = Activity.query.filter(Activity.id==activity_id)
 			recipient = activity.owner
 			sender = activity.subject
 			r_email  = recipient.email
@@ -880,7 +880,7 @@ def styles():
 @app.route('/admin/dashboard')
 @login_required
 def admin_dashboard():
-	if g.user != User.query.get(1):
+	if g.user != User.query.get(1) or User.query.get()
 		return abort(), 403
 	n_users = len(User.query.all())
 	messages_sent = len(Message.query.all())
