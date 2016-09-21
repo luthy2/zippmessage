@@ -287,7 +287,7 @@ def recipients():
 				message.send_message(recipient_id)
 				send_analytics.delay('message sent', fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
 				print 'sending email...'
-				if recipient!= g.user.id:
+				if recipient_id!= g.user.id:
 					send_new_msg_email.delay(g.user.id, recipient_id, message.id)
 			message.deliver_message()
 			db.session.commit()
