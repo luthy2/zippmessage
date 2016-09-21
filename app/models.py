@@ -423,7 +423,7 @@ def get_url_content(message_url):
 				title = resp['title']
 			else:
 				title = ''
-			return '<div class ="embed-responsive embed-responsive-16by9">'+resp['html']+'<p>%s</p></div>' % title
+			return '<div class ="embed-responsive embed-responsive-16by9">'+resp['html']+'</div><p>%s</p>' % title
 		elif 'soundcloud.com' in url:
 			return resp['html']
 		elif 'medium.com' in resp['provider_url']:
@@ -475,3 +475,7 @@ class Activity(db.Model):
 		else:
 			s = s//604800
 			return '{0}w ago'.format(int(s))
+
+# class Digest(db.Model):
+# 	id = db.Column(db.Integer, primary_key=True)
+# 	user_id = db.Column(db.Integer, foreign_key = True)
