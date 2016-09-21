@@ -419,7 +419,11 @@ def get_url_content(message_url):
 		elif resp["type"] == 'photo':
 			return image_tag(url)
 		elif resp['type'] == 'video':
-			return '<div class ="embed-responsive embed-responsive-16by9">'+resp['html']+'</div>'
+			if 'title' in resp:
+				title = resp['title']
+			else:
+				title = ''
+			return '<div class ="embed-responsive embed-responsive-16by9">'+resp['html']+'<p>%s</p></div>' % title
 		elif 'soundcloud.com' in url:
 			return resp['html']
 		elif 'medium.com' in resp['provider_url']:
@@ -472,9 +476,4 @@ class Activity(db.Model):
 			s = s//604800
 			return '{0}w ago'.format(int(s))
 
-# class Action(db.Model):
-# 	id = db.Column(db.Integer, primary_key = True)
-# 	name = db.Column(db.String())
-#
-# 	def __init__(self, name):
-# 		self.name = name
+class Digest(db.Model):
