@@ -98,7 +98,6 @@ def oauthorized():
 	if user is None:
 		first_login = True
 		user = User(username = resp['screen_name'], contacts=(), sent_messages=(), inbox_messages=())
-		send_analytics.delay("signup", userId=int(user.id))
 		#**todo issue a user a new token for  mobile auth. **
 		db.session.add(user)
 		user.add_contact(user)
@@ -115,6 +114,7 @@ def oauthorized():
 	db.session.commit()
 	flash('You were signed in')
 	if first_login is True:
+		send_analytics.delay("signup", userId=str(user.id))
 		return redirect(url_for('find_contacts'))
 	return redirect(redirect_url() or url_for('inbox'))
 
