@@ -292,8 +292,8 @@ class Message(db.Model):
 			self.is_delivered = True
 			return self
 
-	def add_recipient(self, user):
-		recipient = User.query.get(user)
+	def add_recipient(self, user_id):
+		recipient = User.query.get(user_id)
 		self.recipients.append(recipient)
 		return self
 

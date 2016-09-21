@@ -282,13 +282,13 @@ def recipients():
 	if request.method == 'POST':
 		recipients = form.recipients.data
 		if form.validate_on_submit():
-			for recipient in recipients:
-				message.add_recipient(recipient)
-				message.send_message(recipient)
-				send_analytics.delay('message sent', fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient.id)})
+			for recipient_id in recipients:
+				message.add_recipient(recipient_id)
+				message.send_message(recipient_id)
+				send_analytics.delay('message sent', fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
 				print 'sending email...'
 				if recipient!= g.user.id:
-					send_new_msg_email.delay(g.user.id, recipient, message.id)
+					send_new_msg_email.delay(g.user.id, recipient_id, message.id)
 			message.deliver_message()
 			db.session.commit()
 			session.pop('message_id', None)
@@ -422,12 +422,12 @@ def quickshare():
 	if request.method == 'POST':
 		recipients = form.recipients.data
 		if form.validate_on_submit():
-			for recipient in recipients:
-				message.add_recipient(recipient)
-				message.send_message(recipient)
-				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient.id)})
+			for recipient_id in recipients:
+				message.add_recipient(recipient_id)
+				message.send_message(recipient_id)
+				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
 				if recipient!= g.user.id:
-					send_new_msg_email.delay(g.user.id, recipient, message.id)
+					send_new_msg_email.delay(g.user.id, recipient_id, message.id)
 					flash('Message Sent!')
 			message.deliver_message()
 			db.session.commit()
@@ -467,13 +467,13 @@ def share(message_id):
 			db.session.commit()
 
 			#append the new recipients
-			for recipient in recipients:
-				new_message.add_recipient(recipient)
-				new_message.send_message(recipient)
-				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient.id)})
-				send_analytics.delay("message sent shared", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient.id)})
+			for recipient_id in recipients:
+				new_message.add_recipient(recipient_id)
+				new_message.send_message(recipient_id)
+				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
+				send_analytics.delay("message sent shared", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
 				if recipient!=g.user.id:
-					send_new_msg_email.delay(g.user.id, recipient, message.id)
+					send_new_msg_email.delay(g.user.id, recipient_id, message.id)
 
 			#deliver message
 			new_message.deliver_message()
