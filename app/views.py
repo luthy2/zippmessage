@@ -871,7 +871,7 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 											"to":r_email,
 											"subject":"New Message!",
 											"html":html})
-				print resp
+				print 'email sent', resp
 				return resp
 	return False
 
