@@ -364,7 +364,8 @@ def bookmark(message_id):
 		return redirect(url_for('index'))
 
 	m = user.bookmark_message(message_id)
-	send_analytics.delay("message bookmark", fromUser={"userId":str(message.message.author.id)}, toUser={"userId":str(g.user.id)}, messageId=str(message.message.id))
+	author_id = message.message.author.id
+	send_analytics.delay("message bookmark", fromUser={"userId":str(author_id)}, toUser={"userId":str(g.user.id)}, messageId=str(message_id))
 	if m is None:
 		flash('Could not bookmark message')
 		return redirect(url_for('index'))
@@ -401,7 +402,7 @@ def dismiss(message_id):
 		return redirect(url_for('index'))
 	db.session.add(user)
 	db.session.commit()
-	send_analytics.delay("message dismiss", messageId = str(message.id), userId=str(user.id))
+	send_analytics.delay("message dismiss", messageId = str(message_id), userId=str(user.id))
 	flash('Message dismissed')
 	return redirect(redirect_url())
 
@@ -650,7 +651,7 @@ def api_dismiss_message(message_id):
 	    return jsonify(error = 'Message could not be dismissed')
 	db.session.add(user)
 	db.session.commit()
-	send_analytics.delay("message dismiss", userId=str(g.user.id), messageId=str(message.message.id))
+	send_analytics.delay("message dismiss", userId=str(g.user.id), messageId=str(message_id))
 	return jsonify(ok = True, msg = 'Message' + str(message_id) + ' dismissed')
 
 @app.route('/api/1/m/user/inbox', methods = ["GET", "POST"])
