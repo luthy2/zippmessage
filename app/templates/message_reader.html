@@ -42,59 +42,61 @@
   </div>
   <div class = "row">
    <div class = "col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-     {% set resp = message.message.get_content() %}
-      {% if not resp %}
-        <p> We were unable to extract the content from the original source. <a href ="{{message.message.url}}" target ="_blank">Open the link in a new window<span class = "glyphicon glyphicon-new-window"></span></a> to view the content.</p>
-      {% else %}
-        {% if resp["title"]%}
-          <h2>{{resp['title']}}</h2>
-        {% endif %}
-        {% if resp["authors"]%}
-          {% for author in resp["authors"][:1]%}
-            <a href = "{{author['url']}}" style="padding-bottom:4%">{{author["name"]}} </a>
-          {% endfor %}
-        {% endif %}
-        {% if resp["content"] or resp["media"] %}
-          {% if resp["content"] %}
-            {{resp["content"] | safe}}
-          {% endif %}
-          {% if resp["media"]%}
-            {% if resp["media"]["type"]== "photo"%}
-              <img src="{{resp["media"]["url"]}}">
-            {%elif resp["media"]["type"]=="video"%}
-            <div class= 'embedly-embed'><div class="embed-responsive"><div class="embed-responsive-16by9"> {{resp["media"]["html"] | safe}} </div></div></div>
-            {%endif%}
-          {% endif %}
+     {% if message %}
+       {% set resp = message.message.get_content() %}
+        {% if not resp %}
+          <p> We were unable to extract the content from the original source. <a href ="{{message.message.url}}" target ="_blank">Open the link in a new window<span class = "glyphicon glyphicon-new-window"></span></a> to view the content.</p>
         {% else %}
-        <p>We were unable to extract the content from this url. View it at the original source.</p>
-          <ul class = "list-group">
-            <a class = "list-group-item" href="{{message.message.url}}">
-              <p class ="list-group-item-heading">{{resp['title']}}</p>
-              <p class = "list-group-item-text">{{resp['description']}}</p>
-              <p style="color:gray"><small>{{message.message.short_url()}}</small></p>
-            </a>
-          </ul>
-        {%endif%}
-      {%endif%}
-   </div>
-  </div>
-  <footer style = "background-color:white; position:fixed; bottom:0; height:60; width:100%;">
-    <div class = "container">
-      <div class = "row">
-        <div class = "col-xs-12">
-          <h5>
-            <ul class="list-inline" style="text-align:center; vertical-align:center;">
-              <li style = "width:17%" ><a  href = "{{url_for('dismiss', message_id = message.message_id, next = url_for('reader'))}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
-              <li style = "width:17%" ><a  href = "{{url_for('bookmark', message_id = message.message_id)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
-              <li style = "width:17%" ><a href = "{{url_for('share', message_id = message.message_id)}}"><span class = "glyphicon glyphicon-send"></span></a></li>
-              <li style - "wdith:17%"><a id="outline" class = "btn btn-default" type="button" href = "{{url_for('reader')}}" >to reader</a></li>
+          {% if resp["title"]%}
+            <h2>{{resp['title']}}</h2>
+          {% endif %}
+          {% if resp["authors"]%}
+            {% for author in resp["authors"][:1]%}
+              <a href = "{{author['url']}}" style="padding-bottom:4%">{{author["name"]}} </a>
+            {% endfor %}
+          {% endif %}
+          {% if resp["content"] or resp["media"] %}
+            {% if resp["content"] %}
+              {{resp["content"] | safe}}
+            {% endif %}
+            {% if resp["media"]%}
+              {% if resp["media"]["type"]== "photo"%}
+                <img src="{{resp["media"]["url"]}}">
+              {%elif resp["media"]["type"]=="video"%}
+              <div class= 'embedly-embed'><div class="embed-responsive"><div class="embed-responsive-16by9"> {{resp["media"]["html"] | safe}} </div></div></div>
+              {%endif%}
+            {% endif %}
+          {% else %}
+          <p>We were unable to extract the content from this url. View it at the original source.</p>
+            <ul class = "list-group">
+              <a class = "list-group-item" href="{{message.message.url}}" target="_blank">
+                <p class ="list-group-item-heading">{{resp['title']}}</p>
+                <p class = "list-group-item-text">{{resp['description']}}</p>
+                <p style="color:gray"><small>{{message.message.short_url()}}</small></p>
+              </a>
             </ul>
-          </h5>
+          {%endif%}
+        {%endif%}
+     </div>
+    </div>
+    <footer style = "background-color:white; position:fixed; bottom:0; height:60; width:100%;">
+      <div class = "container">
+        <div class = "row">
+          <div class = "col-xs-12">
+            <h5>
+              <ul class="list-inline" style="text-align:center; vertical-align:center;">
+                <li style = "width:17%" ><a  href = "{{url_for('dismiss', message_id = message.message_id, next = url_for('reader'))}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
+                <li style = "width:17%" ><a  href = "{{url_for('bookmark', message_id = message.message_id)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
+                <li style = "width:17%" ><a href = "{{url_for('share', message_id = message.message_id)}}"><span class = "glyphicon glyphicon-send"></span></a></li>
+                <li style - "wdith:17%"><a id="outline" class = "btn btn-default" type="button" href = "{{url_for('reader')}}" >to reader</a></li>
+              </ul>
+            </h5>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
-
-
+    </footer>
+  {%else%}
+  <h2>Hmm.. We couldn't seem to find the message. It might not exist.</h2> <a id="outline" class = "btn btn-default" type="button" href = "{{url_for('reader')}}" >to reader</a>
+  {%endif%}
 </div>
 </body>
