@@ -222,7 +222,10 @@ def find_contacts():
 @login_required
 def user(username):
 	_user = User.query.filter(User.username.ilike(username)).first()
-	tags = _user.tags_for_user().most_common(20)
+	if _user:
+		tags=_user.tags_for_user()
+	else:	
+		tags=None
 	return render_template('user.html', user = _user, tags = tags, title = 'Profile', inbox=inbox)
 
 @app.route('/user/<username>/edit', methods = ["GET", "POST"])
