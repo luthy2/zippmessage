@@ -475,5 +475,3 @@ class Activity(db.Model):
 		else:
 			s = s//604800
 			return '{0}w ago'.format(int(s))
-
-class Digest(db.Model):
