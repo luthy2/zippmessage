@@ -681,7 +681,7 @@ def m_api_inbox():
 			m['description']=None
 			m['img']=None
 		data.append(m)
-		print data
+		print jsonify(data)
 	return jsonify(data)
 
 # @app.route('api/1/m/login', methods = ["GET", "POST"])
