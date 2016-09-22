@@ -9,8 +9,8 @@
 				<h2>@{{user.username}}</h2>
 				{% if user == g.user %}
 				<a id="outline" class="btn btn-default" href = "{{url_for('edit_user', username = g.user.username)}}"><small>edit</small></a>
-				<p>Add the quickshare bookmarklet to your browsers bookmarks bar!<a href = "javascript:window.location=%22http://www.zippmsg.com/quickshare?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)">Zipp-Quickshare</a></p>
-				<p>Click the bookmarklet to share your browsers current page!</p>
+				<p>Add the quickshare bookmarklet to your browsers bookmarks bar! Drag this link: <a href = "javascript:window.location=%22http://www.zippmsg.com/quickshare?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)">Zipp-Quickshare</a></p>
+				<p>Click the bookmarklet to share your browsers current page.</p>
 				{% elif not g.user.is_contact(user) %}
 					<a id="outline" class='btn btn-default btn-sm' role='button' href = "{{url_for('follow', username=user.username)}}">follow <span class = "glyphicon glyphicon-plus"></span></a>
 				{% else %}
