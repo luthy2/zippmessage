@@ -423,7 +423,7 @@ def get_url_content(message_url):
 				title = resp['title']
 			else:
 				title = ''
-			return '<div class ="embed-responsive embed-responsive-16by9">'+resp['html']+'</div><p>%s</p>' % title
+			return '<div class ="embed-responsive embed-responsive-16by9">'+resp['html']+'</div><h5>%s</h5>' % title
 		elif 'soundcloud.com' in url:
 			return resp['html']
 		elif 'medium.com' in resp['provider_url']:
