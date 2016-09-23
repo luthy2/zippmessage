@@ -123,7 +123,7 @@ def oauthorized():
 @app.route('/index', methods = ["GET", "POST"])
 def index():
 	if g.user is None:
-		return redirect(url_for('explore'))
+		return redirect(url_for('home'))
 	return redirect(url_for('inbox'))
 
 @app.route('/home')
@@ -224,7 +224,7 @@ def user(username):
 	_user = User.query.filter(User.username.ilike(username)).first()
 	if _user:
 		tags=_user.tags_for_user()
-	else:	
+	else:
 		tags=None
 	return render_template('user.html', user = _user, tags = tags, title = 'Profile', inbox=inbox)
 
