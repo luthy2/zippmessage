@@ -135,60 +135,66 @@
       </div>
     </div>
   </div>
-  <div class ="container pad-top-2">
-    <div class="row">
-      <div class="col-md-5 col-md-offset-1">
-        <h2>Share Effortlessly</h2><p> Use our bookmarklet <a href = "javascript:window.location=%22http://www.zippmsg.com/quickshare?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)">Zipp-Quickshare</a> to one-click share with your friends, or save for later, without breaking your flow.</p>
-      </div>
-      <div class="col-md-5">
-        <a href="#" class="pop">
-          <img class= "gif" src='./static/img/quickshare.gif'>
-        </a>
+    <div class="container pad-top-2">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class ="container">
+            <div class="row">
+              <div class="col-md-5 col-md-offset-1">
+                <h2>Share Effortlessly</h2><p> Use our bookmarklet <a href = "javascript:window.location=%22http://www.zippmsg.com/quickshare?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)">Zipp-Quickshare</a> to one-click share with your friends, or save for later, without breaking your flow.</p>
+              </div>
+              <div class="col-md-5">
+                <a href="#" class="pop">
+                  <img class= "gif" src='./static/img/quickshare.gif'>
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 col-md-offset-1">
+                <h2>Share Privately</h2>
+                <p>Messages your friends send you, and links you've sent yourself will show up in your inbox. Don't worry Your friends won't be able to see who else you sent the same message to.</p>
+              </div>
+              <div class="col-md-5">
+                <img class="gif" src='./static/img/inbox.gif'>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 col-md-offset-1">
+                <h2>Rich Inbox</h2>
+                <p>Most articles will show up with a nice preview, and rich content like images, videos, and music, will be automatically embedded.</p> <p>You can read tweets, watch YouTube videos, listen to music from Soundcloud, and more without leaving the app.</p>
+              </div>
+              <div class="col-md-5">
+                <a href="#" class="pop">
+                  <img class="gif" src='./static/img/richinbox.gif'>
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 col-md-offset-1">
+                <h2>Interact</h2>
+                <p>Once you're finished with a message, you can respond with a reaction 😀, add to your archive by bookmarking <span class="glyphicon glyphicon-bookmark"></span> and adding #tags, or reshare <span class="glyphicon glyphicon-send"></span> it with more friends! Dismiss <span class= "glyphicon glyphicon-remove"></span> to get rid of it for good.</p>
+              </div>
+              <div class="col-md-5">
+                <a href="#" class="pop">
+                  <img class="gif" src='./static/img/messageactions.gif'>
+                </a>
+              </div>
+            </div>
+            <div class="row" style="padding-top:200px; padding-bottom:150px;">
+              <div class="col-md-8 col-md-offset-2">
+                <h4 class="lead text-center"> We will never spam you, or tweet without your consent.</h4>
+                <p class="text-center pad-bottom">There is nothing to setup. Just connect your twitter and you're ready to go.</p>
+                <p class = "text-center">
+                  <span class="pad-top">
+                    <a class="btn btn-default btn-lg btn-alt" href = "{{url_for('login', next='index')}}">Get Started</a>
+                  </span>
+                </p>
+              </div>
+            </div>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-5 col-md-offset-1">
-        <h2>Share Privately</h2>
-        <p>Messages your friends send you, and links you've sent yourself will show up in your inbox. Don't worry Your friends won't be able to see who else you sent the same message to.</p>
-      </div>
-      <div class="col-md-5">
-        <img class="gif" src='./static/img/inbox.gif'>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-5 col-md-offset-1">
-        <h2>Rich Inbox</h2>
-        <p>Most articles will show up with a nice preview, and rich content like images, videos, and music, will be automatically embedded.</p> <p>You can read tweets, watch YouTube videos, listen to music from Soundcloud, and more without leaving the app.</p>
-      </div>
-      <div class="col-md-5">
-        <a href="#" class="pop">
-          <img class="gif" src='./static/img/richinbox.gif'>
-        </a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-5 col-md-offset-1">
-        <h2>Interact</h2>
-        <p>Once you're finished with a message, you can respond with a reaction 😀, add to your archive by bookmarking <span class="glyphicon glyphicon-bookmark"></span> and adding #tags, or reshare <span class="glyphicon glyphicon-send"></span> it with more friends! Dismiss <span class= "glyphicon glyphicon-remove"></span> to get rid of it for good.</p>
-      </div>
-      <div class="col-md-5">
-        <a href="#" class="pop">
-          <img class="gif" src='./static/img/messageactions.gif'>
-        </a>
-      </div>
-    </div>
-    <div class="row" style="padding-top:200px; padding-bottom:150px;">
-      <div class="col-md-8 col-md-offset-2">
-        <h4 class="lead text-center"> We will never spam you, or tweet without your consent.</h4>
-        <p class="text-center pad-bottom">There is nothing to setup. Just connect your twitter and you're ready to go.</p>
-        <p class = "text-center">
-          <span class="pad-top">
-            <a class="btn btn-default btn-lg btn-alt" href = "{{url_for('login', next='index')}}">Get Started</a>
-          </span>
-        </p>
-      </div>
-    </div>
-</div>
+  </div>
   <script type="text/javascript">
     $(function() {
       $('.pop').on('click', function() {
