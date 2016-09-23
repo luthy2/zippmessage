@@ -327,7 +327,7 @@ def follow(username):
 	if u is None:
 		flash('Cannot follow ' + nickname + '.')
 		return redirect(redirect_url())
-	u.create_activity(owner_id = user.id, action = 'followed', message_id = None #todo
+	u.create_activity(owner_id = user.id, action = 'followed', message_id = None) #todo
 	db.session.add(u)
 	db.session.commit()
 	send_followed_email.delay(g.user.id, user.id)
