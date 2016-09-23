@@ -430,7 +430,7 @@ def quickshare():
 				message.send_message(recipient_id)
 				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
 				if recipient_id!= g.user.id:
-					send_new_msg_email.delay(g.user.id, recipient_id, message.id)
+					send_new_msg_email.delay(int(g.user.id), int(recipient_id), int(message.id))
 					flash('Message Sent!')
 			message.deliver_message()
 			db.session.commit()
@@ -476,7 +476,7 @@ def share(message_id):
 				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
 				send_analytics.delay("message sent shared", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
 				if recipient_id!=g.user.id:
-					send_new_msg_email.delay(g.user.id, recipient_id, message.id)
+					send_new_msg_email.delay(int(g.user.id), int(recipient_id), int(message.id))
 
 			#deliver message
 			new_message.deliver_message()
