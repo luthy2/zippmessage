@@ -105,13 +105,23 @@
     </style>
   </head>
   <body>
+  <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <img src="" class="imagepreview" style="width: 100%">
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="gradient">
     <div class = "container">
       <div class="row">
         <div class ="col-md-6 col-md-offset-3">
-          <h1 class = "text-center"><span style="font-family:Paytone One;">Zipp.</span> Never lose anything</h1>
+          <h1 class = "text-center"><span style="font-family:Paytone One;">Zipp.</span> An easy way to @mention tag your friends and share links.</h1>
           <p class="lead text-center">
-            An easy way to save, share, and organize your internet.
+            Save, share, and organize any link on the web.
           </p>
           <p class = "text-align text-center pad-top pad-bottom-2">
             <span >
@@ -126,23 +136,33 @@
   </div>
       <div class ="container pad-top-2">
         <div class="row">
-          <div class="col-md-4 pad-bottom-2 text">
-            <h1 class="text-center highlight pad-bottom"><span class="outline"><span class="glyphicon glyphicon-inbox inner"></span></span></h1>
-            <h3 class="text-center">Save for later</h3>
-            <p class= "text-center">Easily save articles, photos, videos, audio, tweets, gifs, and pretty much anything to your reading list by adding a link.</p>
+          <div class="col-md-5 col-md-offset-1">
+            <h2>Share Effortlessly</h2><p> Use our bookmarklet <a href = "javascript:window.location=%22http://www.zippmsg.com/quickshare?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)">Zipp-Quickshare</a> to one-click share with your friends, or save for later, without breaking your flow.</p>
           </div>
-          <div class="col-md-4 pad-bottom-2 text">
-            <h1 class="text-center highlight pad-bottom"><span class="outline"><span class="glyphicon glyphicon-send inner"></span></span></h1>
-            <h3 class= "text-center">Share with friends</h3>
-            <p class="text-center">The @mention for everything on the internet. Quickly share any link in private.</p>
-          </div>
-          <div class="col-md-4 pad-bottom-2 text">
-            <h1 class="text-center highlight pad-bottom"><span class="outline"><span class="glyphicon glyphicon-bookmark inner"></span></span></h1>
-            <h3 class = "text-center">Archive your content</h3>
-            <p class="text-center">Never lose anything you've found. Bookmark your content and organize it with #tags</p>
+          <div class="col-md-5">
+            <a href="#" class="pop">
+              <img src='./static/img/quickshare.gif'>
+            </a>
           </div>
         </div>
-        <hr>
+        <div class="row">
+          <div class="col-md-5 col-md-offset-1">
+            <h2>Share Privately</h2><p>Messages your friends send you, and links you've sent yourself will show up in your inbox. Don't worry Your friends won't be able to see who else you sent the same message to.</p>
+          </div>
+          <div class="col-md-5"><img src='./static/img/inbox.gif'></div>
+        </div>
+        <div class="row">
+          <div class="col-md-5 col-md-offset-1">
+            <h2>Rich Inbox</h2><p>Most articles will show up with a nice preview, and rich content like images, videos, and music, will be automatically embedded.</p> <p>You can read tweets, watch YouTube videos, listen to music from Soundcloud, and more without leaving the app.</p>
+          </div>
+          <div class="col-md-5"><a href="#" class="pop"><img src='./static/img/richinbox.gif'></a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-5 col-md-offset-1">
+            <h2>Interact</h2><p>Once you're finished with a message, you can respond with a reaction 😀, add to your archive by bookmarking <span class="glyphicon glyphicon-bookmark"></span> and adding #tags, or reshare <span class="glyphicon glyphicon-send"></span> it with more friends! Dismiss <span class= "glyphicon glyphicon-remove"></span> to get rid of it for good.</p>
+            <div class="col-md-5 "><a href="#" class="pop"><img src='./static/img/messageactions.gif'></a></div>
+          </div>
+        </div>
         <div class="row" style="padding-top:200px; padding-bottom:150px;">
           <div class="col-md-8 col-md-offset-2">
             <h4 class="lead text-center"> We will never spam you, or tweet without your consent.</h4>
@@ -154,12 +174,14 @@
             </p>
           </div>
         </div>
-        <hr>
-        <div class = "row pad-top">
-          <div class="col-md-8 col-md-offset-2">
-            <p class = "text-center" style="color:#2f2f2f; font-size:10px;">copyright 2016 stove labs</p>
-          </div>
-        </div>
     </div>
+    <script type="text/javascript">
+      $(function() {
+        $('.pop').on('click', function() {
+          $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+          $('#imagemodal').modal('show');
+        });
+      });
+    </script>
   </body>
 </html>
