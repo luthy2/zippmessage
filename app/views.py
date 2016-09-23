@@ -855,7 +855,7 @@ def send_activity_email(activity_id):
 @celery.task
 def send_new_msg_email(sender_id, recipient_id, message_id):
 	with app.app_context():
-		print 'task added to queue'
+		print 'email task added to queue...'
 		sender = User.query.get(sender_id)
 		recipient = User.query.get(recipient_id)
 		message = Message.query.get(message_id)
@@ -873,7 +873,7 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 											"to":r_email,
 											"subject":"New Message!",
 											"html":html})
-				print 'email sent', resp
+				print 'email sent', resp	
 				return resp
 	return False
 
