@@ -873,7 +873,7 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 											"to":r_email,
 											"subject":"New Message!",
 											"html":html})
-				print 'email sent', resp	
+				print 'email sent', resp
 				return resp
 	return False
 
@@ -909,5 +909,6 @@ def admin_dashboard():
 	n_users = len(User.query.all())
 	messages_sent = len(Message.query.all())
 	activities = len(Activity.query.all())
+	users = User.query.all()
 	send_analytics.delay("test", test="test")
-	return render_template('dashboard.html', n_users=n_users, messages_sent=messages_sent, activities = activities)
+	return render_template('dashboard.html', n_users=n_users, messages_sent=messages_sent, activities = activities, users =users)
