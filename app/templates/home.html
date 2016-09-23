@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <title> Zipp - Save and Share </title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script  type="text/javascript" src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script  type="text/javascript" src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Paytone+One' rel='stylesheet' type='text/css'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -100,23 +100,23 @@
             border-color:white;
             background-color: #06d66e;
           }
-          img .gif {
+          img .gif{
             width:100%;
           }
 
     </style>
   </head>
   <body>
-    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <img src="" class="imagepreview" style="width: 100%">
-          </div>
+  <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <img src="" class="imagepreview" style="width: 100%">
         </div>
       </div>
     </div>
+  </div>
   <div class="gradient">
     <div class = "container">
       <div class="row">
@@ -127,7 +127,7 @@
             A read-it-later, bookmarking, and link sharing platform, all in one.
           </p>
           <p class = "text-align text-center pad-top pad-bottom-2">
-            <span >
+            <span>
               <a class="btn btn-default btn-lg btn-br" href = "{{url_for('login', next='inbox')}}">
                 Sign Up with twitter
               </a>
@@ -150,20 +150,29 @@
         </div>
         <div class="row">
           <div class="col-md-5 col-md-offset-1">
-            <h2>Share Privately</h2><p>Messages your friends send you, and links you've sent yourself will show up in your inbox. Don't worry Your friends won't be able to see who else you sent the same message to.</p>
+            <h2>Share Privately</h2>
+            <p>Messages your friends send you, and links you've sent yourself will show up in your inbox. Don't worry Your friends won't be able to see who else you sent the same message to.</p>
           </div>
-          <div class="col-md-5"><img class="gif" src='./static/img/inbox.gif'></div>
+          <div class="col-md-5">
+            <img class="gif" src='./static/img/inbox.gif'>
+          </div>
         </div>
         <div class="row">
           <div class="col-md-5 col-md-offset-1">
-            <h2>Rich Inbox</h2><p>Most articles will show up with a nice preview, and rich content like images, videos, and music, will be automatically embedded.</p> <p>You can read tweets, watch YouTube videos, listen to music from Soundcloud, and more without leaving the app.</p>
+            <h2>Rich Inbox</h2>
+            <p>Most articles will show up with a nice preview, and rich content like images, videos, and music, will be automatically embedded.</p> <p>You can read tweets, watch YouTube videos, listen to music from Soundcloud, and more without leaving the app.</p>
           </div>
-          <div class="col-md-5"><a href="#" class="pop"><img class="gif" src='./static/img/richinbox.gif'></a></div>
+          <div class="col-md-5">
+            <a href="#" class="pop">
+              <img class="gif" src='./static/img/richinbox.gif'>
+            </a>
+          </div>
         </div>
         <div class="row">
           <div class="col-md-5 col-md-offset-1">
-            <h2>Interact</h2><p>Once you're finished with a message, you can respond with a reaction 😀, add to your archive by bookmarking <span class="glyphicon glyphicon-bookmark"></span> and adding #tags, or reshare <span class="glyphicon glyphicon-send"></span> it with more friends! Dismiss <span class= "glyphicon glyphicon-remove"></span> to get rid of it for good.</p>
-            <div class="col-md-5 ">
+            <h2>Interact</h2>
+            <p>Once you're finished with a message, you can respond with a reaction 😀, add to your archive by bookmarking <span class="glyphicon glyphicon-bookmark"></span> and adding #tags, or reshare <span class="glyphicon glyphicon-send"></span> it with more friends! Dismiss <span class= "glyphicon glyphicon-remove"></span> to get rid of it for good.</p>
+            <div class="col-md-5">
               <a href="#" class="pop">
                 <img class="gif"src='./static/img/messageactions.gif'>
               </a>
