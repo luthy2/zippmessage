@@ -11,6 +11,7 @@
     <style>
       body{
         font-family: Muli;
+        line-height: 150%;
       }
       body .gradient { 	padding-top: 50px;
               height: 100%;
@@ -29,22 +30,6 @@
               color: #F8F8F8;
       }
 
-      img .gradient {
-             padding:15px;
-             border:1px solid #bfbfbf;
-             border-radius: 7px;
-             -webkit-background-size: cover;
-             -moz-background-size: cover;
-             -o-background-size: cover;
-             background-size: cover;
-             background: #70bg32;
-             background-repeat:no-repeat;
-             background: -webkit-linear-gradient( to left top, #ffffff, #e6e6e6);
-             background: -moz-linear-gradient( to left top, #ffffff, #e6e6e6);
-             background: -ms-linear-gradient( to left top, #ffffff, #e6e6e6);
-             background: -o-linear-gradient( to left top, #ffffff, #e6e6e6);
-             background: linear-gradient( to left top, #ffffff, #e6e6e6);
-          }
           .pad-top{
             padding-top:50px;
           }
@@ -100,7 +85,7 @@
             border-color:white;
             background-color: #06d66e;
           }
-          img .gif{
+          img {
             width:100%;
           }
 
@@ -123,7 +108,7 @@
         <h1 class = "text-center"><span style="font-family:Paytone One;">Zipp.</span></h1>
         <p class="lead text-center">
           An easy way to @mention. Tag your friends and share links.
-          A read-it-later, bookmarking, and link sharing platform, all in one.
+          A read-it-later, bookmarking, and link sharing platform for all links, tweets, memes, music, photos, videos, and everything else.
         </p>
         <p class = "text-align text-center pad-top pad-bottom-2">
           <span>
@@ -149,16 +134,18 @@
                 </a>
               </div>
             </div>
-            <div class="row">
+            <div class="row pad-top-2">
               <div class="col-md-5 col-md-offset-1">
                 <h2>Share Privately</h2>
                 <p>Messages your friends send you, and links you've sent yourself will show up in your inbox. Don't worry Your friends won't be able to see who else you sent the same message to.</p>
               </div>
               <div class="col-md-5">
-                <img class="gif" src='./static/img/inbox.gif'>
+                <a href="#" class="pop">
+                  <img class="gif" src='./static/img/inbox.gif'>
+                </a>
               </div>
             </div>
-            <div class="row">
+            <div class="row pad-top-2">
               <div class="col-md-5 col-md-offset-1">
                 <h2>Rich Inbox</h2>
                 <p>Most articles will show up with a nice preview, and rich content like images, videos, and music, will be automatically embedded.</p> <p>You can read tweets, watch YouTube videos, listen to music from Soundcloud, and more without leaving the app.</p>
@@ -169,7 +156,7 @@
                 </a>
               </div>
             </div>
-            <div class="row">
+            <div class="row pad-top-2">
               <div class="col-md-5 col-md-offset-1">
                 <h2>Interact</h2>
                 <p>Once you're finished with a message, you can respond with a reaction 😀, add to your archive by bookmarking <span class="glyphicon glyphicon-bookmark"></span> and adding #tags, or reshare <span class="glyphicon glyphicon-send"></span> it with more friends! Dismiss <span class= "glyphicon glyphicon-remove"></span> to get rid of it for good.</p>
@@ -180,7 +167,7 @@
                 </a>
               </div>
             </div>
-            <div class="row" style="padding-top:200px; padding-bottom:150px;">
+            <div class="row pad-top-2">
               <div class="col-md-8 col-md-offset-2">
                 <h4 class="lead text-center"> We will never spam you, or tweet without your consent.</h4>
                 <p class="text-center pad-bottom">There is nothing to setup. Just connect your twitter and you're ready to go.</p>
