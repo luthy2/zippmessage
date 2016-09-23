@@ -10,7 +10,7 @@
 					{{form.hidden_tag()}}
 						<label>Email <small>{{user.email}}</small></label>
 						{{form.email(class_="form-control", placeholder="john@example.com")}}
-						<label>receive notifications?</label>
+						<label>receive notifications?<small>currently {%if user.notifications_status%}turned on {%else%}turned off{%endif%}</label> 
 						{{form.notifications_status}}
 				</div>
 					<input type = "submit" value = "Next" class = "btn btn-default pull-right" id="outline">
