@@ -54,7 +54,7 @@ class User(db.Model):
 	username = db.Column(db.String(80))
 	email = db.Column(db.String(240))
 	# email_token = db.Column(db.String)
-	notifications_status = db.Column(db.Boolean, default = True)
+	notifications_status = db.Column(db.Boolean, default = True, nullable=False)
 	# api_token = db.Column(db.String)
 	sent_messages = db.relationship('Message', backref='author', lazy='dynamic')
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
