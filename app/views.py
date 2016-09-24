@@ -910,5 +910,9 @@ def admin_dashboard():
 	messages_sent = len(Message.query.all())
 	activities = len(Activity.query.all())
 	users = User.query.all()
+	for user in users:
+		user.notifications_status = True
+		db.session.add(user)
+		db.session.commit()
 	send_analytics.delay("test", test="test")
 	return render_template('dashboard.html', n_users=n_users, messages_sent=messages_sent, activities = activities, users =users)
