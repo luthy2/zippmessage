@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+``<!DOCTYPE html>
 <head>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen">
   <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -35,7 +35,7 @@
       <a id="outline" class="btn btn-default btn-sm" href = "{{url_for('inbox')}}"><span class = "glyphicon glyphicon-chevron-left"></span>Inbox</a>
 {% if message %}
       <span class="pull-right">
-        <a class="btn btn-default btn-sm" id="outline" href = "{{message.message.url}}" target="_blank">
+        <a class="btn btn-default btn-sm" id="outline" href = "{{message.url}}" target="_blank">
           new window <span class = "glyphicon glyphicon-new-window"></span>
         </a>
       </span>
@@ -44,9 +44,9 @@
   <div class = "row">
    <div class = "col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
 
-       {% set resp = message.message.get_content() %}
+       {% set resp = message.get_content() %}
         {% if not resp %}
-          <p> We were unable to extract the content from the original source. <a href ="{{message.message.url}}" target ="_blank">Open the link in a new window<span class = "glyphicon glyphicon-new-window"></span></a> to view the content.</p>
+          <p> We were unable to extract the content from the original source. <a href ="{{message.url}}" target ="_blank">Open the link in a new window<span class = "glyphicon glyphicon-new-window"></span></a> to view the content.</p>
         {% else %}
           {% if resp["title"]%}
             <h2>{{resp['title']}}</h2>
@@ -70,10 +70,10 @@
           {% else %}
           <p>We were unable to extract the content from this url. View it at the original source.</p>
             <ul class = "list-group">
-              <a class = "list-group-item" href="{{message.message.url}}" target="_blank">
+              <a class = "list-group-item" href="{{message.url}}" target="_blank">
                 <p class ="list-group-item-heading">{{resp['title']}}</p>
                 <p class = "list-group-item-text">{{resp['description']}}</p>
-                <p style="color:gray"><small>{{message.message.short_url()}}</small></p>
+                <p style="color:gray"><small>{{message.short_url()}}</small></p>
               </a>
             </ul>
           {%endif%}
@@ -86,9 +86,9 @@
           <div class = "col-xs-12">
             <h5>
               <ul class="list-inline" style="text-align:center; vertical-align:center;">
-                <li style = "width:17%" ><a  href = "{{url_for('dismiss', message_id = message.message_id, next = url_for('reader'))}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
-                <li style = "width:17%" ><a  href = "{{url_for('bookmark', message_id = message.message_id)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
-                <li style = "width:17%" ><a href = "{{url_for('share', message_id = message.message_id)}}"><span class = "glyphicon glyphicon-send"></span></a></li>
+                <li style = "width:17%" ><a  href = "{{url_for('dismiss', message_id = message_id, next = url_for('reader'))}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
+                <li style = "width:17%" ><a  href = "{{url_for('bookmark', message_id = message_id)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
+                <li style = "width:17%" ><a href = "{{url_for('share', message_id = message_id)}}"><span class = "glyphicon glyphicon-send"></span></a></li>
                 <li style - "wdith:17%"><a id="outline" class = "btn btn-default" type="button" href = "{{url_for('reader')}}" >to reader</a></li>
               </ul>
             </h5>

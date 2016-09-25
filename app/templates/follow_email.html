@@ -14,11 +14,12 @@
     <div class = "container">
       <div class = "row">
         <div class = "col-md-6 col-md-offset-3">
-          <h2 class = "text-align text-center">ZippMsg</h2>
+          <h2 class = "text-align text-center"><a href ="{{url_for('inbox')}}">ZippMsg</a></h2>
           <ul class = "list-group">
             <a class = "list-group-item" href = "{{url_for('user', username = sender, _external=True)}}">
               <h2>hey @{{recipient}}</h2>
-              <h2><small>@{{sender}} is now following you on ZippMsg. cool.</small></h2>
+              <h2><small><a href="{{url_for('user', username=sender)}}">@{{sender}}</a> is now following you on ZippMsg. cool.</small></h2>
+              <h2> Go to your <a href="{{url_for('inbox')}}">Inbox</a></h2>
             </a>
           </ul>
         </div>

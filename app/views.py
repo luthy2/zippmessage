@@ -533,7 +533,6 @@ def reader(page = 1):
 def message_reader(message_id):
 	user = g.user
 	m = Message.query.get(message_id)
-	m = UserMessage.query.filter(UserMessage.message == m).filter(UserMessage.user_id == user.id).first()
 	send_analytics.delay("pageview", userId=str(g.user.id), title="message reader", messageId=str(message_id))
 	return render_template('message_reader.html', user = user, title = 'Reader', message = m)
 
