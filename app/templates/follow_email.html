@@ -1,3 +1,4 @@
+<!doctype html>
 <head>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen">
   <script  type="text/javascript" src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -17,12 +18,13 @@
           <h2 class = "text-align text-center"><a href ="{{url_for('inbox')}}">ZippMsg</a></h2>
           <ul class = "list-group">
             <a class = "list-group-item" href = "{{url_for('user', username = sender, _external=True)}}">
-              <h2>hey @{{recipient}}</h2>
-              <h2><small><a href="{{url_for('user', username=sender)}}">@{{sender}}</a> is now following you on ZippMsg. cool.</small></h2>
-              <h2> Go to your <a href="{{url_for('inbox')}}">Inbox</a></h2>
+              <p>hey @{{recipient}}</p>
+              <p><a href="{{url_for('user', username=sender)}}">@{{sender}}</a> is now following you on ZippMsg. cool.</p>
+              <p>Go to your <a href="{{url_for('inbox')}}">Inbox</a><p>
             </a>
           </ul>
         </div>
       </div>
     </div>
   </body>
+</html>
