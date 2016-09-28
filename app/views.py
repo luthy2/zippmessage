@@ -554,7 +554,7 @@ def explore():
 			items.append(item)
 	return render_template('explore.html', title = 'Explore', items = items)
 
-@app.route('history', methods=["GET", "POST"])
+@app.route('/history', methods=["GET", "POST"])
 @login_required
 def history():
 	user =g.user
