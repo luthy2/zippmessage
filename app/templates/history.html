@@ -1,5 +1,16 @@
 <!-- extends base layout -->
 {% extends "base.html" %}
 {% block content %}
-<h4>message history for {{user}}</h4> 
+<h4>message history for {{user}}</h4>
+{% if history %}
+  {% for item in history %}
+    {{item.note}}
+    {{item.url}}
+    {% set r = item.recipients%}
+    {% for i in r %}
+      sent to <small>{{r}}</small>
+      {%endfor%}
+  {%endfor%}
+{%endif%}
+
 {% endblock %}

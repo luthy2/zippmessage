@@ -554,6 +554,12 @@ def explore():
 			items.append(item)
 	return render_template('explore.html', title = 'Explore', items = items)
 
+@app.route('history', methods=["GET", "POST"])
+@login_required
+def history():
+	user =g.user
+	history = Message.query.filter(Message.author==user)
+	return render_template("history.html", history=history)
 #start of api routes---------------------------------------------------------#
 
 @app.route('/api/1/heartbeat', methods = ["GET", "POST"])
