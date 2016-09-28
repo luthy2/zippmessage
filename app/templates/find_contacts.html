@@ -10,7 +10,7 @@
       <ul class="list-group">
         <li class="list-group-item">
           {% if error %}
-           <div class = "alert alert danger">{{error}} <a href = "{{url_for(inbox)}}">Back to Inbox</a></div>
+           <div class = "alert alert danger">{{error}} <a href = "{{url_for('inbox')}}">Back to Inbox</a></div>
           {% else %}
             {% if not_contacts %}
               <h4>Add Friends</h4><hr>
