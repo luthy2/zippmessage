@@ -181,7 +181,7 @@ def contacts():
 @login_required
 def find_contacts():
 	user = g.user
-	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
+	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)}, token = str(user.oauth_token))
 	not_contacts=[]
 	not_users = []
 	c = []
@@ -193,7 +193,7 @@ def find_contacts():
 		for i in range(size):
 			_ids = ids[s:(s+100)]
 			s += 100
-			_r = twitter.post('users/lookup.json', data = {"user_id":_ids}, token = "21979641-HdbrqMnHFifGyKyKIU51oA6hzguZpEnuBKXgDEeYH")
+			_r = twitter.post('users/lookup.json', data = {"user_id":_ids}, token = str(user.oauth_token))
 			if _r.status == 200:
 				friends = _r.data
 				for f in friends:
@@ -207,7 +207,7 @@ def find_contacts():
 						not_users.append(f) #if they not a user let us invite them
 			else:
 				print _r.status
-				error = "We're having trouble connecting from twitter. Try again later."
+				error = "We're having trouble connecting to twitter. Try again later."
 				return render_template('find_contacts.html', contacts = c, not_contacts=not_contacts, not_users = not_users, title = "Find Contacts", error=error)
 	else:
 		not_users, not_contacts, c = None, None, None
@@ -289,9 +289,9 @@ def recipients():
 				message.add_recipient(recipient_id)
 				message.send_message(recipient_id)
 				send_analytics.delay('message sent', fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
-				print 'sending analytics'
+				print 'sending email...'
 				if recipient_id!= g.user.id:
-					send_new_msg_email.delay(int(g.user.id), int(recipient_id), int(message.id))
+					send_new_msg_email.delay(g.user.id, recipient_id, message.id)
 			message.deliver_message()
 			db.session.commit()
 			session.pop('message_id', None)
@@ -430,7 +430,7 @@ def quickshare():
 				message.send_message(recipient_id)
 				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
 				if recipient_id!= g.user.id:
-					send_new_msg_email.delay(int(g.user.id), int(recipient_id), int(message.id))
+					send_new_msg_email.delay(str(g.user.id), str(recipient_id), str(message.id))
 					flash('Message Sent!')
 			message.deliver_message()
 			db.session.commit()
@@ -476,7 +476,7 @@ def share(message_id):
 				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
 				send_analytics.delay("message sent shared", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
 				if recipient_id!=g.user.id:
-					send_new_msg_email.delay(int(g.user.id), int(recipient_id), int(message.id))
+					send_new_msg_email.delay(g.user.id, recipient_id, message.id)
 
 			#deliver message
 			new_message.deliver_message()
@@ -533,7 +533,7 @@ def reader(page = 1):
 def message_reader(message_id):
 	user = g.user
 	m = Message.query.get(message_id)
-	send_analytics.delay("pageview", userId=str(g.user.id), title="message reader", messageId=str(message_id))
+	send_analytics.delay("pageview", userId=str(user.id), title="message reader", messageId=str(message_id))
 	return render_template('message_reader.html', user = user, title = 'Reader', message = m)
 
 
@@ -854,7 +854,7 @@ def send_activity_email(activity_id):
 @celery.task
 def send_new_msg_email(sender_id, recipient_id, message_id):
 	with app.app_context():
-		print 'email task added to queue...'
+		print 'task added to queue'
 		sender = User.query.get(sender_id)
 		recipient = User.query.get(recipient_id)
 		message = Message.query.get(message_id)
