@@ -2,15 +2,18 @@
 {% extends "base.html" %}
 {% block content %}
 <h4>message history for {{g.user.username}}</h4>
-{% if history %}
-  {% for item in history %}
-    <p class="truncate">{{item.url}}</p>
-    {{item.note}}
-    {% set r = item.recipients.username%}
-    {% for i in r %}
-      sent to <small>{{r}}</small>
-      {%endfor%}
-  {%endfor%}
-{%endif%}
-
+<div class="row">
+  <div class="col-md-6">
+  {% if history %}
+    {% for item in history %}
+      <p class="truncate">{{item.url}}</p>
+      {{item.note}}
+      {% set r = item.recipients%}
+        {% for u in r %}
+        sent to <small>{{r}}</small>
+        {%endfor%}
+    {%endfor%}
+  {%endif%}
+  </div>
+</div>
 {% endblock %}
