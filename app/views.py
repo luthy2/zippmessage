@@ -558,7 +558,7 @@ def explore():
 @login_required
 def history():
 	user =g.user
-	history = Message.query.filter(Message.author==user)
+	history = Message.query.filter(Message.author==user).order_by(Message.timestamp.desc()).limit(50)
 	return render_template("history.html", history=history)
 #start of api routes---------------------------------------------------------#
 

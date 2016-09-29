@@ -8,11 +8,13 @@
     {% for item in history %}
         <p class="truncate">{{item.url}}</p>
         <p><small>{{item.title}}</small></p>
-        sent to
+        <p>sent to<p/>
+        <ul class="list-inline">
         {% set r = item.recipients%}
         {% for i in r %}
-          {{i.username}}
+          <li>{{i.username}}</li>
         {%endfor%}
+        </ul>
     {%endfor%}
   {%endif%}
   </div>
