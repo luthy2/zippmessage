@@ -8,10 +8,10 @@
     {% for item in history %}
         <p class="truncate">{{item.url}}</p>
         <p><small>{{item.note}}</small></p>
-        sent to 
-        {%set r = item.received_messages%}
+        sent to
+        {% set r = item.received_messages%}
         {% for i in r %}
-          {i.username}
+          {{i.username}}
         {%endfor%}
     {%endfor%}
   {%endif%}
