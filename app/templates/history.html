@@ -16,15 +16,15 @@
           </ul>
           <p>sent to</p>
           <ul class="list-inline">
-      {% set r = item.recipients%}
-      {% for i in r %}
-        <li><a href="{{url_for('user', username=i.username)}}">@{{i.username}}</a></li>
-      {%endfor%}
-      </ul>
-      </li>
+          {% set r = item.recipients%}
+          {% for i in r %}
+            <li><a href="{{url_for('user', username=i.username)}}">@{{i.username}}</a></li>
+          {%endfor%}
+          </ul>
+          </li>
+        {%endfor%}
+      {%endif%}
     </ul>
-    {%endfor%}
-  {%endif%}
   </div>
 </div>
 {% endblock %}
