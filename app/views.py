@@ -319,7 +319,7 @@ def bookmarks(page=1):
 		send_analytics.delay("pageview", title="bookmarks", page=page)
 		bookmarks=render_template('bookmarks.html', user = user, bookmarks = b, user_tags = user_tags, title = "Bookmarks")
 		bm.set(key, bookmarks, 600)
-		return rv
+		return bookmarks
 
 @app.route('/follow/<username>')
 @login_required
@@ -794,10 +794,12 @@ def cache_url(url):
 def cache_bookmarks(user_id, page=1):
 	with app.app_context():
 		s = time.time()
-		user = User.query.get(user_id)
+		g.user = User.query.get(user_id)
+		user = g.user
 		b = user.bookmarks().paginate(page,12,False)
 		user_tags = user.tags_for_user().most_common(20)
 		bookmarks = render_template('bookmarks.html', user = user, bookmarks = b, user_tags = user_tags, title = "Bookmarks")
+
 		# key naming convention is object:id:field
 		# in this case bookmarks:user_id:page
 		key='bookmarks:%s:%s' % (user.id, page)
