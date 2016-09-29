@@ -4,11 +4,9 @@
 <h4>message history for {{g.user.username}}</h4>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-  {% if history %}
-    {% for item in history %}
-    <div class="row">
-      <div class="col-xs-12">
-        <ul class="list-group">
+    <ul class="list-group">
+      {% if history %}
+        {% for item in history %}
           <li class="list-group-item">
           <ul class="list-group">
             <a class="list-group-item" href="item.url">
@@ -18,15 +16,13 @@
           </ul>
           <p>sent to</p>
           <ul class="list-inline">
-          {% set r = item.recipients%}
-          {% for i in r %}
-            <li><a href="{{url_for('user', username=i.username)}}">@{{i.username}}</a></li>
-          {%endfor%}
-          </ul>
-          </li>
-        </ul>
-        </div>
-      </div>
+      {% set r = item.recipients%}
+      {% for i in r %}
+        <li><a href="{{url_for('user', username=i.username)}}">@{{i.username}}</a></li>
+      {%endfor%}
+      </ul>
+      </li>
+    </ul>
     {%endfor%}
   {%endif%}
   </div>
