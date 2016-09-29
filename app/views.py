@@ -424,15 +424,16 @@ def quickshare():
 	cache_url.delay(message.url)
 	if request.method == 'POST':
 		recipients = form.recipients.data
+		m= Message.query.get(message.id)
 		if form.validate_on_submit():
 			for recipient_id in recipients:
-				message.add_recipient(recipient_id)
-				message.send_message(recipient_id)
+				m.add_recipient(recipient_id)
+				m.send_message(recipient_id)
 				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
 				if recipient_id!= g.user.id:
-					send_new_msg_email.delay(str(g.user.id), str(recipient_id), str(message.id))
+					send_new_msg_email.delay(str(g.user.id), str(recipient_id), str(m.id))
 					flash('Message Sent!')
-			message.deliver_message()
+			m.deliver_message()
 			db.session.commit()
 			send_analytics.delay("quickshare", userId=str(g.user.id))
 			return redirect(request.args.get('url'))
