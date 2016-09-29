@@ -143,6 +143,8 @@ def inbox():
 	user_tags = user.tags_for_user().most_common(20)
 	activity = user.user_activity()
 	form = NewMessageForm()
+	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
+	cache_bookmarks.delay(user.id)
 	if form.validate_on_submit():
 			message = Message(title = form.message_title.data,
 								url = form.message_url.data,
@@ -153,7 +155,6 @@ def inbox():
 			session['message_id'] = message.id
 			flash('Choose Receipients')
 			return redirect(url_for('recipients'))
-	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
 	return render_template('inbox.html', user=user, user_tags = user_tags, title = "Inbox", form= form, activity = activity)
 
 @app.route('/activity', methods=["GET", "POST"])
@@ -308,10 +309,17 @@ def recipients():
 @login_required
 def bookmarks(page=1):
 	user = g.user
-	bookmarks = user.bookmarks().paginate(page,12,False)
-	user_tags = user.tags_for_user().most_common(20)
-	send_analytics.delay("pageview", title="bookmarks", page=page)
-	return render_template('bookmarks.html', user = user, bookmarks = bookmarks, user_tags = user_tags, title = "Bookmarks")
+	key = 'bookmarks:%s:%s' (user.id, page)
+	if bm.get(key):
+		return bm.get(key)
+	else:
+		b = user.bookmarks().paginate(page,12,False)
+		user_tags = user.tags_for_user().most_common(20)
+		send_analytics.delay("pageview", title="bookmarks", page=page)
+		bookmarks=render_template('bookmarks.html', user = user, bookmarks = b, user_tags = user_tags, title = "Bookmarks")
+		bm.set('bookmarks_'+user.id, bookmarks, 600)
+		cache_bookmarks.delay(user.id, page=page+1)
+		return rv
 
 @app.route('/follow/<username>')
 @login_required
@@ -381,6 +389,7 @@ def bookmark(message_id):
 			user.create_activity(message.message.author.id, 'bookmarked', message.message.id)
 		db.session.add(message, user)
 		db.session.commit()
+		cache_bookmarks.delay(user.id)
 		flash("tags updated")
 		send_analytics.delay("bookmark tag", userId=str(g.user.id), tags=message.usermessage_tags())
 		return redirect(redirect_url())
@@ -404,6 +413,7 @@ def dismiss(message_id):
 		return redirect(url_for('index'))
 	db.session.add(user)
 	db.session.commit()
+	cache_bookmarks.delay(user.id)
 	send_analytics.delay("message dismiss", messageId = str(message_id), userId=str(user.id))
 	flash('Message dismissed')
 	return redirect(redirect_url())
@@ -779,10 +789,21 @@ def cache_url(url):
 		print 'content cached via thread'
 		return bm.set(url, content, 172800)
 
-#todo
+
 @celery.task
-def cache_bookmarks():
-	pass
+def cache_bookmarks(user_id, page=1):
+	with app.app_context():
+		user = User.query.get(user_id)
+		b = user.bookmarks().paginate(page,12,False)
+		user_tags = user.tags_for_user().most_common(20)
+		bookmarks = render_template('bookmarks.html', user = user, bookmarks = b, user_tags = user_tags, title = "Bookmarks")
+		if page ==1:
+			bm.get()
+		# key naming convention is object:id:field
+		# in this case bookmarks:user_id:page
+		key='bookmarks:%s:%s' % (user.id, page)
+		print 'Bookmarks page ' + page + 'cached'
+		return bm.set(key, bookmarks, 600)
 
 #todo
 @celery.task
