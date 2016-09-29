@@ -318,8 +318,7 @@ def bookmarks(page=1):
 		user_tags = user.tags_for_user().most_common(20)
 		send_analytics.delay("pageview", title="bookmarks", page=page)
 		bookmarks=render_template('bookmarks.html', user = user, bookmarks = b, user_tags = user_tags, title = "Bookmarks")
-		bm.set('bookmarks_'+user.id, bookmarks, 600)
-
+		bm.set(key, bookmarks, 600)
 		return rv
 
 @app.route('/follow/<username>')
