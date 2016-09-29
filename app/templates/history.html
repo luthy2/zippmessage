@@ -6,11 +6,12 @@
   <div class="col-md-6">
   {% if history %}
     {% for item in history %}
-      <p class="truncate">{{item.url}}</p>
-      {{item.note}}
-      {% set r = item.recipients%}
-        {% for u in r %}
-        sent to <small>{{r}}</small>
+        <p class="truncate">{{item.url}}</p>
+        <p><small>{{item.note}}</small></p>
+        sent to 
+        {%set r = item.received_messages%}
+        {% for i in r %}
+          {i.username}
         {%endfor%}
     {%endfor%}
   {%endif%}
