@@ -181,7 +181,7 @@ def contacts():
 @login_required
 def find_contacts():
 	user = g.user
-	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)}, token = str(user.oauth_token))
+	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)}, token = (user.oauth_token, user.oauth_token_secret))
 	not_contacts=[]
 	not_users = []
 	c = []
@@ -838,8 +838,8 @@ def send_activity_email(activity_id):
 	if activity_id:
 		with app.app_context():
 			activity = Activity.query.filter(Activity.id==activity_id)
-			recipient = activity.owner
-			sender = activity.subject
+			recipient = activity.owner.id
+			sender = activity.subject.id
 			r_email  = recipient.email
 			if r_email:
 				if recipient.notifications_status == True:
