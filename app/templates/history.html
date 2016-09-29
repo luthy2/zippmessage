@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <h4>message history for {{g.user.username}}</h4>
+    <h4>Sent Messages</h4>
     <ul class="list-group">
       {% if history %}
         {% for item in history %}
@@ -17,7 +17,7 @@
           {%endfor%}
           </ul>
           <ul class="list-group">
-            <a class="list-group-item" href="item.url">
+            <a class="list-group-item" href="{{item.url}}">
               <p>{{item.title}}</p>
               <p class="truncate"><small>{{item.url}}</small></p>
             </a>
