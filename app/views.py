@@ -793,16 +793,17 @@ def cache_url(url):
 @celery.task
 def cache_bookmarks(user_id, page=1):
 	with app.app_context():
+		s = time.time()
 		user = User.query.get(user_id)
 		b = user.bookmarks().paginate(page,12,False)
 		user_tags = user.tags_for_user().most_common(20)
 		bookmarks = render_template('bookmarks.html', user = user, bookmarks = b, user_tags = user_tags, title = "Bookmarks")
-		if page ==1:
-			bm.get()
 		# key naming convention is object:id:field
 		# in this case bookmarks:user_id:page
 		key='bookmarks:%s:%s' % (user.id, page)
-		print 'Bookmarks page ' + page + 'cached'
+		e = time.time()
+		td = s-e
+		print 'Bookmarks page %s cached in %s seconds' % (page, td)
 		return bm.set(key, bookmarks, 600)
 
 #todo
