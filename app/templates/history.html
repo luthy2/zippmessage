@@ -3,18 +3,26 @@
 {% block content %}
 <h4>message history for {{g.user.username}}</h4>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-6 col-md-offset-3">
   {% if history %}
     {% for item in history %}
-        <p class="truncate">{{item.url}}</p>
-        <p><small>{{item.title}}</small></p>
-        <p>sent to<p/>
-        <ul class="list-inline">
-        {% set r = item.recipients%}
-        {% for i in r %}
-          <li>{{i.username}}</li>
-        {%endfor%}
-        </ul>
+    <div class="row">
+      <div class="col-md-6">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <p>{{item.title}}</p>
+            <p class="truncate"><small>{{item.url}}</small></p>
+          </li>
+          <p>sent to</p>
+          <ul class="list-inline">
+          {% set r = item.recipients%}
+          {% for i in r %}
+            <li><a href="{{url_for('user', username=i.username)}}">@{{i.username}}</a></li>
+          {%endfor%}
+          </ul>
+        </div>
+      </div>
+      <hr>
     {%endfor%}
   {%endif%}
   </div>
