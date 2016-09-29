@@ -8,6 +8,12 @@
       {% if history %}
         {% for item in history %}
           <li class="list-group-item">
+          <ul class="list-inline">
+          {% set r = item.recipients%}
+          {% for i in r %}
+            <li><a href="{{url_for('user', username=i.username)}}">@{{i.username}}</a></li>
+          {%endfor%}
+          </ul>
           <ul class="list-group">
             <a class="list-group-item" href="item.url">
               <p>{{item.title}}</p>
@@ -15,12 +21,6 @@
             </a>
           </ul>
           <p>sent to</p>
-          <ul class="list-inline">
-          {% set r = item.recipients%}
-          {% for i in r %}
-            <li><a href="{{url_for('user', username=i.username)}}">@{{i.username}}</a></li>
-          {%endfor%}
-          </ul>
           </li>
         {%endfor%}
       {%endif%}
