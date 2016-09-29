@@ -181,7 +181,7 @@ def contacts():
 @login_required
 def find_contacts():
 	user = g.user
-	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)}, token = (user.oauth_token, user.oauth_token_secret))
+	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)}, token = (user.oauth_token, user.oauth_secret))
 	not_contacts=[]
 	not_users = []
 	c = []
