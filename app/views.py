@@ -309,8 +309,9 @@ def recipients():
 @login_required
 def bookmarks(page=1):
 	user = g.user
-	key = 'bookmarks:%s:%s' (user.id, page)
+	key = 'bookmarks:%s:%s' % (user.id, page)
 	if bm.get(key):
+		cache_bookmarks.delay(user.id, page=page+1)
 		return bm.get(key)
 	else:
 		b = user.bookmarks().paginate(page,12,False)
@@ -318,7 +319,7 @@ def bookmarks(page=1):
 		send_analytics.delay("pageview", title="bookmarks", page=page)
 		bookmarks=render_template('bookmarks.html', user = user, bookmarks = b, user_tags = user_tags, title = "Bookmarks")
 		bm.set('bookmarks_'+user.id, bookmarks, 600)
-		cache_bookmarks.delay(user.id, page=page+1)
+
 		return rv
 
 @app.route('/follow/<username>')
