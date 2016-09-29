@@ -181,7 +181,7 @@ def contacts():
 @login_required
 def find_contacts():
 	user = g.user
-	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)}, token = user.oauth_token)
+	resp = twitter.get('friends/ids.json', data = {"screen_name":str(user.username)})
 	not_contacts=[]
 	not_users = []
 	c = []
@@ -193,7 +193,7 @@ def find_contacts():
 		for i in range(size):
 			_ids = ids[s:(s+100)]
 			s += 100
-			_r = twitter.post('users/lookup.json', data = {"user_id":_ids}, token = str(user.oauth_token))
+			_r = twitter.post('users/lookup.json', data = {"user_id":_ids})
 			if _r.status == 200:
 				friends = _r.data
 				for f in friends:
