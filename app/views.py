@@ -144,7 +144,7 @@ def inbox():
 	activity = user.user_activity()
 	form = NewMessageForm()
 	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
-	cache_bookmarks.delay(user.id)
+	# cache_bookmarks.delay(user.id)
 	if form.validate_on_submit():
 			message = Message(title = form.message_title.data,
 								url = form.message_url.data,
@@ -310,16 +310,15 @@ def recipients():
 def bookmarks(page=1):
 	user = g.user
 	key = 'bookmarks:%s:%s' % (user.id, page)
-	if bm.get(key):
-		cache_bookmarks.delay(user.id, page=page+1)
-		return bm.get(key)
-	else:
-		b = user.bookmarks().paginate(page,12,False)
-		user_tags = user.tags_for_user().most_common(20)
-		send_analytics.delay("pageview", title="bookmarks", page=page)
-		bookmarks=render_template('bookmarks.html', user = user, bookmarks = b, user_tags = user_tags, title = "Bookmarks")
-		bm.set(key, bookmarks, 600)
-		return bookmarks
+	# if bm.get(key):
+	# 	cache_bookmarks.delay(user.id, page=page+1)
+	# 	return bm.get(key)
+	# else:
+	b = user.bookmarks().paginate(page,12,False)
+	user_tags = user.tags_for_user().most_common(20)
+	send_analytics.delay("pageview", title="bookmarks", page=page)
+	# bm.set(key, bookmarks, 600)
+	return render_template('bookmarks.html', user = user, bookmarks = b, user_tags = user_tags, title = "Bookmarks")
 
 @app.route('/follow/<username>')
 @login_required
@@ -389,7 +388,7 @@ def bookmark(message_id):
 			user.create_activity(message.message.author.id, 'bookmarked', message.message.id)
 		db.session.add(message, user)
 		db.session.commit()
-		cache_bookmarks.delay(user.id)
+		# cache_bookmarks.delay(user.id)
 		flash("tags updated")
 		send_analytics.delay("bookmark tag", userId=str(g.user.id), tags=message.usermessage_tags())
 		return redirect(redirect_url())
@@ -413,7 +412,7 @@ def dismiss(message_id):
 		return redirect(url_for('index'))
 	db.session.add(user)
 	db.session.commit()
-	cache_bookmarks.delay(user.id)
+	# cache_bookmarks.delay(user.id)
 	send_analytics.delay("message dismiss", messageId = str(message_id), userId=str(user.id))
 	flash('Message dismissed')
 	return redirect(redirect_url())
