@@ -423,9 +423,9 @@ def quickshare():
 	db.session.commit()
 	cache_url.delay(message.url)
 	if request.method == 'POST':
-		recipients = form.recipients.data
-		m= Message.query.get(message.id)
 		if form.validate_on_submit():
+			recipients = form.recipients.data
+			m= Message.query.get(message.id)
 			for recipient_id in recipients:
 				m.add_recipient(recipient_id)
 				m.send_message(recipient_id)
