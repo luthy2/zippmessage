@@ -130,6 +130,19 @@ body .pad-nav{
 		}
 	}
 
+
+	.outline{
+		border:1px solid #06D66E;
+		border-radius:5px;
+		background-color: white;
+		color:#06D66E;
+	}
+	.outline:hover{
+		color:white;
+		background-color: #06D66E;
+		border-color:#06D66E;
+		transition: all .5s ease 0s;
+	}
 	#outline{
 		border:1px solid #06D66E;
 		border-radius:5px;
