@@ -223,14 +223,12 @@ def find_contacts():
 @login_required
 def user(username):
 	_user = User.query.filter(User.username.ilike(username)).first()
-	if _user.id == g.user.id:
-		history = Message.query.filter(Message.author==g.user).order_by(Message.timestamp.desc()).limit(50)
-	else:
-		history=None
+	history=None
+	tags=None
 	if _user:
-		tags=_user.tags_for_user()
-	else:
-		tags=None
+		if _user.id == g.user.id:
+			history = Message.query.filter(Message.author==g.user).order_by(Message.timestamp.desc()).limit(50)
+			tags=_user.tags_for_user()
 	return render_template('user.html', user = _user, tags = tags, title = 'Profile', inbox=inbox, history = history)
 
 @app.route('/user/<username>/edit', methods = ["GET", "POST"])
