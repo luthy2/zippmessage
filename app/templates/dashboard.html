@@ -7,7 +7,9 @@
 </head>
 <body>
   <h1>Current Users<p>{{n_users}}</p></h1>
+   {% for user in users%}
+     {{user.username}}
+   {% endfor %}
   <h1>Messages Sent<p>{{messages_sent}}</p></h1>
   <h1>Activities Created<p>{{activities}}</h1>
-  
 </body>

@@ -932,8 +932,9 @@ def styles():
 def admin_dashboard():
 	if g.user != User.query.get(1):
 		return 403
-	n_users = len(User.query.all())
+	users = Users.query.all()
+	n_users = len(users)
 	messages_sent = len(Message.query.all())
 	activities = len(Activity.query.all())
 	send_analytics.delay("test", test="test")
-	return render_template('dashboard.html', n_users=n_users, messages_sent=messages_sent, activities = activities)
+	return render_template('dashboard.html', n_users=n_users, messages_sent=messages_sent, activities = activities, users = users)
