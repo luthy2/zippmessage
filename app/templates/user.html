@@ -4,8 +4,8 @@
 {% block content %}
 <div class = "container">
 	<div class = "row">
+		{% if user %}
 		<div class = "col-md-3">
-			{% if user %}
 				<h2>@{{user.username}}</h2>
 				{% if user == g.user %}
 				<a id="outline" class="btn btn-default" href = "{{url_for('edit_user', username = g.user.username)}}"><small>edit</small></a>
@@ -30,10 +30,10 @@
 											</a>
 										</ul>
 										</li>
+									{%endfor%}
 								</ul>
 							</div>
-							{%endfor%}
-						{% else %}
+								{% else %}
 						<p> You haven't sent anything yet!</p>
 						{%endif%}
 				{% elif not g.user.is_contact(user) %}
