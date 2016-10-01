@@ -932,7 +932,7 @@ def styles():
 def admin_dashboard():
 	if g.user != User.query.get(1):
 		return 403
-	users = Users.query.all()
+	users = User.query.all()
 	n_users = len(users)
 	messages_sent = len(Message.query.all())
 	activities = len(Activity.query.all())
