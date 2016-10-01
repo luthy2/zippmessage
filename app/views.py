@@ -223,7 +223,7 @@ def find_contacts():
 @login_required
 def user(username):
 	_user = User.query.filter(User.username.ilike(username)).first()
-	if _user == g.user:
+	if _user.id == g.user.id:
 		history = Message.query.filter(Message.author==user).order_by(Message.timestamp.desc()).limit(50)
 	else:
 		history=None
