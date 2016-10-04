@@ -940,3 +940,25 @@ def admin_dashboard():
 	activities = len(Activity.query.all())
 	send_analytics.delay("test", test="test")
 	return render_template('dashboard.html', n_users=n_users, messages_sent=messages_sent, activities = activities, users = users)
+
+
+@app.route('/438498thv893h4jnksxcv9n34ukkjdknuodoh8rg9', methods = ["GET", "POST"])
+def demo():
+	g.user = User.query.filter(User.username.ilike("zippdemo")).first()
+	user = g.user
+	user_tags = user.tags_for_user().most_common(20)
+	activity = user.user_activity()
+	form = NewMessageForm()
+	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
+	# cache_bookmarks.delay(user.id)
+	if form.validate_on_submit():
+			message = Message(title = form.message_title.data,
+								url = form.message_url.data,
+								author = g.user,
+								timestamp = datetime.utcnow())
+			db.session.add(message)
+			db.session.commit()
+			session['message_id'] = message.id
+			flash('Choose Receipients')
+			return redirect(url_for('recipients'))
+	return render_template('inbox.html', user=user, user_tags = user_tags, title = "Inbox", form= form, activity = activity)
