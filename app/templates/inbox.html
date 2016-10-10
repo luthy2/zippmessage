@@ -69,7 +69,7 @@
         <button type="button" class="btn btn-link btn-sm" style="width:14%" ng-click="dismissMessage(message.id)" data-toggle="tooltip" title="Dismiss" data-placement="bottom"><span id="dismiss" class="glyphicon glyphicon-remove"></span></button>
         <a type="button" class="btn btn-link btn-sm" style="width:14%" href ="/bookmark/{{message.id}}?next=inbox" data-toggle="tooltip" title="Bookmark"><span class="glyphicon glyphicon-bookmark green-hover" aria-hidden="true"></span></a>
         <div class="btn-group dropup no-style" style="width:14%;">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown tooltip"  title="Send Reaction" role="button" aria-expanded="false">😀<span class="sr-only">Toggle Dropdown</span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title="Send Reaction" role="button" aria-expanded="false">😀<span class="sr-only">Toggle Dropdown</span></a>
           <ul class="dropdown-menu list-inline reaction">
             <li><a href=# ng-click="createReaction(message.id, '😀')">😀</a></li>
             <li><a href=# ng-click="createReaction(message.id, '😂')">😂</a></li>
@@ -115,8 +115,5 @@
     $("#compose").toggle("fast", function(){
     })
   })
-  $(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  });
 </script>
 {% endblock %}
