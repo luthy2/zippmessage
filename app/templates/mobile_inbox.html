@@ -19,10 +19,15 @@
     <![endif]-->
 	</head>
   <body>
+    <style>
+    body{
+      padding-top:100px;
+    }
+    </style>
 {% if not g.user.email %}
 <div class="container">
   <div class="row">
-    <div class="col-md-5 col-md-offset-3">
+    <div class="col-xs-12">
       <div class = "alert alert-info"	role= "alert">
         Get notified when your friends send you messages! Add your <a href = "{{url_for('edit_user', username=g.user.username)}}" class = "alert-link">email</a>
       </div>
@@ -30,7 +35,7 @@
   </div>
   {% endif %}
   <div class="row">
-  	<div class ="col-md-5 col-sm-8"  ng-controller="InboxController" ng-cloak>
+  	<div class ="col-xs-12"  ng-controller="InboxController" ng-cloak>
       {% raw %}
       <div class = "alert alert-info"	role= "alert" ng-show="alert">
         {{alert}}
