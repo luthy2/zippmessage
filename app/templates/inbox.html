@@ -57,7 +57,7 @@
   </div>
 	<div class ="col-md-5 col-sm-8"  ng-controller="InboxController" ng-cloak>
     {% raw %}
-    <div class = "alert alert-info"	role= "alert" ng-show="alert">
+    <div class = "alert-overlay"	role= "alert" ng-show="alert">
       {{alert}}
     </div>
     <ul class = "list-group" ng-repeat="message in inbox">
