@@ -569,6 +569,17 @@ def history():
 	user =g.user
 	history = Message.query.filter(Message.author==user).order_by(Message.timestamp.desc()).limit(50)
 	return render_template("history.html", history=history)
+
+# @app.route('/digest')
+# def digest_home():
+# 	return render_template('diget_home.html')
+#
+# @app.route('digest/<str:unique_id>')
+# def digest(unique_id):
+# 	uid = unique_id.lower()
+# 	digest = Digest.query.filter(Digest.unique_id == uid)
+# 	return render_template('digest.html', digest = digest)
+#
 #start of api routes---------------------------------------------------------#
 
 @app.route('/api/1/heartbeat', methods = ["GET", "POST"])
@@ -770,13 +781,27 @@ def api_user_activity():
 	u = None
 	if owner_id != user.id:
 		u = user.create_activity(owner_id = owner_id, action=action, message_id= message_id)
-		activity = u[1].id
-		# m.incr_pts()
-		send_activity_email.delay(activity)
-	if u is None:
-		return jsonify(error="action could not be performed. you might have done this already, or the message was deleted.")
-	send_analytics.delay("reaction", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(owner_id)}, messageId=str(message_id), reactionName=action)
+		if u[1]:
+			activity = u[1].id
+			send_activity_email.delay(activity)
+			send_analytics.delay("reaction", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(owner_id)}, messageId=str(message_id), reactionName=action)
+			# m.incr_pts()
+		else:
+			return jsonify(error="action could not be performed. You might have done this already.")
 	return jsonify(ok=True)
+
+
+#Mobile routes
+@app.route('/m/user/inbox')
+@login_required
+def mobile_inbox():
+	user = g.user
+	return render_template("mobile_inbox.html")
+
+
+
+
+
 
 #*********----------------------ASYNC TASKS-----------------------********
 @celery.task
@@ -905,7 +930,6 @@ def send_new_msg_email(sender_id, recipient_id, message_id):
 				return resp
 	return False
 
-#todo
 @celery.task
 def send_analytics(collection, **kwargs):
 	for kw in kwargs:

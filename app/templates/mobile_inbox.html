@@ -1,0 +1,59 @@
+{% if not g.user.email %}
+<div class="row">
+  <div class="col-md-5 col-md-offset-3">
+    <div class = "alert alert-info"	role= "alert">
+      Get notified when your friends send you messages! Add your <a href = "{{url_for('edit_user', username=g.user.username)}}" class = "alert-link">email</a>
+    </div>
+  </div>
+</div>
+{% endif %}
+<div class="row">
+	<div class ="col-md-5 col-sm-8"  ng-controller="InboxController" ng-cloak>
+    {% raw %}
+    <div class = "alert alert-info"	role= "alert" ng-show="alert">
+      {{alert}}
+    </div>
+    <ul class = "list-group" ng-repeat="message in inbox">
+      <li class = "list-group-item">
+        <p><a href = "/user/{{message.from_user}}">@{{message.from_user}}:</a> {{message.note}}<span class ='pull-right' style="color:gray">{{message.timedelta}}</span></p>
+        <span class = "embedly-embed" ng-bind-html="$sce.trustAsHtml(message.content)"></span>
+      </li>
+      <li class = "list-group-item" style="text-align:center;">
+        <button type="button" class="btn btn-link btn-sm" style="width:14%" ng-click="dismissMessage(message.id)" data-toggle="tooltip" title="Dismiss" data-placement="top"><span id="dismiss" class="glyphicon glyphicon-remove"></span></button>
+        <a type="button" class="btn btn-link btn-sm" style="width:14%" href ="/bookmark/{{message.id}}?next=inbox" data-toggle="tooltip" title="Bookmark"><span class="glyphicon glyphicon-bookmark green-hover" aria-hidden="true"></span></a>
+        <div class="btn-group dropup no-style" style="width:14%;">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown tooltip"  title="Send Reaction" role="button" aria-expanded="false">😀<span class="sr-only">Toggle Dropdown</span></a>
+          <ul class="dropdown-menu list-inline reaction">
+            <li><a href=# ng-click="createReaction(message.id, '😀')">😀</a></li>
+            <li><a href=# ng-click="createReaction(message.id, '😂')">😂</a></li>
+            <li><a href=# ng-click="createReaction(message.id, '👎')">👎</a></li>
+            <li><a href=# ng-click="createReaction(message.id, '👍')">👍</a></li>
+            <li><a href=# ng-click="createReaction(message.id, '😠')">😠</a></li>
+            <li><a href=# ng-click="createReaction(message.id, '❤️')">❤️</a></li>
+            <li><a href=# ng-click="createReaction(message.id, '🔥')">🔥</a></li>
+          </ul>
+        </div>
+        <a type="button" class="btn btn-link btn-sm" style="width:14%" href = "/message/reader/{{message.id}}" data-toggle="tooltip" title="Open in Reader"><span class="glyphicon glyphicon-book green-hover" aria-hidden="true"></span></a>
+        <a type="button" class="btn btn-link btn-sm" style="width:14%" href ="/share/{{message.id}}?next=inbox" data-toggle="tooltip" title="Share" ><span class="glyphicon glyphicon-send blue-hover" aria-hidden="true"></span></a>
+      </li>
+    </ul>
+    <div class="loader" ng-show="loading">Loading...</div>
+    <div class = "text-center" style="padding-bottom:50px" ng-cloak>
+      <button type = "button" class = "btn btn-default btn-block" id="outline" ng-click="getInbox()" ng-hide="loadedAll">Load More</button>
+      <span ng-show="loadedAll"><h3>You've reached the end of your inbox! :)</h3></span>
+    </div>
+    {% endraw %}
+    <script type="text/javascript" src="/static/js/app.js"></script>
+  </div>
+</div>
+<script type="text/javascript">
+	$(".inbox").addClass("active")
+  $("#toggleCompose").click(function(){
+    $("#compose").toggle("fast", function(){
+    })
+  })
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  });
+</script>
+{% endblock %}
