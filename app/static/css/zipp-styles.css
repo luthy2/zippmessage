@@ -19,9 +19,11 @@ body .pad-nav{
 }
 .alert-overlay{
 	position:absolute;
-	height:10%;
+	padding-top:70px;
+	height:50px;
 	background-color:#06d66E;
 	color:white;
+	width:100%;
 }
 /*-------------------------navbar styles----------------------*/
 @media (max-width: 980px) {
