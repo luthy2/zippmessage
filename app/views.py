@@ -801,7 +801,7 @@ def mobile_inbox():
 @app.route('/m/user/bookmarks', methods = 	["GET", "POST"])
 @app.route('/m/user/bookmarks/<int:page>', methods = ["GET", "POST"])
 @login_required
-def bookmarks(page=1):
+def mobile_bookmarks(page=1):
 	user = g.user
 	key = 'bookmarks:%s:%s' % (user.id, page)
 	#TODO
