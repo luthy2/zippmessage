@@ -18,7 +18,7 @@ body .pad-nav{
 	height:120px;
 }
 .alert-overlay{
-	position:absolute;
+	position:fixed;
 	padding-top:70px;
 	height:50px;
 	background-color:#06d66E;
