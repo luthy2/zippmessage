@@ -115,8 +115,10 @@
     $("#compose").toggle("fast", function(){
     })
   })
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  });
+  $(document).ready(){
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+  }
 </script>
 {% endblock %}
