@@ -1,0 +1,82 @@
+<html lang="en" ng-app= "zippApp">
+	<title> Zipp - {{title}}</title>
+	<head>
+   		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen">
+			<link rel='stylesheet' type="text/css" href={{url_for('styles')}}>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+   		<script  type="text/javascript" src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+			<script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
+			<script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
+  		<link rel="shortcut icon" href="{{ url_for('favicon')}}">
+			<link href='https://fonts.googleapis.com/css?family=Paytone+One' rel='stylesheet' type='text/css'>
+			<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<meta charset="utf-8">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+	</head>
+<body>
+<div class="container-fluid">
+  <div class="row hidden-sm hidden-md hidden-lg">
+    <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+      <ul class = "list-group">
+        {% if user_tags %}
+          <a class="list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right pull-right"></span></a>
+        {% else %}
+          <p>no tagged items yet :/</p>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class ="col-sm-3 hidden-xs">
+      <ul class = "list-group">
+        <li class="list-group-item">
+          <a href ="{{url_for('tags')}}"><h4>Tags</h4></a>
+          <hr>
+        {% if user_tags %}
+          {% for tag in user_tags%}
+            <p><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}} </a><small>{{tag[1]}}</small></p>
+          {% endfor %}
+        </li>
+          <a class="list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right pull-right"></span></a>
+        {% else %}
+          <p>no tagged items yet :/</p>
+        {% endif %}
+      </ul>
+    </div>
+    <div class = "col-sm-9 col-xs-12">
+      <div class="row masonry">
+      {% if bookmarks %}
+        {% for message in bookmarks.items %}
+            <div class = "col-sm-5 col-md-4 item">
+              <ul class = "list-group">
+                {% include "bookmarked.html" %}
+              </ul>
+            </div>
+        {% endfor %}
+      {% else %}
+        <ul class ="list-group">
+          <li class = "list-group-item">You don't have any bookmarks! Save some things and they'll show up here.</li>
+        </ul>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "col-xs-12 col-md-offset-2">
+      <div class = "text-align text-center">
+          <ul class="list-inline">
+            {% if bookmarks.has_prev %}<li><a id = "outline" class = "btn btn-default" href = "{{url_for('bookmarks',page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
+            {% if bookmarks.has_next %}<li><a id="outline" class = "btn btn-default" href = "{{url_for('bookmarks',page = bookmarks.next_num)}}">next</a></li>{% endif %}
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</body>

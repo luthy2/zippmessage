@@ -798,7 +798,21 @@ def mobile_inbox():
 	user = g.user
 	return render_template("mobile_inbox.html")
 
-
+@app.route('/m/user/bookmarks', methods = 	["GET", "POST"])
+@app.route('/m/user/bookmarks/<int:page>', methods = ["GET", "POST"])
+@login_required
+def bookmarks(page=1):
+	user = g.user
+	key = 'bookmarks:%s:%s' % (user.id, page)
+	#TODO
+	# if bm.get(key):
+	# 	cache_bookmarks.delay(user.id, page=page+1)
+	# 	return bm.get(key)
+	# else:
+	b = user.bookmarks().paginate(page,12,False)
+	send_analytics.delay("pageview", title="bookmarks", page=page)
+	# bm.set(key, bookmarks, 600)
+	return render_template('mobile_bookmarks.html', user = user, bookmarks = b, title = "Bookmarks")
 
 
 
