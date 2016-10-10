@@ -26,10 +26,6 @@ body .pad-nav{
 	color:white;
 	width:100%;
 }
-ul .list-group{
-	border-radius:0;
-	box-shadow: 1px 1px 3px gray; 
-}
 /*-------------------------navbar styles----------------------*/
 @media (max-width: 980px) {
   /* Enable use of floated navbar text */
