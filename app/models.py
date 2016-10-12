@@ -55,6 +55,7 @@ class User(db.Model):
 	oauth_secret = db.Column(db.String(200))
 	username = db.Column(db.String(80))
 	email = db.Column(db.String(240))
+	profile_img_url = db.Column(db.String())
 	# email_token = db.Column(db.String)
 	notifications_status = db.Column(db.Boolean, default = True, nullable=False)
 	# api_token = db.Column(db.String)
@@ -153,7 +154,7 @@ class User(db.Model):
 		return self
 
 	def user_activity(self):
-		activity = Activity.query.filter(Activity.owner_id == self.id).order_by(Activity.timestamp.desc()).limit(12).all()
+		activity = Activity.query.filter(Activity.owner_id == self.id).order_by(Activity.timestamp.desc()).limit(8).all()
 		return activity
 
 	def create_activity(self, owner_id, action, message_id, timestamp = datetime.utcnow()):
@@ -428,7 +429,7 @@ def get_url_content(message_url):
 				title = resp['title']
 			else:
 				title = ''
-			return '<div class ="embed-responsive embed-responsive-16by9">'+resp['html']+'</div><h5>%s</h5>' % title
+			return '<div class ="embed-responsive embed-responsive-16by9">'+resp['html']+'</div><h5><a href="%s">%s</a></h5>' % (url,title)
 		elif 'soundcloud.com' in url:
 			return resp['html']
 		elif 'medium.com' in resp['provider_url']:
