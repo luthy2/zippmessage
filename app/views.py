@@ -868,27 +868,27 @@ def load_next(user_id, offset=6):
 	with app.app_context():
 		user = User.query.get(user_id)
 		next_items = user.inbox().from_self.offset(offset).limit(6)
-			for item in next_items.all():
-				msg_start = time.time()
-				message = {}
-				message['id'] = item.message_id
-				message['note']=item.message.title
-				message['from_user']=item.message.author.username
-				message['timedelta']=item.message.format_timestamp()
-				url = item.message.url
-				url = url.encode('utf-8')
-				if bm.get(url):
-					message['content']= bm.get(url)
-					msg_end = time.time()
-					print "content from cache in ", msg_end - msg_start
-				else:
-					content = item.message.render_url()
-					msg_end = time.time()
-					print "cache miss, content rendered in ", msg_end - msg_start
-					message['content'] = content.encode('utf-8')
-					bm.set(url, message['content'], 172800)
-					msg_cached = time.time()
-					print "message cached in ", msg_end-msg_cached
+		for item in next_items.all():
+			msg_start = time.time()
+			message = {}
+			message['id'] = item.message_id
+			message['note']=item.message.title
+			message['from_user']=item.message.author.username
+			message['timedelta']=item.message.format_timestamp()
+			url = item.message.url
+			url = url.encode('utf-8')
+			if bm.get(url):
+				message['content']= bm.get(url)
+				msg_end = time.time()
+				print "content from cache in ", msg_end - msg_start
+			else:
+				content = item.message.render_url()
+				msg_end = time.time()
+				print "cache miss, content rendered in ", msg_end - msg_start
+				message['content'] = content.encode('utf-8')
+				bm.set(url, message['content'], 172800)
+				msg_cached = time.time()
+				print "message cached in ", msg_end-msg_cached
 	print 'Next 6 items cached'
 	return True
 
