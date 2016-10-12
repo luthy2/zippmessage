@@ -1,38 +1,23 @@
 <!--extend from base layout -->
 {% extends "base.html" %}
 {% block content %}
-<div class ="conatiner">
-  <div class = "jumbotron">
-	<h1>Welcome to Zipp!</h1>
-  <p>Drag this link <a href = "javascript:window.location=%22http://www.zippmsg.com/quickshare?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)">Zipp-Quickshare</a> to your browser's bookmarks bar to create a bookmarklet. Click the bookmarklet to  share your browsers current page.</p>
-	<p>Save a link to read later by sending it to yourself, or share with friends.</p>
-  <p>Once you're finished with a link, you can click the bookmark <span class="glyphicon glyphicon-bookmark"></span> to save it for later, or click the <span class= "glyphicon glyphicon-remove"></span> to dismiss an article for good.</p>
-  <p>You can send your reaction by clicking the 😀</p>
-  <p>Click the airplane <span class="glyphicon glyphicon-send"></span> to reshare a message.</p>
-  <br>
-  <p>Edit your <a href="{{url_for('edit_user', username = g.user.username)}}">profile</a> to enable email notifications when you recieve a new message, or someone follows you.</p>
-  <br>
-  <p>Note: this is a very early version of zipp and the product still contains various known bugs. Have patience if something breaks. Feel free to alert me to the problem and i will try to fix it as soon as possible.</p>
-  <p>I am currently working on implementing new features like public shares, reminders, reactions to messages, chat, recommendations, integrations with other apps, and more cool stuff! View the product roadmap on <a href = "https://trello.com/b/IuHm5olz/zipp-product-roadmap">Trello.</a> Let me know if there's a feature youd like to see.</p>
-  <p><a href = "mailto:info@gzippmsg.com?Subject=ZippMsg-feedback" target="_top"> Feedback</a> welcome and appreciated!</p>
-  <p>made with <span class = "glyphicon glyphicon-heart" style ="color:red"></span> by <a href = "https://twitter.com/thebigJL">thebigJL</a>
-  </div>
-  <div>
-    <h2>Changelog</h2>
-    <h5>9/19/2016</h5>
-    <p>Added Activity Feed - See activity on the messages you've sent!</p>
-    <p>Added emoji reactions. give your reaction on messages you've recieved</p>
-    <h5>9/12/2016</h5>
-    <p>style changes</p>
-    <p>major bug fix</p>
-    <h5>9/11/2016</h5>
-    <p>explore welcome page</p>
-    <p>masonry layout for bookmarks</p>
-    <p>minor style changes</p>
-    <h5>9/9/2016</h5>
-    <p>added placeholder for activity feed</p>
-    <p>added recents page</p>
-    <p>added link to reader view from message preview</p>
+<div class ="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <p>Note: this is a very early version of zipp and the product still contains various known bugs. Have patience if something breaks. Feel free to alert me to the problem and i will try to fix it as soon as possible.</p>
+      <p>I am currently working on implementing new features like public shares, reminders, chat, recommendations, integrations with other apps, and more cool stuff! View the product roadmap on <a href = "https://trello.com/b/IuHm5olz/zipp-product-roadmap">Trello.</a> Let me know if there's a feature youd like to see.</p>
+      <p><a href = "mailto:info@gzippmsg.com?Subject=ZippMsg-feedback" target="_top"> Feedback</a> welcome and appreciated!</p>
+      <p>made with <span class = "glyphicon glyphicon-heart" style ="color:red"></span> by <a href = "https://twitter.com/thebigJL">thebigJL</a></p>
+      <div>
+        <h2>Changelog</h2>
+        <h5>10/12/2016</h5>
+        <p>Tooltips</p>
+        <h5>10/1/2016</h5>
+        <p>Added sent messages history in profile</p>
+        <p>Made compose button more visible on small screens</p>
+        <p>Made a link to quickshare on "compose" page</p>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
