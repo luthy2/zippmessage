@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="row">
-  <div class ="col-xs-12 col-md-8 col-md-offset-2">
-    <h4>tags</h4>
+  <div class ="col-xs-12 col-md-8 col-md-offset-2 text-align text-center">
+    <h4>#tags</h4>
       <ul class = "list-inline">
       {% if user_tags %}
         {% for tag in user_tags|dictsort()%}
-          <li><h6><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}</a><small>{{tag[1]}}</small><h6></li>
+          <li><h6><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}}</a><small> {{tag[1]}}</small><h6></li>
         {% endfor %}
       {% else %}
         <li>no tagged items yet :/</li>
