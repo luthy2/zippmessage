@@ -146,7 +146,7 @@ def inbox():
 	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
 	# cache_bookmarks.delay(user.id)
 	if form.validate_on_submit():
-			message = Message(title = form.message_title.data,
+			message = Message(title = form.message_title.data or '',
 								url = form.message_url.data,
 								author = g.user,
 								timestamp = datetime.utcnow())
@@ -259,7 +259,7 @@ def compose():
 	inbox = user.inbox()
 	form = NewMessageForm()
 	if form.validate_on_submit():
-		message = Message(title = form.message_title.data,
+		message = Message(title = form.message_title.data or '',
 							url = form.message_url.data,
 							author = g.user,
 							timestamp = datetime.utcnow())
@@ -538,7 +538,19 @@ def reader(page = 1):
 	send_analytics.delay("pageview", userId=str(g.user.id), title="reader", page=page)
 	return render_template('reader.html', user = user, title = 'Reader', inbox = inbox)
 
+
+# @app.route('/message/<message_id>')
+# @login_required
+# def message(message_id):
+# 	user = g.user
+# 	m = Message.query.get(message_id)
+# 	comments = message.message_comments.filter_by(Comment.commenter == g.user).order_by(Comment.id.desc()).all()
+# 	# Should be able to see all of your own comments on a message
+# 	# All comments in reply to your own comments
+# 	return render_template("message.html", message = m)
+
 @app.route('/message/reader/<message_id>', methods = ["GET", "POST"])
+@login_required
 def message_reader(message_id):
 	user = g.user
 	m = Message.query.get(message_id)
@@ -570,16 +582,23 @@ def history():
 	history = Message.query.filter(Message.author==user).order_by(Message.timestamp.desc()).limit(50)
 	return render_template("history.html", history=history)
 
-# @app.route('/digest')
-# def digest_home():
-# 	return render_template('diget_home.html')
+# @app.route('/collections')
+# def collection_home():
+# 	return render_template('collection_home.html')
 #
-# @app.route('digest/<str:unique_id>')
-# def digest(unique_id):
+# @app.route('collection/<str:unique_id>')
+# def collection(unique_id):
 # 	uid = unique_id.lower()
-# 	digest = Digest.query.filter(Digest.unique_id == uid)
-# 	return render_template('digest.html', digest = digest)
+# 	collection = Collection.query.filter(Collection.unique_id == uid)
+# 	return render_template('collection.html', collection = collection)
 #
+# @app.route('/user/collections')
+# @app.login_required
+# def user_collections():
+# 	user = g.user
+# 	user_collections = Collection.query.filter(Collection.creator.id == user.id).order_by(Collection.timestamp.desc()).limit(16)
+# 	return render_template('user_collections.html', user = user, collections = user_collections)
+
 #start of api routes---------------------------------------------------------#
 
 @app.route('/api/1/heartbeat', methods = ["GET", "POST"])
@@ -710,6 +729,18 @@ def m_api_inbox():
 		data.append(m)
 		print jsonify(data)
 	return jsonify(data)
+
+#
+# @app.route('/api/1/collection/create', methods=["POST"])
+# def api_create_collection():
+# 	data = request.data.json()
+# 	collection = Collection()
+# 	for item in data["items"]:
+# 		collection.collection_items.append(CollectionItem(parent=self, content=str(item)))
+# 	collection.is_public = data["is_public"]
+# 	db.session.add(collection)
+# 	db.session.commmit()
+# 	return jsonify(ok=True)
 
 # @app.route('api/1/m/login', methods = ["GET", "POST"])
 # def m_api_login():
@@ -991,7 +1022,7 @@ def demo():
 	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
 	# cache_bookmarks.delay(user.id)
 	if form.validate_on_submit():
-			message = Message(title = form.message_title.data,
+			message = Message(title = form.message_title.data or '',
 								url = form.message_url.data,
 								author = g.user,
 								timestamp = datetime.utcnow())
