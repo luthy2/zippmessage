@@ -14,20 +14,16 @@
 </div>
 <div class="row">
   <div class ="col-sm-3 hidden-xs">
-    <ul class = "list-group">
-      <li class="list-group-item">
-        <a href ="{{url_for('tags')}}"><h4>Tags</h4></a>
-        <hr>
-      {% if user_tags %}
-        {% for tag in user_tags%}
-          <p><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}} </a><small>{{tag[1]}}</small></p>
-        {% endfor %}
-      </li>
-        <a class="list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right pull-right"></span></a>
-      {% else %}
-        <p>no tagged items yet :/</p>
-      {% endif %}
-    </ul>
+      <a href ="{{url_for('tags')}}"><h4>Tags</h4></a>
+      <hr>
+    {% if user_tags %}
+      {% for tag in user_tags%}
+        <p><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}} </a><small>{{tag[1]}}</small></p>
+      {% endfor %}
+      <a class="list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right pull-right"></span></a>
+    {% else %}
+      <p>no tagged items yet :/</p>
+    {% endif %}
   </div>
   <div class = "col-sm-9 col-xs-12">
     <div class="row masonry">
