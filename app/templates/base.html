@@ -27,21 +27,9 @@
 	}
 </style>
 	<body>
-		{% if not g.user%}
-		<div class="welcome-user">
-			<div class= "welcome-text">
-				<div>
-					<h3>Welcome to Zipp.</h3>
-					<p>Zipp is a social link sharing and bookmarking platform.</p>
-					<p> Easily save any type of content for later</p>
-					<p>Share anything with your friends! <strong><a href="{{url_for('home')}}" class="text-white">Learn more</a></strong></p>
-				</div>
-			</div>
-		</div>
-		{%endif%}
 	<div class="container">
 		<nav class="navbar navbar-default navbar-fixed-top">
-		  <div class="container-fluid">
+		  <div class="container">
 		    <div class="navbar-header">
 		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-links">
 		        <span class="sr-only">Toggle navigation</span>
