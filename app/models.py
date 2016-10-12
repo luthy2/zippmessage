@@ -55,7 +55,7 @@ class User(db.Model):
 	oauth_secret = db.Column(db.String(200))
 	username = db.Column(db.String(80))
 	email = db.Column(db.String(240))
-	profile_img_url = db.Column(db.String())
+	# profile_img_url = db.Column(db.String())
 	# email_token = db.Column(db.String)
 	notifications_status = db.Column(db.Boolean, default = True, nullable=False)
 	# api_token = db.Column(db.String)
