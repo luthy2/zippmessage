@@ -514,7 +514,7 @@ def tag(name, page = 1):
 	tag_name = urllib.unquote(name)
 	bookmarks = user.get_bookmarks_with_tag(tag_name)
 	tag_count = bookmarks.count()
-	bookmakrs = bookmarks.paginate(page,12,False)
+	bookmarks = bookmarks.paginate(page,12,False)
 	send_analytics.delay("pageview", userId=str(g.user.id), title="tag", page=page)
 	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, name = name, tag_count=tag_count)
 
