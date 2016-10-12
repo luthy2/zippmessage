@@ -24,6 +24,7 @@ body .pad-nav{
 	background-color: #06d66e;
 	color:white;
 	border-color:#06d66e;
+	z-index: 10000;
 }
 /*-------------------------navbar styles----------------------*/
 @media (max-width: 980px) {
