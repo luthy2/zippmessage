@@ -19,8 +19,8 @@ body .pad-nav{
 }
 .alert-overlay{
 	position:fixed;
-	width:100%;
-	top:70px;
+	width:25%;
+	top:85px;
 	background-color: #06d66e;
 	color:white;
 	border-color:#06d66e;
@@ -288,6 +288,6 @@ a:hover {
 }
 
 .form-control:focus{
-	border-color: #06d66c;
-	box-shadow: 2px 2px 1px blue;
+	border-color: #06d66e;
+	box-shadow: 0px 0px 5px #06d66e;
 }
