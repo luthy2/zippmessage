@@ -1,5 +1,5 @@
 <li class="list-group-item">
-    <a href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}: </a>{{message.message.title}}<small><span class="pull-right">{{message.message.format_timestamp()}}</span></small>
+    <a class="username" href = "{{url_for('user', username = message.message.author.username)}}">@{{message.message.author.username}}: </a>{{message.message.title}}<small><span class="pull-right">{{message.message.format_timestamp()}}</span></small>
 </li>
 <a class="list-group-item" href="{{message.message.url}}" target = "_blank" rel = "noopener">
   {% set resp = message.message.request_url() %}

@@ -186,7 +186,7 @@ class User(db.Model):
 	def get_bookmarks_with_tag(self, tag):
 		# we don't need to check if it's bookmarked because an unbookmarked message can't have tags
 		# this will produce false matches, and might crash if there are no tags
-		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.tags.contains(tag))
+		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.tags.contains(tag)).order_by(UserMessage.message_id.desc())
 
 
 class Message(db.Model):

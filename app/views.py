@@ -512,9 +512,11 @@ def tag(name, page = 1):
 	user = g.user
 	user_tags=dict(user.tags_for_user())
 	tag_name = urllib.unquote(name)
-	bookmarks = user.get_bookmarks_with_tag(tag_name).paginate(page,12,False)
+	bookmarks = user.get_bookmarks_with_tag(tag_name)
+	tag_count = len(bookmarks)
+	bookmakrs = bookmarks.paginate(page,12,False)
 	send_analytics.delay("pageview", userId=str(g.user.id), title="tag", page=page)
-	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, name = name, user_tags=user_tags)
+	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, name = name, tag_count=tag_count)
 
 @app.route('/tags', methods = ["GET", "POST"])
 @login_required
@@ -1044,7 +1046,7 @@ def demo():
 	user_tags = user.tags_for_user().most_common(20)
 	activity = user.user_activity()
 	form = NewMessageForm()
-	send_analytics.delay('demoPageview', userId=str(g.user.id), title='inbox')
+	send_analytics.delay('pageview', userId=str(g.user.id), title='demo_inbox')
 	# cache_bookmarks.delay(user.id)
 	if form.validate_on_submit():
 			message = Message(title = form.message_title.data or 'check this out!',

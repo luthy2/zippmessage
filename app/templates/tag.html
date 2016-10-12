@@ -5,23 +5,9 @@
   margin-top:1em
 }
 </style>
-<div class="row">
-  <div class ="col-md-8 col-md-offset-2 hidden-xs">
-    <a class= "text-center" href ="{{url_for('tags')}}"><h4>tags</h4></a>
-      <ul class = "list-inline">
-      {% if user_tags %}
-        {% for tag in user_tags|dictsort()%}
-          <a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}} </a><small>{{tag[1]}}   </small>
-        {% endfor %}
-      {% else %}
-        <li>no tagged items yet :/</li>
-      {% endif %}
-    </ul>
-  </div>
-</div>
 <div class = "row">
   <div class = "col-md-6 col-md-offset-3">
-    <h4 class = "text-center">Bookmarks with #{{name}}</h4>
+    <h4 class = "text-center">{{tag_count}} bookmarks tagged #{{name}}<small><a href="{{url_for_(tags)}}">see all tags</a></h4>
   </div>
 </div>
 <div class = "row masonry">
