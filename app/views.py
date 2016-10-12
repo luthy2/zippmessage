@@ -623,8 +623,10 @@ def api_user_inbox():
 	if offset:
 		offset = int(offset)
 		inbox = inbox.from_self().offset(offset).limit(6)
+		load_next.delay(int(g.user.id), offset=(offset+6))
 	else:
 		inbox = inbox.limit(6)
+		load_next.delay(int(g.user.id))
 	data = []
 	for item in inbox.all():
 		msg_start = time.time()
@@ -860,6 +862,35 @@ def cache_url(url):
 		print 'content cached via thread'
 		return bm.set(url, content, 172800)
 
+@celery.task
+def load_next(user_id, offset=6):
+	#routine to preload the next items in a user inbox
+	with app.app_context():
+		user = User.query.get(user_id)
+		next_items = user.inbox().from_self.offset(offset).limit(6)
+			for item in next_items.all():
+				msg_start = time.time()
+				message = {}
+				message['id'] = item.message_id
+				message['note']=item.message.title
+				message['from_user']=item.message.author.username
+				message['timedelta']=item.message.format_timestamp()
+				url = item.message.url
+				url = url.encode('utf-8')
+				if bm.get(url):
+					message['content']= bm.get(url)
+					msg_end = time.time()
+					print "content from cache in ", msg_end - msg_start
+				else:
+					content = item.message.render_url()
+					msg_end = time.time()
+					print "cache miss, content rendered in ", msg_end - msg_start
+					message['content'] = content.encode('utf-8')
+					bm.set(url, message['content'], 172800)
+					msg_cached = time.time()
+					print "message cached in ", msg_end-msg_cached
+	print 'Next 6 items cached'
+	return True
 
 @celery.task
 def cache_bookmarks(user_id, page=1):
@@ -878,12 +909,6 @@ def cache_bookmarks(user_id, page=1):
 		td = s-e
 		print 'Bookmarks page %s cached in %s seconds' % (page, td)
 		return bm.set(key, bookmarks, 600)
-
-#todo
-@celery.task
-def load_next():
-	pass
-
 
 @celery.task
 def send_reminder_email(recipient_id, message_id):
