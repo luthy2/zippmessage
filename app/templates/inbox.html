@@ -46,6 +46,7 @@
       {% for tag in user_tags%}
         <p><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}} </a><small>{{tag[1]}}</small></p>
       {% endfor %}
+      <hr>
       <a href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right pull-right"></span></a>
     {% else %}
       <p>Once you bookmark some stuff, your most used tags will show up here!</p>
@@ -88,15 +89,15 @@
     {% endraw %}
     <script type="text/javascript" src="/static/js/app.js"></script>
   </div>
-  <div class = "col-md-3 col-md-offset-1 hidden-sm hidden-xs">
+  <div class = "col-md-3 hidden-sm hidden-xs">
       <a href="{{url_for('activity')}}" ><h4 class="text-right">Activity</h4></a>
       <hr>
     {% if activity %}
       {% for item in activity %}
         <p><a href="{{url_for('user', username=item.subject.username)}}">@{{item.subject.username}}</a> {{item.action}} your message {{item.format_timestamp()}} ago. <ul class="list-group"><a class="list-group-item" href = "{{url_for('message_reader', message_id = item.message.id)}}"><h5>{{item.message.title}}</h5><span class="truncate provider">{{item.message.short_url()}}</a></ul></p>
-          <hr>
-          <a href ="{{url_for('activity')}}" >See all activity<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
       {% endfor %}
+      <hr>
+      <a href ="{{url_for('activity')}}" >See all activity<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
     {% else %}
         <p>No Activity. Make sure you <a href = "{{url_for('find_contacts')}}">add your friends!</a></p>
     {% endif %}

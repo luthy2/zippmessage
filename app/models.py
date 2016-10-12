@@ -5,6 +5,8 @@ from urlparse import urlparse
 from datetime import datetime
 from collections import Counter
 import requests
+import random
+import string
 
 
 approved_contacts = db.Table('approved_contacts',
@@ -60,6 +62,8 @@ class User(db.Model):
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
 	activity_feed = db.relationship('Activity', foreign_keys="Activity.owner_id", backref='owner', lazy='dynamic')
 	actions_created = db.relationship('Activity', foreign_keys= "Activity.subject_id", backref='subject', lazy='dynamic')
+	# collections = db.relationship('Collections', backref = "creator", lazy='dynamic')
+	# comments = db.relationship('Comment', backref = "commenter", lazy='dynamic')
 
 	contacts = db.relationship('User',
 								secondary = approved_contacts,
@@ -149,7 +153,7 @@ class User(db.Model):
 		return self
 
 	def user_activity(self):
-		activity = Activity.query.filter(Activity.owner_id == self.id).order_by(Activity.timestamp.desc()).limit(50).all()
+		activity = Activity.query.filter(Activity.owner_id == self.id).order_by(Activity.timestamp.desc()).limit(12).all()
 		return activity
 
 	def create_activity(self, owner_id, action, message_id, timestamp = datetime.utcnow()):
@@ -194,6 +198,7 @@ class Message(db.Model):
 	# points = db.Column(db.Integer, default = 0)
 	timestamp = db.Column(db.DateTime)
 	message_activity = db.relationship("Activity", backref = 'message', lazy = 'dynamic')
+	# message_comments = db.relationship("MessageComment", backref = 'parent_message', lazy = 'dynamic')
 	private = db.Column(db.Boolean, default = True)
 
 	recipients = db.relationship(	'User',
@@ -476,6 +481,72 @@ class Activity(db.Model):
 			s = s//604800
 			return '{0}w ago'.format(int(s))
 
-# class Digest(db.Model):
+# class Collection(db.Model):
 # 	id = db.Column(db.Integer, primary_key=True)
-# 	user_id = db.Column(db.Integer, foreign_key = True)
+# 	creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True, index = True)
+# 	title = db.Column(db.String())
+# 	is_public = db.Column(db.Boolean, default=True)
+# 	is_published = db.Column(db.Boolean, default=False)
+# 	unique_id = db.Column(db.String(), index = True)
+# 	timestamp = db.Column(db.DateTime)
+# 	collection_items = db.relationship("CollectionItem", backref = 'parent', lazy = 'dynamic')
+#
+#
+# 	def __init__(self):
+# 		self.unique_id = self.create_unique_id()
+#
+# 	def create_unique_id(self, size=9):
+# 		chars = string.ascii_lowercase + string.digits
+# 		uid = ''.join(random.SystemRandom.choice(chars) for i in xrange(size))
+# 		return uid
+#
+# 	def publish_diget(self):
+# 		self.is_published = True
+# 		db.session.add(self)
+# 		db.session.commit()
+# 		return self
+#
+# 	# def create_child(self, item):
+# 	# 	self.collection_items.append(item)
+# 	# 	db.session.add(self)
+# 	# 	db.session.comit()
+# 	# 	return self
+#
+#
+#
+# class CollectionItem(db.Model):
+# 	id = db.Column(db.Integer, priamry_key	= True)
+# 	parent_collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'),  primary_key=True)
+# 	content = db.Column(db.String())
+#
+# 	def __init__(self, parent, content):
+# 		self.parent = parent
+# 		self.content = content
+#
+#
+# class Comment(db.Model):
+# 	id = db.Column(db.Integer, primary_key = True)
+# 	from_user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True, index=True)
+# 	to_user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True, index=True)
+# 	message_id=db.Column(db.Integer, db.ForeignKey('message.id'), primary_key=True)
+# 	children=db.relationship('Comment', backref="parent_comment")
+#     comment = db.Column(db.String())
+# 	timestamp = db.Column(db.DateTime)
+#
+# 	def __init__(self, parent_message, comment, timestamp):
+# 		self.parent_message = parent_message
+# 		self.comment = comment
+# 		self.timestamp = timestamp
+#
+
+# # we want to be able to sort the inbox in a weighted manner.
+# # the amount of messages sent to and recieved by a particular user,
+# # as well as the
+# class Affinity(db.Model):
+# 	sender_id = db.Column(db.Integer, foreign_key = True)
+# 	recipient_id = db.Column(db.Integer, foreign_key = True)
+# 	count = db.Column(db.Integer)
+#
+# 	def affinity_rank():
+# 		#reci
+# 		# total messages sent
