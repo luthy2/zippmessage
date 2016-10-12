@@ -21,7 +21,7 @@
 				{% for recipient in form.recipients %}
 						<li class = "list-group-item">
 							<div>
-								@{{recipient.label}}{% if recipient == g.user.id %}(Send to Inbox){% endif %}<span class="pull-right">{{recipient}}</span>
+								@{{recipient.label}}{% if recipient == g.user %}(Send to Inbox){% endif %}<span class="pull-right">{{recipient}}</span>
 							</div>
 						</li>
 				{% endfor %}
