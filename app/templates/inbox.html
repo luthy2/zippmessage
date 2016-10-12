@@ -94,7 +94,7 @@
       <hr>
       {% if activity %}
         {% for item in activity %}
-          <p><a class="username" href="{{url_for('user', username=item.subject.username)}}">@{{item.subject.username}}</a> {{item.action}} your message {{item.format_timestamp()}} ago. <ul class="list-group"><a class="list-group-item" href = "{{url_for('message_reader', message_id = item.message.id)}}"><h5>{{item.message.title}}</h5><span class="truncate provider">{{item.message.short_url()}}</span></a></ul></p>
+          <p><a class="username" href="{{url_for('user', username=item.subject.username)}}">@{{item.subject.username}}</a> {{item.action}} your message {{item.format_timestamp()}} ago. <ul class="list-group"><a class="list-group-item" href = "{{url_for('message_reader', message_id = item.message.id)}}"><h5>{{item.message.title}}</h5><span class="truncate provider"><small>{{item.message.short_url()}}<small></span></a></ul></p>
         {% endfor %}
         <hr>
         <a href ="{{url_for('activity')}}" >See all activity<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>

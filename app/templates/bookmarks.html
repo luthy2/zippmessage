@@ -13,14 +13,19 @@
   </div>
 </div>
 <div class="row">
+  <div class="col-xs-12 text-align text-center">
+    <h4>All Bookmarks</h4>
+  </div>
+</div>
+<div class="row">
   <div class ="col-sm-3 hidden-xs">
-      <a href ="{{url_for('tags')}}"><h4>Tags</h4></a>
+      <a href ="{{url_for('tags')}}"><h4>#tags</h4></a>
       <hr>
     {% if user_tags %}
       {% for tag in user_tags%}
         <p><a href = "{{url_for('tag', name = tag[0])}}">#{{tag[0]}} </a><small>{{tag[1]}}</small></p>
       {% endfor %}
-      <a class="list-group-item" href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right pull-right"></span></a>
+      <a href = "{{url_for('tags')}}">see all tags <span class = "glyphicon glyphicon-chevron-right pull-right"></span></a>
     {% else %}
       <p>no tagged items yet :/</p>
     {% endif %}
