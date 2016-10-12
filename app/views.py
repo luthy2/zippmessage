@@ -1044,7 +1044,7 @@ def demo():
 	user_tags = user.tags_for_user().most_common(20)
 	activity = user.user_activity()
 	form = NewMessageForm()
-	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
+	send_analytics.delay('demoPageview', userId=str(g.user.id), title='inbox')
 	# cache_bookmarks.delay(user.id)
 	if form.validate_on_submit():
 			message = Message(title = form.message_title.data or 'check this out!',
