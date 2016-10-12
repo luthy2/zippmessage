@@ -146,7 +146,7 @@ def inbox():
 	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
 	# cache_bookmarks.delay(user.id)
 	if form.validate_on_submit():
-			message = Message(title = form.message_title.data or '',
+			message = Message(title = form.message_title.data or 'check this out!',
 								url = form.message_url.data,
 								author = g.user,
 								timestamp = datetime.utcnow())
@@ -259,7 +259,7 @@ def compose():
 	inbox = user.inbox()
 	form = NewMessageForm()
 	if form.validate_on_submit():
-		message = Message(title = form.message_title.data or '',
+		message = Message(title = form.message_title.data or 'check this out!',
 							url = form.message_url.data,
 							author = g.user,
 							timestamp = datetime.utcnow())
@@ -1022,7 +1022,7 @@ def demo():
 	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
 	# cache_bookmarks.delay(user.id)
 	if form.validate_on_submit():
-			message = Message(title = form.message_title.data or '',
+			message = Message(title = form.message_title.data or 'check this out!',
 								url = form.message_url.data,
 								author = g.user,
 								timestamp = datetime.utcnow())
