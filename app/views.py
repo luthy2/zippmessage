@@ -867,7 +867,6 @@ def load_next(user_id, offset=6):
 	#routine to preload the next items in a user inbox
 	with app.app_context():
 		user = User.query.get(user_id)
-		inbox = inbox.from_self().offset(offset).limit(6)
 		next_items = user.inbox().from_self().offset(offset).limit(6)
 		for item in next_items.all():
 			msg_start = time.time()
