@@ -1,4 +1,4 @@
-``<!DOCTYPE html>
+<!DOCTYPE html>
 <head>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen">
   <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -61,23 +61,23 @@
               {{resp["content"] | safe}}
             {% endif %}
             {% if resp["media"]%}
+              <div class= 'embedly-embed'>
+                {{resp["media"]["html"] | safe}}
+              </div>
               {% if resp["media"]["type"]== "photo"%}
-                <img src="{{resp["media"]["url"]}}">
-              {%elif resp["media"]["type"]=="video"%}
-                <div class="embed-responsive"><div class="embed-responsive-16by9"> {{resp["media"]["html"] | safe}} </div></div>
+                <img src="{{resp['media']['url']}}">
               {%endif%}
             {% endif %}
           {% else %}
-          <p>We were unable to extract the content from this url. View it at the original source.</p>
             <ul class = "list-group">
-              <a class = "list-group-item" href="{{message.url}}" target="_blank">
+              <p>We were unable to extract the content from this url. View it at the original source.</p>
+              <a class = "list-group-item" href="{{item.message.url}}">
                 <p class ="list-group-item-heading">{{resp['title']}}</p>
                 <p class = "list-group-item-text">{{resp['description']}}</p>
-                <p style="color:gray"><small>{{message.short_url()}}</small></p>
+                <p style="color:gray"><small>{{item.message.short_url()}}</small></p>
               </a>
             </ul>
           {%endif%}
-        {%endif%}
      </div>
     </div>
     <footer style = "background-color:white; position:fixed; bottom:0; height:60; width:100%;">
