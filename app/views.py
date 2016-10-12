@@ -140,7 +140,7 @@ def welcome():
 @login_required
 def inbox():
 	user = g.user
-	user_tags = user.tags_for_user().most_common(12)
+	user_tags = user.tags_for_user().most_common(16)
 	activity = user.user_activity()
 	form = NewMessageForm()
 	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
