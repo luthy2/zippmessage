@@ -234,7 +234,7 @@ body .pad-nav{
 	.article {
 			position: relative;
 			overflow: hidden;
-			height:16em;
+			height:15em;
 			width:100%;
 	}
 
@@ -276,4 +276,12 @@ text-overflow: ellipsis;
 }
 .provider {
 	color:gray;
+}
+
+a{
+	color:#06d66e;
+}
+
+a:hover {
+	color:#04ab58;
 }
