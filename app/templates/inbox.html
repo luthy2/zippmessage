@@ -16,7 +16,7 @@
   </div>
 </div>
 <div class = "row" id="compose"  style="padding-bottom:10px;">
-  <div class="col-md-5 col-md-offset-3 col-sm-8 col-sm-offset-3">
+  <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-3">
       <form action="" method = "POST" class="">
         <div class="form-group">
           {{form.hidden_tag()}}
@@ -52,7 +52,7 @@
       <p>Once you bookmark some stuff, your most used tags will show up here!</p>
     {% endif %}
   </div>
-	<div class ="col-md-5 col-sm-8"  ng-controller="InboxController" ng-cloak>
+	<div class ="col-md-6 col-sm-8"  ng-controller="InboxController" ng-cloak>
     {% raw %}
     <div class = "alert alert-info"	role= "alert" ng-show="alert">
       {{alert}}
@@ -89,7 +89,7 @@
     {% endraw %}
     <script type="text/javascript" src="/static/js/app.js"></script>
   </div>
-  <div class = "col-md-3 col-md-offset-1 hidden-sm hidden-xs">
+  <div class = "col-md-3  hidden-sm hidden-xs">
       <a href="{{url_for('activity')}}" ><h4 class="text-right">Activity</h4></a>
       <hr>
       {% if activity %}
