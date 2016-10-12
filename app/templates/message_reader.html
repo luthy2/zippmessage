@@ -43,42 +43,40 @@
   </div>
   <div class = "row">
    <div class = "col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-
        {% set resp = message.get_content() %}
         {% if not resp %}
-          <p> We were unable to extract the content from the original source. <a href ="{{message.url}}" target ="_blank">Open the link in a new window<span class = "glyphicon glyphicon-new-window"></span></a> to view the content.</p>
+          <p> We were unable to extract the content from the original source. Visit {{item.message.url}} to view the content</p>
+        {% endif %}
+        {% if resp["title"]%}
+          <h2>{{resp['title']}}</h2>
+        {%endif%}
+        {% if resp["authors"]%}
+          {% for author in resp["authors"][:1]%}
+            <a href = "{{author['url']}}" style="padding-bottom:4%">{{author["name"]}} </a>
+          {% endfor %}
+        {% endif %}
+        {% if resp["content"] or resp["media"] %}
+          {% if resp["content"] %}
+            {{resp["content"] | safe}}
+          {% endif %}
+          {% if resp["media"]%}
+            <div class= 'embedly-embed'>
+              {{resp["media"]["html"] | safe}}
+            </div>
+            {% if resp["media"]["type"]== "photo"%}
+              <img src="{{resp['media']['url']}}">
+            {%endif%}
+          {% endif %}
         {% else %}
-          {% if resp["title"]%}
-            <h2>{{resp['title']}}</h2>
-          {% endif %}
-          {% if resp["authors"]%}
-            {% for author in resp["authors"][:1]%}
-              <a href = "{{author['url']}}" style="padding-bottom:4%">{{author["name"]}} </a>
-            {% endfor %}
-          {% endif %}
-          {% if resp["content"] or resp["media"] %}
-            {% if resp["content"] %}
-              {{resp["content"] | safe}}
-            {% endif %}
-            {% if resp["media"]%}
-              <div class= 'embedly-embed'>
-                {{resp["media"]["html"] | safe}}
-              </div>
-              {% if resp["media"]["type"]== "photo"%}
-                <img src="{{resp['media']['url']}}">
-              {%endif%}
-            {% endif %}
-          {% else %}
-            <ul class = "list-group">
-              <p>We were unable to extract the content from this url. View it at the original source.</p>
-              <a class = "list-group-item" href="{{item.message.url}}">
-                <p class ="list-group-item-heading">{{resp['title']}}</p>
-                <p class = "list-group-item-text">{{resp['description']}}</p>
-                <p style="color:gray"><small>{{item.message.short_url()}}</small></p>
-              </a>
-            </ul>
-          {%endif%}
-     </div>
+          <ul class = "list-group">
+            <p>We were unable to extract the content from this url. View it at the original source.</p>
+            <a class = "list-group-item" href="{{item.message.url}}">
+              <p class ="list-group-item-heading">{{resp['title']}}</p>
+              <p class = "list-group-item-text">{{resp['description']}}</p>
+              <p style="color:gray"><small>{{item.message.short_url()}}</small></p>
+            </a>
+          </ul>
+        {%endif%}
     </div>
     <footer style = "background-color:white; position:fixed; bottom:0; height:60; width:100%;">
       <div class = "container">
