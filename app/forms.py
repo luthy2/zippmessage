@@ -10,10 +10,6 @@ class NewMessageForm(Form):
 	message_url = StringField('url', validators=[DataRequired(), URL(require_tld = False, message = 'Must contain a valid URL'), Length(min = 7, max = 350)])
 	#add bookmarked = True field
 
-	def flash_errors(form):
-		for field, errors in form.errors.items():
-			for error in errors:
-				flash(u"Error in the %s field - %s" % (getattr(form, field).label.text,error))
 
 class MultiCheckboxField(SelectMultipleField):
     """
