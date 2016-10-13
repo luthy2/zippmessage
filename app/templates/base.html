@@ -71,6 +71,13 @@
 		</nav>
 	</div>
 	<div class="container zipp-app">
+		{% with messages = get_flashed_messages() %}
+		  {% if messages %}
+		    {% for message in messages %}
+		      <div class="alert alert-info alert-overlay">{{ message }}</div>
+		    {% endfor %}
+		  {% endif %}
+		{% endwith %}
 		{% block content %}
 		{% endblock %}
 	</div>
