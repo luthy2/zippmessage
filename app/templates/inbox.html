@@ -10,7 +10,7 @@
   {% endif %}
 {% endwith %}
 <div class="row">
-  <div class="col-md-5 col-md-offset-3">
+  <div class="col-md-5 col-md-offset-2">
     <div class = "alert alert-info alert-overlay dismissable"	role= "alert">
       Get notified when your friends send you messages! Add your <a href = "{{url_for('edit_user', username=g.user.username)}}" class = "alert-link">email</a>
     </div>
@@ -18,12 +18,12 @@
 </div>
 {% endif %}
 <div class = "row text-align text-center">
-  <div class = "col-md-5 col-md-offset-3 col-sm-8 col-sm-offset-3" style="padding-bottom:10px;">
+  <div class = "col-md-5 col-md-offset-2 col-sm-8 col-sm-offset-3" style="padding-bottom:10px;">
     <a href ="#compose" id ="toggleCompose" class ="btn btn-default btn-block outline">Share a link!</a>
   </div>
 </div>
 <div class = "row" id="compose"  style="padding-bottom:10px;">
-  <div class="col-md-5 col-md-offset-3 col-sm-8 col-sm-offset-3">
+  <div class="col-md-5 col-md-offset-2 col-sm-8 col-sm-offset-3">
       <form action="" method = "POST" class="">
         <div class="form-group">
           {{form.hidden_tag()}}
@@ -46,7 +46,7 @@
   </div>
 </div>
 <div class="row">
-  <div class ="col-sm-2 hidden-xs">
+  <div class ="col-sm-2 col-sm-offset-1 hidden-xs">
     <a href ="{{url_for('tags')}}"><h4>#tags</h4></a>
     <hr>
     {% if user_tags %}
