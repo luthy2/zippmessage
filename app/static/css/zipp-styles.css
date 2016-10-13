@@ -18,11 +18,12 @@ body .pad-nav{
 	height:120px;
 }
 .alert
+
 .alert-success{
-	background-color: #06d66e;
+	background-color:#06d66e;
 	border-color:#06d66e;
 	color:white;
-		border-radius: 0%;
+	border-radius: 0%;
 }
 .alert-info{
 	background-color: #54C6EB;
