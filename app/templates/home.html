@@ -118,7 +118,7 @@
         <p class="lead text-align text-center">
           <h2>An inbox for links.</h2>
         </p>
-          <p class=""><h3>Zipp is an easy way to save, and privately share links. Built for all types of content, not just for articles. Save and share videos, music, images, gifs, photos, tweets, .pdfs, and anything else.</h3></p>
+          <p class=""><h4>Zipp is an easy way to save, and privately share links. Built for all types of content, not just for articles. Save items for yourself, or add to your friends reading lists!</h4></p>
         <p class = "pad-top pad-bottom-2">
           <span>
             <a class="btn btn-default btn-lg btn-br" href = "{{url_for('login', next='inbox')}}">
@@ -155,6 +155,17 @@
               </div>
             </div>
             <div class="row pad-top-2">
+              <div class="col-md-8 col-md-offset-2">
+                <h2 class="lead text-center"> Start a save for later list that you will actually want to use. </h2>
+                <p class="text-center pad-bottom">Add music, videos, podcasts, images, and anything you want to see later.</p>
+                <p class = "text-center">
+                  <span class="pad-top">
+                    <a class="btn btn-default btn-lg btn-alt" href = "{{url_for('login', next='index')}}">Start an Inbox</a>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="row pad-top-2">
               <div class="col-md-5 col-md-offset-1">
                 <h2>Share Privately</h2>
                 <p>Messages your friends send you, and links you've sent yourself will show up in your inbox. Don't worry your friends won't be able to see who else you sent the same message to.</p>
@@ -176,7 +187,7 @@
                 </a>
               </div>
             </div>
-            <div class="row pad-top-2 pad-bottom-1">
+            <div class="row pad-top-1">
               <div class="col-md-8 col-md-offset-2">
                 <h2 class="lead text-center"> We will never spam you, or tweet without your consent.</h2>
                 <p class="text-center pad-bottom">There is nothing to setup. Just connect your twitter and you're ready to go.</p>
