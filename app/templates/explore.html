@@ -29,10 +29,20 @@
   #hover:hover{
     color:#54C6eb;
   }
+  .btn-br:hover{
+    color:rgba(0,0,0,0);
+    border-color:white;
+    background-color:white;
+  }
+  .btn-br{
+    color:white;
+    border-color: white;
+    background-color: transparent;;
+  }
 </style>
 {% if not g.user %}
 <div class="pad-top"></div>
-<div class="alert alert-success alert-overlay dismissable text-align text-center"><p>Zipp is an easy way to save and share links!<a href="{{url_for('login')}}" class="btn btn-default btn-br">Sign Up/Sign In</a></p></div>
+<div class="alert alert-success alert-overlay dismissable text-align text-center"><p>Zipp is an easy way to save and share links. Start an inbox for all your links! <a href="{{url_for('login')}}" class="btn btn-default btn-br"> Sign Up/Sign In</a></p></div>
 {% endif %}
 <div class="masonry row">
   {% for item in items %}
