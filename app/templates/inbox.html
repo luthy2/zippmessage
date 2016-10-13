@@ -11,12 +11,12 @@
 </div>
 {% endif %}
 <div class = "row text-align text-center">
-  <div class = "col-md-5 col-md-offset-3 col-sm-8 col-sm-offset-3" style="padding-bottom:10px;">
+  <div class = "col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-3" style="padding-bottom:10px;">
     <a href ="#compose" id ="toggleCompose" class ="btn btn-default btn-block outline">Share a link!</a>
   </div>
 </div>
 <div class = "row" id="compose"  style="padding-bottom:10px;">
-  <div class="col-md-5 col-md-offset-3 col-sm-8 col-sm-offset-3">
+  <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-3">
       <form action="" method = "POST" class="">
         <div class="form-group">
           {{form.hidden_tag()}}
@@ -52,10 +52,10 @@
       <p>Once you bookmark some stuff, your most used tags will show up here!</p>
     {% endif %}
   </div>
-	<div class ="col-md-5 col-sm-8"  ng-controller="InboxController" ng-cloak>
+	<div class ="col-md-6 col-sm-8"  ng-controller="InboxController" ng-cloak>
     {% raw %}
-    <div class = "alert alert-info alert-overlay"	role= "alert" ng-show="alert">
-      {{alert}}
+    <div class = "alert alert-info alert-overlay text-align text-center"	role= "alert" ng-show="alert">
+      <h4>{{alert}}</h4>
     </div>
     <ul class = "list-group" ng-repeat="message in inbox">
       <li class = "list-group-item">
