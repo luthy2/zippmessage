@@ -4,7 +4,7 @@
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     {% for message in messages %}
-      <div class="alert alert-success alert-overlay dismissable"><h5>{{ message }}</h5></div>
+      <div class="alert alert-success alert-overlay dismissable text-align text-center"><h5>{{ message }}</h5></div>
     {% endfor %}
   {% endif %}
 {% endwith %}
