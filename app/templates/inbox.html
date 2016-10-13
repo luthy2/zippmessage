@@ -4,14 +4,14 @@
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     {% for message in messages %}
-      <div class="alert alert-success alert-overlay dismissable text-align text-center"><h5>{{ message }}</h5></div>
+      <div class="alert alert-success alert-overlay dismissable text-align text-center"><p>{{ message }}</p></div>
     {% endfor %}
   {% endif %}
 {% endwith %}
 {% if not g.user.email %}
 <div class="row">
   <div class="col-md-5 col-md-offset-3">
-    <div class = "alert alert-info alert-overlay"	role= "alert">
+    <div class = "alert alert-info"	role= "alert">
       Get notified when your friends send you messages! Add your <a href = "{{url_for('edit_user', username=g.user.username)}}" class = "alert-link">email</a>
     </div>
   </div>
@@ -62,7 +62,7 @@
 	<div class ="col-md-5 col-sm-8"  ng-controller="InboxController" ng-cloak>
     {% raw %}
     <div class = "alert alert-success alert-overlay text-align text-center"	role= "alert" ng-show="alert">
-      <h5>{{alert}}</h5>
+      <p>{{alert}}</p>
     </div>
     <ul class = "list-group" ng-repeat="message in inbox">
       <li class = "list-group-item">
@@ -122,6 +122,6 @@
   });
   setTimeout(function() {
       $('.dismissable').fadeOut('fast');
-  }, 2800);
+  }, 2000);
 </script>
 {% endblock %}
