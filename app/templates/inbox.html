@@ -4,7 +4,7 @@
 {% if not g.user.email %}
 <div class="row">
   <div class="col-md-5 col-md-offset-3">
-    <div class = "alert alert-info"	role= "alert">
+    <div class = "alert alert-info alert-overlay"	role= "alert">
       Get notified when your friends send you messages! Add your <a href = "{{url_for('edit_user', username=g.user.username)}}" class = "alert-link">email</a>
     </div>
   </div>
@@ -113,5 +113,8 @@
       $('[data-toggle="tooltip"]').tooltip();
       console.log('tooltips activated')
   });
+  setTimeout(function() {
+      $('.alert-overlay').fadeOut('fast');
+  }, 2800);
 </script>
 {% endblock %}
