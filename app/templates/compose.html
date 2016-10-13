@@ -2,6 +2,13 @@
 {% extends "base.html" %}
 {% block content %}
 <div class ="row">
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+	    {% for message in messages %}
+	      <div class="alert alert-warning alert-overlay dismissable text-align text-center"><p>{{ message }}</p></div>
+	    {% endfor %}
+	  {% endif %}
+	{% endwith %}
 	<div class="col-md-6 col-md-offset-3">
 		<div class="alert alert-info notification hidden-xs">
 			<p>Drag this link <a href = "javascript:window.location=%22http://www.zippmsg.com/quickshare?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)">Zipp-Quickshare</a> to your browsers bookmarks bar.</p>
