@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, Length, URL, Email
 
 
 class NewMessageForm(Form):
-	message_title = StringField('title', validators=[Length(max = 300)])
+	message_title = StringField('title', validators=[Length(max = 300, message="The note is too long! Try Again")])
 	message_url = StringField('url', validators=[DataRequired(), URL(require_tld = False, message = 'Must contain a valid URL'), Length(min = 7, max = 350)])
 	#add bookmarked = True field
 
@@ -25,7 +25,7 @@ class RecipientsForm(Form):
 	recipients = MultiCheckboxField("recipients", choices = [], coerce=int, validators=[DataRequired()])
 
 class TagForm(Form):
-	tags = StringField('title', validators = [Length(max=300)])
+	tags = StringField('title', validators = [Length(max=300, message="Too many tags! Sorry.")])
 
 class EmailForm(Form):
 	email = StringField('email', validators = [Email(message="Please enter a valid email")])

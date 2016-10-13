@@ -266,8 +266,7 @@ def compose():
 		cache_url.delay(message.url)
 		session['message_id'] = message.id
 		return redirect(url_for('recipients'))
-	else:
-		flash(form.errors)
+
 	return render_template('compose.html', form=form, title = "Compose", inbox =inbox)
 
 
