@@ -112,7 +112,6 @@ def oauthorized():
 	current_user = user
 	login_user(user)
 	db.session.commit()
-	flash('You were signed in')
 	if first_login is True:
 		send_analytics.delay("signup", userId=str(user.id))
 		return redirect(url_for('find_contacts'))
@@ -153,7 +152,6 @@ def inbox():
 			db.session.add(message)
 			db.session.commit()
 			session['message_id'] = message.id
-			flash('Choose Receipients')
 			return redirect(url_for('recipients'))
 	return render_template('inbox.html', user=user, user_tags = user_tags, title = "Inbox", form= form, activity = activity)
 
@@ -267,10 +265,9 @@ def compose():
 		db.session.commit()
 		cache_url.delay(message.url)
 		session['message_id'] = message.id
-		flash('Choose Receipients')
 		return redirect(url_for('recipients'))
 	else:
-		form.flash_errors()
+		flash(form.errors)
 	return render_template('compose.html', form=form, title = "Compose", inbox =inbox)
 
 
@@ -1056,6 +1053,5 @@ def demo():
 			db.session.add(message)
 			db.session.commit()
 			session['message_id'] = message.id
-			flash('Choose Receipients')
 			return redirect(url_for('recipients'))
 	return render_template('inbox.html', user=user, user_tags = user_tags, title = "Inbox", form= form, activity = activity)
