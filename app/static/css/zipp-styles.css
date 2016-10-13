@@ -18,7 +18,7 @@ body .pad-nav{
 	height:120px;
 }
 .alert{
-	border-radius: 0%;
+
 }
 
 .alert-success{
@@ -33,11 +33,20 @@ body .pad-nav{
 }
 
 .alert-overlay{
+	border-radius: 0%;
 	position:fixed;
 	width:100%;
 	left:0px;
 	top:50px;
 	z-index: 10000;
+}
+.notification a{
+	color:white;
+	font-weight: bolder;
+}
+.notification a:hover{
+	color:white;
+	font-weight: bolder;
 }
 /*-------------------------navbar styles----------------------*/
 @media (max-width: 980px) {
