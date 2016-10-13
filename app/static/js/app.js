@@ -103,7 +103,7 @@ zippApp.controller("InboxController", function InboxController($scope, $http, $q
         $scope.alert = 'Reaction ' + action + ' Sent!'
         $timeout(function(){
             $scope.alert ='';
-        }, 2800);
+        }, 2000);
     }), function error(response){
       console.log(response)
       $scope.alert = response.error
