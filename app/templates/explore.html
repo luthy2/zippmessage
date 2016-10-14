@@ -42,7 +42,7 @@
 </style>
 {% if not g.user %}
 <div class="pad-top"></div>
-<div class="alert alert-success alert-overlay dismissable"><p>Zipp is an easy way to save and share links. Start an inbox for all your links! <a href="{{url_for('login')}}" class="btn btn-default btn-br pull-right"> Sign Up </a></p></div>
+<div class="alert alert-success alert-overlay dismissable"><h5>Zipp is an easy way to save and share links. Start an inbox for all your links!</h5> <a href="{{url_for('login')}}" class="btn btn-default btn-br pull-right"> Sign Up </a></div>
 {% endif %}
 <div class="masonry row">
   {% for item in items %}
