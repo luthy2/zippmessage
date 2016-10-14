@@ -31,6 +31,11 @@ body .pad-nav{
 	border-color:#54C6EB;
 	color:white;
 }
+.alert-danger{
+	background-color: #CC1A40;
+	border-color: #CC1A40;
+	color:white;
+}
 
 .alert-overlay{
 	border-radius: 0%;
@@ -238,6 +243,13 @@ body .pad-nav{
     outline:0;
     border:none;
   }
+
+	.btn-br{
+		color:white;
+		border-color: white;
+		background-color: transparent;;
+	}
+
   .blue-hover:hover{
     color:#54C6EB;
   }
@@ -313,4 +325,7 @@ a:hover {
 .form-control:focus{
 	border-color: #06d66e;
 	box-shadow: 0px 0px 5px #06d66e;
+}
+.activity{
+	background-color: transparent;
 }
