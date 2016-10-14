@@ -104,7 +104,7 @@
           <p>
             <a class="username" href="{{url_for('user', username=item.subject.username)}}">@{{item.subject.username}}</a> {{item.action}} your message {{item.format_timestamp()}} ago.
             <ul class="list-group activity">
-              <a class="list-group-item" href = "{{url_for('message_reader', message_id = item.message.id)}}">
+              <a class="list-group-item activity" href = "{{url_for('message_reader', message_id = item.message.id)}}">
                 <h5>{{item.message.title}}</h5><span class="truncate provider"><small>{{item.message.short_url()}}</small></span>
               </a>
             </ul>
