@@ -195,7 +195,7 @@ class User(db.Model):
 			# self.profile_img_url = resp["profile_image_url"]
 			# db.session.add(self)
 			# db.session.commit()
-			return resp["profile_image_url"]
+			return str(resp["profile_image_url"])
 		else:
 			return ''
 
