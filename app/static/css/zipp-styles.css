@@ -329,3 +329,7 @@ a:hover {
 .activity{
 	background-color: #fafafa;
 }
+.profile-image{
+	border-radius:50%;
+	height:25px;
+}
