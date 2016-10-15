@@ -55,7 +55,7 @@ class User(db.Model):
 	oauth_secret = db.Column(db.String(200))
 	username = db.Column(db.String(80))
 	email = db.Column(db.String(240))
-	# profile_img_url = db.Column(db.String())
+	profile_img_url = db.Column(db.String())
 	# email_token = db.Column(db.String)
 	notifications_status = db.Column(db.Boolean, default = True, nullable=False)
 	# api_token = db.Column(db.String)
@@ -190,16 +190,19 @@ class User(db.Model):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.tags.contains(tag)).order_by(UserMessage.message_id.desc())
 
 	def get_profile_img_url(self):
-		resp = twitter.get('users/show.json', data = {"screen_name":str(self.username)}, token = self.oauth_token)
-		if resp.status == 200:
-			# self.profile_img_url = resp["profile_image_url"]
-			# db.session.add(self)
-			# db.session.commit()
-			print resp.data.get("profile_image_url")
-			return resp.data.get("profile_image_url")
+		if self.profile_img_url:
+			return str(self.profile_img_url)
 		else:
-			print resp.status
-			return ''
+			resp = twitter.get('users/show.json', data = {"screen_name":str(self.username)}, token = self.oauth_token)
+			if resp.status == 200:
+				self.profile_img_url = resp.data.get("profile_image_url")
+				db.session.add(self)
+				db.session.commit()
+				print resp.data.get("profile_image_url")
+				return str(self.profile_img_url)
+			else:
+				print resp.status
+				return 'https://www.buira.org/assets/images/shared/default-profile.png'
 
 class Message(db.Model):
 	id= db.Column(db.Integer, primary_key = True)
