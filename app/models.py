@@ -190,7 +190,7 @@ class User(db.Model):
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.tags.contains(tag)).order_by(UserMessage.message_id.desc())
 
 	def get_profile_img_url(self):
-		resp = twitter.get('user/show.json', params = {"screen_name":str(self.username)}, token = self.oauth_token)
+		resp = twitter.get('user/show.json', data = {"screen_name":str(self.username)}, token = self.oauth_token)
 		print resp
 		if resp.status == 200:
 			# self.profile_img_url = resp["profile_image_url"]
