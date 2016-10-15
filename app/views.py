@@ -142,7 +142,7 @@ def inbox():
 	user_tags = user.tags_for_user().most_common(16)
 	activity = user.user_activity()
 	form = NewMessageForm()
-	send_analytics.delay('pageview', userId=str(g.user.id), title='inbox')
+	send_analytics.delay('pageview', userId=str(user.id), title='inbox')
 	# cache_bookmarks.delay(user.id)
 	if form.validate_on_submit():
 			message = Message(title = form.message_title.data or 'check this out!',
@@ -439,7 +439,7 @@ def quickshare():
 					flash('Message Sent!')
 			message.deliver_message()
 			db.session.commit()
-			send_analytics.delay("quickshare", userId=str(g.user.id))
+			send_analytics.delay("quickshare", userId=str(user.id))
 			return redirect(request.args.get('url'))
 
 		else:
@@ -478,8 +478,8 @@ def share(message_id):
 			for recipient_id in recipients:
 				new_message.add_recipient(recipient_id)
 				new_message.send_message(recipient_id)
-				send_analytics.delay("message sent", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
-				send_analytics.delay("message sent shared", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(recipient_id)})
+				send_analytics.delay("message sent", fromUser={"userId":str(user.id)}, toUser={"userId":str(recipient_id)})
+				send_analytics.delay("message sent shared", fromUser={"userId":str(user.id)}, toUser={"userId":str(recipient_id)})
 				if recipient_id!=g.user.id:
 					send_new_msg_email.delay(g.user.id, recipient_id, message.id)
 
@@ -491,7 +491,7 @@ def share(message_id):
 			# new_message.incr_pts(points=2)
 			db.session.add(new_message)
 			db.session.commit()
-			send_analytics.delay("message shared", userId=str(g.user.id))
+			send_analytics.delay("message shared", userId=str(user.id))
 			flash('Message Shared!')
 			return redirect(redirect_url())
 
@@ -511,7 +511,7 @@ def tag(name, page = 1):
 	bookmarks = user.get_bookmarks_with_tag(tag_name)
 	tag_count = bookmarks.count()
 	bookmarks = bookmarks.paginate(page,12,False)
-	send_analytics.delay("pageview", userId=str(g.user.id), title="tag", page=page)
+	send_analytics.delay("pageview", userId=str(user.id), title="tag", page=page)
 	return render_template('tag.html', user = user, title = "#" + name, bookmarks = bookmarks, name = name, tag_count=tag_count)
 
 @app.route('/tags', methods = ["GET", "POST"])
@@ -519,7 +519,7 @@ def tag(name, page = 1):
 def tags():
 	user = g.user
 	user_tags = dict(user.tags_for_user())
-	send_analytics.delay("pageview", userId=str(g.user.id), title="tags")
+	send_analytics.delay("pageview", userId=str(user.id), title="tags")
 	return render_template('tags.html', user = user, title = 'Tags', user_tags = user_tags)
 
 
@@ -533,7 +533,7 @@ def redirect_url(default='index'):
 def reader(page = 1):
 	user = g.user
 	inbox = user.inbox().paginate(page,1,False)
-	send_analytics.delay("pageview", userId=str(g.user.id), title="reader", page=page)
+	send_analytics.delay("pageview", userId=str(user.id), title="reader", page=page)
 	return render_template('reader.html', user = user, title = 'Reader', inbox = inbox)
 
 
@@ -632,6 +632,7 @@ def api_user_inbox():
 		message['id'] = item.message_id
 		message['note']=item.message.title
 		message['from_user']=item.message.author.username
+		message['user_profile_img']=item.message.author.get_profile_img_url
 		message['timedelta']=item.message.format_timestamp()
 		url = item.message.url
 		url = url.encode('utf-8')
@@ -697,7 +698,7 @@ def api_dismiss_message(message_id):
 	    return jsonify(error = 'Message could not be dismissed')
 	db.session.add(user)
 	db.session.commit()
-	send_analytics.delay("message dismiss", userId=str(g.user.id), messageId=str(message_id))
+	send_analytics.delay("message dismiss", userId=str(user.id), messageId=str(message_id))
 	return jsonify(ok = True, msg = 'Message' + str(message_id) + ' dismissed')
 
 @app.route('/api/1/m/user/inbox', methods = ["GET", "POST"])
@@ -815,7 +816,7 @@ def api_user_activity():
 		if u[1]:
 			activity = u[1].id
 			send_activity_email.delay(activity)
-			send_analytics.delay("reaction", fromUser={"userId":str(g.user.id)}, toUser={"userId":str(owner_id)}, messageId=str(message_id), reactionName=action)
+			send_analytics.delay("reaction", fromUser={"userId":str(user.id)}, toUser={"userId":str(owner_id)}, messageId=str(message_id), reactionName=action)
 			# m.incr_pts()
 		else:
 			return jsonify(error="action could not be performed. You might have done this already.")
@@ -1042,7 +1043,7 @@ def demo():
 	user_tags = user.tags_for_user().most_common(20)
 	activity = user.user_activity()
 	form = NewMessageForm()
-	send_analytics.delay('pageview', userId=str(g.user.id), title='demo_inbox')
+	send_analytics.delay('pageview', userId=str(user.id), title='demoInbox')
 	# cache_bookmarks.delay(user.id)
 	if form.validate_on_submit():
 			message = Message(title = form.message_title.data or 'check this out!',

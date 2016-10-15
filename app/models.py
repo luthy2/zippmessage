@@ -1,6 +1,6 @@
 from app import db
 from app import app
-from app import embedly
+from app import embedly, twitter
 from urlparse import urlparse
 from datetime import datetime
 from collections import Counter
@@ -189,6 +189,15 @@ class User(db.Model):
 		# this will produce false matches, and might crash if there are no tags
 		return UserMessage.query.filter(UserMessage.user_id == self.id).filter(UserMessage.tags.contains(tag)).order_by(UserMessage.message_id.desc())
 
+	def get_profile_img_url(self):
+		resp = twitter.get('user/show.json', params = {"screen_name":str(user.username)}, token = self.oauth_token)
+		if resp.status == 200:
+			# self.profile_img_url = resp["profile_image_url"]
+			# db.session.add(self)
+			# db.session.commit()
+			return resp["profile_image_url"]
+		else:
+			return ''
 
 class Message(db.Model):
 	id= db.Column(db.Integer, primary_key = True)
