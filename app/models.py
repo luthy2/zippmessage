@@ -191,10 +191,12 @@ class User(db.Model):
 
 	def get_profile_img_url(self):
 		resp = twitter.get('user/show.json', params = {"screen_name":str(user.username)}, token = self.oauth_token)
+		print resp
 		if resp.status == 200:
 			# self.profile_img_url = resp["profile_image_url"]
 			# db.session.add(self)
 			# db.session.commit()
+			print resp["profile_image_url"]
 			return str(resp["profile_image_url"])
 		else:
 			return ''

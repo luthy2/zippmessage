@@ -633,6 +633,7 @@ def api_user_inbox():
 		message['note']=item.message.title
 		message['from_user']=item.message.author.username
 		message['user_profile_img']= str(item.message.author.get_profile_img_url)
+		print message['user_profile_img']
 		message['timedelta']=item.message.format_timestamp()
 		url = item.message.url
 		url = url.encode('utf-8')
