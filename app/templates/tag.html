@@ -19,7 +19,7 @@
 </div>
 <div class = "row">
   <div class="col-md-6 text-align text-center">
-    <ul class "list-inline">
+    <ul class= "list-inline">
       {% if bookmarks.has_prev %}<li><a id="outline" href = "{{url_for('tag', name = name, page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
       {% if bookmarks.has_next %}<li><a id = "outline" href = "{{url_for('tag', name = name, page = bookmarks.next_num)}}">next</a></li>{% endif %}
     </ul>
