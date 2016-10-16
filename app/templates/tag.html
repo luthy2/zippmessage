@@ -19,8 +19,8 @@
 </div>
 <div class = "row">
   <div class="col-md-6 text-align text-center">
-    {% if bookmarks.has_prev %}<a id="outline" href = "{{url_for('tag', name = name, page = bookmarks.prev_num)}}">previous</a></li>{% endif %}
-    {% if bookmarks.has_next %}<a id = "outline" href = "{{url_for('tag', name = name, page = bookmarks.next_num)}}">next</a></li>{% endif %}
+    {% if bookmarks.has_prev %}<a id="outline" href = "{{url_for('tag', name = name, page = bookmarks.prev_num)}}">previous</a>{% endif %}
+    {% if bookmarks.has_next %}<a id = "outline" href = "{{url_for('tag', name = name, page = bookmarks.next_num)}}">next</a>{% endif %}
   </div>
 </div>
 <script type="text/javascript">
@@ -32,6 +32,6 @@
       percentPosition: true,
     });
   });
-  window.onload = $container.masonry.layout()
+  window.onload = $container.layout()
 </script>
 {% endblock %}
