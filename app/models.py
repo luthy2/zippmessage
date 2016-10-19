@@ -507,7 +507,8 @@ class Collection(db.Model):
 	collection_items = db.relationship("CollectionItem", backref = 'parent', lazy = 'dynamic')
 
 
-	def __init__(self):
+	def __init__(self, creator):
+		self.creator = creator
 		self.unique_id = self.create_unique_id()
 
 	def create_unique_id(self, size=9):
@@ -526,8 +527,6 @@ class Collection(db.Model):
 
 	def create_child(self, item):
 		self.collection_items.append(item)
-		db.session.add(self)
-		db.session.comit()
 		return self
 
 

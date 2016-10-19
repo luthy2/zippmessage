@@ -742,7 +742,7 @@ def api_create_collection():
 	data = request.get_json()
 	collection = Collection()
 	for item in data["items"]:
-		collection.collection_items.append(CollectionItem(parent=self, content=str(item)))
+		collection.create_child(CollectionItem(parent=collection, content=str(item)))
 	collection.is_public = data["is_public"]
 	db.session.add(collection)
 	db.session.commmit()
