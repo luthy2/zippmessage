@@ -5,7 +5,7 @@
   <div class="col-md-6">
     {% for collection in user_collections%}
     <ul class="list-group">
-      <a class="list-group-item" href = "{{url_for('collection', unique_id=collection.unique_id)}}">{{collection.title}}{{collection.collection_items|count}}</a>
+      <a class="list-group-item" href = "{{url_for('collection', unique_id=collection.unique_id)}}">{{collection.title}}{{collection.collection_items.all()|count}}</a>
     </ul>
     {% else %}
       <p>You haven't created any collections yet!! You can create a collection of links and share it with anyone anywhere! <a href = "{{url_for('collection_home')}}">Click here to make one!</a></p>
