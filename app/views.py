@@ -592,7 +592,7 @@ def collection(unique_id):
 	return render_template('collection.html', collection = collection)
 
 @app.route('/user/collections')
-@app.login_required
+@login_required
 def user_collections():
 	user = g.user
 	user_collections = Collection.query.filter(Collection.creator.id == user.id).order_by(Collection.timestamp.desc()).limit(8)
