@@ -745,7 +745,7 @@ def api_create_collection():
 		collection.create_child(CollectionItem(parent=collection, content=str(item)))
 	collection.is_public = data["is_public"]
 	db.session.add(collection)
-	db.session.commmit()
+	db.session.commit()
 	return jsonify(ok=True)
 
 # @app.route('api/1/m/login', methods = ["GET", "POST"])
