@@ -63,7 +63,7 @@ class User(db.Model):
 	inbox_messages = db.relationship('UserMessage', cascade = 'all, delete-orphan', backref = 'user', lazy ='dynamic')
 	activity_feed = db.relationship('Activity', foreign_keys="Activity.owner_id", backref='owner', lazy='dynamic')
 	actions_created = db.relationship('Activity', foreign_keys= "Activity.subject_id", backref='subject', lazy='dynamic')
-	collections = db.relationship('Collections', backref = "creator", lazy='dynamic')
+	collections = db.relationship('Collection', backref = "creator", lazy='dynamic')
 	# comments = db.relationship('Comment', backref = "commenter", lazy='dynamic')
 
 	contacts = db.relationship('User',
