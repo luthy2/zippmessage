@@ -4,7 +4,7 @@
 {% if collection %}
   {{collection.title}}
   {% for item in collection.collection_items%}
-    <p><a href = "{{item.content}}">{{collection.content}}</a></p>
+    <p><a href = "{{item.content}}">{{item.content}}</a></p>
   {% endfor %}
 {% endif %}
 {% endblock %}
