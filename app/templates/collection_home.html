@@ -123,7 +123,7 @@
         }
 
         $scope.submit = function(){
-          collection = {'title'=$scope.title, "is_public"=true, "items" = $scope.items}
+          collection = {'title':$scope.title, "is_public":true, "items" : $scope.items}
           $http ({
             method:'POST',
             url: api_base + 'collection/create',
