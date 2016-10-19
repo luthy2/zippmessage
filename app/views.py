@@ -595,7 +595,7 @@ def collection(unique_id):
 @login_required
 def user_collections(username):
 	user = User.query.filter(User.username.ilike(username)).first()
-	if user == g.user
+	if user == g.user:
 		user_collections = Collection.query.filter(Collection.creator.id == user.id).order_by(Collection.timestamp.desc()).limit(8)
 	else:
 		user_collections = Collection.query.filter(Collection.creator == user.id).filter(Collection.is_public == True).order_by(Collection.timestamp.desc()).limit(8)
