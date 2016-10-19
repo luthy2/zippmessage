@@ -51,15 +51,16 @@
       <h4>Untitled <a href ="{{url_for('edit_collection', unique_id = collection.unique_id)}}"><small>edit</small></a></h4>
     {% endif %}
      <p>by {{collection.creator.username}}</p>
+     <div class="row masonry">
       {% for item in collection.collection_items%}
-      <div class="row masonry">
+
         <div class="col-md-4 col-sm-6 item">
           <p><a href="{{item.content}}" class="link-embed">{{item.content}}</a></p>
         {% else %}
           <p>You haven't added any items to this collection yet.</p>
         </div>
-      </div>
       {% endfor %}
+    </div>
     {% endif%}
 {% else%}
 <p>Hmm, we couldn't find the collection. It might be private! Or maybe it doesnt exist.</p>
