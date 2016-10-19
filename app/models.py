@@ -528,19 +528,19 @@ class Collection(db.Model):
 		self.collection_items.append(item)
 		db.session.add(self)
 		db.session.comit()
-		return self	
+		return self
 
 
 class CollectionItem(db.Model):
-	id = db.Column(db.Integer, priamry_key	= True)
+	id = db.Column(db.Integer, primary_key	= True)
 	parent_collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'),  primary_key=True)
 	content = db.Column(db.String())
 
 	def __init__(self, parent, content):
 		self.parent = parent
 		self.content = content
-#
-#
+
+
 # class Comment(db.Model):
 # 	id = db.Column(db.Integer, primary_key = True)
 # 	from_user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True, index=True)
