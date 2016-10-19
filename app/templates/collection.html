@@ -1,20 +1,78 @@
 {% extends "base.html"%}
 {% block content%}
+<style>
+.item{
+  margin-top:1em
+}
+.article {
+    position: relative;
+    overflow: hidden;
+    height:12em;
+    width:100%;
+}
+
+.article-small {
+    position: relative;
+    overflow: hidden;
+    height:12em;
+    width:100%;
+}
+
+.article img {
+    position: absolute;
+    top: -9999px;
+    bottom: -9999px;
+    left: -9999px;
+    right: -9999px;
+    margin: auto;
+    }
+  #hover:hover{
+    color:#54C6eb;
+  }
+  .btn-br:hover{
+    color:rgba(0,0,0,0);
+    border-color:white;
+    background-color:white;
+  }
+  .btn-br{
+    color:white;
+    border-color: white;
+    background-color: transparent;;
+  }
+</style>
 {% if collection%}
   {% if collection.is_public or collection.creator == g.user%}
     {% if collection.title %}
       {{collection.title}} <a href ="{{url_for('edit_collection', unique_id = collection.unique_id)}}">edit</a>
     {% else %}
-      Untitled <a href ="{{url_for('edit_collection', unique_id = collection.unique_id)}}">edit</a>
+      <h4>Untitled <a href ="{{url_for('edit_collection', unique_id = collection.unique_id)}}"><small>edit</small></a></h4>
     {% endif %}
-     by {{collection.creator.username}}
+     <p>by {{collection.creator.username}}</p>
       {% for item in collection.collection_items%}
-        <p><a href="{{item.content}}">{{item.content}}</a></p>
-      {% else %}
-        <p>You haven't added any items to this collection yet</p>
+      <div class="row masonry">
+        <div class="col-md-4 col-sm-6 item">
+          <p><a href="{{item.content}}" class="link-embed">{{item.content}}</a></p>
+        {% else %}
+          <p>You haven't added any items to this collection yet.</p>
+        </div>
+      </div>
       {% endfor %}
     {% endif%}
 {% else%}
 <p>Hmm, we couldn't find the collection. It might be private! Or maybe it doesnt exist.</p>
 {%  endif %}
+<script type="text/javascript">
+  $('.link-embed').embedly({key: '7cc09b03ae3b48c5b8025541369b22c3'});
+  var $container = $('.masonry');
+  $container.imagesLoaded( function () {
+    $container.masonry({
+      columnWidth:'.item',
+      itemSelector: '.item',
+      percentPosition: true,
+    });
+  });
+  $(window).load(function(){
+    $container.masonry()
+  });
+</script>
 {% endblock%}
