@@ -53,10 +53,11 @@
      <p>by {{collection.creator.username}}</p>
      <div class="row masonry">
       {% for item in collection.collection_items%}
-
         <div class="col-md-4 col-sm-6 item">
           <p><a href="{{item.content}}" class="link-embed">{{item.content}}</a></p>
+        </div>
         {% else %}
+      </div>
           <p>You haven't added any items to this collection yet.</p>
         </div>
       {% endfor %}
