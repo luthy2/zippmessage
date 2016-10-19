@@ -591,6 +591,12 @@ def collection(unique_id):
 	collection = Collection.query.filter(Collection.unique_id == uid).first()
 	return render_template('collection.html', collection = collection)
 
+@app.route('/collection/<string:unique_id>/edit')
+def edit_collection(unique_id):
+	uid = unique_id.lower()
+	collection = Collection.query.filter(Collection.unique_id == uid).first()
+	return render_template('edit_collection.html', collection = collection)
+
 @app.route('/user/<username>/collections')
 @login_required
 def user_collections(username):
