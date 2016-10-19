@@ -591,11 +591,14 @@ def collection(unique_id):
 	collection = Collection.query.filter(Collection.unique_id == uid).first()
 	return render_template('collection.html', collection = collection)
 
-@app.route('/user/collections')
+@app.route('/user/<username>/collections')
 @login_required
-def user_collections():
-	user = g.user
-	user_collections = Collection.query.filter(Collection.creator.id == user.id).order_by(Collection.timestamp.desc()).limit(8)
+def user_collections(username):
+	user = User.query.filter(User.username.ilike(username)).first()
+	if user = g.user
+		user_collections = Collection.query.filter(Collection.creator.id == user.id).order_by(Collection.timestamp.desc()).limit(8)
+	else:
+		user_collections = Collection.query.filter(Collection.creator == user.id).filter(Collection.is_public == True).order_by(Collection.timestamp.desc()).limit(8)
 	return render_template('user_collections.html', user = user, user_collections = user_collections)
 
 #start of api routes---------------------------------------------------------#
