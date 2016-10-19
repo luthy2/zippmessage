@@ -334,3 +334,9 @@ a:hover {
 	border:1px solid #fafafa;
 	height:35px;
 }
+.nav-profile-image{
+	border-radius:50%;
+	border:1px solid #fafafa;
+	height:35px;
+	padding-bottom:10%;
+}
