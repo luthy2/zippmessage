@@ -92,7 +92,7 @@
   {% endraw %}
   <script>
     angular.module('collectionApp', [])
-      .controller('CollectionController', ['$scope', function CollectionController($scope, $http,$q) {
+      .controller('CollectionController', ['$scope' ,'$http', '$q', function ($scope, $http,$q) {
         $scope.items = [];
         $scope.url = ''
         $scope.title = ''
@@ -140,8 +140,6 @@
             console.log(response);
           };
         };
-
-
       }]);
   </script>
   <script type="text/javascript">
