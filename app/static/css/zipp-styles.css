@@ -264,6 +264,14 @@ body .pad-nav{
 		display: block;
 	}
 
+	.compose-nav{
+		border:1px solid #06d66e;
+		margin:1px;
+	}
+	.compose-nav:hover{
+		color:white;
+		background-color: #06d66e;
+	}
 
 	.article {
 			position: relative;
