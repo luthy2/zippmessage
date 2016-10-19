@@ -47,6 +47,7 @@
 </style>
 
 <body ng-app="collectionApp" ng-cloak>
+  {% raw %}
   <div ng-controller="CollectionController">
     <div class ="container">
       <div class="row">
@@ -88,6 +89,7 @@
       </div>
     </div><!---------bootstrap container--------->
   </div> <!-------angular app-------->
+  {% endraw %}
   <script>
     angular.module('collectionApp', [])
       .controller('CollectionController', ['$scope', function($scope) {
@@ -114,6 +116,7 @@
             $scope.urlForm.$setPristine();
             $scope.urlForm.$setUntouched();
             $scope.url = ''
+            console.log($scope.items)
           }
         };
 
