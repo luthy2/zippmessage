@@ -585,7 +585,7 @@ def collection_home():
 	user = g.user
 	return render_template('collection_home.html')
 
-@app.route('collection/<str:unique_id>')
+@app.route('/collection/<str:unique_id>')
 def collection(unique_id):
 	uid = unique_id.lower()
 	collection = Collection.query.filter(Collection.unique_id == uid).first()
