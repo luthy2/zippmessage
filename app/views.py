@@ -739,7 +739,7 @@ def m_api_inbox():
 
 @app.route('/api/1/collection/create', methods=["POST"])
 def api_create_collection():
-	data = request.data.json()
+	data = request.get_json()
 	collection = Collection()
 	for item in data["items"]:
 		collection.collection_items.append(CollectionItem(parent=self, content=str(item)))
