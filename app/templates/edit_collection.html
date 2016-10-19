@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content%}
+<h4>Edit Collection</h4>
+{% if collection %}
+  {{collection.title}}
+  {% for item in collection.collection_items%}
+    <p><a href = "{{url_for(collection.content, external=True}}">{{collection.content}}</a></p>
+  {% endfor %}
+{% endif %}
+{% endblock %}
