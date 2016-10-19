@@ -50,7 +50,7 @@
     {% else %}
       <h4>Untitled <a href ="{{url_for('edit_collection', unique_id = collection.unique_id)}}"><small>edit</small></a></h4>
     {% endif %}
-     <p>by <a href="{{url_for('user', collection.creator.username)}}">{{collection.creator.username}}</a></p>
+     <p>by <a href="{{url_for('user', username= collection.creator.username)}}">{{collection.creator.username}}</a></p>
      <div class="row masonry">
       {% for item in collection.collection_items%}
         <div class="col-md-4 col-sm-6 item">
