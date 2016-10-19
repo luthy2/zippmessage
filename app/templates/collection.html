@@ -9,12 +9,12 @@
     {% endif %}
      by {{collection.creator.username}}
       {% for item in collection.collection_items%}
-        <a href="{{item.content}}">{{item.content}}</a>
+        <p><a href="{{item.content}}">{{item.content}}</a></p>
       {% else %}
         <p>You haven't added any items to this collection yet</p>
       {% endfor %}
     {% endif%}
 {% else%}
-<p>Hmm, we couldn't find the collection. It might be private! Or maybe it doesnt exist.</p> 
+<p>Hmm, we couldn't find the collection. It might be private! Or maybe it doesnt exist.</p>
 {%  endif %}
 {% endblock%}
