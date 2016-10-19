@@ -49,8 +49,8 @@
             <li id = "nav-bottom-border"><a class="explore" href="{{url_for('explore')}}"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Explore</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-							<li id = "nav-bottom-border"><a class="btn btn-default navbar-btn compose" href="{{url_for('compose')}}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Compose</a></li>
-							<img class="profile-image" src="{{user.get_profile_img_url}}">
+							<li id = "nav-bottom-border"><a class="btn btn-default compose" href="{{url_for('compose')}}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Compose</a></li>
+							<img class="profile-image" src="{{user.get_profile_img_url()}}">
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@{{g.user.username}}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
