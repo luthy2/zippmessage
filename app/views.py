@@ -596,9 +596,9 @@ def collection(unique_id):
 def user_collections(username):
 	user = User.query.filter(User.username.ilike(username)).first()
 	if user == g.user:
-		user_collections = Collection.query.filter(Collection.creator.id == user.id).order_by(Collection.timestamp.desc()).limit(8)
+		user_collections = Collection.query.filter(User.id== g.user.id).order_by(Collection.timestamp.desc()).limit(8)
 	else:
-		user_collections = Collection.query.filter(Collection.creator == user.id).filter(Collection.is_public == True).order_by(Collection.timestamp.desc()).limit(8)
+		user_collections = Collection.query.filter(User.id == user.id).filter(Collection.is_public == True).order_by(Collection.timestamp.desc()).limit(8)
 	return render_template('user_collections.html', user = user, user_collections = user_collections)
 
 #start of api routes---------------------------------------------------------#
