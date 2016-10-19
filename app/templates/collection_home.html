@@ -108,6 +108,7 @@
         $scope.setTitle = function(title, form){
           if (form){
             $scope.title = title
+            console.log($scope.title)
           }
         }
 
@@ -135,6 +136,7 @@
           }).then(function success(response){
             console.log(response)
             $scope.alert = "Collection succesfully created"
+            $window.location.href='/collection/'+response.data.id
           }), function error(response){
             $scope.alert = "We had a problem creating your collection. Try again!"
             console.log(response);
