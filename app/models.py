@@ -496,47 +496,49 @@ class Activity(db.Model):
 			s = s//604800
 			return '{0}w ago'.format(int(s))
 
-# class Collection(db.Model):
-# 	id = db.Column(db.Integer, primary_key=True)
-# 	creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True, index = True)
-# 	title = db.Column(db.String())
-# 	is_public = db.Column(db.Boolean, default=True)
-# 	is_published = db.Column(db.Boolean, default=False)
-# 	unique_id = db.Column(db.String(), index = True)
-# 	timestamp = db.Column(db.DateTime)
-# 	collection_items = db.relationship("CollectionItem", backref = 'parent', lazy = 'dynamic')
-#
-#
-# 	def __init__(self):
-# 		self.unique_id = self.create_unique_id()
-#
-# 	def create_unique_id(self, size=9):
-# 		chars = string.ascii_lowercase + string.digits
-# 		uid = ''.join(random.SystemRandom.choice(chars) for i in xrange(size))
-# 		return uid
-#
-# 	def publish_diget(self):
-# 		self.is_published = True
-# 		db.session.add(self)
-# 		db.session.commit()
-# 		return self
-#
-# 	# def create_child(self, item):
-# 	# 	self.collection_items.append(item)
-# 	# 	db.session.add(self)
-# 	# 	db.session.comit()
-# 	# 	return self
-#
-#
-#
-# class CollectionItem(db.Model):
-# 	id = db.Column(db.Integer, priamry_key	= True)
-# 	parent_collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'),  primary_key=True)
-# 	content = db.Column(db.String())
-#
-# 	def __init__(self, parent, content):
-# 		self.parent = parent
-# 		self.content = content
+class Collection(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), index = True)
+	title = db.Column(db.String())
+	is_public = db.Column(db.Boolean, default=True)
+	is_published = db.Column(db.Boolean, default=False)
+	unique_id = db.Column(db.String(), index = True)
+	timestamp = db.Column(db.DateTime)
+	collection_items = db.relationship("CollectionItem", backref = 'parent', lazy = 'dynamic')
+
+
+	def __init__(self):
+		self.unique_id = self.create_unique_id()
+
+	def create_unique_id(self, size=9):
+		chars = string.ascii_lowercase + string.digits
+		uid = ''.join(random.SystemRandom().choice(chars) for i in xrange(size))
+		return uid
+
+	def publish_diget(self):
+		if not self.title:
+			return False
+		else:
+			self.is_published = True
+			db.session.add(self)
+			db.session.commit()
+			return self
+
+	def create_child(self, item):
+		self.collection_items.append(item)
+		db.session.add(self)
+		db.session.comit()
+		return self	
+
+
+class CollectionItem(db.Model):
+	id = db.Column(db.Integer, priamry_key	= True)
+	parent_collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'),  primary_key=True)
+	content = db.Column(db.String())
+
+	def __init__(self, parent, content):
+		self.parent = parent
+		self.content = content
 #
 #
 # class Comment(db.Model):
@@ -545,7 +547,7 @@ class Activity(db.Model):
 # 	to_user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True, index=True)
 # 	message_id=db.Column(db.Integer, db.ForeignKey('message.id'), primary_key=True)
 # 	children=db.relationship('Comment', backref="parent_comment")
-#     comment = db.Column(db.String())
+#   comment = db.Column(db.String())
 # 	timestamp = db.Column(db.DateTime)
 #
 # 	def __init__(self, parent_message, comment, timestamp):

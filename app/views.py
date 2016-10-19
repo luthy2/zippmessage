@@ -580,22 +580,23 @@ def history():
 	history = Message.query.filter(Message.author==user).order_by(Message.timestamp.desc()).limit(50)
 	return render_template("history.html", history=history)
 
-# @app.route('/collections')
-# def collection_home():
-# 	return render_template('collection_home.html')
-#
-# @app.route('collection/<str:unique_id>')
-# def collection(unique_id):
-# 	uid = unique_id.lower()
-# 	collection = Collection.query.filter(Collection.unique_id == uid)
-# 	return render_template('collection.html', collection = collection)
-#
-# @app.route('/user/collections')
-# @app.login_required
-# def user_collections():
-# 	user = g.user
-# 	user_collections = Collection.query.filter(Collection.creator.id == user.id).order_by(Collection.timestamp.desc()).limit(16)
-# 	return render_template('user_collections.html', user = user, collections = user_collections)
+@app.route('/collections')
+def collection_home():
+	user = g.user
+	return render_template('collection_home.html')
+
+@app.route('collection/<str:unique_id>')
+def collection(unique_id):
+	uid = unique_id.lower()
+	collection = Collection.query.filter(Collection.unique_id == uid).first()
+	return render_template('collection.html', collection = collection)
+
+@app.route('/user/collections')
+@app.login_required
+def user_collections():
+	user = g.user
+	user_collections = Collection.query.filter(Collection.creator.id == user.id).order_by(Collection.timestamp.desc()).limit(8)
+	return render_template('user_collections.html', user = user, user_collections = user_collections)
 
 #start of api routes---------------------------------------------------------#
 
@@ -732,17 +733,17 @@ def m_api_inbox():
 		print jsonify(data)
 	return jsonify(data)
 
-#
-# @app.route('/api/1/collection/create', methods=["POST"])
-# def api_create_collection():
-# 	data = request.data.json()
-# 	collection = Collection()
-# 	for item in data["items"]:
-# 		collection.collection_items.append(CollectionItem(parent=self, content=str(item)))
-# 	collection.is_public = data["is_public"]
-# 	db.session.add(collection)
-# 	db.session.commmit()
-# 	return jsonify(ok=True)
+
+@app.route('/api/1/collection/create', methods=["POST"])
+def api_create_collection():
+	data = request.data.json()
+	collection = Collection()
+	for item in data["items"]:
+		collection.collection_items.append(CollectionItem(parent=self, content=str(item)))
+	collection.is_public = data["is_public"]
+	db.session.add(collection)
+	db.session.commmit()
+	return jsonify(ok=True)
 
 # @app.route('api/1/m/login', methods = ["GET", "POST"])
 # def m_api_login():

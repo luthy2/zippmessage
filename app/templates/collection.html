@@ -1,0 +1,18 @@
+{% extends "base.html"%}
+{% block content%}
+{% if collection%}
+  {% if collection.is_public or collection.creator == g.user%}
+    {% if collection.title %}
+      {{collection.title}} <a href ="{{url_for('edit_collection', unique_id = collection.unique_id)}}">edit</a>
+    {% else %}
+      Untitled <a href ="{{url_for('edit_collection', unique_id = collection.unique_id)}}">edit</a>
+    {% endif %}
+     by {{collection.creator.username}}
+      {% for item in collection.collection_items%}
+        <a href="{{item.content}}">{{item.content}}</a>
+      {% else %}
+        <p>You haven't added any items to this collection yet</p>
+      {% endfor %}
+    {% endif%}
+{%  endif %}
+{% endblock%}
