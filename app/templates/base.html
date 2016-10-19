@@ -50,6 +50,7 @@
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 							<li id = "nav-bottom-border"><a class="compose" href="{{url_for('compose')}}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Compose</a></li>
+							<a class="navbar-brand navbar-right" href="{{url_for('user',username=g.user.username)}}"><img class="profile-image" src="{{user.get_profile_img_url()}}"></a>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@{{g.user.username}}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
@@ -62,7 +63,6 @@
 								</ul>
 							</li>
 					</ul>
-					<a class="navbar-brand navbar-right" href="{{url_for('user',username=g.user.username)}}"><img class="profile-image" src="{{user.get_profile_img_url()}}"></a>
 					{%else%}
 					<ul class="nav navbar-nav navbar-right">
 						<li ><a href = "{{url_for('login')}}" class="text-brand-color">Sign up or Login</a></li>
