@@ -740,7 +740,7 @@ def m_api_inbox():
 @app.route('/api/1/collection/create', methods=["POST"])
 def api_create_collection():
 	data = request.get_json()
-	collection = Collection()
+	collection = Collection(creator = g.user)
 	for item in data["items"]:
 		collection.create_child(CollectionItem(parent=collection, content=str(item)))
 	collection.is_public = data["is_public"]
