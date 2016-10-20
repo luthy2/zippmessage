@@ -1,6 +1,6 @@
 {%extends "base.html"%}
 {% block content%}
-<h4>{{user.username}}'s collections</h4>
+<h4>{{_user.username}}'s collections</h4>
 <div class="row">
   {% for collection in user_collections%}
     <div class="col-md-3">
@@ -12,7 +12,7 @@
       </ul>
     </div>
     {% else %}
-      <p>You haven't created any collections yet!! You can create a collection of links and share it with anyone anywhere! <a href = "{{url_for('collection_home')}}">Click here to make one!</a></p>
+      <p>No collections yet. :/ <a href = "{{url_for('collection_home')}}">Click here to make one!</a></p>
     {% endfor%}
 </div>
 {% endblock %}
