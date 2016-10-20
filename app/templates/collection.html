@@ -69,7 +69,7 @@ iframe{
     </p>
      <div class="row masonry">
       {% for item in collection.collection_items%}
-        <div id ="item" class="col-md-4 col-sm-6 item">
+        <div class="col-md-4 col-sm-6 item">
           <ul class="list-group">
             <li class="list-group-item"><a href="{{item.content}}" class="link-embed article">{{item.content}}</a></li>
           </ul>
@@ -98,12 +98,12 @@ iframe{
     $container.masonry()
   });
   $("#toggleGrid").click(function(){
-  	$("#item").removeClass('col-md-12')
-  	$("#item").addClass('col-md-4')
+  	$(".item").removeClass('col-md-12')
+  	$(".item").addClass('col-md-4')
   })
   $("#toggleList").click(function(){
-  	$("#item").removeClass('col-md-4')
-  	$("#item").addClass('col-md-12')
+  	$(".item").removeClass('col-md-4')
+  	$(".item").addClass('col-md-12')
   })
 </script>
 {% endblock%}
