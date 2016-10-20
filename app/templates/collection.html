@@ -61,10 +61,15 @@ iframe{
       <h4>Untitled <a href ="{{url_for('edit_collection', unique_id = collection.unique_id)}}"><small>edit</small></a></h4>
     {% endif %}
     <p>by <a href="{{url_for('user', username= collection.creator.username)}}">{{collection.creator.username}}</a>
-    {% if collection.is_public %}  public 🔓 {%else%}  private 🔒 {%endif%}</p>
+    {% if collection.is_public %}  public 🔓 {%else%}  private 🔒 {%endif%}
+    <div class = "btn-group" role="group">
+      <btn class="btn btn-default btn-sm" id="toggleList"><span class="glyphicon glyphicon-list"></span></btn>
+      <btn class="btn btn-default btn-sm" id ="toggleGrid"><span class="glyphicon glyphicon-th"></span></btn>
+    </div>
+    </p>
      <div class="row masonry">
       {% for item in collection.collection_items%}
-        <div class="col-md-4 col-sm-6 item">
+        <div id ="item" class="col-md-4 col-sm-6 item">
           <ul class="list-group">
             <li class="list-group-item"><a href="{{item.content}}" class="link-embed article">{{item.content}}</a></li>
           </ul>
@@ -92,5 +97,13 @@ iframe{
   $(window).load(function(){
     $container.masonry()
   });
+  $("#toggleGrid").click(function(){
+  	$("#item").removeClass('col-md-12')
+  	$("#item").addClass('col-md-4')
+  })
+  $("#toggleList").click(function(){
+  	$("#item").removeClass('col-md-4')
+  	$("#item").addClass('col-md-12')
+  })
 </script>
 {% endblock%}
