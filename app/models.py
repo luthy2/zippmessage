@@ -403,15 +403,15 @@ def render_no_style(url):
 	no_style_tag = '<a href = "%s" class = "list-group-item" target = "_blank">Content via %s</a>'
 	return no_style_tag % (url , provider)
 
-def image_tag(url):
-	p = provider_url(url)
+def image_tag(img_url, original_url):
+	p = provider_url(original_url)
 	image_tag = '<ul class="list-group">'\
 				'<li class = "list-group-item" >' \
 				'<img id = "img-message" src = "%s" width="100%%">' \
-				'<p style="padding-top:2%%">Image via <a href = "%s" target="_blank" rel="noopener">%s</a></p>'\
+				'<p style="padding-top:2%%">View original at <a href = "%s" target="_blank" rel="noopener">%s</a></p>'\
 				'</li>'\
 				'</ul>'
-	return image_tag % (url, url, p)
+	return image_tag % (img_url, original_url, p)
 
 def provider_url(url):
 	resp = requests.get(url)
@@ -437,7 +437,7 @@ def get_url_content(message_url):
 		elif resp['type'] == 'link':
 			return article_tag(resp, msg_url = message_url)
 		elif resp["type"] == 'photo':
-			return image_tag(url)
+			return image_tag(url, message_url)
 		elif resp['type'] == 'video':
 			if 'title' in resp:
 				title = resp['title']
