@@ -86,7 +86,7 @@
           <div class = "col-xs-12">
             <h5>
               <ul class="list-inline" style="text-align:center; vertical-align:center;">
-                <li style = "width:17%" ><a  href = "{{url_for('dismiss', message_id = message_id, next = url_for('reader'))}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
+                <li style = "width:17%" ><a  href = "{{url_for('dismiss', message_id = message_id, next = 'reader'))}}"><span class = "glyphicon glyphicon-remove" id="dismiss"></span></a></li>
                 <li style = "width:17%" ><a  href = "{{url_for('bookmark', message_id = message_id)}}"><span class = "glyphicon glyphicon-bookmark"></span></a></li>
                 <li style = "width:17%" ><a href = "{{url_for('share', message_id = message_id)}}"><span class = "glyphicon glyphicon-send"></span></a></li>
                 <li style - "wdith:17%"><a id="outline" class = "btn btn-default" type="button" href = "{{url_for('reader')}}" >to reader</a></li>
