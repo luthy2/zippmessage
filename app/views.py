@@ -598,11 +598,12 @@ def edit_collection(unique_id):
 @app.route('/user/<username>/collections')
 @login_required
 def user_collections(username):
-	user = User.query.filter(User.username.ilike(username)).first()
-	if user == g.user:
-		user_collections = Collection.query.filter(User.id== g.user.id).order_by(Collection.timestamp.desc()).limit(8)
-	else:
-		user_collections = Collection.query.filter(User.id == user.id).filter(Collection.is_public == True).order_by(Collection.timestamp.desc()).limit(8)
+	_user = User.query.filter(User.username.ilike(username)).first()
+	if _user:
+		if _user.id == g.user.id:
+			user_collections = Collection.query.filter(Collection.creator==g.user).order_by(Collection.timestamp.desc()).limit(8)
+		else:
+			user_collections = Collection.query.filter(Collection.creator== _user).filter(Collection.is_public == True).order_by(Collection.timestamp.desc()).limit(8)
 	return render_template('user_collections.html', user = user, user_collections = user_collections)
 
 #start of api routes---------------------------------------------------------#
