@@ -280,7 +280,8 @@ def recipients():
 
 	message_id = session['message_id']
 	message = Message.query.get(message_id)
-
+	# tw =
+	# twitter_intent = urllib.quote()
 	if request.method == 'POST':
 		recipients = form.recipients.data
 		if form.validate_on_submit():
@@ -307,7 +308,7 @@ def recipients():
 @login_required
 def bookmarks(page=1):
 	user = g.user
-	key = 'bookmarks:%s:%s' % (user.id, page)
+	# key = 'bookmarks:%s:%s' % (user.id, page)
 	# if bm.get(key):
 	# 	cache_bookmarks.delay(user.id, page=page+1)
 	# 	return bm.get(key)
@@ -390,10 +391,7 @@ def bookmark(message_id):
 		flash("tags updated")
 		send_analytics.delay("bookmark tag", userId=str(g.user.id), tags=message.usermessage_tags())
 		return redirect(redirect_url())
-	else:
-		flash(form.errors)
-
-		return render_template("bookmark.html", message = message, user = user, form = form, title = "Edit Bookmark")
+	return render_template("bookmark.html", message = message, user = user, form = form, title = "Edit Bookmark")
 
 
 @app.route('/dismiss/<message_id>')
@@ -589,7 +587,7 @@ def collection_home():
 def collection(unique_id):
 	uid = unique_id.lower()
 	collection = Collection.query.filter(Collection.unique_id == uid).first()
-	return render_template('collection.html', collection = collection)
+	return render_template('collection.html', collection = collection, title = collection.title)
 
 @app.route('/collection/<string:unique_id>/edit')
 def edit_collection(unique_id):
