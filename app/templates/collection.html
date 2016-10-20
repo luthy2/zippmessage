@@ -100,10 +100,12 @@ iframe{
   $("#toggleGrid").click(function(){
   	$(".item").removeClass('col-md-12')
   	$(".item").addClass('col-md-4')
+    $container.masonry()
   })
   $("#toggleList").click(function(){
   	$(".item").removeClass('col-md-4')
   	$(".item").addClass('col-md-12')
+    $container.masonry()
   })
 </script>
 {% endblock%}
