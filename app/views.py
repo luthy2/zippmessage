@@ -550,8 +550,13 @@ def reader(page = 1):
 def message_reader(message_id):
 	user = g.user
 	m = Message.query.get(message_id)
-	send_analytics.delay("pageview", userId=str(user.id), title="message reader", messageId=str(message_id))
-	return render_template('message_reader.html', user = user, title = 'Reader', message = m)
+	user_m = UserMessage.query.get(user.id, m.id)
+	if not user_m.is_read or user_m.is_bookmarked:
+		send_analytics.delay("pageview", userId=str(user.id), title="message reader", messageId=str(message_id))
+		return render_template('message_reader.html', user = user, title = 'Reader', message = m)
+	else:
+		flash("Hmm.. this message doesn't seem to exist. You could have dismissed it already ")
+		return redirect_url(url_for('inbox'))
 
 
 @app.route("/explore", methods = ["GET", "POST"] )
