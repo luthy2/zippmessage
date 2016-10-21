@@ -550,7 +550,7 @@ def reader(page = 1):
 def message_reader(message_id):
 	user = g.user
 	m = Message.query.get(message_id)
-	user_m = UserMessage.query.filter(UserMessage.message_id==m.id).filter(UserMessage.user_id)==user.id.one()
+	user_m = UserMessage.query.filter(UserMessage.message_id==m.id).filter(UserMessage.user_id==user.id).one()
 	if not user_m.is_read or user_m.is_bookmarked:
 		send_analytics.delay("pageview", userId=str(user.id), title="message reader", messageId=str(message_id))
 		return render_template('message_reader.html', user = user, title = 'Reader', message = m)
