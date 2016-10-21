@@ -604,7 +604,7 @@ def user_collections(username):
 			user_collections = Collection.query.filter(Collection.creator==g.user).order_by(Collection.timestamp.desc()).limit(8)
 		else:
 			user_collections = Collection.query.filter(Collection.creator== _user).filter(Collection.is_public == True).order_by(Collection.timestamp.desc()).limit(8)
-	return render_template('user_collections.html', user = user, user_collections = user_collections)
+	return render_template('user_collections.html', user = _user, user_collections = user_collections)
 
 #start of api routes---------------------------------------------------------#
 
