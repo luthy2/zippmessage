@@ -70,7 +70,7 @@
         <span class = "embedly-embed" ng-bind-html="$sce.trustAsHtml(message.content)"></span>
       </li>
       <li class = "list-group-item" style="text-align:center;">
-        <button type="button" class="btn btn-link btn-sm" style="width:14%" ng-click="dismissMessage(message.id)" data-toggle="tooltip" title="Dismiss" data-placement="bottom"><span id="dismiss" class="glyphicon glyphicon-remove"></span></button>
+        <button type="button" class="btn btn-link btn-sm" style="width:14%" ng-click="dismissMessage(message.id)" data-toggle="tooltip" title="Dismiss" data-placement="bottom">❌</button>
         <a type="button" class="btn btn-link btn-sm" style="width:14%" href ="/bookmark/{{message.id}}?next=inbox" data-toggle="tooltip" title="Bookmark"><span class="glyphicon glyphicon-bookmark green-hover" aria-hidden="true"></span></a>
         <div class="btn-group dropup no-style" style="width:14%;">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title="Send Reaction" role="button" aria-expanded="false">😀<span class="sr-only">Toggle Dropdown</span></a>
