@@ -420,7 +420,7 @@ def provider_url(url):
 		parse_object = urlparse(url)
 		provider = parse_object.netloc
 		return provider or 'No Source'
-	except SSLError:
+	except requests.exceptions.SSLError:
 		print SSLError, 'failed to validate url: ' + str(url)
 		return url
 
