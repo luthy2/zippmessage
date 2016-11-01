@@ -414,11 +414,16 @@ def image_tag(img_url, original_url):
 	return image_tag % (img_url, original_url, p)
 
 def provider_url(url):
-	resp = requests.get(url)
-	url = resp.url
-	parse_object = urlparse(url)
-	provider = parse_object.netloc
-	return provider or 'No Source'
+	try:
+		resp = requests.get(url)
+		url = resp.url
+		parse_object = urlparse(url)
+		provider = parse_object.netloc
+		return provider or 'No Source'
+	except SSLError:
+		print SSLError, 'failed to validate url: ' + str(url)
+		return url
+
 
 
 def get_url_content(message_url):
