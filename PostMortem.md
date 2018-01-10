@@ -1,10 +1,10 @@
 # ZippMessage Post Mortem
 <a href="#overview">Overview</a>
 <a href = "#details">Details</a>
-<a href = "screenshots">Screenshots</a>
+<a href = "#screenshots">Screenshots</a>
 
 ## Overview <a name="overview">
----
+
 ### Conception
 Zipp was conceived after noticing my friends and I were sending a lot of links in our group messages. I was unhappy that I could not easily find links if I wanted to revisit them, or forward them on to friends. I also noticed that many people used the @/mention feature on Instagram and Twitter to quickly share content with friends. I figured there should be an easy way to share links with friends, along with an easy way to save and organize them. Based on some initial research exploring bookmarking products like pocket, I felt that there was a product that should exist that didn't yet.
 
@@ -25,7 +25,7 @@ Overall, I'm proud of what I was able to learn and build on my own. I went from 
 
 
 ## Details <a name="details">
----
+
 ### Features and Technologies
 #### Product Features
 * One-to-one or one-to-many link sharing
@@ -46,13 +46,14 @@ Overall, I'm proud of what I was able to learn and build on my own. I went from 
 * caching with celery and redis
 
 ## Screenshots <a name="screenshots">
-![alt text](/Users/Justin/Desktop/zippmessage/app/static/img/richinbox.gif "Inbox with link previews")
+![alt text](/app/static/img/richinbox.gif "Inbox with link previews")
 Inbox with rich previews for different types of content.
 
-![alt text](/Users/Justin/Desktop/zippmessage/app/static/img/quickshare.gif "quickshare bookmarklet")
+![alt text](/app/static/img/quickshare.gif "quickshare bookmarklet")
 quickly share links from the tab bar
 
-![alt text](/Users/Justin/Desktop/zippmessage/app/static/img/messageactions.gif "send your reaction")
-share
+![alt text](/app/static/img/messageactions.gif "send your reaction")
+share your reaction on links shared with you
 
-![alt text](/Users/Justin/Desktop/zippmessage/app/static/img/inbox.gif "Inbox with link previews")
+![alt text](/app/static/img/inbox.gif "Inbox with link previews")
+inbox view
