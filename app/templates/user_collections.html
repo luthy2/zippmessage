@@ -1,6 +1,6 @@
 {%extends "base.html"%}
 {% block content%}
-<h4>{{user.username}}'s collections</h4>
+<h4><a href = "{{url_for('user', username = user.username)}}">@{{user.username}}</a>'s collections</h4>
 <div class="row">
   {% for collection in user_collections%}
     <div class="col-md-3">

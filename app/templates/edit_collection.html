@@ -2,7 +2,7 @@
 {% block content%}
 <h4>Edit Collection</h4>
 {% if collection %}
-  {{collection.title}}
+  <h4>{{collection.title}}</h4>
   {% for item in collection.collection_items%}
     <p><a href = "{{item.content}}">{{item.content}}</a></p>
   {% endfor %}

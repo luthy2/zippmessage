@@ -11,7 +11,7 @@ import urlparse
 import json
 import redis
 import celery
-
+#from raven.contrib.flask import Sentry
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -27,7 +27,7 @@ bm = bmemcached.Client(MEMCACHEDCLOUD_SERVERS, MEMCACHEDCLOUD_USERNAME, MEMCACHE
 celery = celery.Celery('app', broker = CELERY_BROKER)
 mailgun_api = "https://api.mailgun.net/v3/zippmsg.com/messages"
 mailgun_auth = "key-96d0fea83b79dd08312c6c68ea308679"
-
+#sentry = Sentry(app, dsn='https://7f9e23c200754134ac8112a594b5751a:34633c5c757b4667a2877a93de8c32d4@sentry.io/100635')
 
 twitter = oauth.remote_app('twitter',
     # unless absolute urls are used to make requests, this will be added
