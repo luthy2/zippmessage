@@ -1,5 +1,5 @@
 # ZippMessage Post-Mortem
-Note: Retired code from a bookmarking/link sharing app. The project is no longer live. Working on a complete rewrite at [zipp2](https://www.github.com/luthy2/zipp2). Try a live version at zipp2.herokuapp.com. <br/>
+Note: Retired code from a bookmarking/link sharing app. The project is no longer live. Working on a complete rewrite at [zipp2](https://www.github.com/luthy2/zipp2). Try a live version [here](zipp2.herokuapp.com). <br/>
 
 <a href="#overview">Overview</a>
 <a href = "#details">Details</a>
